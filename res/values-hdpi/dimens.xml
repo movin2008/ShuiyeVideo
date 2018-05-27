@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <dimen name="album_title_size">36sp</dimen>
+    <dimen name="album_summary_size">20sp</dimen>
+    
+</resources>
