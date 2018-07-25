@@ -35,10 +35,10 @@ public class FullScreenDialog extends Dialog implements View.OnClickListener {
 
         final LayoutParams layoutParams = getWindow().getAttributes();
         // align bottom
-        layoutParams.gravity= Gravity.BOTTOM;
+        layoutParams.gravity = Gravity.BOTTOM;
         // fullscreen
-        layoutParams.width= LayoutParams.MATCH_PARENT;
-        layoutParams.height= LayoutParams.WRAP_CONTENT;
+        layoutParams.width = LayoutParams.MATCH_PARENT;
+        layoutParams.height = LayoutParams.WRAP_CONTENT;
 
         getWindow().getDecorView().setPadding(0, 0, 0, 0);
         getWindow().setAttributes(layoutParams);
@@ -48,13 +48,14 @@ public class FullScreenDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
         }
         dismiss();
     }
 
     protected View.OnClickListener mListener;
-    public void setOnClickListener(View.OnClickListener l){
+
+    public void setOnClickListener(View.OnClickListener l) {
         mListener = l;
     }
 

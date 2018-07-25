@@ -308,6 +308,8 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                 } catch (Exception e) {
                     Log.e("HAHA", e.getLocalizedMessage());
                     e.printStackTrace();
+                    fault(e.getLocalizedMessage());
+
                 }
             }
         }).start();

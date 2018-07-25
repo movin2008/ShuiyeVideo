@@ -14,7 +14,7 @@ import com.shuiyes.video.R;
 
 import java.lang.reflect.Method;
 
-public class VideoController extends MediaController{
+public class VideoController extends MediaController {
     public VideoController(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -31,8 +31,8 @@ public class VideoController extends MediaController{
     public void setAnchorView(View view) {
         super.setAnchorView(view);
 
-        Log.e("HAHA", " =========================== Build.VERSION.SDK_INT="+Build.VERSION.SDK_INT);
-        if(Build.VERSION.SDK_INT == 19){
+        Log.e("HAHA", " =========================== Build.VERSION.SDK_INT=" + Build.VERSION.SDK_INT);
+        if (Build.VERSION.SDK_INT == 19) {
             FrameLayout.LayoutParams frameParams = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
@@ -46,12 +46,12 @@ public class VideoController extends MediaController{
                 Method m_initControllerView = MediaController.class.getDeclaredMethod("initControllerView", View.class);
                 m_initControllerView.setAccessible(true);
                 m_initControllerView.invoke(this, v);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
             addView(v, frameParams);
-        }else if(Build.VERSION.SDK_INT == 26){
+        } else if (Build.VERSION.SDK_INT == 26) {
 
         }
     }

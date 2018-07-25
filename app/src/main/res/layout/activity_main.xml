@@ -23,6 +23,6 @@
         android:id="@+id/lv_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"></ListView>
+        android:layout_marginBottom="20dp"/>
 
 </LinearLayout>

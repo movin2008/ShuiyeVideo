@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
@@ -26,6 +27,7 @@ import android.widget.ListView;
 import com.shuiyes.video.adapter.AlbumAdapter;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
+import com.shuiyes.video.constants.ResourceDef;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.YoukuUtils;
 import com.shuiyes.video.widget.Tips;
@@ -48,35 +50,36 @@ public class MainActivity extends Activity {
                 case 100:
                     View view = getWindow().getDecorView().findFocus();
                     int focusId = 0;
-                    if(view != null){
+                    if (view != null) {
                         focusId = view.getId();
                     }
-                    Log.i("HAHA", "id = 0x"+Integer.toHexString(focusId));
+                    Log.i("HAHA", "id = 0x" + Integer.toHexString(focusId));
                     mHandler.sendEmptyMessageDelayed(100, 1111);
                     break;
                 case MSG_LIST_ALBUM:
+                    mPosition = -1;
                     mAlbumAdapter.listAlbums(mAlbums);
                     break;
-                case 1:
+                case MSG_SET_IMAGE:
                     // 通过tag找到ImageView
                     ImageView imageView = (ImageView) mListView.findViewWithTag(msg.getData().getString("imageUrl"));
                     if (imageView != null) {
                         imageView.setImageBitmap((Bitmap) msg.obj);
                     }
                     break;
-                case 2:
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        List<String> permissions = new ArrayList<String>();
-                        for (int i = 0; i < mPermissions.length; i++) {
-                            String permission = mPermissions[i];
-                            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-                                permissions.add(permission);
-                            }
-                        }
-                        if (!permissions.isEmpty()) {
-                            requestPermissions(permissions.toArray(new String[permissions.size()]), 100);
-                        }
-                    }
+                case MSG_CHECK_PERMISSION:
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        List<String> permissions = new ArrayList<String>();
+//                        for (int i = 0; i < mPermissions.length; i++) {
+//                            String permission = mPermissions[i];
+//                            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+//                                permissions.add(permission);
+//                            }
+//                        }
+//                        if (!permissions.isEmpty()) {
+//                            requestPermissions(permissions.toArray(new String[permissions.size()]), 100);
+//                        }
+//                    }
                     break;
                 default:
                     break;
@@ -86,32 +89,33 @@ public class MainActivity extends Activity {
         ;
     };
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == 100) {
-            for (int i = 0; i < grantResults.length; i++) {
-                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        //判断是否勾选禁止后不再询问
-                        boolean showRequestPermission = shouldShowRequestPermissionRationale(permissions[i]);
-                        String permission = permissions[i];
-                        if (showRequestPermission) {
-                            Tips.show(mContext, "水也视频需要 "+permission, 0);
-                            finish();
-                        }else{
-                            requestPermissions(new String[]{permission}, 100);
-                        }
-                    }
-                }
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        if (requestCode == 100) {
+//            for (int i = 0; i < grantResults.length; i++) {
+//                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        //判断是否勾选禁止后不再询问
+//                        boolean showRequestPermission = shouldShowRequestPermissionRationale(permissions[i]);
+//                        String permission = permissions[i];
+//                        if (showRequestPermission) {
+//                            Tips.show(mContext, "水也视频需要 "+permission, 0);
+//                            finish();
+//                        }else{
+//                            requestPermissions(new String[]{permission}, 100);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//    }
 
     private Context mContext;
     private ListView mListView;
     private EditText mSearch;
     private AlbumAdapter mAlbumAdapter;
+    private int mPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,28 +127,41 @@ public class MainActivity extends Activity {
         mContext = this;
         mAlbumAdapter = new AlbumAdapter(this, mHandler);
         mListView = (ListView) this.findViewById(R.id.lv_result);
+        mListView.setItemsCanFocus(true);
+        mListView.setFocusable(true);
         mListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TagFlowLayout album = (TagFlowLayout) view.findViewById(R.id.album_list);
-                Log.e("HAHA", "onItemSelected1 = " + album);
-                Log.e("HAHA", "onItemSelected1 = " + view.getNextFocusRightId());
+                mPosition = position;
 
-                int size = album.getChildCount();
-                Log.e("HAHA", "onItemSelected2 = " + album.getChildCount());
-                if (size > 0) {
-                    Log.e("HAHA", "onItemSelected3 = " + album.getChildAt(0));
-                    for (int i = 0; i < size; i++) {
-                        album.getChildAt(i).setSelected(false);
-                        album.getChildAt(i).setFocusable(true);
-                        Log.e("HAHA", "onItemSelected4 = " + album.getChildAt(i).getId());
-                    }
-//                    album.getChildAt(0).setSelected(true);
-                    album.getChildAt(0).requestFocus();
+                if (mListView.getLastVisiblePosition() == position || mListView.getFirstVisiblePosition() == position) {
+//            		mListView.scrollListBy(view.getHeight());
+                    mListView.setSelection(position);
                 }
 
-//                Tips.show(mContext, position + "/" + album, 0);
+                int size = parent.getCount();
+//            	for (int i = 0; i < size; i++) {
+//            		View child = parent.getChildAt(i);
+//            		if(child != null){
+//            			child.setBackgroundResource(R.drawable.btn_rect_transparent);
+//            		}
+//                }
+
+                TagFlowLayout album = (TagFlowLayout) view.findViewById(R.id.album_list);
+                size = album.getChildCount();
+                if (size > 0) {
+                    for (int i = 0; i < size; i++) {
+                        album.getChildAt(i).setSelected(false);
+                    }
+
+                    View focusView = getWindow().getDecorView().findFocus();
+                    if (focusView != null && focusView.getId() == (ResourceDef.ID_SEARCH_VIDEO + position)) {
+                        album.getChildAt(0).requestFocus();
+                    }
+                } else {
+//                	view.setBackgroundResource(R.drawable.rect_blue);
+                }
 
             }
 
@@ -152,15 +169,14 @@ public class MainActivity extends Activity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        // 焦点给子view后无效
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Album album = mAlbums.get(position);
-                YoukuUtils.playUrl(mContext, album.getPlayurl(), album.getTitle());
+                playVideo(position);
             }
         });
-        mListView.setItemsCanFocus(true);
         mListView.setAdapter(mAlbumAdapter);
 
 
@@ -172,8 +188,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                          int arg3) {
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             }
 
             @Override
@@ -197,7 +212,7 @@ public class MainActivity extends Activity {
 
 //		Tips.show(this, Build.VERSION.SDK_INT+"/"+Build.MANUFACTURER, 1);
 
-        mHandler.sendEmptyMessageDelayed(100, 1111);
+//        mHandler.sendEmptyMessageDelayed(100, 1111);
     }
 
 
@@ -205,6 +220,13 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         mHandler.sendEmptyMessage(MSG_CHECK_PERMISSION);
+    }
+
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        mHandler.removeMessages(100);
     }
 
     private void search(final String keyword) {
@@ -365,6 +387,11 @@ public class MainActivity extends Activity {
         }
     }
 
+    private void playVideo(int position) {
+        Album album = mAlbums.get(position);
+        YoukuUtils.playUrl(mContext, album.getPlayurl(), album.getTitle());
+    }
+
     private long mPrevBackTime;
 
     @Override
@@ -377,21 +404,46 @@ public class MainActivity extends Activity {
          public static final int KEYCODE_DPAD_RIGHT = 22;
          public static final int KEYCODE_DPAD_CENTER = 23;
          */
-        if(event.getAction() == KeyEvent.ACTION_DOWN){
-            Log.e("HAHA", "onKeyDown="+keyCode);
+
+        Log.e("HAHA", "onKeyDown=" + keyCode);
+
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                long time = System.currentTimeMillis();
+                if (time - mPrevBackTime < 2000) {
+                    finish();
+                } else {
+                    Tips.show(this, "再按一次退出应用", 0);
+                }
+                mPrevBackTime = time;
+                return false;
+            default:
+                break;
         }
 
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            long time = System.currentTimeMillis();
-            if (time - mPrevBackTime < 2000) {
-                finish();
-            } else {
-                Tips.show(this, "再按一次退出应用", 0);
-            }
-            mPrevBackTime = time;
-            return false;
-        }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_UP) {
+            return super.dispatchKeyEvent(event);
+        }
+        Log.e("HAHA", "dispatchKeyEvent=" + event.getKeyCode());
+
+        switch (event.getKeyCode()) {
+            case KeyEvent.KEYCODE_ENTER:
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+                View focusView = getWindow().getDecorView().findFocus();
+                if (focusView != null && focusView.getId() == (ResourceDef.ID_SEARCH_VIDEO + mPosition)) {
+                    playVideo(mPosition);
+                    return false;
+                }
+            default:
+                break;
+        }
+
+        return super.dispatchKeyEvent(event);
     }
 
 }

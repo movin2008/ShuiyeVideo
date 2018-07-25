@@ -1,6 +1,7 @@
 package com.shuiyes.video;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,7 +15,7 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.List;
 
-public class AlbumDialog extends FullScreenDialog{
+public class AlbumDialog extends FullScreenDialog {
 
     private List<ListVideo> mVideoList;
 
@@ -27,11 +28,11 @@ public class AlbumDialog extends FullScreenDialog{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mView.setAdapter(new TagAdapter<ListVideo>(mVideoList)
-        {
+        mView.setAdapter(new TagAdapter<ListVideo>(mVideoList) {
             @Override
             public TagView getView(FlowLayout parent, int position, ListVideo t) {
                 NumberView view = new NumberView(getContext(), t);
+                view.setTextColor(Color.WHITE);
                 view.setOnClickListener(mListener);
                 view.setSize(120, 120);
                 return view;

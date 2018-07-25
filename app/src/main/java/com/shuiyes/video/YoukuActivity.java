@@ -13,7 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -116,7 +115,7 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 Log.e("HAHA", " =========================== onCompletion");
-                if(!mIsError){
+                if (!mIsError) {
                     mLoadingProgress.setVisibility(View.VISIBLE);
                     playVideo();
                 }
@@ -173,6 +172,9 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
         super.onResume();
 
         if (mPrepared && !mVideoView.isPlaying()) {
+            if (mCurrentPosition > 0) {
+                mVideoView.seekTo(mCurrentPosition);
+            }
             mVideoView.start();
         }
     }
@@ -216,7 +218,7 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                     }
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
-                    String video = YoukuUtils.fetchVideo(YoukuUtils.getVideoUrl(mVid, mToken));
+                    String video = YoukuUtils.fetchVideo(mVid, mToken);
 
                     if (video == null) {
                         fault("解析异常请重试");
@@ -312,10 +314,9 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
     }
 
     private boolean mIsError;
+
     private void fault(String text) {
         mIsError = true;
-
-        mLoadingProgress.setVisibility(View.GONE);
 
         Message msg = mHandler.obtainMessage(MSG_FAULT);
         msg.obj = text;
@@ -336,6 +337,7 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
             switch (msg.what) {
                 case MSG_FAULT:
                     Object error = msg.obj;
+                    mLoadingProgress.setVisibility(View.GONE);
                     mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : "") + " 5s后返回...");
                     mHandler.postDelayed(new Runnable() {
                         @Override
@@ -400,26 +402,32 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-//        Tips.show(this, "onKeyDown="+keyCode, 0);
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            Log.e("HAHA", "onKeyDown=" + keyCode);
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                long time = System.currentTimeMillis();
+                if ((time - mPrevBackTime) < 2000) {
+                    finish();
+                } else {
+                    Tips.show(this, "再按一次退出播放", 0);
+                }
+                mPrevBackTime = time;
+                return false;
+            case KeyEvent.KEYCODE_MENU:
+            case KeyEvent.KEYCODE_DPAD_UP:
+                mClarity.requestFocus();
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                mVideoView.requestFocus();
+                break;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                break;
+            default:
+                Tips.show(this, "onKeyDown=" + keyCode, 0);
+                Log.e("HAHA", "onKeyDown=" + keyCode);
+                break;
         }
 
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            long time = System.currentTimeMillis();
-            if (time - mPrevBackTime < 2000) {
-                finish();
-            } else {
-                Tips.show(this, "再按一次退出播放", 0);
-            }
-            mPrevBackTime = time;
-            return false;
-        } else if (keyCode == KeyEvent.KEYCODE_MENU) {
-            mSelect.setSelected(true);
-            mSelect.requestFocus();
-            return false;
-        }
         return super.onKeyDown(keyCode, event);
     }
 

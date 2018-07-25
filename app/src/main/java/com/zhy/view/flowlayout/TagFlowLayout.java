@@ -3,6 +3,7 @@ package com.zhy.view.flowlayout;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import com.shuiyes.video.constants.ResourceDef;
 import com.shuiyes.video.util.ResourceUtils;
 
 public class TagFlowLayout extends FlowLayout
@@ -32,17 +33,18 @@ public class TagFlowLayout extends FlowLayout
 
     private void updateAdapter() {
         removeAllViews();
-        final TagAdapter adapter = mTagAdapter;
-        for (int i = 0; i < adapter.getCount(); i++) {
-            int id = i+1;
-            TagView tagView = adapter.getView(this, i, adapter.getItem(i));
+        for (int i = 0; i < mTagAdapter.getCount(); i++) {
+            int id = i + ResourceDef.ID_TAG_BTN;
+            TagView tagView = mTagAdapter.getView(this, i, mTagAdapter.getItem(i));
+            tagView.setFocusable(true);
             tagView.setId(id);
+
             int width = tagView.getSetWidth();
             int height = tagView.getSetHeight();
-            if(width == 0){
+            if (width == 0) {
                 width = LayoutParams.WRAP_CONTENT;
             }
-            if(height == 0){
+            if (height == 0) {
                 height = LayoutParams.WRAP_CONTENT;
             }
             int margin = ResourceUtils.dip2px(getContext(), 15);
@@ -50,12 +52,6 @@ public class TagFlowLayout extends FlowLayout
             MarginLayoutParams lp = new MarginLayoutParams(width, height);
             lp.setMargins(0, 0, margin, margin);
             tagView.setLayoutParams(lp);
-
-            tagView.setFocusable(true);
-            tagView.setNextFocusDownId(id+1);
-            tagView.setNextFocusRightId(id+1);
-            tagView.setNextFocusUpId(id-1);
-            tagView.setNextFocusLeftId(id-1);
 
             addView(tagView);
         }

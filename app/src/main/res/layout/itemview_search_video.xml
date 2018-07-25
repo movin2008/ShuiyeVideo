@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_search_video"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants"
+    android:descendantFocusability="afterDescendants"
+    android:focusable="true"
+    android:background="@drawable/btn_rect_transparent"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -24,14 +27,12 @@
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@id/album_image"
             android:ellipsize="marquee"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:marqueeRepeatLimit="marquee_forever"
-            android:lines="2"
+            android:singleLine="true"
             android:text="Title"
             android:textSize="@dimen/album_title_size"
             android:textStyle="bold" />
-        <!--android:singl-eLine="true"-->
+        <!-- android:lines="2" -->
 
         <TextView
             android:id="@+id/album_summary"
@@ -50,7 +51,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
-        android:paddingLeft="15dp"
-        android:focusable="true" />
+        android:paddingLeft="15dp" />
 
 </LinearLayout>

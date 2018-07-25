@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ScrollView;
 
-public class ReboundScrollView  extends ScrollView{
+public class ReboundScrollView extends ScrollView {
 
-    /** 滑动距离为 屏幕的 1/5 */
+    /**
+     * 滑动距离为 屏幕的 1/5
+     */
     private static final float SCROLL_RATIO = 0.25f;
     private static final int ANIM_TIME = 500;
     private float mStartY = 0;
@@ -56,7 +58,7 @@ public class ReboundScrollView  extends ScrollView{
     @Override
     protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX,
                                   boolean clampedY) {
-        if(clampedY && !mIsTouchDown){
+        if (clampedY && !mIsTouchDown) {
             animation();
         }
         super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
@@ -64,12 +66,12 @@ public class ReboundScrollView  extends ScrollView{
 
     // 开启动画移动
     public void animation() {
-        if(mContentView == null){
+        if (mContentView == null) {
             return;
         }
         if (mOriginalRect.isEmpty()) {
             // 保存正常的布局位置
-            mOriginalRect.set(mContentView.getLeft(), mContentView.getTop(),mContentView.getRight(), mContentView.getBottom());
+            mOriginalRect.set(mContentView.getLeft(), mContentView.getTop(), mContentView.getRight(), mContentView.getBottom());
             int newTop = mContentView.getTop() - mDeltaY;
             int newBottom = mContentView.getBottom() - mDeltaY;
             // 移动布局
@@ -88,7 +90,7 @@ public class ReboundScrollView  extends ScrollView{
         mOriginalRect.setEmpty();
     }
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             mIsOverScrolled = false;
@@ -119,13 +121,13 @@ public class ReboundScrollView  extends ScrollView{
             case MotionEvent.ACTION_MOVE:
                 final float preY = mStartY;
                 float nowY = e.getY();
-                int offset = (int)((preY - nowY)*SCROLL_RATIO);
+                int offset = (int) ((preY - nowY) * SCROLL_RATIO);
 
                 mStartY = nowY;
                 if (isNeedMove()) {
                     if (mOriginalRect.isEmpty()) {
                         // 保存正常的布局位置
-                        mOriginalRect.set(mContentView.getLeft(), mContentView.getTop(),mContentView.getRight(), mContentView.getBottom());
+                        mOriginalRect.set(mContentView.getLeft(), mContentView.getTop(), mContentView.getRight(), mContentView.getBottom());
                         return;
                     }
                     int newTop = mContentView.getTop() - offset;

@@ -23,7 +23,7 @@ public abstract class TagAdapter<T> {
     }
 
     public void notifyDataChanged() {
-        if (mOnDataChangedListener != null){
+        if (mOnDataChangedListener != null) {
             mOnDataChangedListener.onChanged();
         }
     }

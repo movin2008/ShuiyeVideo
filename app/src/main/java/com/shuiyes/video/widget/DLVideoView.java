@@ -6,8 +6,7 @@ import android.widget.VideoView;
 
 public class DLVideoView extends VideoView {
 
-    public DLVideoView(Context context, AttributeSet attrs)
-    {
+    public DLVideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

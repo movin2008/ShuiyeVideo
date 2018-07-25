@@ -5,30 +5,32 @@ import com.shuiyes.video.bean.ListVideo;
 import com.zhy.view.flowlayout.TagView;
 
 import android.content.Context;
+import android.view.Gravity;
 
 public class NumberView extends TagView {
-	
+
     private String url;
     private String title;
-    public NumberView(Context context, ListVideo video)
-    {
+
+    public NumberView(Context context, ListVideo video) {
         super(context);
-        
+
         this.url = video.getUrl();
         this.title = video.getTitle();
-        
-        this.setText(String.valueOf(video.getId()));
-        this.setPadding(0, 0, 0, 0);
+
         this.setBackgroundResource(R.drawable.btn_rect);
-//        this.setGravity(Gravity.CENTER);
+        this.setText(String.valueOf(video.getId()));
+        this.setGravity(Gravity.CENTER);
+        this.setPadding(0, 0, 0, 0);
+        this.setTextSize(25);
     }
 
     public String getUrl() {
-		return url;
-	}
+        return url;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
 }
