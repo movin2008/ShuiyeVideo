@@ -24,15 +24,17 @@ public class YoukuUtils {
 
     public static void playUrl(Context context, String url, String title) {
         if (url.contains("youku.com")) {
-            context.startActivity(new Intent(context, YoukuActivity.class)
-                    .putExtra("url", url)
-                    .putExtra("title", title));
+            context.startActivity(new Intent(context, YoukuActivity.class).putExtra("url", url).putExtra("title", title));
         } else {
             Tips.show(context, "暂不支持播放 " + url + "\n请等待完善...", 0);
         }
     }
 
-    public static String CCODE = "0510";//0502
+    /**
+     # Found in http://g.alicdn.com/player/ykplayer/0.5.64/youku-player.min.js
+     # grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
+     */
+    public static String CCODE = "0511";
 
     /**
      * Found in http://g.alicdn.com/player/ykplayer/0.5.28/youku-player.min.js

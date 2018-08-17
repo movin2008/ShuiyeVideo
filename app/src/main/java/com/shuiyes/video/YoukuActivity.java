@@ -254,6 +254,8 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                             mVid = videos.getJSONObject("next").getString("encodevid");
                             Log.e("HAHA", "next vid=" + mVid);
                         }
+//                        Log.e("HAHA", "videos=" + videos);
+
                         if (videos.has("list")) {
                             mVideoList.clear();
 
