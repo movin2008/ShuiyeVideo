@@ -34,7 +34,7 @@ public class YoukuUtils {
      # Found in http://g.alicdn.com/player/ykplayer/0.5.64/youku-player.min.js
      # grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
      */
-    public static String CCODE = "0511";
+    public static String CCODE = "0516";
 
     /**
      * Found in http://g.alicdn.com/player/ykplayer/0.5.28/youku-player.min.js
@@ -42,15 +42,16 @@ public class YoukuUtils {
      */
     public static String CKEY = "DIl58SLFxFNndSV1GFNnMQVYkx1PP5tKe1siZu/86PR1u/Wh1Ptd+WOZsHHWxysSfAOhNJpdVWsdVJNsfJ8Sxd8WKVvNfAS8aS8fAOzYARzPyPc3JvtnPHjTdKfESTdnuTW6ZPvk2pNDh4uFzotgdMEFkzQ5wZVXl2Pf1/Y6hLK0OnCNxBj3+nb0v72gZ6b0td+WOZsHHWxysSo/0y9D2K42SaB8Y/+aD2K42SaB8Y/+ahU+WOZsHcrxysooUeND";
 //    public static String CKEY = "109#RqUa7mdFapsp9apEpCqGCVSRznvERMZcCqX0Iln5dHyu91719bAkcBShwJzGaAGer8cDwCIW77A+zGpFD6xdqyLg5gdglcDpgCCazWDjHpJ5KpS91YOrUXRrFNcRlB+d7T227SjyR5aeGacBf4CmSHUG6iLHVpNyb5+NoPM3bmLNS0YVHYCqXNZMXMOgMilyGirsYGqFTwSCK7jKZhGThu+wgO7mQI7fE7e4u61KKvydc+9OOsJDODaVdSa7GC8LDEm+7Wb17YgCFsPpmyT+ypTw1rq8m8VjWit0t+mX2xG6l3BYZl+n1yNiGWunFXKOHMxI869ZKgEN23XBBKuzgHJSMQqDnTo5glSrO+CWlxFR/B6oWS5Tyvyl6iW7ymMYag+jkA8Atk1V+HtAlSurnji0B83ifeodyJH9QpxRY3aWGkUf7Ycpoz4rJ71YvoPw/oqt+jpDK7CZT8C7YifAzogzsoegZtJIrXKmuAks4pJ36QOSKsNqnGEw61zvUt9kD1nrY0PXLvqlKYGYY7F7b87pbQvdXO2Yh7l4";
+//    public static String CKEY = "110#KjBkAUkfkHf20K59gUcUMuy2kMZXmTkQTyHOFUK2hQ7/8xbhlUwzcMdyjwucSltV8MKGhKc2hnpfJ9BYEUKghlFt1gRqzgjx81K1k7umbToEbcrhy+aWcuGWx0PNYDvZo3J3cdUijTkiLMgnP25is9kk4EKQs3gKb444GOsJaAKeVB2LvWq/eLr4gyaeDAkiskkkG9kiCTcOwyUUsLvwsTRU9zgSgqhwzJxkKOmw4Kf+TTzs2wHakT6UlDqlNcrptIJqynGMX4d1eb/e/TUDuGIYRVs8M9TeMCcxUoujInc2gyGsrgA34aIDAlZNN4gCw/BJRZ6+3TWGXXbixs2T5KkcAJxCszJDMzb7R5Ovt+4TgDNLYealzP+PF9FnhwvcyyqxqxYGdSRpmTgnwUaLkq70c63418E7cwfYH/FSJNEn3OXZexSbWoLVXALXHcy3SSEXePQ2pzv7CnM6WohrQK/MTs0pWkBh5zxIYedFDqNqY3AFLAB0OPC5pu/Np6EgZ7dh7NVJVTLJ/mehtF5gswA7bRVuwKve87zI/+lUJ2jZBZyFqdUr4b5DaAxi";
 
     public static String getVideoUrl(String vid, String cna) {
         String url = "https://ups.youku.com/ups/get.json?vid=" + vid;
-        url += "&utid=" + URLEncoder.encode(cna);
-        url += "&ckey=" + URLEncoder.encode(CKEY);
-        url += "&client_ip=192.168.1.1";
-        url += "&version=0.5.52";
         url += "&ccode=" + CCODE;
+        url += "&client_ip=192.168.1.1";
+        url += "&utid=" + URLEncoder.encode(cna);
         url += "&client_ts=" + System.currentTimeMillis() / 1000;
+        url += "&ckey=" + URLEncoder.encode(CKEY);
+        url += "&version=0.5.68";
         return url;
     }
 
@@ -69,36 +70,41 @@ public class YoukuUtils {
         YoukuUtils.setURLConnection(conn);
         conn.connect();
 
-        Map<String, List<String>> headers = conn.getHeaderFields();
-        Set<String> keys = headers.keySet();
-        Iterator<String> iterator = keys.iterator();
-        String ret = null;
-        while (iterator.hasNext()) {
-            String key = iterator.next();
+        try {
+            Map<String, List<String>> headers = conn.getHeaderFields();
+            Set<String> keys = headers.keySet();
+            Iterator<String> iterator = keys.iterator();
+            String ret = null;
+            while (iterator.hasNext()) {
+                String key = iterator.next();
 //            Log.e("HAHA", key+"="+headers.get(key).get(0));
 
-            if ("ETag".equals(key)) {
-                String cna = headers.get(key).get(0);
-                ret = cna.substring(1, cna.length() - 1);
-                break;
-            } else if ("Set-Cookie".equals(key)) {
-                List<String> l = headers.get(key);
-                if (l.size() > 0) {
-                    String v = l.get(0);
-                    if (v.contains("cna=")) {
-                        String cna = v.split(";")[0];
-                        if ("cna".equals(cna.split("=")[0])) {
-                            ret = cna.split("=")[1];
-                            break;
+                if ("ETag".equals(key)) {
+                    String cna = headers.get(key).get(0);
+                    ret = cna.substring(1, cna.length() - 1);
+                    break;
+                } else if ("Set-Cookie".equals(key)) {
+                    List<String> l = headers.get(key);
+                    if (l.size() > 0) {
+                        String v = l.get(0);
+                        if (v.contains("cna=")) {
+                            String cna = v.split(";")[0];
+                            if ("cna".equals(cna.split("=")[0])) {
+                                ret = cna.split("=")[1];
+                                break;
+                            }
                         }
                     }
                 }
             }
+            return ret;
+        }catch (ArrayIndexOutOfBoundsException e){
+            e.printStackTrace();
+        }finally {
+            conn.getInputStream().close();
+            conn.disconnect();
         }
-        conn.getInputStream().close();
-        conn.disconnect();
-
-        return ret;
+        return null;
     }
 
 

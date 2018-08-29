@@ -18,11 +18,14 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.shuiyes.video.adapter.AlbumAdapter;
 import com.shuiyes.video.bean.Album;
@@ -352,7 +355,6 @@ public class MainActivity extends Activity {
                 len = data.indexOf("\\\"");
                 String url = data.substring(0, len);
 
-
                 key = ">";
                 len = data.indexOf(key);
                 data = data.substring(len + key.length());
@@ -383,7 +385,12 @@ public class MainActivity extends Activity {
 //				Log.e("HAHA", "++++++++++++++++ "+listVideo);
             }
             result = result.substring(result.indexOf(start) + start.length());
-            mAlbums.add(new Album(flag++, albumTitle, albumSummary, albumImg, albumUrl, listVideos));
+
+            if(albumUrl.contains("youku.com") && !albumUrl.contains("list.youku.com")){
+                mAlbums.add(new Album(flag++, albumTitle, albumSummary, albumImg, albumUrl, listVideos));
+            }else{
+                Log.e("HAHA", listVideos.size()+", 暂不支持播放 " + albumUrl);
+            }
         }
     }
 
@@ -425,6 +432,7 @@ public class MainActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_UP) {
             return super.dispatchKeyEvent(event);
@@ -444,6 +452,24 @@ public class MainActivity extends Activity {
         }
 
         return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
