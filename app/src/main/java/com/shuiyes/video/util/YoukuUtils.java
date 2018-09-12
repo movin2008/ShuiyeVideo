@@ -34,7 +34,7 @@ public class YoukuUtils {
      # Found in http://g.alicdn.com/player/ykplayer/0.5.64/youku-player.min.js
      # grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
      */
-    public static String CCODE = "0516";
+    public static String CCODE = "0511";
 
     /**
      * Found in http://g.alicdn.com/player/ykplayer/0.5.28/youku-player.min.js
@@ -51,17 +51,17 @@ public class YoukuUtils {
         url += "&utid=" + URLEncoder.encode(cna);
         url += "&client_ts=" + System.currentTimeMillis() / 1000;
         url += "&ckey=" + URLEncoder.encode(CKEY);
-        url += "&version=0.5.68";
+//        url += "&version=0.5.68";
         return url;
     }
 
     public static void setURLConnection(URLConnection conn) {
         conn.setConnectTimeout(10000);
         conn.setReadTimeout(10000);
-        conn.setRequestProperty("Charset", "UTF-8");
-        conn.setRequestProperty("Host", conn.getURL().getHost());
-        conn.setRequestProperty("Referer", "https://v.youku.com/v_show/id_XMzU5OTkwMzM4OA.html");
-        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36");
+//        conn.setRequestProperty("Charset", "UTF-8");
+//        conn.setRequestProperty("Host", conn.getURL().getHost());
+//        conn.setRequestProperty("Referer", "https://v.youku.com/v_show/id_XMzU5OTkwMzM4OA.html");
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36");
     }
 
     public static String fetchCna() throws Exception {
@@ -113,9 +113,21 @@ public class YoukuUtils {
         Log.e("HAHA", "url=" + url);
 
         HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
-        YoukuUtils.setURLConnection(conn);
-        conn.setRequestProperty("Cookie", "cna=" + cna);
+//        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
+
+////        conn.setRequestProperty("Cookie", "cna=" + cna);
+//        conn.setRequestProperty("Upgrade-Insecure-Requests", "1");
+//        conn.setRequestProperty("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+//        conn.setRequestProperty("accept-encoding", "gzip, deflate, br");
+//        conn.setRequestProperty("accept-language", "zh-CN,zh;q=0.9");
+//        conn.setRequestProperty("cache-control", "max-age=0");
+//        conn.setRequestProperty(":authority", conn.getURL().getAuthority());
+//        conn.setRequestProperty(":path", conn.getURL().getPath()+"?"+conn.getURL().getQuery());
+//        conn.setRequestProperty(":scheme", "https");
+//        conn.setRequestProperty(":method", "GET");
+
         conn.setRequestMethod("GET");
+        YoukuUtils.setURLConnection(conn);
         conn.connect();
 
         if (conn.getResponseCode() == 200) {
@@ -125,6 +137,7 @@ public class YoukuUtils {
             StringBuffer ret = new StringBuffer();
             while ((read = in.readLine()) != null) {
                 ret.append(read);
+//                Log.e("HAHA", read);
             }
             in.close();
             return ret.toString();
