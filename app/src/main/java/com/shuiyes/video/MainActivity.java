@@ -6,12 +6,10 @@ import java.util.List;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
@@ -31,8 +29,9 @@ import com.shuiyes.video.adapter.AlbumAdapter;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.constants.ResourceDef;
+import com.shuiyes.video.letv.LetvActivity;
 import com.shuiyes.video.util.HttpUtils;
-import com.shuiyes.video.util.YoukuUtils;
+import com.shuiyes.video.youku.YoukuUtils;
 import com.shuiyes.video.widget.Tips;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
@@ -470,6 +469,10 @@ public class MainActivity extends Activity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void test(View view){
+        startActivity(new Intent(this, LetvActivity.class));
     }
 
 }

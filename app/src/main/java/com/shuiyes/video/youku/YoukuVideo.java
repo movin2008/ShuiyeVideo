@@ -1,9 +1,9 @@
-package com.shuiyes.video.bean;
+package com.shuiyes.video.youku;
 
 import android.content.Context;
 import android.text.format.Formatter;
 
-public class PlayVideo {
+public class YoukuVideo {
 
     /**
      * # Last updated: 2017-10-13
@@ -96,7 +96,7 @@ public class PlayVideo {
     private int size;
     private String url;
 
-    public PlayVideo(VideoType type, int size, String url) {
+    public YoukuVideo(VideoType type, int size, String url) {
         this.type = type;
         this.size = size;
         this.url = url;
@@ -127,7 +127,7 @@ public class PlayVideo {
     }
 
     public String toStr(Context ctx) {
-        return "PlayVideo{" + type +
+        return "YoukuVideo{" + type +
                 ", size=" + Formatter.formatFileSize(ctx, Long.valueOf(size)) +
 //                ", url='" + url + '\'' +
                 '}';

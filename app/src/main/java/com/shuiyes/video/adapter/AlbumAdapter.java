@@ -18,7 +18,7 @@ import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.constants.ResourceDef;
 import com.shuiyes.video.util.ImageLoader;
-import com.shuiyes.video.util.YoukuUtils;
+import com.shuiyes.video.youku.YoukuUtils;
 import com.shuiyes.video.widget.NumberView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;

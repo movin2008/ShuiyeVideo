@@ -1,4 +1,4 @@
-package com.shuiyes.video;
+package com.shuiyes.video.youku;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,10 +29,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.shuiyes.video.AlbumDialog;
+import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
-import com.shuiyes.video.bean.PlayVideo;
-import com.shuiyes.video.util.YoukuUtils;
 import com.shuiyes.video.widget.ClarityView;
+import com.shuiyes.video.widget.FullScreenDialog;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
 
@@ -189,14 +190,13 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
     }
 
     private String mVid;
-    private String mTitle;
     private String mToken;
     /**
      * 专辑可选集
      */
     private boolean mIsAlbum;
     private List<ListVideo> mVideoList = new ArrayList<ListVideo>();
-    private List<PlayVideo> mUrlList = new ArrayList<PlayVideo>();
+    private List<YoukuVideo> mUrlList = new ArrayList<YoukuVideo>();
 
     private void playVideo() {
         new Thread(new Runnable() {
@@ -218,9 +218,9 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                     }
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
-                    String video = YoukuUtils.fetchVideo(mVid, mToken);
+                    String info = YoukuUtils.fetchVideo(mVid, mToken);
 
-                    if (video == null) {
+                    if (info == null) {
                         fault("解析异常请重试");
                         return;
                     }
@@ -229,21 +229,23 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                     if (file.exists()) {
                         file.delete();
                     }
+
                     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-                    bw.write(video);
+                    bw.write(info);
                     bw.close();
 
 
-                    JSONObject data = new JSONObject(video).getJSONObject("data");
+                    JSONObject data = new JSONObject(info).getJSONObject("data");
 
                     if (data.has("error")) {
                         fault(data.getJSONObject("error").getString("note"));
                         return;
                     }
 
-                    JSONObject videoInfo = data.getJSONObject("video");
+                    JSONObject video = data.getJSONObject("video");
+
                     Message msg = mHandler.obtainMessage(MSG_SET_TITLE);
-                    msg.obj = videoInfo.getString("title");
+                    msg.obj = video.getString("title");
                     mHandler.sendMessage(msg);
 
                     mIsAlbum = data.has("videos");
@@ -283,21 +285,21 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                         String stream_type = stream.getString("stream_type");
                         String m3u8Url = stream.getString("m3u8_url");
 
-                        mUrlList.add(new PlayVideo(PlayVideo.formateVideoType(stream_type), size, m3u8Url));
+                        mUrlList.add(new YoukuVideo(YoukuVideo.formateVideoType(stream_type), size, m3u8Url));
                     }
 
                     Log.e("HAHA", "UrlList=" + mUrlList.size() + "/" + streamsLen);
                     if (mUrlList.isEmpty()) {
                         fault("无视频地址");
                     } else {
-                        Collections.sort(mUrlList, new Comparator<PlayVideo>() {
+                        Collections.sort(mUrlList, new Comparator<YoukuVideo>() {
                             @Override
-                            public int compare(PlayVideo v1, PlayVideo v2) {
+                            public int compare(YoukuVideo v1, YoukuVideo v2) {
                                 return v2.getSize() - v1.getSize();
                             }
                         });
 
-                        for (PlayVideo v : mUrlList) {
+                        for (YoukuVideo v : mUrlList) {
                             Log.i("HAHA", v.toStr(mContext));
                         }
 
@@ -364,7 +366,7 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                         }
                     }
 
-                    PlayVideo video = (PlayVideo) msg.obj;
+                    YoukuVideo video = (YoukuVideo) msg.obj;
                     String profile = video.getType().getProfile();
                     mClarity.setText(profile);
                     mStateView.setText(mStateView.getText() + "[成功]\n开始缓存" + profile + "视频...");
@@ -433,7 +435,7 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
         return super.onKeyDown(keyCode, event);
     }
 
-    private ClarityDialog mClarityDialog;
+    private FullScreenDialog mClarityDialog;
     private AlbumDialog mAlbumDialog;
 
     @Override
@@ -443,7 +445,7 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                 if (mClarityDialog != null && mClarityDialog.isShowing()) {
                     mClarityDialog.dismiss();
                 }
-                mClarityDialog = new ClarityDialog(this, mUrlList);
+                mClarityDialog = new YoukuClarityDialog(this, mUrlList);
                 mClarityDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -454,7 +456,7 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                         mStateView.setText("初始化...");
 
                         Message msg = mHandler.obtainMessage(MSG_CACHE_VIDEO);
-                        msg.obj = ((ClarityView) view).getPlayVideo();
+                        msg.obj = ((YoukuClarityView) view).getPlayVideo();
                         mHandler.sendMessage(msg);
                     }
                 });

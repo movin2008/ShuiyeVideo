@@ -1,4 +1,4 @@
-package com.shuiyes.video.util;
+package com.shuiyes.video.youku;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import java.util.Set;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import com.shuiyes.video.YoukuActivity;
+import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.widget.Tips;
 
 public class YoukuUtils {
@@ -55,19 +55,11 @@ public class YoukuUtils {
         return url;
     }
 
-    public static void setURLConnection(URLConnection conn) {
-        conn.setConnectTimeout(10000);
-        conn.setReadTimeout(10000);
-//        conn.setRequestProperty("Charset", "UTF-8");
-//        conn.setRequestProperty("Host", conn.getURL().getHost());
-//        conn.setRequestProperty("Referer", "https://v.youku.com/v_show/id_XMzU5OTkwMzM4OA.html");
-        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36");
-    }
-
     public static String fetchCna() throws Exception {
 
         HttpURLConnection conn = (HttpURLConnection) new URL("http://log.mmstat.com/eg.js").openConnection();
-        YoukuUtils.setURLConnection(conn);
+        HttpUtils.setURLConnection(conn);
+//        conn.setRequestProperty("Referer", "https://v.youku.com/v_show/id_XMzU5OTkwMzM4OA.html");
         conn.connect();
 
         try {
@@ -127,7 +119,7 @@ public class YoukuUtils {
 //        conn.setRequestProperty(":method", "GET");
 
         conn.setRequestMethod("GET");
-        YoukuUtils.setURLConnection(conn);
+        HttpUtils.setURLConnection(conn);
         conn.connect();
 
         if (conn.getResponseCode() == 200) {
@@ -164,7 +156,7 @@ public class YoukuUtils {
         Log.e("HAHA", "keyword=" + keyword);
 
         HttpURLConnection conn = (HttpURLConnection) new URL("http://so.youku.com/search_video/q_" + keyword).openConnection();
-        YoukuUtils.setURLConnection(conn);
+        HttpUtils.setURLConnection(conn);
         conn.setRequestMethod("GET");
         conn.connect();
 
