@@ -1,4 +1,4 @@
-package com.shuiyes.video.widget;
+package com.shuiyes.video.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

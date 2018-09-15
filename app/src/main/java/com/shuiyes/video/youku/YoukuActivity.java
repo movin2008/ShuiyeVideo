@@ -17,12 +17,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.shuiyes.video.AlbumDialog;
+import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.PlayActivity;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
-import com.shuiyes.video.widget.MiscDialog;
+import com.shuiyes.video.dialog.MiscDialog;
 import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;

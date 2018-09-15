@@ -1,17 +1,14 @@
-package com.shuiyes.video;
+package com.shuiyes.video.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 
 import com.shuiyes.video.bean.ListVideo;
-import com.shuiyes.video.widget.FullScreenDialog;
 import com.shuiyes.video.widget.NumberView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagView;
-import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.List;
 

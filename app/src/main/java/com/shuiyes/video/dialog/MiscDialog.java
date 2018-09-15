@@ -1,12 +1,12 @@
-package com.shuiyes.video.widget;
+package com.shuiyes.video.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import com.shuiyes.video.bean.PlayVideo;
+import com.shuiyes.video.dialog.FullScreenDialog;
 import com.shuiyes.video.widget.MiscView;
-import com.shuiyes.video.widget.FullScreenDialog;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagView;
