@@ -12,81 +12,31 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.content.Context;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.MediaController;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.shuiyes.video.AlbumDialog;
+import com.shuiyes.video.PlayActivity;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
-import com.shuiyes.video.widget.ClarityView;
-import com.shuiyes.video.widget.FullScreenDialog;
+import com.shuiyes.video.bean.PlayVideo;
+import com.shuiyes.video.widget.MiscDialog;
+import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
 
-public class YoukuActivity extends Activity implements View.OnClickListener {
+public class YoukuActivity extends PlayActivity implements View.OnClickListener {
 
-    private Context mContext;
-    private TextView mTitleView;
-    private TextView mStateView;
-    private VideoView mVideoView;
-    private boolean mPrepared = false;
-    private ProgressBar mLoadingProgress;
-    private Button mClarity, mSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play);
 
-        mContext = this;
-        mLoadingProgress = (ProgressBar) findViewById(R.id.loading);
-
-        mClarity = (Button) findViewById(R.id.btn_clarity);
-        mClarity.setOnClickListener(this);
-        mSelect = (Button) findViewById(R.id.btn_select);
-        mSelect.setOnClickListener(this);
-
-        mTitleView = (TextView) findViewById(R.id.tv_title);
-        mStateView = (TextView) findViewById(R.id.tv_state);
-        mVideoView = (VideoView) findViewById(R.id.vitamio_videoView);
-        MediaController controller = new MediaController(this);
-        controller.setOnHoverListener(new View.OnHoverListener() {
-            @Override
-            public boolean onHover(View view, MotionEvent motionEvent) {
-                Log.e("HAHA", " =========================== onPrepared");
-                return false;
-            }
-        });
-
-//        ProgressBar pb;
-//        try {
-//            Field f_mProgress =MediaController.class.getDeclaredField("mProgress");
-//            f_mProgress.setAccessible(true);
-//
-//            Method m_initControllerView = MediaController.class.getDeclaredMethod("initControllerView", View.class);
-//            m_initControllerView.setAccessible(true);
-//            m_initControllerView.invoke(this, v);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        mVideoView.setMediaController(controller);
-        mVideoView.requestFocus();
+        mClarityView.setOnClickListener(this);
+        mSelectView.setOnClickListener(this);
+        mNextView.setOnClickListener(this);
 
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -123,30 +73,6 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
             }
         });
 
-        mVideoView.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-
-            @Override
-            public boolean onInfo(MediaPlayer mediaPlayer, int what, int extra) {
-                Log.e("HAHA", " =========================== onInfo(" + what + ", " + extra + ")");
-                switch (what) {
-                    case MediaPlayer.MEDIA_INFO_BUFFERING_START:
-                        Log.e("HAHA", " =========================== MEDIA_INFO_BUFFERING_START");
-                        mLoadingProgress.setVisibility(View.VISIBLE);
-                        break;
-                    case MediaPlayer.MEDIA_INFO_BUFFERING_END:
-                        Log.e("HAHA", " =========================== MEDIA_INFO_BUFFERING_END");
-                        mLoadingProgress.setVisibility(View.GONE);
-                        break;
-                    case MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
-                        Log.e("HAHA", " =========================== MEDIA_INFO_VIDEO_RENDERING_START");
-                        mLoadingProgress.setVisibility(View.GONE);
-                        break;
-                }
-
-                return false;
-            }
-        });
-
         String url = getIntent().getStringExtra("url");
         Log.e("HAHA", "now url=" + url);
 
@@ -168,34 +94,11 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
         playVideo();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (mPrepared && !mVideoView.isPlaying()) {
-            if (mCurrentPosition > 0) {
-                mVideoView.seekTo(mCurrentPosition);
-            }
-            mVideoView.start();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (mVideoView.isPlaying()) {
-            mVideoView.pause();
-        }
-    }
-
-    private String mVid;
     private String mToken;
     /**
      * 专辑可选集
      */
     private boolean mIsAlbum;
-    private List<ListVideo> mVideoList = new ArrayList<ListVideo>();
     private List<YoukuVideo> mUrlList = new ArrayList<YoukuVideo>();
 
     private void playVideo() {
@@ -225,7 +128,7 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                         return;
                     }
 
-                    File file = new File("/sdcard/video");
+                    File file = new File("/sdcard/youku");
                     if (file.exists()) {
                         file.delete();
                     }
@@ -244,17 +147,17 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
 
                     JSONObject video = data.getJSONObject("video");
 
-                    Message msg = mHandler.obtainMessage(MSG_SET_TITLE);
-                    msg.obj = video.getString("title");
-                    mHandler.sendMessage(msg);
+                    mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, video.getString("title")));
 
                     mIsAlbum = data.has("videos");
                     if (mIsAlbum) {
                         JSONObject videos = data.getJSONObject("videos");
 
                         if (videos.has("next")) {
-                            mVid = videos.getJSONObject("next").getString("encodevid");
-                            Log.e("HAHA", "next vid=" + mVid);
+                            String nid = videos.getJSONObject("next").getString("encodevid");
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, nid));
+                        }else{
+                            Log.e("HAHA", "No next video.");
                         }
 //                        Log.e("HAHA", "videos=" + videos);
 
@@ -271,7 +174,6 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                             Log.e("HAHA", "VideoList=" + mVideoList.size());
                         }
                     }
-
                     mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
 
                     JSONArray streams = data.getJSONArray("stream");
@@ -305,137 +207,18 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
 
                         mCurrentPosition = 0;
 
-                        msg = mHandler.obtainMessage(MSG_CACHE_VIDEO);
-                        msg.obj = mUrlList.get(0);
-                        mHandler.sendMessage(msg);
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mUrlList.get(0)));
                     }
                 } catch (Exception e) {
-                    Log.e("HAHA", e.getLocalizedMessage());
+                    fault(e);
                     e.printStackTrace();
                 }
             }
         }).start();
     }
 
-    private boolean mIsError;
 
-    private void fault(String text) {
-        mIsError = true;
-
-        Message msg = mHandler.obtainMessage(MSG_FAULT);
-        msg.obj = text;
-        mHandler.sendMessage(msg);
-    }
-
-    private final int MSG_FAULT = 0;
-    private final int MSG_FETCH_TOKEN = 1;
-    private final int MSG_FETCH_VIDEO = 2;
-    private final int MSG_CACHE_VIDEO = 3;
-    private final int MSG_PALY_VIDEO = 4;
-    private final int MSG_SET_TITLE = 5;
-    private final int MSG_UPDATE_SELECT = 6;
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_FAULT:
-                    Object error = msg.obj;
-                    mLoadingProgress.setVisibility(View.GONE);
-                    mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : "") + " 5s后返回...");
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    }, 5555);
-                    break;
-                case MSG_FETCH_TOKEN:
-                    mStateView.setText("初始化...[成功]\n获取Token...");
-                    mStateView.setVisibility(View.VISIBLE);
-                    break;
-                case MSG_FETCH_VIDEO:
-                    mStateView.setText(mStateView.getText() + "[成功]\n解析视频地址...");
-                    break;
-                case MSG_CACHE_VIDEO:
-                    if (!mUrlList.isEmpty()) {
-                        if (mUrlList.size() > 1) {
-                            mClarity.setEnabled(true);
-                        } else {
-                            mClarity.setEnabled(false);
-                        }
-                    }
-
-                    YoukuVideo video = (YoukuVideo) msg.obj;
-                    String profile = video.getType().getProfile();
-                    mClarity.setText(profile);
-                    mStateView.setText(mStateView.getText() + "[成功]\n开始缓存" + profile + "视频...");
-
-                    mVideoView.stopPlayback();
-                    Log.e("HAHA", "setVideoURI=" + video.getUrl());
-                    mVideoView.setVideoURI(Uri.parse(video.getUrl()));
-                    if (mCurrentPosition != 0) {
-                        Log.e("HAHA", "seekTo=" + mCurrentPosition);
-                        mVideoView.seekTo(mCurrentPosition);
-                    }
-                    break;
-                case MSG_PALY_VIDEO:
-                    mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mStateView.setText("");
-                        }
-                    }, 1111);
-                    break;
-                case MSG_SET_TITLE:
-                    Log.e("HAHA", "setTitle=" + msg.obj);
-                    mTitleView.setText((String) msg.obj);
-                case MSG_UPDATE_SELECT:
-                    if (mVideoList.isEmpty()) {
-                        mSelect.setVisibility(View.GONE);
-                    } else {
-                        mSelect.setVisibility(View.VISIBLE);
-                    }
-                    break;
-            }
-        }
-    };
-
-    private long mPrevBackTime;
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                long time = System.currentTimeMillis();
-                if ((time - mPrevBackTime) < 2000) {
-                    finish();
-                } else {
-                    Tips.show(this, "再按一次退出播放", 0);
-                }
-                mPrevBackTime = time;
-                return false;
-            case KeyEvent.KEYCODE_MENU:
-            case KeyEvent.KEYCODE_DPAD_UP:
-                mClarity.requestFocus();
-                break;
-            case KeyEvent.KEYCODE_DPAD_DOWN:
-                mVideoView.requestFocus();
-                break;
-            case KeyEvent.KEYCODE_DPAD_LEFT:
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                break;
-            default:
-                Tips.show(this, "onKeyDown=" + keyCode, 0);
-                Log.e("HAHA", "onKeyDown=" + keyCode);
-                break;
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
-
-    private FullScreenDialog mClarityDialog;
+    private MiscDialog mClarityDialog;
     private AlbumDialog mAlbumDialog;
 
     @Override
@@ -445,7 +228,7 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                 if (mClarityDialog != null && mClarityDialog.isShowing()) {
                     mClarityDialog.dismiss();
                 }
-                mClarityDialog = new YoukuClarityDialog(this, mUrlList);
+                mClarityDialog = new MiscDialog(this, mUrlList);
                 mClarityDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -455,9 +238,7 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
 
                         mStateView.setText("初始化...");
 
-                        Message msg = mHandler.obtainMessage(MSG_CACHE_VIDEO);
-                        msg.obj = ((YoukuClarityView) view).getPlayVideo();
-                        mHandler.sendMessage(msg);
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, ((MiscView) view).getPlayVideo()));
                     }
                 });
                 mClarityDialog.show();
@@ -485,19 +266,21 @@ public class YoukuActivity extends Activity implements View.OnClickListener {
                 });
                 mAlbumDialog.show();
                 break;
+            case R.id.btn_next:
+                playVideo();
+                break;
         }
     }
 
-    private int mCurrentPosition;
-    private MediaPlayer.OnBufferingUpdateListener mBufferingUpdateListener = new MediaPlayer.OnBufferingUpdateListener() {
-
-        @Override
-        public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
-//            Log.e("HAHA", " =========================== onBufferingUpdate=" + mediaPlayer.getCurrentPosition() + "/" + i);
-            if (mediaPlayer.isPlaying()) {
-                mCurrentPosition = mediaPlayer.getCurrentPosition();
-            }
+    @Override
+    protected void cacheVideo(PlayVideo video) {
+        if (mUrlList.size() == 1) {
+            mClarityView.setEnabled(false);
+        }else{
+            mClarityView.setEnabled(true);
         }
-    };
+
+        mClarityView.setText(((YoukuVideo)video).getType().getProfile());
+    }
 
 }

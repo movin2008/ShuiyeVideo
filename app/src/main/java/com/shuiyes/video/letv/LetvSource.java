@@ -1,35 +1,33 @@
 package com.shuiyes.video.letv;
 
 import android.content.Context;
-import android.text.format.Formatter;
 
-public class LetvSource {
+import com.shuiyes.video.bean.PlayVideo;
 
-    private String type;
+public class LetvSource extends PlayVideo {
+
+    private String stream;
     private String source;
-    private String url;
 
-    public LetvSource(int stream, String source, String url) {
-        this.type = stream+"P";
+    public LetvSource(String stream, String source, String url) {
+        super(source, url);
+        this.stream = stream;
         this.source = source;
         this.url = url;
     }
 
-    public void setProfile(int stream) {
-        this.type = stream+"P";
+    public String getStream() {
+        return stream;
     }
 
-    public String getProfile() {
-        return type;
+    public String getSource() {
+        return source;
     }
 
 
-    public String getUrl() {
-        return url;
-    }
-
+    @Override
     public String toStr(Context ctx) {
-        return "LetvSource{" + type +
+        return "LetvSource{" + stream +
                 ", source=" + source +
 //                ", url='" + url + '\'' +
                 '}';

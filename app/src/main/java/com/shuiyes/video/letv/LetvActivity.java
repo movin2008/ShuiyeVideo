@@ -1,27 +1,17 @@
 package com.shuiyes.video.letv;
 
-import android.app.Activity;
-import android.content.Context;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.MediaController;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.shuiyes.video.AlbumDialog;
 import com.shuiyes.video.PlayActivity;
-import com.shuiyes.video.widget.FullScreenDialog;
+import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
+import com.shuiyes.video.widget.MiscDialog;
+import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
 
@@ -35,17 +25,17 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 public class LetvActivity extends PlayActivity implements View.OnClickListener {
-
-    private Button mSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSource = (Button) findViewById(R.id.btn_source);
+        mSourceView.setOnClickListener(this);
+        mClarityView.setOnClickListener(this);
+        mSelectView.setOnClickListener(this);
+        mNextView.setOnClickListener(this);
 
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -104,37 +94,13 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
         playVideo();
     }
 
-    private Random mRandom = new Random();
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (mPrepared && !mVideoView.isPlaying()) {
-            if (mCurrentPosition > 0) {
-                mVideoView.seekTo(mCurrentPosition);
-            }
-            mVideoView.start();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (mVideoView.isPlaying()) {
-            mVideoView.pause();
-        }
-    }
-
-    private String mVid;
-    private String mToken;
     /**
      * 专辑可选集
      */
     private boolean mIsAlbum;
     private List<ListVideo> mVideoList = new ArrayList<ListVideo>();
-    private List<LetvSource> mUrlList = new ArrayList<LetvSource>();
+    private List<LetvStream> mUrlList = new ArrayList<LetvStream>();
     private List<LetvSource> mSourceList = new ArrayList<LetvSource>();
 
     private void playVideo() {
@@ -146,7 +112,7 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
                     String info = LetvUtils.fetchVideo(LetvUtils.getVideoInfoUrl(mVid), false);
 
-                    File file = new File("/sdcard/info");
+                    File file = new File("/sdcard/LetvStream");
                     if (file.exists()) {
                         file.delete();
                     }
@@ -165,170 +131,124 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
 
                     JSONObject playurl = data.getJSONObject("playurl");
 
-                    Message msg = mHandler.obtainMessage(MSG_SET_TITLE);
-                    msg.obj = playurl.getString("title");
-                    mHandler.sendMessage(msg);
+                    mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, playurl.getString("title")));
 
                     JSONArray domain = playurl.getJSONArray("domain");
                     JSONObject dispatch = playurl.getJSONObject("dispatch");
 
                     if (playurl.has("nextvid")) {
-                        mVid = playurl.getInt("nextvid")+"";
-                        Log.e("HAHA", "next vid=" + mVid);
+                        String nid = playurl.getInt("nextvid") + "";
+                        Log.e("HAHA", "next vid=" + nid);
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, nid));
+                    }else{
+                        Log.e("HAHA", "No next video.");
                     }
 
-                    Iterator<String> iterator = dispatch.keys();
+                    String host = domain.getString(0);
+
+                    mUrlList.clear();
                     int streamID = 0;
-                    while (iterator.hasNext()){
+                    Iterator<String> iterator = dispatch.keys();
+                    while (iterator.hasNext()) {
                         int tmp = Integer.parseInt(iterator.next());
-                        if(tmp > streamID){
+                        mUrlList.add(new LetvStream(tmp, host + dispatch.getJSONArray(tmp + "").get(0)));
+                        if (tmp > streamID) {
                             streamID = tmp;
                         }
                     }
-                    String url = domain.getString(0)+dispatch.getJSONArray(streamID+"").get(0);
 
-                    mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
-                    String video = LetvUtils.fetchVideo(LetvUtils.getVideoPlayUrl(url, mVid), false);
-
-                    if (video == null) {
-                        fault("解析异常请重试");
-                        return;
+                    for (LetvStream v : mUrlList) {
+                        Log.i("HAHA", v.toStr(mContext));
                     }
 
-                    file = new File("/sdcard/video");
-                    if (file.exists()) {
-                        file.delete();
-                    }
-
-                    bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-                    bw.write(video);
-                    bw.close();
-
-                    data = new JSONObject(video);
-                    JSONArray streams = data.getJSONArray("nodelist");
-                    int streamsLen = streams.length();
-
-                    mSourceList.clear();
-                    for (int i = 0; i < streamsLen; i++) {
-                        JSONObject stream = (JSONObject) streams.get(i);
-
-                        String m3u8Url = stream.getString("location");
-                        String name = stream.getString("name");
-
-                        mSourceList.add(new LetvSource(streamID, name, m3u8Url));
-                    }
-
-                    Log.e("HAHA", "SourceList=" + mSourceList.size() + "/" + streamsLen);
-                    if (mSourceList.isEmpty()) {
-                        fault("无视频源地址");
-                    } else {
-                        for (LetvSource v : mUrlList) {
-                            Log.i("HAHA", v.toStr(mContext));
-                        }
-
-                        mCurrentPosition = 0;
-
-                        msg = mHandler.obtainMessage(MSG_CACHE_VIDEO);
-                        msg.obj = mSourceList.get(0);
-                        mHandler.sendMessage(msg);
-                    }
+                    String url = host + dispatch.getJSONArray(streamID + "").get(0);
+                    playUrl(url, streamID + "P");
                 } catch (Exception e) {
-                    Log.e("HAHA", e.getLocalizedMessage());
+                    fault(e);
                     e.printStackTrace();
                 }
             }
         }).start();
     }
 
-    private boolean mIsError;
+    private void playUrl(String url, String streamStr) throws Exception {
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIDEO, streamStr));
 
-    private void fault(String text) {
-        mIsError = true;
+        String video = LetvUtils.fetchVideo(LetvUtils.getVideoPlayUrl(url, mVid), false);
 
-        Message msg = mHandler.obtainMessage(MSG_FAULT);
-        msg.obj = text;
-        mHandler.sendMessage(msg);
+        if (video == null) {
+            fault("解析异常请重试");
+            return;
+        }
+
+        File file = new File("/sdcard/LetvSource");
+        if (file.exists()) {
+            file.delete();
+        }
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+        bw.write(video);
+        bw.close();
+
+        JSONObject data = new JSONObject(video);
+        JSONArray streams = data.getJSONArray("nodelist");
+        int streamsLen = streams.length();
+
+        mSourceList.clear();
+        for (int i = 0; i < streamsLen; i++) {
+            JSONObject stream = (JSONObject) streams.get(i);
+
+            String m3u8Url = stream.getString("location");
+            String name = stream.getString("name").replace("中国", "").replaceAll("-", "");
+
+            mSourceList.add(new LetvSource(streamStr, name, m3u8Url));
+        }
+
+        Log.e("HAHA", "UrlList=" + mSourceList.size() + "/" + streamsLen);
+        if (mSourceList.isEmpty()) {
+            fault("无视频源地址");
+        } else {
+            for (LetvSource v : mSourceList) {
+                Log.i("HAHA", v.toStr(mContext));
+            }
+
+            mCurrentPosition = 0;
+
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mSourceList.get(0)));
+        }
     }
 
-    private final int MSG_FAULT = 0;
-    private final int MSG_FETCH_VIDEOINFO = 1;
-    private final int MSG_FETCH_VIDEO = 2;
-    private final int MSG_CACHE_VIDEO = 3;
-    private final int MSG_PALY_VIDEO = 4;
-    private final int MSG_SET_TITLE = 5;
-    private final int MSG_UPDATE_SELECT = 6;
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_FAULT:
-                    Object error = msg.obj;
-                    mLoadingProgress.setVisibility(View.GONE);
-                    mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : "") + " 5s后返回...");
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    }, 5555);
-                    break;
-                case MSG_FETCH_VIDEOINFO:
-                    mStateView.setText("初始化...[成功]\n获取视频信息...");
-                    mStateView.setVisibility(View.VISIBLE);
-                    break;
-                case MSG_FETCH_VIDEO:
-                    mStateView.setText(mStateView.getText() + "[成功]\n解析视频地址...");
-                    break;
-                case MSG_CACHE_VIDEO:
-                    LetvSource video = (LetvSource) msg.obj;
-                    String profile = video.getProfile();
-                    mClarity.setText(profile);
-                    mStateView.setText(mStateView.getText() + "[成功]\n开始缓存" + profile + "视频...");
-
-                    mVideoView.stopPlayback();
-                    Log.e("HAHA", "setVideoURI=" + video.getUrl());
-                    mVideoView.setVideoURI(Uri.parse(video.getUrl()));
-
-                    if (mCurrentPosition != 0) {
-                        Log.e("HAHA", "seekTo=" + mCurrentPosition);
-                        mVideoView.seekTo(mCurrentPosition);
-                    }
-                    break;
-                case MSG_PALY_VIDEO:
-                    mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mStateView.setText("");
-                        }
-                    }, 1111);
-                    break;
-                case MSG_SET_TITLE:
-                    Log.e("HAHA", "setTitle=" + msg.obj);
-                    mTitleView.setText((String) msg.obj);
-                case MSG_UPDATE_SELECT:
-                    if (mVideoList.isEmpty()) {
-                        mSelect.setVisibility(View.GONE);
-                    } else {
-                        mSelect.setVisibility(View.VISIBLE);
-                    }
-                    break;
-            }
-        }
-    };
-
-    private FullScreenDialog mClarityDialog;
+    private MiscDialog mSourceDialog;
+    private MiscDialog mClarityDialog;
     private AlbumDialog mAlbumDialog;
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btn_source:
+                if (mSourceDialog != null && mSourceDialog.isShowing()) {
+                    mSourceDialog.dismiss();
+                }
+                mSourceDialog = new MiscDialog(this, mSourceList);
+                mSourceDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mSourceDialog != null && mSourceDialog.isShowing()) {
+                            mSourceDialog.dismiss();
+                        }
+
+                        mStateView.setText("初始化...");
+
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, ((MiscView) view).getPlayVideo()));
+                    }
+                });
+                mSourceDialog.show();
+                break;
             case R.id.btn_clarity:
                 if (mClarityDialog != null && mClarityDialog.isShowing()) {
                     mClarityDialog.dismiss();
                 }
-                mClarityDialog = new LetvClarityDialog(this, mUrlList);
+                mClarityDialog = new MiscDialog(this, mUrlList);
                 mClarityDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -338,9 +258,20 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
 
                         mStateView.setText("初始化...");
 
-                        Message msg = mHandler.obtainMessage(MSG_CACHE_VIDEO);
-                        msg.obj = ((LetvClarityView) view).getPlayVideo();
-                        mHandler.sendMessage(msg);
+
+                        final LetvStream stream = (LetvStream) ((MiscView) view).getPlayVideo();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    playUrl(stream.getUrl(), stream.getStream());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    fault(e);
+                                }
+                            }
+                        }).start();
+
                     }
                 });
                 mClarityDialog.show();
@@ -368,8 +299,24 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
                 });
                 mAlbumDialog.show();
                 break;
+            case R.id.btn_next:
+                playVideo();
+                break;
         }
     }
 
+    @Override
+    protected void cacheVideo(PlayVideo video) {
+        if (mSourceList.isEmpty()) {
+            mSourceView.setVisibility(View.GONE);
+        } else {
+            mSourceView.setVisibility(View.VISIBLE);
+            if (mSourceList.size() > 1) {
+                mSourceView.setEnabled(true);
+            } else {
+                mSourceView.setEnabled(false);
+            }
+        }
+    }
 
 }

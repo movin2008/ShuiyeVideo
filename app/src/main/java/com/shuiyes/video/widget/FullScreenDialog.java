@@ -43,7 +43,10 @@ public class FullScreenDialog extends Dialog implements View.OnClickListener {
         getWindow().getDecorView().setPadding(0, 0, 0, 0);
         getWindow().setAttributes(layoutParams);
 
-        mView.getChildAt(0).requestFocus();
+        View firstChild = mView.getChildAt(0);
+        if(firstChild != null){
+            firstChild.requestFocus();
+        }
     }
 
     @Override

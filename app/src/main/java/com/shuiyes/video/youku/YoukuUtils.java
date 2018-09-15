@@ -63,10 +63,14 @@ public class YoukuUtils {
         conn.connect();
 
         try {
+            String ret = conn.getHeaderField("ETag");
+            if(conn.getHeaderField("ETag") != null){
+               return ret;
+            }
+
             Map<String, List<String>> headers = conn.getHeaderFields();
             Set<String> keys = headers.keySet();
             Iterator<String> iterator = keys.iterator();
-            String ret = null;
             while (iterator.hasNext()) {
                 String key = iterator.next();
 //            Log.e("HAHA", key+"="+headers.get(key).get(0));
@@ -93,7 +97,7 @@ public class YoukuUtils {
         }catch (ArrayIndexOutOfBoundsException e){
             e.printStackTrace();
         }finally {
-            conn.getInputStream().close();
+//            conn.getInputStream().close();
             conn.disconnect();
         }
         return null;

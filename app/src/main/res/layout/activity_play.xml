@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@null" >
+    android:background="@null">
 
     <com.shuiyes.video.widget.DLVideoView
         android:id="@+id/vitamio_videoView"
@@ -11,47 +11,69 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#99000000" >
+        android:background="#99000000">
 
         <LinearLayout
             android:id="@+id/ll_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" >
+            android:layout_centerVertical="true">
 
             <Button
                 android:id="@+id/btn_source"
-                android:layout_width="30dp"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/btn_rect"
                 android:focusable="true"
-                android:padding="0dp"
+                android:minWidth="30dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:text="切源"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_clarity"
-                android:layout_width="30dp"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/btn_rect"
                 android:focusable="true"
-                android:padding="0dp"
+                android:minWidth="30dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:text="高清"
                 android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/btn_select"
-                android:layout_width="30dp"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/btn_rect"
                 android:focusable="true"
-                android:padding="0dp"
+                android:minWidth="30dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:text="选集"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/btn_rect"
+                android:focusable="true"
+                android:minWidth="30dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="下集"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
