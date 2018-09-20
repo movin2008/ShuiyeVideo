@@ -1,4 +1,4 @@
-package com.shuiyes.video;
+package com.shuiyes.video.base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.widget.Tips;
@@ -24,7 +25,7 @@ import com.shuiyes.video.widget.Tips;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PlayActivity extends Activity {
+public abstract class PlayActivity extends BaseActivity {
 
     protected Context mContext;
     protected TextView mTitleView;
@@ -123,20 +124,9 @@ public abstract class PlayActivity extends Activity {
         }
     }
 
-    private long mPrevBackTime;
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                long time = System.currentTimeMillis();
-                if ((time - mPrevBackTime) < 2000) {
-                    finish();
-                } else {
-                    Tips.show(this, "再按一次退出播放", 0);
-                }
-                mPrevBackTime = time;
-                return false;
             case KeyEvent.KEYCODE_MENU:
             case KeyEvent.KEYCODE_DPAD_UP:
                 mClarityView.requestFocus();
@@ -148,8 +138,6 @@ public abstract class PlayActivity extends Activity {
             case KeyEvent.KEYCODE_DPAD_RIGHT:
                 break;
             default:
-//                Tips.show(this, "onKeyDown=" + keyCode, 0);
-//                Log.e("HAHA", "onKeyDown=" + keyCode);
                 break;
         }
 

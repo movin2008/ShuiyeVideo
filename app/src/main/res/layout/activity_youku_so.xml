@@ -6,11 +6,17 @@
     android:orientation="vertical"
     tools:context="com.shuiyes.video.MainActivity">
 
-    <Button
-        android:id="@+id/test"
+    <EditText
+        android:id="@+id/et_seach"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="test"
-        android:text="测试" />
+        android:layout_margin="10dp"
+        android:hint="优酷资源"></EditText>
+
+    <ListView
+        android:id="@+id/lv_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"/>
 
 </LinearLayout>

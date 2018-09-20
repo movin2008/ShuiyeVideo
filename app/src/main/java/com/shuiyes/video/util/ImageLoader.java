@@ -14,9 +14,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
-import com.shuiyes.video.MainActivity;
+import com.shuiyes.video.youku.SoYoukuActivity;
 
 public class ImageLoader {
     protected static final String TAG = "ImageLoader";
@@ -62,7 +61,7 @@ public class ImageLoader {
                     // //保存图片至SD卡，文件名为图片名称加密串
                     // BitmapUtil.saveBitmap(bitmap, md5(imageUrl));
                     // 发送携带了bitmap的消息，通知handler更新UI
-                    Message message = handler.obtainMessage(MainActivity.MSG_SET_IMAGE);
+                    Message message = handler.obtainMessage(SoYoukuActivity.MSG_SET_IMAGE);
                     message.obj = bitmap;
                     Bundle bundle = new Bundle();
                     bundle.putString("imageUrl", imageUrl);
@@ -84,10 +83,9 @@ public class ImageLoader {
         InputStream is = null;
         try {
             URL url = new URL(urlStr);
-//			Log.e("HAHA", "down img=" + urlStr);
             connection = (HttpURLConnection) url.openConnection();
-            // connection.setConnectTimeout(Constant.CONNECT_TIMEOUT);
-            // connection.setReadTimeout(Constant.READ_TIMEOUT);
+             connection.setConnectTimeout(6666);
+             connection.setReadTimeout(6666);
             connection.setRequestMethod("GET");
             connection.connect();
             is = connection.getInputStream();

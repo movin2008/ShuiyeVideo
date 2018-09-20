@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.shuiyes.video.dialog.AlbumDialog;
-import com.shuiyes.video.PlayActivity;
+import com.shuiyes.video.base.PlayActivity;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
@@ -73,7 +73,6 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
         });
 
         String url = getIntent().getStringExtra("url");
-        url = "http://www.le.com/ptv/vplay/26101788.html";
         Log.e("HAHA", "now url=" + url);
 
         String key = "vplay/";
@@ -311,11 +310,6 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
             mSourceView.setVisibility(View.GONE);
         } else {
             mSourceView.setVisibility(View.VISIBLE);
-            if (mSourceList.size() > 1) {
-                mSourceView.setEnabled(true);
-            } else {
-                mSourceView.setEnabled(false);
-            }
         }
     }
 

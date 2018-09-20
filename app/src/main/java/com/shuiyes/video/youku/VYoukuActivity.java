@@ -18,7 +18,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.shuiyes.video.dialog.AlbumDialog;
-import com.shuiyes.video.PlayActivity;
+import com.shuiyes.video.base.PlayActivity;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
@@ -27,7 +27,7 @@ import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
 
-public class YoukuActivity extends PlayActivity implements View.OnClickListener {
+public class VYoukuActivity extends PlayActivity implements View.OnClickListener {
 
 
     @Override
@@ -274,7 +274,7 @@ public class YoukuActivity extends PlayActivity implements View.OnClickListener 
 
     @Override
     protected void cacheVideo(PlayVideo video) {
-        if (mUrlList.size() == 1) {
+        if (mUrlList.size() < 2) {
             mClarityView.setEnabled(false);
         }else{
             mClarityView.setEnabled(true);

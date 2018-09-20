@@ -12,7 +12,7 @@ import com.zhy.view.flowlayout.TagView;
 
 import java.util.List;
 
-public class AlbumDialog extends FullScreenDialog {
+public class AlbumDialog extends FlowlayoutDialog {
 
     private List<ListVideo> mVideoList;
 

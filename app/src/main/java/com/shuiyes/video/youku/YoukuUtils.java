@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +23,7 @@ public class YoukuUtils {
 
     public static void playUrl(Context context, String url, String title) {
         if (url.contains("youku.com")) {
-            context.startActivity(new Intent(context, YoukuActivity.class).putExtra("url", url).putExtra("title", title));
+            context.startActivity(new Intent(context, VYoukuActivity.class).putExtra("url", url).putExtra("title", title));
         } else {
             Tips.show(context, "暂不支持播放 " + url + "\n请等待完善...", 0);
         }

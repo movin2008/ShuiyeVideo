@@ -2,18 +2,20 @@ package com.zhy.view.flowlayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v4.text.TextUtilsCompat;
 import android.util.AttributeSet;
+import android.util.LayoutDirection;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import com.shuiyes.video.R;
 
 public class FlowLayout extends ViewGroup {
-    private static final String TAG = "FlowLayout";
     private static final int LEFT = -1;
     private static final int CENTER = 0;
     private static final int RIGHT = 1;
@@ -28,14 +30,14 @@ public class FlowLayout extends ViewGroup {
         super(context, attrs, defStyle);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TagFlowLayout);
         mGravity = ta.getInt(R.styleable.TagFlowLayout_tag_gravity, LEFT);
-//        int layoutDirection = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault());
-//        if (layoutDirection == LayoutDirection.RTL) {
-//            if (mGravity == LEFT) {
-//                mGravity = RIGHT;
-//            } else {
-//                mGravity = LEFT;
-//            }
-//        }
+        int layoutDirection = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault());
+        if (layoutDirection == LayoutDirection.RTL) {
+            if (mGravity == LEFT) {
+                mGravity = RIGHT;
+            } else {
+                mGravity = LEFT;
+            }
+        }
         ta.recycle();
     }
 

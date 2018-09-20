@@ -9,8 +9,6 @@ import com.shuiyes.video.util.ResourceUtils;
 public class TagFlowLayout extends FlowLayout
         implements TagAdapter.OnDataChangedListener {
 
-    private static final String TAG = "TagFlowLayout";
-
     private TagAdapter mTagAdapter;
 
     public TagFlowLayout(Context context, AttributeSet attrs, int defStyle) {

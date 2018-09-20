@@ -11,13 +11,13 @@ import com.shuiyes.video.R;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 
-public class FullScreenDialog extends Dialog implements View.OnClickListener {
+public class FlowlayoutDialog extends Dialog implements View.OnClickListener {
 
-    private Context mContext = null;
+    protected Context mContext = null;
     protected TagFlowLayout mView;
 
 
-    public FullScreenDialog(Context context) {
+    public FlowlayoutDialog(Context context) {
         super(context, R.style.FullScreenDialog);
         mContext = context;
     }
