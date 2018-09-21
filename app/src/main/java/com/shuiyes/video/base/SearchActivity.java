@@ -141,6 +141,7 @@ public abstract class SearchActivity extends BaseActivity {
                     return;
                 }
 
+                Log.e(TAG, "searchVideos=" + keyword);
                 searchVideos(keyword);
             }
         });

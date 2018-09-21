@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.shuiyes.video.base.BaseActivity;
+import com.shuiyes.video.letv.LetvSoActivity;
 import com.shuiyes.video.letv.LetvVActivity;
 import com.shuiyes.video.youku.YoukuSoActivity;
 
@@ -64,7 +65,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void soletv(View view){
-        this.startActivity(new Intent(this, LetvVActivity.class).putExtra("url", "http://www.le.com/ptv/vplay/26101788.html"));
+        this.startActivity(new Intent(this, LetvSoActivity.class));
     }
 
 }

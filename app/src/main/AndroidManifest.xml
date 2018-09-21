@@ -41,6 +41,10 @@
         <activity
             android:name=".letv.LetvVActivity"
             android:screenOrientation="landscape"/>
+
+        <activity
+            android:name=".letv.LetvSoActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

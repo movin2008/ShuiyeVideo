@@ -44,14 +44,13 @@ public class YoukuUtils {
         return url;
     }
 
-    public static String fetchCna() throws Exception {
-
-        HttpURLConnection conn = (HttpURLConnection) new URL("http://log.mmstat.com/eg.js").openConnection();
-        HttpUtils.setURLConnection(conn);
-//        conn.setRequestProperty("Referer", "https://v.youku.com/v_show/id_XMzU5OTkwMzM4OA.html");
-        conn.connect();
-
+    public static String fetchCna() {
+        HttpURLConnection conn = null;
         try {
+            conn = (HttpURLConnection) new URL("http://log.mmstat.com/eg.js").openConnection();
+            HttpUtils.setURLConnection(conn);
+            conn.connect();
+
             String ret = conn.getHeaderField("ETag");
             if(conn.getHeaderField("ETag") != null){
                return ret.substring(1, ret.length() - 1);
@@ -83,23 +82,22 @@ public class YoukuUtils {
                 }
             }
             return ret;
-        }catch (ArrayIndexOutOfBoundsException e){
+        }catch (Exception e){
             e.printStackTrace();
         }finally {
-//            conn.getInputStream().close();
-            conn.disconnect();
+            if(conn != null){
+                conn.disconnect();
+            }
         }
         return null;
     }
 
 
-    public static String fetchVideo(String vid, String cna, String videoUrl) throws Exception {
+    public static String fetchVideo(String vid, String cna, String videoUrl) {
         String url = YoukuUtils.getVideoUrl(vid, cna);
         Log.e(TAG, "url=" + url);
 
-        HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
 //        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
-
 ////        conn.setRequestProperty("Cookie", "cna=" + cna);
 //        conn.setRequestProperty("Upgrade-Insecure-Requests", "1");
 //        conn.setRequestProperty("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
@@ -111,45 +109,42 @@ public class YoukuUtils {
 //        conn.setRequestProperty(":scheme", "https");
 //        conn.setRequestProperty(":method", "GET");
 
-        conn.setRequestMethod("GET");
-        HttpUtils.setURLConnection(conn, videoUrl);
-        conn.connect();
+        HttpsURLConnection conn = null;
+        try {
+            conn = (HttpsURLConnection) new URL(url).openConnection();
+            conn.setRequestMethod("GET");
+            HttpUtils.setURLConnection(conn, videoUrl);
+            conn.connect();
 
-        if (conn.getResponseCode() == 200) {
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            String read = null;
-            StringBuffer ret = new StringBuffer();
-            while ((read = in.readLine()) != null) {
-                ret.append(read);
+            int code = conn.getResponseCode();
+            if (code == 200) {
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                String read = null;
+                StringBuffer ret = new StringBuffer();
+                while ((read = in.readLine()) != null) {
+                    ret.append(read);
 //                Log.e(TAG, read);
-            }
-            in.close();
-            return ret.toString();
-        } else {
-            Log.i(TAG, "fetchVideo error");
-            Map<String, List<String>> headers = conn.getHeaderFields();
-            Set<String> keys = headers.keySet();
-            Iterator<String> iterator = keys.iterator();
-            while (iterator.hasNext()) {
-                String key = iterator.next();
-                Log.e(TAG, "key=" + key);
-
-                List<String> values = headers.get(key);
-                for (String value : values) {
-                    Log.e(TAG, "value=" + value);
                 }
+                in.close();
+                return ret.toString();
+            } else {
+                Log.e(TAG, "fetchVideo("+url+") ResponseCode="+code);
+                HttpUtils.printHeaders(conn);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            if(conn != null){
+                conn.disconnect();
             }
         }
+
         return null;
     }
 
-
     public static String search(String keyword) throws Exception {
-        Log.e(TAG, "keyword=" + keyword);
-
         return HttpUtils.open("http://so.youku.com/search_video/q_" + keyword);
     }
-
 
 }

@@ -9,10 +9,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class LetvUtils {
 
@@ -54,43 +50,46 @@ public class LetvUtils {
         return ((val & l) >> r_bits%32) |  (val << (32-(r_bits%32)) & l);
     }
 
-    public static String fetchVideo(String url, boolean print) throws Exception {
+    public static String fetchVideo(String url, boolean print) {
         Log.e(TAG, "url=" + url);
 
-        HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-        conn.setRequestMethod("GET");
-        HttpUtils.setURLConnection(conn);
-        conn.connect();
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection) new URL(url).openConnection();
+            conn.setRequestMethod("GET");
+            HttpUtils.setURLConnection(conn);
+            conn.connect();
 
-        if (conn.getResponseCode() == 200) {
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            String read = null;
-            StringBuffer ret = new StringBuffer();
-            while ((read = in.readLine()) != null) {
-                ret.append(read);
-                if(print){
-                    Log.e(TAG, read);
+            int code = conn.getResponseCode();
+            if (code == 200) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                String read = null;
+                StringBuffer ret = new StringBuffer();
+                while ((read = in.readLine()) != null) {
+                    ret.append(read);
+                    if(print){
+                        Log.e(TAG, read);
+                    }
                 }
+                in.close();
+                return ret.toString();
+            } else {
+                Log.e(TAG, "fetchVideo("+url+") ResponseCode="+code);
+                HttpUtils.printHeaders(conn);
             }
-            in.close();
-            return ret.toString();
-        } else {
-            Log.i("https", "fetchVideo error");
-            Map<String, List<String>> headers = conn.getHeaderFields();
-            Set<String> keys = headers.keySet();
-            Iterator<String> iterator = keys.iterator();
-            while (iterator.hasNext()) {
-                String key = iterator.next();
-                Log.e(TAG, "key=" + key);
-
-                List<String> values = headers.get(key);
-                for (String value : values) {
-                    Log.e(TAG, "value=" + value);
-                }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            if(conn != null){
+                conn.disconnect();
             }
         }
+
         return null;
+    }
+
+    public static String search(String keyword) throws Exception {
+        return HttpUtils.open("http://so.le.com/s?wd=" + keyword);
     }
 
     public static String splatid = "105";

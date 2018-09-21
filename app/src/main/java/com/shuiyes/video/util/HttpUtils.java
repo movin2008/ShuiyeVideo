@@ -3,6 +3,7 @@ package com.shuiyes.video.util;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -36,41 +37,52 @@ public class HttpUtils {
         conn.setRequestProperty("Referer",Referer);
     }
 
-    public static String open(String url) throws Exception{
-        HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-        HttpUtils.setURLConnection(conn);
-        conn.setRequestMethod("GET");
-        conn.connect();
+    public static void printHeaders(URLConnection conn){
+        Map<String, List<String>> headers = conn.getHeaderFields();
+        Set<String> keys = headers.keySet();
+        Iterator<String> iterator = keys.iterator();
 
-        int code = conn.getResponseCode();
-        if (code == 200) {
-            StringBuffer ret = new StringBuffer();
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            String read = null;
-            while ((read = in.readLine()) != null) {
-                ret.append(read);
+        StringBuffer buf = new StringBuffer();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+
+            buf.setLength(0);
+            List<String> values = headers.get(key);
+            for (String value : values) {
+                buf.append(value+",");
             }
-            in.close();
-            return ret.toString();
-        } else {
-            Log.e(TAG, "open("+url+") ResponseCode="+code);
-
-            Map<String, List<String>> headers = conn.getHeaderFields();
-            Set<String> keys = headers.keySet();
-            Iterator<String> iterator = keys.iterator();
-
-            StringBuffer buf = new StringBuffer();
-            while (iterator.hasNext()) {
-                String key = iterator.next();
-
-                buf.setLength(0);
-                List<String> values = headers.get(key);
-                for (String value : values) {
-                    buf.append(value+",");
-                }
-                Log.e(TAG, key+"=" + buf.toString());
-            }
+            Log.e(TAG, key+"=" + buf.toString());
         }
+    }
+
+    public static String open(String url){
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection) new URL(url).openConnection();
+            HttpUtils.setURLConnection(conn);
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            int code = conn.getResponseCode();
+            if (code == 200) {
+                StringBuffer ret = new StringBuffer();
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                String read = null;
+                while ((read = in.readLine()) != null) {
+                    ret.append(read);
+                }
+                in.close();
+                return ret.toString();
+            } else {
+                Log.e(TAG, "open("+url+") ResponseCode="+code);
+                printHeaders(conn);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            conn.disconnect();
+        }
+
         return null;
     }
 
