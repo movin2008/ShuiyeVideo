@@ -9,20 +9,21 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.shuiyes.video.base.BaseActivity;
-import com.shuiyes.video.letv.LetvActivity;
+import com.shuiyes.video.letv.LetvVActivity;
+import com.shuiyes.video.youku.YoukuSoActivity;
 
 public class MainActivity extends BaseActivity {
 
+    private final String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.e("HAHA", "onCreate ========================= ");
+        Log.e(TAG, "onCreate ========================= ");
 
         //		Tips.show(this, Build.VERSION.SDK_INT+"/"+Build.MANUFACTURER, 1);
-
     }
 
 
@@ -55,7 +56,15 @@ public class MainActivity extends BaseActivity {
     }
 
     public void test(View view){
-        this.startActivity(new Intent(this, LetvActivity.class).putExtra("url", "http://www.le.com/ptv/vplay/26101788.html"));
+        this.startActivity(new Intent(this, LetvVActivity.class).putExtra("url", "http://www.le.com/ptv/vplay/26101788.html"));
+    }
+
+    public void soyouku(View view){
+        this.startActivity(new Intent(this, YoukuSoActivity.class));
+    }
+
+    public void soletv(View view){
+        this.startActivity(new Intent(this, LetvVActivity.class).putExtra("url", "http://www.le.com/ptv/vplay/26101788.html"));
     }
 
 }

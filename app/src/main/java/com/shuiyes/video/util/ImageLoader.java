@@ -1,10 +1,8 @@
 package com.shuiyes.video.util;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.SoftReference;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.util.HashMap;
@@ -14,8 +12,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
-import com.shuiyes.video.youku.SoYoukuActivity;
 
 public class ImageLoader {
     protected static final String TAG = "ImageLoader";
@@ -61,7 +57,7 @@ public class ImageLoader {
                     // //保存图片至SD卡，文件名为图片名称加密串
                     // BitmapUtil.saveBitmap(bitmap, md5(imageUrl));
                     // 发送携带了bitmap的消息，通知handler更新UI
-                    Message message = handler.obtainMessage(SoYoukuActivity.MSG_SET_IMAGE);
+                    Message message = handler.obtainMessage(Constants.MSG_SET_IMAGE);
                     message.obj = bitmap;
                     Bundle bundle = new Bundle();
                     bundle.putString("imageUrl", imageUrl);
@@ -80,7 +76,6 @@ public class ImageLoader {
      */
     public InputStream getInputStreamFromUrl(String urlStr) {
         HttpURLConnection connection = null;
-        InputStream is = null;
         try {
             URL url = new URL(urlStr);
             connection = (HttpURLConnection) url.openConnection();
@@ -88,13 +83,13 @@ public class ImageLoader {
              connection.setReadTimeout(6666);
             connection.setRequestMethod("GET");
             connection.connect();
-            is = connection.getInputStream();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            if(connection.getResponseCode() == 200){
+                return connection.getInputStream();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return is;
+        return null;
     }
 
     /**

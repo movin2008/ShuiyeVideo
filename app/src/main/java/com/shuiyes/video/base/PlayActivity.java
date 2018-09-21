@@ -1,6 +1,5 @@
 package com.shuiyes.video.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -20,12 +19,13 @@ import android.widget.VideoView;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
-import com.shuiyes.video.widget.Tips;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class PlayActivity extends BaseActivity {
+
+    private final String TAG = this.getClass().getSimpleName();
 
     protected Context mContext;
     protected TextView mTitleView;
@@ -56,7 +56,7 @@ public abstract class PlayActivity extends BaseActivity {
         controller.setOnHoverListener(new View.OnHoverListener() {
             @Override
             public boolean onHover(View view, MotionEvent motionEvent) {
-                Log.e("HAHA", " =========================== onPrepared");
+                Log.e(TAG, " =========================== onPrepared");
                 return false;
             }
         });
@@ -81,18 +81,18 @@ public abstract class PlayActivity extends BaseActivity {
 
             @Override
             public boolean onInfo(MediaPlayer mediaPlayer, int what, int extra) {
-                Log.e("HAHA", " =========================== onInfo(" + what + ", " + extra + ")");
+                Log.e(TAG, " =========================== onInfo(" + what + ", " + extra + ")");
                 switch (what) {
                     case MediaPlayer.MEDIA_INFO_BUFFERING_START:
-                        Log.e("HAHA", " =========================== MEDIA_INFO_BUFFERING_START");
+                        Log.e(TAG, " =========================== MEDIA_INFO_BUFFERING_START");
                         mLoadingProgress.setVisibility(View.VISIBLE);
                         break;
                     case MediaPlayer.MEDIA_INFO_BUFFERING_END:
-                        Log.e("HAHA", " =========================== MEDIA_INFO_BUFFERING_END");
+                        Log.e(TAG, " =========================== MEDIA_INFO_BUFFERING_END");
                         mLoadingProgress.setVisibility(View.GONE);
                         break;
                     case MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
-                        Log.e("HAHA", " =========================== MEDIA_INFO_VIDEO_RENDERING_START");
+                        Log.e(TAG, " =========================== MEDIA_INFO_VIDEO_RENDERING_START");
                         mLoadingProgress.setVisibility(View.GONE);
                         break;
                 }
@@ -152,7 +152,7 @@ public abstract class PlayActivity extends BaseActivity {
 
         @Override
         public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
-//            Log.e("HAHA", " =========================== onBufferingUpdate=" + mediaPlayer.getCurrentPosition() + "/" + i);
+//            Log.e(TAG, " =========================== onBufferingUpdate=" + mediaPlayer.getCurrentPosition() + "/" + i);
             if (mediaPlayer.isPlaying()) {
                 mCurrentPosition = mediaPlayer.getCurrentPosition();
             }
@@ -220,11 +220,11 @@ public abstract class PlayActivity extends BaseActivity {
                     cacheVideo(video);
 
                     mVideoView.stopPlayback();
-                    Log.e("HAHA", "setVideoURI=" + video.getUrl());
+                    Log.e(TAG, "setVideoURI=" + video.getUrl());
                     mVideoView.setVideoURI(Uri.parse(video.getUrl()));
 
                     if (mCurrentPosition != 0) {
-                        Log.e("HAHA", "seekTo=" + mCurrentPosition);
+                        Log.e(TAG, "seekTo=" + mCurrentPosition);
                         mVideoView.seekTo(mCurrentPosition);
                     }
                     break;
@@ -238,7 +238,7 @@ public abstract class PlayActivity extends BaseActivity {
                     }, 1111);
                     break;
                 case MSG_SET_TITLE:
-                    Log.e("HAHA", "setTitle=" + msg.obj);
+                    Log.e(TAG, "setTitle=" + msg.obj);
                     mTitleView.setText((String) msg.obj);
                     break;
                 case MSG_UPDATE_SELECT:
@@ -250,7 +250,7 @@ public abstract class PlayActivity extends BaseActivity {
                     break;
                 case MSG_UPDATE_NEXT:
                     String nid = (String) msg.obj;
-                    Log.e("HAHA", "mVid="+mVid+", next vid=" + nid);
+                    Log.e(TAG, "mVid="+mVid+", next vid=" + nid);
 
                     if(mVid.equals(nid)){
                         mNextView.setVisibility(View.GONE);

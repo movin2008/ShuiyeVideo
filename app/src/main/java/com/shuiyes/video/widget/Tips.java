@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import com.shuiyes.video.R;
 
+import java.util.Arrays;
+
 public class Tips {
 
     /**
@@ -34,6 +36,15 @@ public class Tips {
         }
         mToast.setDuration(duration);
         mToast.setText(text);
+        mToast.show();
+    }
+
+    public static void show(Context context, String[] permissions) {
+        if (mToast == null) {
+            mToast = createToast(context);
+        }
+        mToast.setDuration(Toast.LENGTH_SHORT);
+        mToast.setText(Arrays.toString(permissions));
         mToast.show();
     }
 

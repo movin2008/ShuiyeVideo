@@ -10,7 +10,6 @@ import android.view.WindowManager.LayoutParams;
 import com.shuiyes.video.R;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
-
 public class FlowlayoutDialog extends Dialog implements View.OnClickListener {
 
     protected Context mContext = null;

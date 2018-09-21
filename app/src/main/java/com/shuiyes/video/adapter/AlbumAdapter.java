@@ -18,6 +18,7 @@ import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.constants.ResourceDef;
 import com.shuiyes.video.util.ImageLoader;
+import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.youku.YoukuUtils;
 import com.shuiyes.video.widget.NumberView;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -84,7 +85,7 @@ public class AlbumAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
-                YoukuUtils.playUrl(context, album.getPlayurl(), album.getTitle());
+                PlayUtils.play(context, album);
             }
         });
 
@@ -107,7 +108,7 @@ public class AlbumAdapter extends BaseAdapter {
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        YoukuUtils.playUrl(context, t.getUrl(), t.getTitle());
+                        PlayUtils.play(context, t.getUrl(), t.getTitle());
                     }
                 });
 

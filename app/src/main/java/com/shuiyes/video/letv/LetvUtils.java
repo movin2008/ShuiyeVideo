@@ -16,6 +16,7 @@ import java.util.Set;
 
 public class LetvUtils {
 
+    private final static String TAG = "LetvUtils";
 
     /**
      #@DEPRECATED
@@ -54,7 +55,7 @@ public class LetvUtils {
     }
 
     public static String fetchVideo(String url, boolean print) throws Exception {
-        Log.e("HAHA", "url=" + url);
+        Log.e(TAG, "url=" + url);
 
         HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
         conn.setRequestMethod("GET");
@@ -69,7 +70,7 @@ public class LetvUtils {
             while ((read = in.readLine()) != null) {
                 ret.append(read);
                 if(print){
-                    Log.e("HAHA", read);
+                    Log.e(TAG, read);
                 }
             }
             in.close();
@@ -81,11 +82,11 @@ public class LetvUtils {
             Iterator<String> iterator = keys.iterator();
             while (iterator.hasNext()) {
                 String key = iterator.next();
-                Log.e("HAHA", "key=" + key);
+                Log.e(TAG, "key=" + key);
 
                 List<String> values = headers.get(key);
                 for (String value : values) {
-                    Log.e("HAHA", "value=" + value);
+                    Log.e(TAG, "value=" + value);
                 }
             }
         }

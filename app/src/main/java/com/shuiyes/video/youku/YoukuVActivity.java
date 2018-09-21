@@ -27,8 +27,9 @@ import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
 
-public class VYoukuActivity extends PlayActivity implements View.OnClickListener {
+public class YoukuVActivity extends PlayActivity implements View.OnClickListener {
 
+    private final String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class VYoukuActivity extends PlayActivity implements View.OnClickListener
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
-                Log.e("HAHA", " =========================== onPrepared");
+                Log.e(TAG, " =========================== onPrepared");
                 mediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
 
                 mPrepared = true;
@@ -53,7 +54,7 @@ public class VYoukuActivity extends PlayActivity implements View.OnClickListener
         mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-                Log.e("HAHA", " =========================== onError(" + i + "," + i1 + ")");
+                Log.e(TAG, " =========================== onError(" + i + "," + i1 + ")");
                 String err = "视频无法播放(" + i + "," + i1 + ")";
                 Tips.show(mContext, err, 0);
                 fault(err);
@@ -65,7 +66,7 @@ public class VYoukuActivity extends PlayActivity implements View.OnClickListener
 
             @Override
             public void onCompletion(MediaPlayer mp) {
-                Log.e("HAHA", " =========================== onCompletion");
+                Log.e(TAG, " =========================== onCompletion");
                 if (!mIsError) {
                     mLoadingProgress.setVisibility(View.VISIBLE);
                     playVideo();
@@ -73,20 +74,20 @@ public class VYoukuActivity extends PlayActivity implements View.OnClickListener
             }
         });
 
-        String url = getIntent().getStringExtra("url");
-        Log.e("HAHA", "now url=" + url);
+        mUrl = getIntent().getStringExtra("url");
+        Log.e(TAG, "now url=" + mUrl);
 
         String key = "show/id_";
 //        if(url.contains("soku.com")){
 //            key = "show/";
 //        }
-        int index = url.indexOf(key);
-        if (url.indexOf(".html") != -1) {
-            mVid = url.substring(index + key.length(), url.indexOf(".html"));
+        int index = mUrl.indexOf(key);
+        if (mUrl.indexOf(".html") != -1) {
+            mVid = mUrl.substring(index + key.length(), mUrl.indexOf(".html"));
         } else {
-            mVid = url.substring(index + key.length());
+            mVid = mUrl.substring(index + key.length());
         }
-        Log.e("HAHA", "now mVid=" + mVid);
+        Log.e(TAG, "now mVid=" + mVid);
 
 
         mTitleView.setText(getIntent().getStringExtra("title"));
@@ -94,7 +95,9 @@ public class VYoukuActivity extends PlayActivity implements View.OnClickListener
         playVideo();
     }
 
+    private String mUrl;
     private String mToken;
+
     /**
      * 专辑可选集
      */
@@ -110,9 +113,9 @@ public class VYoukuActivity extends PlayActivity implements View.OnClickListener
                     mHandler.sendEmptyMessage(MSG_FETCH_TOKEN);
                     if (mToken == null) {
                         mToken = YoukuUtils.fetchCna();
-                        Log.e("HAHA", "new mToken=" + mToken);
+                        Log.e(TAG, "new mToken=" + mToken);
                     } else {
-                        Log.e("HAHA", "prev mToken=" + mToken);
+                        Log.e(TAG, "prev mToken=" + mToken);
                     }
 
                     if (mToken == null) {
@@ -121,7 +124,7 @@ public class VYoukuActivity extends PlayActivity implements View.OnClickListener
                     }
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
-                    String info = YoukuUtils.fetchVideo(mVid, mToken);
+                    String info = YoukuUtils.fetchVideo(mVid, mToken, mUrl);
 
                     if (info == null) {
                         fault("解析异常请重试");
@@ -157,9 +160,9 @@ public class VYoukuActivity extends PlayActivity implements View.OnClickListener
                             String nid = videos.getJSONObject("next").getString("encodevid");
                             mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, nid));
                         }else{
-                            Log.e("HAHA", "No next video.");
+                            Log.e(TAG, "No next video.");
                         }
-//                        Log.e("HAHA", "videos=" + videos);
+//                        Log.e(TAG, "videos=" + videos);
 
                         if (videos.has("list")) {
                             mVideoList.clear();
@@ -171,7 +174,7 @@ public class VYoukuActivity extends PlayActivity implements View.OnClickListener
                                 String title = listVideo.getString("title");
                                 mVideoList.add(new ListVideo(i + 1, title, encodevid));
                             }
-                            Log.e("HAHA", "VideoList=" + mVideoList.size());
+                            Log.e(TAG, "VideoList=" + mVideoList.size());
                         }
                     }
                     mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
@@ -190,7 +193,7 @@ public class VYoukuActivity extends PlayActivity implements View.OnClickListener
                         mUrlList.add(new YoukuVideo(YoukuVideo.formateVideoType(stream_type), size, m3u8Url));
                     }
 
-                    Log.e("HAHA", "UrlList=" + mUrlList.size() + "/" + streamsLen);
+                    Log.e(TAG, "UrlList=" + mUrlList.size() + "/" + streamsLen);
                     if (mUrlList.isEmpty()) {
                         fault("无视频地址");
                     } else {
@@ -202,7 +205,7 @@ public class VYoukuActivity extends PlayActivity implements View.OnClickListener
                         });
 
                         for (YoukuVideo v : mUrlList) {
-                            Log.i("HAHA", v.toStr(mContext));
+                            Log.i(TAG, v.toStr(mContext));
                         }
 
                         mCurrentPosition = 0;

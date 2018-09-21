@@ -7,7 +7,18 @@
     tools:context="com.shuiyes.video.MainActivity">
 
     <Button
-        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="soyouku"
+        android:text="优酷搜索" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="soletv"
+        android:text="乐视搜索" />
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="test"

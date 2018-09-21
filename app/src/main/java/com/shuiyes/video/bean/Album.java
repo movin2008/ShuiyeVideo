@@ -9,15 +9,17 @@ public class Album {
     private String summary;
     private String imgurl;
     private String playurl;
+    private String albumUrl;
     private List<ListVideo> listVideos;
 
-    public Album(int order, String title, String summary, String imgurl, String playurl, List<ListVideo> listVideos) {
+    public Album(int order, String title, String summary, String imgurl, String albumUrl, List<ListVideo> listVideos) {
         this.order = order;
         this.title = title;
         this.summary = summary;
         this.imgurl = imgurl;
-        this.playurl = playurl;
+        this.albumUrl = albumUrl;
         this.listVideos = listVideos;
+        this.playurl = getListPlayurl();
     }
 
     public String getTitle() {
@@ -35,7 +37,6 @@ public class Album {
     public void setSummary(String summary) {
         this.summary = summary;
     }
-
 
     public int getOrder() {
         return order;
@@ -61,12 +62,28 @@ public class Album {
         this.playurl = playurl;
     }
 
+    public String getAlbumUrl() {
+        return albumUrl;
+    }
+
+    public void setAlbumUrl(String listurl) {
+        this.albumUrl = listurl;
+    }
+
     public List<ListVideo> getListVideos() {
         return listVideos;
     }
 
     public void setListVideos(List<ListVideo> listVideos) {
         this.listVideos = listVideos;
+    }
+
+    private String getListPlayurl() {
+        if(listVideos != null && listVideos.size() > 0){
+            return listVideos.get(0).getUrl();
+        }else{
+            return albumUrl;
+        }
     }
 
 }

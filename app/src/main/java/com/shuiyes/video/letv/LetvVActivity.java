@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.shuiyes.video.R;
 import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.base.PlayActivity;
 import com.shuiyes.video.bean.PlayVideo;
-import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.dialog.MiscDialog;
 import com.shuiyes.video.widget.MiscView;
@@ -26,7 +26,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class LetvActivity extends PlayActivity implements View.OnClickListener {
+public class LetvVActivity extends PlayActivity implements View.OnClickListener {
+
+    private final String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
-                Log.e("HAHA", " =========================== onPrepared");
+                Log.e(TAG, " =========================== onPrepared");
                 mediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
 
                 mPrepared = true;
@@ -52,7 +54,7 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
         mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-                Log.e("HAHA", " =========================== onError(" + i + "," + i1 + ")");
+                Log.e(TAG, " =========================== onError(" + i + "," + i1 + ")");
                 String err = "视频无法播放(" + i + "," + i1 + ")";
                 Tips.show(mContext, err, 0);
                 fault(err);
@@ -64,7 +66,7 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
 
             @Override
             public void onCompletion(MediaPlayer mp) {
-                Log.e("HAHA", " =========================== onCompletion");
+                Log.e(TAG, " =========================== onCompletion");
                 if (!mIsError) {
                     mLoadingProgress.setVisibility(View.VISIBLE);
                     playVideo();
@@ -73,7 +75,7 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
         });
 
         String url = getIntent().getStringExtra("url");
-        Log.e("HAHA", "now url=" + url);
+        Log.e(TAG, "now url=" + url);
 
         String key = "vplay/";
 //        if(url.contains("soku.com")){
@@ -85,7 +87,7 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
         } else {
             mVid = url.substring(index + key.length());
         }
-        Log.e("HAHA", "now mVid=" + mVid);
+        Log.e(TAG, "now mVid=" + mVid);
 
 
         mTitleView.setText(getIntent().getStringExtra("title"));
@@ -137,10 +139,10 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
 
                     if (playurl.has("nextvid")) {
                         String nid = playurl.getInt("nextvid") + "";
-                        Log.e("HAHA", "next vid=" + nid);
+                        Log.e(TAG, "next vid=" + nid);
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, nid));
                     }else{
-                        Log.e("HAHA", "No next video.");
+                        Log.e(TAG, "No next video.");
                     }
 
                     String host = domain.getString(0);
@@ -157,7 +159,7 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
                     }
 
                     for (LetvStream v : mUrlList) {
-                        Log.i("HAHA", v.toStr(mContext));
+                        Log.i(TAG, v.toStr(mContext));
                     }
 
                     String url = host + dispatch.getJSONArray(streamID + "").get(0);
@@ -203,12 +205,12 @@ public class LetvActivity extends PlayActivity implements View.OnClickListener {
             mSourceList.add(new LetvSource(streamStr, name, m3u8Url));
         }
 
-        Log.e("HAHA", "UrlList=" + mSourceList.size() + "/" + streamsLen);
+        Log.e(TAG, "UrlList=" + mSourceList.size() + "/" + streamsLen);
         if (mSourceList.isEmpty()) {
             fault("无视频源地址");
         } else {
             for (LetvSource v : mSourceList) {
-                Log.i("HAHA", v.toStr(mContext));
+                Log.i(TAG, v.toStr(mContext));
             }
 
             mCurrentPosition = 0;

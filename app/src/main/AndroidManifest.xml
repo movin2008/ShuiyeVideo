@@ -21,10 +21,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+
         <!-- android:windowSoftInputMode="adjustUnspecified|stateHidden" -->
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,16 +31,16 @@
         </activity>
 
         <activity
-            android:name=".youku.VYoukuActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape"></activity>
+            android:name=".youku.YoukuSoActivity"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity
-            android:name=".letv.LetvActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape"></activity>
+            android:name=".youku.YoukuVActivity"
+            android:screenOrientation="landscape"/>
+
+        <activity
+            android:name=".letv.LetvVActivity"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>
