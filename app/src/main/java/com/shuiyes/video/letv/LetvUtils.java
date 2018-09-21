@@ -89,7 +89,8 @@ public class LetvUtils {
     }
 
     public static String search(String keyword) throws Exception {
-        return HttpUtils.open("http://so.le.com/s?wd=" + keyword);
+//        return HttpUtils.open("http://so.le.com/s?wd=" + keyword);
+        return HttpUtils.open("http://so.le.com/s?wd="+keyword+"&from=pc&index=0&ref=click&click_area=search_button&query="+keyword+"&is_default_query=0&module=suggest_list&eid=undefined&experiment_id=undefined&is_trigger=undefined");
     }
 
     public static String splatid = "105";

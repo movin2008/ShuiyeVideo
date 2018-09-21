@@ -151,7 +151,7 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
                     int streamID = 0;
                     Iterator<String> iterator = dispatch.keys();
                     while (iterator.hasNext()) {
-                        int tmp = Integer.parseInt(iterator.next());
+                        int tmp = Integer.parseInt(iterator.next().replace("P", "").replace("p", ""));
                         mUrlList.add(new LetvStream(tmp, host + dispatch.getJSONArray(tmp + "").get(0)));
                         if (tmp > streamID) {
                             streamID = tmp;

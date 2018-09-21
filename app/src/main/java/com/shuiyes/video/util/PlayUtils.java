@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.shuiyes.video.bean.Album;
+import com.shuiyes.video.letv.LetvVActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.youku.YoukuVActivity;
 
@@ -17,7 +18,7 @@ public class PlayUtils {
     }
 
     public static boolean isSurpportUrl(String url){
-        return url.contains("youku.com");
+        return url.contains("youku.com") || url.contains("le.com");
     }
 
     public static String formateUrlSource(String url){
@@ -47,6 +48,8 @@ public class PlayUtils {
             }else{
                 context.startActivity(new Intent(context, YoukuVActivity.class).putExtra("url", url).putExtra("title", title));
             }
+        }if (url.contains("le.com")) {
+            context.startActivity(new Intent(context, LetvVActivity.class).putExtra("url", url).putExtra("title", title));
         } else {
             Tips.show(context, "暂不支持播放 " + PlayUtils.formateUrlSource(url), 0);
         }

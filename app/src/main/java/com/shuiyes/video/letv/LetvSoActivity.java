@@ -108,7 +108,35 @@ public class LetvSoActivity extends SearchActivity {
                         data = result.substring(startIndex);
                     }
 
-                    flag++;
+                    String key = "<a href=\"";
+                    int len = data.indexOf(key);
+                    String tmp = data.substring(len + key.length());
+                    len = tmp.indexOf("\"");
+                    String albumUrl = tmp.substring(0, len);
+
+                    key = "title=\"";
+                    len = data.indexOf(key);
+                    tmp = data.substring(len + key.length());
+                    len = tmp.indexOf("\"");
+                    String albumTitle = tmp.substring(0, len);
+
+                    key = "src=\"";
+                    len = data.indexOf(key);
+                    tmp = data.substring(len + key.length());
+                    len = tmp.indexOf("\"");
+                    String albumImg = tmp.substring(0, len);
+
+                    List<ListVideo> listVideos = new ArrayList<ListVideo>();
+
+                    if(PlayUtils.isSurpportUrl(albumUrl)){
+                        Album album = new Album(flag++, albumTitle, "...", albumImg, albumUrl, listVideos);
+                        if(PlayUtils.isSurpportUrl(album.getPlayurl())){
+                            mAlbums.add(album);
+                        }
+                    }else{
+                        Log.e(TAG, "暂不支持播放 《"+albumTitle+"》" + albumUrl);
+                    }
+
 //                    Log.e(TAG, "data"+flag+" ===== "+data);
                     result = result.substring(startIndex+start.length());
 
