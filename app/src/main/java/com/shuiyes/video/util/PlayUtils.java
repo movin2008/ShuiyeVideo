@@ -13,9 +13,9 @@ public class PlayUtils {
 
     private static final String TAG = "PlayUtils";
 
-    public static boolean isYoukuListAlbum(String url){
-        return url.contains("list.youku.com");
-    }
+//    public static boolean isYoukuListAlbum(String url){
+//        return url.contains("list.youku.com");
+//    }
 
     public static boolean isSurpportUrl(String url){
         return url.contains("youku.com") || url.contains("le.com");
@@ -34,10 +34,10 @@ public class PlayUtils {
 
     public static void play(Context context, Album album) {
         String url = album.getPlayurl();
-        if(PlayUtils.isYoukuListAlbum(url)){
-            Tips.show(context, "暂不支持" + PlayUtils.formateUrlSource(url)+"的优酷专辑", 0);
-        }else{
+        if(url.contains("youku.com/v_show/")){
             PlayUtils.play(context, url, album.getTitle());
+        }else{
+            Tips.show(context, "暂不支持" + PlayUtils.formateUrlSource(url)+"的优酷专辑", 0);
         }
     }
 
@@ -46,13 +46,13 @@ public class PlayUtils {
             if(url.contains("youku.com/v_show/")){
                 context.startActivity(new Intent(context, YoukuVActivity.class).putExtra("url", url).putExtra("title", title));
             }else{
-                Tips.show(context, "暂不支持播放" + url, 0);
+                Tips.show(context, "优酷暂不支持播放" + url, 0);
             }
-        }if (url.contains("le.com")) {
+        }else if (url.contains("le.com")) {
             if(url.contains("le.com/ptv/vplay/")){
                 context.startActivity(new Intent(context, LetvVActivity.class).putExtra("url", url).putExtra("title", title));
             }else{
-                Tips.show(context, "暂不支持播放" + url, 0);
+                Tips.show(context, "乐视暂不支持播放" + url, 0);
             }
         } else {
             Tips.show(context, "暂不支持播放 " + PlayUtils.formateUrlSource(url), 0);
