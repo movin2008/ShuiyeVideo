@@ -70,6 +70,10 @@ public class Album {
         this.albumUrl = listurl;
     }
 
+    public int getSize() {
+        return listVideos!=null?listVideos.size():0;
+    }
+
     public List<ListVideo> getListVideos() {
         return listVideos;
     }
@@ -86,4 +90,8 @@ public class Album {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Album [id=" + order + ", title='" + title + "', size="+((listVideos!=null)?listVideos.size():0)+", url='" + playurl + "']";
+    }
 }

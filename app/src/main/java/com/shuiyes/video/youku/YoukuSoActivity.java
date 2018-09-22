@@ -157,10 +157,10 @@ public class YoukuSoActivity extends SearchActivity {
                     String albumImg = HttpUtils.FormateUrl(tmp.substring(0, len));
 //			        Log.e(TAG, flag+" albumImg ===================== "+albumImg);
 
-                    String titleKey = "<a title=\\\"";
                     int prev = 0;
-
                     List<ListVideo> listVideos = new ArrayList<ListVideo>();
+
+                    String titleKey = "<a title=\\\"";
                     while (data.contains(titleKey)) {
 
                         if(mCancelled){

@@ -19,7 +19,7 @@ public class NumberView extends TagView {
         this.title = video.getTitle();
 
         this.setBackgroundResource(R.drawable.btn_rect);
-        this.setText(String.valueOf(video.getId()));
+        this.setText(video.getId());
         this.setGravity(Gravity.CENTER);
         this.setPadding(0, 0, 0, 0);
         this.setTextSize(25);
@@ -31,6 +31,11 @@ public class NumberView extends TagView {
 
     public String getTitle() {
         return title;
+    }
+
+    public int measureWidth(){
+        int measureWidth = Math.round(getPaint().measureText(getText().toString()))+20;
+        return measureWidth>100?measureWidth:100;
     }
 
 }

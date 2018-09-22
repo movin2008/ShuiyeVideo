@@ -6,22 +6,37 @@
     android:orientation="vertical"
     tools:context="com.shuiyes.video.MainActivity">
 
-    <Button
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="soyouku"
-        android:text="优酷搜索" />
+        android:layout_margin="10dp"
+        android:text="@string/app_dpi"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="soletv"
+        android:background="@drawable/btn_rect"
+        android:textSize="30sp"
+        android:layout_margin="10dp"
         android:text="乐视搜索" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="soyouku"
+        android:textSize="30sp"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_rect"
+        android:text="优酷搜索" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="test"
+        android:textSize="30sp"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_rect"
         android:text="测试" />
 
 </LinearLayout>

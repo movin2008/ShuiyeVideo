@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.shuiyes.video.R;
 import com.shuiyes.video.adapter.AlbumAdapter;
 import com.shuiyes.video.bean.Album;
+import com.shuiyes.video.bean.AlbumList;
 import com.shuiyes.video.constants.ResourceDef;
 import com.shuiyes.video.util.Constants;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -56,7 +57,7 @@ public abstract class SearchActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_youku_so);
+        setContentView(R.layout.activity_search);
 
         Log.e(TAG, "onCreate ========================= ");
 
@@ -159,7 +160,7 @@ public abstract class SearchActivity extends BaseActivity {
 
 
     protected String mSearchText;
-    protected List<Album> mAlbums = new ArrayList<Album>();
+    protected AlbumList mAlbums = new AlbumList();
     protected Object LOCK = new Object();
 
     protected abstract void searchVideos(String keyword);

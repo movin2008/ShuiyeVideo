@@ -12,6 +12,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
+import android.util.Log;
 
 public class ImageLoader {
     protected static final String TAG = "ImageLoader";
@@ -23,6 +25,10 @@ public class ImageLoader {
     }
 
     public Bitmap getBitmap(final String imageUrl, final Handler handler) {
+        if(TextUtils.isEmpty(imageUrl)){
+            return null;
+        }
+
         // 判断缓存中是否存在
         if (imageCaches.containsKey(imageUrl)) {
 
@@ -52,6 +58,7 @@ public class ImageLoader {
             public void run() {
                 Bitmap bitmap = BitmapFactory.decodeStream(getInputStreamFromUrl(imageUrl));
                 if (bitmap != null) {
+                    Log.i(TAG, bitmap.getWidth()+"x"+bitmap.getHeight());
                     // 将bitmap放入缓存
                     imageCaches.put(imageUrl, new SoftReference<Bitmap>(bitmap));
                     // //保存图片至SD卡，文件名为图片名称加密串

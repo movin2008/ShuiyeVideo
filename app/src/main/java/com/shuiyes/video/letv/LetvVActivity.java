@@ -126,7 +126,8 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
                     JSONObject data = new JSONObject(info).getJSONObject("msgs");
 
                     if (data.getInt("statuscode") != 1001) {
-                        fault("API 变更");
+//                        Log.e(TAG, info);
+                        fault(data.getString("content"));
                         return;
                     }
 
@@ -148,13 +149,18 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
                     String host = domain.getString(0);
 
                     mUrlList.clear();
-                    int streamID = 0;
+                    String streamUrl = "";
+                    int prevStreamID = 0;
                     Iterator<String> iterator = dispatch.keys();
                     while (iterator.hasNext()) {
-                        int tmp = Integer.parseInt(iterator.next().replace("P", "").replace("p", ""));
-                        mUrlList.add(new LetvStream(tmp, host + dispatch.getJSONArray(tmp + "").get(0)));
-                        if (tmp > streamID) {
-                            streamID = tmp;
+                        String key = iterator.next();
+                        String url = host + dispatch.getJSONArray(key).get(0);
+
+                        int tmp = Integer.parseInt(key.replace("P", "").replace("p", ""));
+                        mUrlList.add(new LetvStream(tmp, url));
+                        if (tmp > prevStreamID) {
+                            prevStreamID = tmp;
+                            streamUrl = url;
                         }
                     }
 
@@ -162,8 +168,7 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
                         Log.i(TAG, v.toStr(mContext));
                     }
 
-                    String url = host + dispatch.getJSONArray(streamID + "").get(0);
-                    playUrl(url, streamID + "P");
+                    playUrl(streamUrl, prevStreamID + "P");
                 } catch (Exception e) {
                     fault(e);
                     e.printStackTrace();

@@ -32,6 +32,7 @@
 
         <activity
             android:name=".youku.YoukuSoActivity"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan"/>
 
         <activity
@@ -44,6 +45,7 @@
 
         <activity
             android:name=".letv.LetvSoActivity"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan"/>
     </application>
 

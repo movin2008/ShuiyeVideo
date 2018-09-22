@@ -2,21 +2,25 @@ package com.shuiyes.video.bean;
 
 public class ListVideo {
 
-    private int id;
+    private String id;
     private String title;
     private String url;
 
     public ListVideo(int id, String title, String url) {
+        this(id+"", title, url);
+    }
+
+    public ListVideo(String id, String title, String url) {
         this.id = id;
         this.title = title;
         this.url = url;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

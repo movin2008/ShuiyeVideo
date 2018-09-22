@@ -43,13 +43,17 @@ public class PlayUtils {
 
     public static void play(Context context, String url, String title) {
         if (url.contains("youku.com")) {
-            if(PlayUtils.isYoukuListAlbum(url)){
-                Log.e(TAG, "暂不支持优酷搜索的" + PlayUtils.formateUrlSource(url));
-            }else{
+            if(url.contains("youku.com/v_show/")){
                 context.startActivity(new Intent(context, YoukuVActivity.class).putExtra("url", url).putExtra("title", title));
+            }else{
+                Tips.show(context, "暂不支持播放" + url, 0);
             }
         }if (url.contains("le.com")) {
-            context.startActivity(new Intent(context, LetvVActivity.class).putExtra("url", url).putExtra("title", title));
+            if(url.contains("le.com/ptv/vplay/")){
+                context.startActivity(new Intent(context, LetvVActivity.class).putExtra("url", url).putExtra("title", title));
+            }else{
+                Tips.show(context, "暂不支持播放" + url, 0);
+            }
         } else {
             Tips.show(context, "暂不支持播放 " + PlayUtils.formateUrlSource(url), 0);
         }

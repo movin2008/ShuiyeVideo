@@ -31,7 +31,7 @@ public class AlbumDialog extends FlowlayoutDialog {
                 NumberView view = new NumberView(getContext(), t);
                 view.setTextColor(Color.WHITE);
                 view.setOnClickListener(mListener);
-                view.setSize(120, 120);
+                view.setSize(view.measureWidth(), 120);
                 return view;
             }
         });

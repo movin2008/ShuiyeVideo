@@ -2,7 +2,6 @@ package com.zhy.view.flowlayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.text.TextUtilsCompat;
 import android.util.AttributeSet;
 import android.util.LayoutDirection;
 import android.view.View;
@@ -30,14 +29,14 @@ public class FlowLayout extends ViewGroup {
         super(context, attrs, defStyle);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TagFlowLayout);
         mGravity = ta.getInt(R.styleable.TagFlowLayout_tag_gravity, LEFT);
-        int layoutDirection = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault());
-        if (layoutDirection == LayoutDirection.RTL) {
-            if (mGravity == LEFT) {
-                mGravity = RIGHT;
-            } else {
-                mGravity = LEFT;
-            }
-        }
+//        int layoutDirection = android.support.v4.text.TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault());
+//        if (layoutDirection == LayoutDirection.RTL) {
+//            if (mGravity == LEFT) {
+//                mGravity = RIGHT;
+//            } else {
+//                mGravity = LEFT;
+//            }
+//        }
         ta.recycle();
     }
 

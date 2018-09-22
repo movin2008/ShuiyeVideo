@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-     
+    
     <dimen name="album_title_size">20sp</dimen>
     <dimen name="album_summary_size">12sp</dimen>
     <dimen name="search_bottom_size">2dp</dimen>

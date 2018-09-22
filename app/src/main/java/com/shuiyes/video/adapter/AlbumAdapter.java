@@ -103,7 +103,7 @@ public class AlbumAdapter extends BaseAdapter {
             @Override
             public TagView getView(FlowLayout parent, int position, final ListVideo t) {
                 NumberView view = new NumberView(context, t);
-                view.setSize(100, 100);
+                view.setSize(view.measureWidth(), 100);
 
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override

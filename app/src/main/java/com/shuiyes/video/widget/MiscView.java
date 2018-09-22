@@ -14,7 +14,7 @@ public class MiscView extends TagView {
 
         this.setBackgroundResource(R.drawable.btn_rect);
         this.setGravity(Gravity.CENTER);
-        this.setPadding(20, 0, 20, 0);
+        this.setPadding(0, 0, 0, 0);
         this.setTextSize(25);
     }
 
@@ -31,6 +31,9 @@ public class MiscView extends TagView {
         return playVideo;
     }
 
-
+    public int measureWidth(){
+        int measureWidth = Math.round(getPaint().measureText(getText().toString()))+40;
+        return measureWidth>100?measureWidth:100;
+    }
 
 }
