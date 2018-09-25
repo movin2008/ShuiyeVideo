@@ -21,6 +21,7 @@ import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.dialog.MiscDialog;
+import com.shuiyes.video.widget.Tips;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +103,43 @@ public abstract class PlayActivity extends BaseActivity {
                 }
 
                 return false;
+            }
+        });
+
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                Log.e(TAG, " =========================== onPrepared");
+                mediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
+
+                mPrepared = true;
+                mIsError = false;
+
+                mHandler.sendEmptyMessage(MSG_PALY_VIDEO);
+                mediaPlayer.start();
+            }
+        });
+
+        mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+                Log.e(TAG, " =========================== onError(" + i + "," + i1 + ")");
+                String err = "视频无法播放(" + i + "," + i1 + ")";
+                Tips.show(mContext, err, 0);
+                fault(err);
+                return false;
+            }
+        });
+
+        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Log.e(TAG, " =========================== onCompletion");
+                if (!mIsError) {
+                    mLoadingProgress.setVisibility(View.VISIBLE);
+                    playVideo();
+                }
             }
         });
 
@@ -215,13 +253,13 @@ public abstract class PlayActivity extends BaseActivity {
                 case MSG_FAULT:
                     Object error = msg.obj;
                     mLoadingProgress.setVisibility(View.GONE);
-                    mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : "") + " 5s后返回...");
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    }, 5555);
+                    mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : "") /*+ " 5s后返回..."*/);
+//                    mHandler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            finish();
+//                        }
+//                    }, 5555);
                     break;
                 case MSG_FETCH_TOKEN:
                     mStateView.setText(mStateView.getText() + "[成功]\n获取Token...");
@@ -261,7 +299,7 @@ public abstract class PlayActivity extends BaseActivity {
                         public void run() {
                             mStateView.setText("");
                         }
-                    }, 1111);
+                    }, 2222);
                     break;
                 case MSG_SET_TITLE:
                     Log.e(TAG, "setTitle=" + msg.obj);
@@ -290,5 +328,6 @@ public abstract class PlayActivity extends BaseActivity {
     };
 
     protected abstract void cacheVideo(PlayVideo video);
+    protected abstract void playVideo();
 
 }

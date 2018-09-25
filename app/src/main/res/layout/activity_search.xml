@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="优酷资源"/>
+            android:hint="请输入搜索关键字"/>
 
         <Button
             android:layout_width="35dp"

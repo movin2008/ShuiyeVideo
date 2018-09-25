@@ -27,6 +27,7 @@ public class LetvSoActivity extends SearchActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mSearch.setHint("乐看搜索");
         mSearch.setText("胡歌");//延禧宫略
     }
 

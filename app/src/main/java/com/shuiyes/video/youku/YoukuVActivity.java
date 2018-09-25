@@ -8,7 +8,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +22,6 @@ import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
-import com.shuiyes.video.widget.Tips;
 
 public class YoukuVActivity extends PlayActivity implements View.OnClickListener {
 
@@ -36,41 +34,6 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
         mClarityView.setOnClickListener(this);
         mSelectView.setOnClickListener(this);
         mNextView.setOnClickListener(this);
-
-        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                Log.e(TAG, " =========================== onPrepared");
-                mediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
-
-                mPrepared = true;
-                mHandler.sendEmptyMessage(MSG_PALY_VIDEO);
-                mediaPlayer.start();
-            }
-        });
-
-        mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-                Log.e(TAG, " =========================== onError(" + i + "," + i1 + ")");
-                String err = "视频无法播放(" + i + "," + i1 + ")";
-                Tips.show(mContext, err, 0);
-                fault(err);
-                return false;
-            }
-        });
-
-        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                Log.e(TAG, " =========================== onCompletion");
-                if (!mIsError) {
-                    mLoadingProgress.setVisibility(View.VISIBLE);
-                    playVideo();
-                }
-            }
-        });
 
         String key = "show/id_";
         int index = mUrl.indexOf(key);
@@ -92,7 +55,8 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
     private boolean mIsAlbum;
     private List<YoukuVideo> mUrlList = new ArrayList<YoukuVideo>();
 
-    private void playVideo() {
+    @Override
+    protected void playVideo() {
         new Thread(new Runnable() {
             @Override
             public void run() {

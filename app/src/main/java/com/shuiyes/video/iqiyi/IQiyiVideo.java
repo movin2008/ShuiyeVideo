@@ -45,15 +45,15 @@ public class IQiyiVideo extends PlayVideo{
             case 14:
                 type = VideoType.TD;
                 break;
-            case 17:
-                type = VideoType.TD_H265;
-                break;
+//            case 17:
+//                type = VideoType.TD_H265;
+//                break;
             case 2:
                 type = VideoType.HD;
                 break;
-            case 21:
-                type = VideoType.HD_H265;
-                break;
+//            case 21:
+//                type = VideoType.HD_H265;
+//                break;
             case 1:
                 type = VideoType.SD;
                 break;

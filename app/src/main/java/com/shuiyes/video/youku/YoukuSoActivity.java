@@ -23,6 +23,7 @@ public class YoukuSoActivity extends SearchActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mSearch.setHint("优酷搜索");
         mSearch.setText("wangwangduilidagong");
     }
 

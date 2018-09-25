@@ -99,7 +99,9 @@ public class AlbumAdapter extends BaseAdapter {
             viewHolder.img.setImageBitmap(bitmap);
         }
 
-        viewHolder.album.setAdapter(new TagAdapter<ListVideo>(album.getListVideos()) {
+
+        List<ListVideo> listVideos = album.getListVideos();
+        viewHolder.album.setAdapter(new TagAdapter<ListVideo>(listVideos) {
             @Override
             public TagView getView(FlowLayout parent, int position, final ListVideo t) {
                 NumberView view = new NumberView(context, t);
@@ -115,6 +117,8 @@ public class AlbumAdapter extends BaseAdapter {
                 return view;
             }
         });
+//        if(listVideos.size() > 1){
+//        }
 
         return view;
     }

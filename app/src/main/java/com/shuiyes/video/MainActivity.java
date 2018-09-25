@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.shuiyes.video.base.BaseActivity;
+import com.shuiyes.video.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.iqiyi.IQiyiVActivity;
 import com.shuiyes.video.letv.LetvSoActivity;
 import com.shuiyes.video.letv.LetvVActivity;
@@ -63,6 +64,7 @@ public class MainActivity extends BaseActivity {
 //        this.startActivity(new Intent(this, LetvVActivity.class).putExtra("url", "http://www.le.com/ptv/vplay/26101788.html"));
 //        this.startActivity(new Intent(this, IQiyiVActivity.class).putExtra("url", "https://www.iqiyi.com/v_19rqzvbyms.html"));
         this.startActivity(new Intent(this, IQiyiVActivity.class).putExtra("url", "https://www.iqiyi.com/v_19rrc17tj8.html"));
+//        this.startActivity(new Intent(this, IQiyiVActivity.class).putExtra("url", "https://www.iqiyi.com/v_19rr4tgn5c.html"));
     }
 
     public void soyouku(View view){
@@ -71,6 +73,10 @@ public class MainActivity extends BaseActivity {
 
     public void soletv(View view){
         this.startActivity(new Intent(this, LetvSoActivity.class));
+    }
+
+    public void soiqiyi(View view){
+        this.startActivity(new Intent(this, IQIyiSoActivity.class));
     }
 
 }

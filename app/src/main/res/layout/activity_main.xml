@@ -15,6 +15,15 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="soiqiyi"
+        android:background="@drawable/btn_rect"
+        android:textSize="30sp"
+        android:layout_margin="10dp"
+        android:text="爱奇艺搜索" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="soletv"
         android:background="@drawable/btn_rect"
         android:textSize="30sp"

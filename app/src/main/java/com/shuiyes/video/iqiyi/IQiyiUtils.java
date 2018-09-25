@@ -25,4 +25,13 @@ public class IQiyiUtils {
         return HttpUtils.open(url);
     }
 
+    public static String search(String keyword) {
+        String url = "https://search.video.iqiyi.com/o?if=html5&pageNum=1&pageSize=30&video_allow_3rd=1";
+        // 电影,1;电视剧,2;纪录片,3;动漫,4;音乐,5;综艺,6;娱乐,7;游戏,8;旅游,9;片花,10;
+        // 公开课,11;教育,12;时尚,13;时尚综艺,14;少儿综艺,15;微电影,16;体育,17;奥运,18;直播,19;广告,20;
+        // 生活,21;搞笑,22;奇葩,23",
+        url += "&channel_name=";
+        url += "&key="+keyword;
+        return HttpUtils.open(url);
+    }
 }

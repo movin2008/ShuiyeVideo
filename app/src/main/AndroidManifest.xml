@@ -49,6 +49,11 @@
             android:screenOrientation="landscape"/>
 
         <activity
+            android:name=".iqiyi.IQIyiSoActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <activity
             android:name=".iqiyi.IQiyiVActivity"
             android:screenOrientation="landscape"/>
 

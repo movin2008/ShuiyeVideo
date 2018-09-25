@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class HttpUtils {
 
     private final static String TAG = "HttpUtils";
@@ -75,34 +77,66 @@ public class HttpUtils {
 //        conn.setRequestProperty(":method", "GET");
 
 
-        HttpURLConnection conn = null;
-        try {
-            conn = (HttpURLConnection) new URL(url).openConnection();
-            HttpUtils.setURLConnection(conn);
-            conn.setRequestMethod("GET");
-            conn.connect();
+        if(url.startsWith("https://")){
+            HttpsURLConnection conn = null;
+            try {
+                conn = (HttpsURLConnection) new URL(url).openConnection();
+                HttpUtils.setURLConnection(conn);
+                conn.setRequestMethod("GET");
+                conn.connect();
 
-            int code = conn.getResponseCode();
-            if (code == 200) {
-                StringBuffer ret = new StringBuffer();
-                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-                String read = null;
-                while ((read = in.readLine()) != null) {
-                    ret.append(read);
+                int code = conn.getResponseCode();
+                if (code == 200) {
+                    StringBuffer ret = new StringBuffer();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                    String read = null;
+                    while ((read = in.readLine()) != null) {
+                        ret.append(read);
+                    }
+                    in.close();
+                    return ret.toString();
+                } else {
+                    Log.e(TAG, "open("+url+") ResponseCode="+code);
+                    printHeaders(conn);
                 }
-                in.close();
-                return ret.toString();
-            } else {
-                Log.e(TAG, "open("+url+") ResponseCode="+code);
-                printHeaders(conn);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                if(conn != null){
+                    conn.disconnect();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            if(conn != null){
-                conn.disconnect();
+        }else{
+            HttpURLConnection conn = null;
+            try {
+                conn = (HttpURLConnection) new URL(url).openConnection();
+                HttpUtils.setURLConnection(conn);
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                int code = conn.getResponseCode();
+                if (code == 200) {
+                    StringBuffer ret = new StringBuffer();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                    String read = null;
+                    while ((read = in.readLine()) != null) {
+                        ret.append(read);
+                    }
+                    in.close();
+                    return ret.toString();
+                } else {
+                    Log.e(TAG, "open("+url+") ResponseCode="+code);
+                    printHeaders(conn);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                if(conn != null){
+                    conn.disconnect();
+                }
             }
         }
+
 
         return null;
     }

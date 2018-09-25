@@ -20,6 +20,11 @@ public class Album {
         this.albumUrl = albumUrl;
         this.listVideos = listVideos;
         this.playurl = getListPlayurl();
+
+        // 一个视频不需要展示列表
+        if(listVideos.size() == 1){
+            listVideos.clear();
+        }
     }
 
     public String getTitle() {
