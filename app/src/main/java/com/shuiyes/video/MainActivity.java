@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.shuiyes.video.base.BaseActivity;
+import com.shuiyes.video.iqiyi.IQiyiVActivity;
 import com.shuiyes.video.letv.LetvSoActivity;
 import com.shuiyes.video.letv.LetvVActivity;
 import com.shuiyes.video.youku.YoukuSoActivity;
+import com.shuiyes.video.youku.YoukuVActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -57,7 +59,10 @@ public class MainActivity extends BaseActivity {
     }
 
     public void test(View view){
-        this.startActivity(new Intent(this, LetvVActivity.class).putExtra("url", "http://www.le.com/ptv/vplay/26101788.html"));
+//        this.startActivity(new Intent(this, YoukuVActivity.class).putExtra("url", "http://v.youku.com/v_show/id_XMzcwNjg5MDUyNA==.html"));
+//        this.startActivity(new Intent(this, LetvVActivity.class).putExtra("url", "http://www.le.com/ptv/vplay/26101788.html"));
+//        this.startActivity(new Intent(this, IQiyiVActivity.class).putExtra("url", "https://www.iqiyi.com/v_19rqzvbyms.html"));
+        this.startActivity(new Intent(this, IQiyiVActivity.class).putExtra("url", "https://www.iqiyi.com/v_19rrc17tj8.html"));
     }
 
     public void soyouku(View view){

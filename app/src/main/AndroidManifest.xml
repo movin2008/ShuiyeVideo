@@ -40,13 +40,18 @@
             android:screenOrientation="landscape"/>
 
         <activity
+            android:name=".letv.LetvSoActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <activity
             android:name=".letv.LetvVActivity"
             android:screenOrientation="landscape"/>
 
         <activity
-            android:name=".letv.LetvSoActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan"/>
+            android:name=".iqiyi.IQiyiVActivity"
+            android:screenOrientation="landscape"/>
+
     </application>
 
 </manifest>

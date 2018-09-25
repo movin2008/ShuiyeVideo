@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:text="初始化...[成功]"
+        android:text="初始化..."
         android:textColor="@android:color/white" />
 
     <ProgressBar

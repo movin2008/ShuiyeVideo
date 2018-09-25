@@ -56,6 +56,25 @@ public class HttpUtils {
     }
 
     public static String open(String url){
+        return HttpUtils.open(url ,false);
+    }
+
+    public static String open(String url, boolean print){
+        Log.e(TAG, "open "+url);
+
+//        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
+////        conn.setRequestProperty("Cookie", "cna=" + cna);
+//        conn.setRequestProperty("Upgrade-Insecure-Requests", "1");
+//        conn.setRequestProperty("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+//        conn.setRequestProperty("accept-encoding", "gzip, deflate, br");
+//        conn.setRequestProperty("accept-language", "zh-CN,zh;q=0.9");
+//        conn.setRequestProperty("cache-control", "max-age=0");
+//        conn.setRequestProperty(":authority", conn.getURL().getAuthority());
+//        conn.setRequestProperty(":path", conn.getURL().getPath()+"?"+conn.getURL().getQuery());
+//        conn.setRequestProperty(":scheme", "https");
+//        conn.setRequestProperty(":method", "GET");
+
+
         HttpURLConnection conn = null;
         try {
             conn = (HttpURLConnection) new URL(url).openConnection();
@@ -80,7 +99,9 @@ public class HttpUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
-            conn.disconnect();
+            if(conn != null){
+                conn.disconnect();
+            }
         }
 
         return null;

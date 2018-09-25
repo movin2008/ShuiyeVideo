@@ -11,6 +11,8 @@ import com.shuiyes.video.base.PlayActivity;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.dialog.MiscDialog;
+import com.shuiyes.video.util.HttpUtils;
+import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
@@ -18,10 +20,6 @@ import com.shuiyes.video.widget.Tips;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -74,33 +72,21 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
             }
         });
 
-        String url = getIntent().getStringExtra("url");
-        Log.e(TAG, "now url=" + url);
-
         String key = "vplay/";
 //        if(url.contains("soku.com")){
 //            key = "show/";
 //        }
-        int index = url.indexOf(key);
-        if (url.indexOf(".html") != -1) {
-            mVid = url.substring(index + key.length(), url.indexOf(".html"));
+        int index = mUrl.indexOf(key);
+        if (mUrl.indexOf(".html") != -1) {
+            mVid = mUrl.substring(index + key.length(), mUrl.indexOf(".html"));
         } else {
-            mVid = url.substring(index + key.length());
+            mVid = mUrl.substring(index + key.length());
         }
         Log.e(TAG, "now mVid=" + mVid);
-
-
-        mTitleView.setText(getIntent().getStringExtra("title"));
 
         playVideo();
     }
 
-
-    /**
-     * 专辑可选集
-     */
-    private boolean mIsAlbum;
-    private List<ListVideo> mVideoList = new ArrayList<ListVideo>();
     private List<LetvStream> mUrlList = new ArrayList<LetvStream>();
     private List<LetvSource> mSourceList = new ArrayList<LetvSource>();
 
@@ -111,20 +97,11 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
                 try {
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
-                    String info = LetvUtils.fetchVideo(LetvUtils.getVideoInfoUrl(mVid), false);
+                    String info = HttpUtils.open(LetvUtils.getVideoInfoUrl(mVid));
 
-                    File file = new File("/sdcard/LetvStream");
-                    if (file.exists()) {
-                        file.delete();
-                    }
-
-                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-                    bw.write(info);
-                    bw.close();
-
+                    Utils.setFile("/sdcard/LetvStream", info);
 
                     JSONObject data = new JSONObject(info).getJSONObject("msgs");
-
                     if (data.getInt("statuscode") != 1001) {
 //                        Log.e(TAG, info);
                         fault(data.getString("content"));
@@ -179,22 +156,14 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
 
     private void playUrl(String url, String streamStr) throws Exception {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIDEO, streamStr));
-
-        String video = LetvUtils.fetchVideo(LetvUtils.getVideoPlayUrl(url, mVid), false);
+        String video = HttpUtils.open(LetvUtils.getVideoPlayUrl(url, mVid));
 
         if (video == null) {
             fault("解析异常请重试");
             return;
         }
 
-        File file = new File("/sdcard/LetvSource");
-        if (file.exists()) {
-            file.delete();
-        }
-
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-        bw.write(video);
-        bw.close();
+        Utils.setFile("/sdcard/LetvSource", video);
 
         JSONObject data = new JSONObject(video);
         JSONArray streams = data.getJSONArray("nodelist");
@@ -223,10 +192,6 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
             mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mSourceList.get(0)));
         }
     }
-
-    private MiscDialog mSourceDialog;
-    private MiscDialog mClarityDialog;
-    private AlbumDialog mAlbumDialog;
 
     @Override
     public void onClick(View view) {

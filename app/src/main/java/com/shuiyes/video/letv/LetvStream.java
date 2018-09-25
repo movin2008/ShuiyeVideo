@@ -18,7 +18,6 @@ public class LetvStream extends PlayVideo{
         return stream;
     }
 
-    @Override
     public String toStr(Context ctx) {
         return "LetvSource{" +
                 "stream=" + stream +

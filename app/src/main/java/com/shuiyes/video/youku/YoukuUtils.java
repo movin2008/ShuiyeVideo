@@ -2,8 +2,6 @@ package com.shuiyes.video.youku;
 
 import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -11,8 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import com.shuiyes.video.util.HttpUtils;
 
@@ -52,30 +48,26 @@ public class YoukuUtils {
             conn.connect();
 
             String ret = conn.getHeaderField("ETag");
-            if(conn.getHeaderField("ETag") != null){
-               return ret.substring(1, ret.length() - 1);
-            }
+            if(ret != null){
+                ret = ret.substring(1, ret.length() - 1);
+            }else{
+                Map<String, List<String>> headers = conn.getHeaderFields();
+                Set<String> keys = headers.keySet();
+                Iterator<String> iterator = keys.iterator();
+                while (iterator.hasNext()) {
+                    String key = iterator.next();
+                    Log.e(TAG, key+"="+headers.get(key).get(0));
 
-            Map<String, List<String>> headers = conn.getHeaderFields();
-            Set<String> keys = headers.keySet();
-            Iterator<String> iterator = keys.iterator();
-            while (iterator.hasNext()) {
-                String key = iterator.next();
-                Log.e(TAG, key+"="+headers.get(key).get(0));
-
-                if ("ETag".equals(key)) {
-                    String cna = headers.get(key).get(0);
-                    ret = cna.substring(1, cna.length() - 1);
-                    break;
-                } else if ("Set-Cookie".equals(key)) {
-                    List<String> l = headers.get(key);
-                    if (l.size() > 0) {
-                        String v = l.get(0);
-                        if (v.contains("cna=")) {
-                            String cna = v.split(";")[0];
-                            if ("cna".equals(cna.split("=")[0])) {
-                                ret = cna.split("=")[1];
-                                break;
+                    if ("Set-Cookie".equals(key)) {
+                        List<String> l = headers.get(key);
+                        if (l.size() > 0) {
+                            String v = l.get(0);
+                            if (v.contains("cna=")) {
+                                String cna = v.split(";")[0];
+                                if ("cna".equals(cna.split("=")[0])) {
+                                    ret = cna.split("=")[1];
+                                    break;
+                                }
                             }
                         }
                     }
@@ -89,57 +81,6 @@ public class YoukuUtils {
                 conn.disconnect();
             }
         }
-        return null;
-    }
-
-
-    public static String fetchVideo(String vid, String cna, String videoUrl) {
-        String url = YoukuUtils.getVideoUrl(vid, cna);
-        Log.e(TAG, "url=" + url);
-
-//        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
-////        conn.setRequestProperty("Cookie", "cna=" + cna);
-//        conn.setRequestProperty("Upgrade-Insecure-Requests", "1");
-//        conn.setRequestProperty("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-//        conn.setRequestProperty("accept-encoding", "gzip, deflate, br");
-//        conn.setRequestProperty("accept-language", "zh-CN,zh;q=0.9");
-//        conn.setRequestProperty("cache-control", "max-age=0");
-//        conn.setRequestProperty(":authority", conn.getURL().getAuthority());
-//        conn.setRequestProperty(":path", conn.getURL().getPath()+"?"+conn.getURL().getQuery());
-//        conn.setRequestProperty(":scheme", "https");
-//        conn.setRequestProperty(":method", "GET");
-
-        HttpsURLConnection conn = null;
-        try {
-            conn = (HttpsURLConnection) new URL(url).openConnection();
-            conn.setRequestMethod("GET");
-            HttpUtils.setURLConnection(conn, videoUrl);
-            conn.connect();
-
-            int code = conn.getResponseCode();
-            if (code == 200) {
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(conn.getInputStream(), "UTF-8"));
-                String read = null;
-                StringBuffer ret = new StringBuffer();
-                while ((read = in.readLine()) != null) {
-                    ret.append(read);
-//                Log.e(TAG, read);
-                }
-                in.close();
-                return ret.toString();
-            } else {
-                Log.e(TAG, "fetchVideo("+url+") ResponseCode="+code);
-                HttpUtils.printHeaders(conn);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            if(conn != null){
-                conn.disconnect();
-            }
-        }
-
         return null;
     }
 

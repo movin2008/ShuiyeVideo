@@ -1,9 +1,5 @@
 package com.shuiyes.video.youku;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,6 +19,8 @@ import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.MiscDialog;
+import com.shuiyes.video.util.HttpUtils;
+import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
@@ -74,13 +72,7 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
             }
         });
 
-        mUrl = getIntent().getStringExtra("url");
-        Log.e(TAG, "now url=" + mUrl);
-
         String key = "show/id_";
-//        if(url.contains("soku.com")){
-//            key = "show/";
-//        }
         int index = mUrl.indexOf(key);
         if (mUrl.indexOf(".html") != -1) {
             mVid = mUrl.substring(index + key.length(), mUrl.indexOf(".html"));
@@ -89,13 +81,9 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
         }
         Log.e(TAG, "now mVid=" + mVid);
 
-
-        mTitleView.setText(getIntent().getStringExtra("title"));
-
         playVideo();
     }
 
-    private String mUrl;
     private String mToken;
 
     /**
@@ -124,22 +112,14 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
                     }
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
-                    String info = YoukuUtils.fetchVideo(mVid, mToken, mUrl);
+                    String info = HttpUtils.open(YoukuUtils.getVideoUrl(mVid, mToken));
 
                     if (info == null) {
                         fault("解析异常请重试");
                         return;
                     }
 
-                    File file = new File("/sdcard/youku");
-                    if (file.exists()) {
-                        file.delete();
-                    }
-
-                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-                    bw.write(info);
-                    bw.close();
-
+                    Utils.setFile("/sdcard/youku", info);
 
                     JSONObject data = new JSONObject(info).getJSONObject("data");
 
@@ -220,10 +200,6 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
         }).start();
     }
 
-
-    private MiscDialog mClarityDialog;
-    private AlbumDialog mAlbumDialog;
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -240,7 +216,6 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
                         }
 
                         mStateView.setText("初始化...");
-
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, ((MiscView) view).getPlayVideo()));
                     }
                 });

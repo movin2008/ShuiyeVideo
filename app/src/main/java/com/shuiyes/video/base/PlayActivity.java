@@ -19,6 +19,8 @@ import android.widget.VideoView;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
+import com.shuiyes.video.dialog.AlbumDialog;
+import com.shuiyes.video.dialog.MiscDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +83,6 @@ public abstract class PlayActivity extends BaseActivity {
 
             @Override
             public boolean onInfo(MediaPlayer mediaPlayer, int what, int extra) {
-                Log.e(TAG, " =========================== onInfo(" + what + ", " + extra + ")");
                 switch (what) {
                     case MediaPlayer.MEDIA_INFO_BUFFERING_START:
                         Log.e(TAG, " =========================== MEDIA_INFO_BUFFERING_START");
@@ -95,12 +96,19 @@ public abstract class PlayActivity extends BaseActivity {
                         Log.e(TAG, " =========================== MEDIA_INFO_VIDEO_RENDERING_START");
                         mLoadingProgress.setVisibility(View.GONE);
                         break;
+                    default:
+                        Log.e(TAG, " =========================== onInfo(" + what + ", " + extra + ")");
+                        break;
                 }
 
                 return false;
             }
         });
 
+        mUrl = getIntent().getStringExtra("url");
+        Log.e(TAG, "now url=" + mUrl);
+
+        mTitleView.setText(getIntent().getStringExtra("title"));
     }
 
     @Override
@@ -124,6 +132,24 @@ public abstract class PlayActivity extends BaseActivity {
         }
     }
 
+    protected MiscDialog mSourceDialog;
+    protected MiscDialog mClarityDialog;
+    protected AlbumDialog mAlbumDialog;
+
+    @Override
+    protected void onDestroy() {
+        if(mSourceDialog != null && mSourceDialog.isShowing()){
+            mSourceDialog.dismiss();
+        }
+        if(mClarityDialog != null && mClarityDialog.isShowing()){
+            mClarityDialog.dismiss();
+        }
+        if(mAlbumDialog != null && mAlbumDialog.isShowing()){
+            mAlbumDialog.dismiss();
+        }
+        super.onDestroy();
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
@@ -144,7 +170,7 @@ public abstract class PlayActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    protected String mVid;
+    protected String mVid, mUrl;
     protected List<ListVideo> mVideoList = new ArrayList<ListVideo>();
 
     protected int mCurrentPosition;
@@ -198,11 +224,11 @@ public abstract class PlayActivity extends BaseActivity {
                     }, 5555);
                     break;
                 case MSG_FETCH_TOKEN:
-                    mStateView.setText("初始化...[成功]\n获取Token...");
+                    mStateView.setText(mStateView.getText() + "[成功]\n获取Token...");
                     mStateView.setVisibility(View.VISIBLE);
                     break;
                 case MSG_FETCH_VIDEOINFO:
-                    mStateView.setText("初始化...[成功]\n获取视频信息...");
+                    mStateView.setText(mStateView.getText() + "[成功]\n获取视频信息...");
                     mStateView.setVisibility(View.VISIBLE);
                     break;
                 case MSG_FETCH_VIDEO:

@@ -2,7 +2,6 @@ package com.shuiyes.video.letv;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -11,14 +10,11 @@ import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.Constants;
 import com.shuiyes.video.util.PlayUtils;
+import com.shuiyes.video.util.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -100,15 +96,7 @@ public class LetvSoActivity extends SearchActivity {
                 }else{
                     Log.e(TAG, "解析异常.");
 
-                    File file = new File("/sdcard/letv.html");
-                    if (file.exists()) {
-                        file.delete();
-                    }
-
-                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-                    bw.write(result);
-                    bw.close();
-
+                    Utils.setFile("/sdcard/letv.html", result);
                     return false;
                 }
 
