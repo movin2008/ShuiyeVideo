@@ -5,12 +5,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.shuiyes.video.base.BaseActivity;
 import com.shuiyes.video.util.HttpUtils;
@@ -25,7 +27,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    private EditText mEditText;
+    private TextView mUrl, mProgress;
     private WebView mWebView;
     protected Button mBack, mForward, mRefresh, mPlay;
 
@@ -45,8 +47,9 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
         String url = getIntent().getStringExtra("url");
 
-        mEditText = (EditText) this.findViewById(R.id.et_url);
-        mEditText.setText(url);
+        mProgress = (TextView) this.findViewById(R.id.tv_progress);
+        mUrl = (TextView) this.findViewById(R.id.tv_url);
+        mUrl.setText(url);
 
         mWebView = (WebView) findViewById(R.id.webview);
 
@@ -71,7 +74,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
                 Log.e(TAG, "shouldOverrideUrlLoading " + url);
 
-                mEditText.setText(url);
+                mUrl.setText(url);
                 view.loadUrl(url);
 
                 // 返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
@@ -135,6 +138,15 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 //                        "})()");
 
                 super.onPageFinished(view, url);
+            }
+        });
+
+        mWebView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+//                Log.e(TAG, "onProgressChanged " + newProgress);
+                mProgress.setText(newProgress+"%");
+                super.onProgressChanged(view, newProgress);
             }
         });
     }
