@@ -12,7 +12,7 @@
         android:id="@+id/et_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#cccccccc"
+        android:background="#44000000"
         android:enabled="false"
         android:focusable="false" />
 
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#aaaaaaaa"
+        android:background="#55000000"
         android:padding="1dp">
 
         <Button

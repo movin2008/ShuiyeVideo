@@ -1,6 +1,7 @@
 package com.shuiyes.video;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,9 +15,11 @@ import android.widget.EditText;
 import com.shuiyes.video.base.BaseActivity;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.PlayUtils;
+import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.Tips;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class WebActivity extends BaseActivity implements View.OnClickListener {
 
@@ -48,7 +51,9 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         mWebView = (WebView) findViewById(R.id.webview);
 
         WebSettings settings = mWebView.getSettings();
-        if(url.contains("m.youku.com") || url.contains("m.iqiyi.com")){
+
+        //url.contains("m.iqiyi.com")
+        if(url.contains("m.youku.com")){
             settings.setUserAgentString(HttpUtils.UA_WX);
         }else{
             settings.setUserAgentString(HttpUtils.UA_WIN);
@@ -61,7 +66,11 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                mLoadHighlightCss = false;
+                mCssUrl = null;
+                mOverlayCss = false;
+
+                Log.e(TAG, "shouldOverrideUrlLoading " + url);
+
                 mEditText.setText(url);
                 view.loadUrl(url);
 
@@ -73,18 +82,44 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
 
                 // 爱奇艺没有高亮状态
-                if (url.contains("iqiyi.com") && url.endsWith(".css")) {
-                    Log.e(TAG, "shouldInterceptRequest " + url);
-                    try {
-                        if(!mLoadHighlightCss){
-                            mLoadHighlightCss = true;
-                            Log.e(TAG, "load webkit_tap_highlight.css");
-                            return new WebResourceResponse("text/css", "utf-8", mContext.getAssets().open("css/webkit_tap_highlight.css"));
+
+                try{
+//                    if(url.equals("https://www.iqiyipic.com/common/fix/site-v4/sprite-headLogo-index.png")){
+//                        return new WebResourceResponse("text/css", "utf-8", mContext.getAssets().open("css/test.css"));
+//                    }
+
+//                    Log.e(TAG, "shouldInterceptRequest " + url);
+                    if (url.startsWith("https://stc.iqiyipic.com/gaze/uniqy/main/css/")) {
+                        InputStream in = Utils.isTransparentHighlightCss(mContext, url);
+                        if (in != null) {
+                            Log.e(TAG, "inject webkit_tap_highlight.css");
+                            return new WebResourceResponse("text/css", "utf-8", in);
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
+                }catch (Exception e) {
+                    e.printStackTrace();
                 }
+
+
+//                if (url.contains("iqiyi") && (url.endsWith(".css") || url.endsWith(".jpg"))) {
+////                    Log.e(TAG, "shouldInterceptRequest " + url);
+//                    try {
+//                        if(TextUtils.isEmpty(mCssUrl)){
+//                            Log.e(TAG, "load webkit_tap_highlight.css");
+//                            mCssUrl = url;
+//
+//                            return new WebResourceResponse("text/css", "utf-8", mContext.getAssets().open("css/webkit_tap_highlight.css"));
+//                        }else{
+//                            if(!mOverlayCss){
+//                                mOverlayCss = true;
+////                                return new WebResourceResponse("text/css", "utf-8", HttpUtils.openInputStream(mCssUrl));
+//                            }
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+
                 return super.shouldInterceptRequest(view, url);
             }
 
@@ -95,7 +130,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 //                        "var parent = document.getElementsByTagName('head').item(0);" +
 //                        "var style = document.createElement('style');" +
 //                        "style.type = 'text/css';" +
-//                        "style.innerHTML = window.atob('html{-webkit-tap-highlight-color: red;}');" +
+//                        "style.innerHTML = window.atob('html{-webkit-tap-highlight-color: grey;}');" +
 //                        "parent.appendChild(style)" +
 //                        "})()");
 
@@ -104,7 +139,8 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
-    private boolean mLoadHighlightCss = false;
+    private boolean mOverlayCss = false;
+    private String mCssUrl = null;
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -117,17 +153,29 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 if ((time - mPrevBackTime) < 2000) {
                     finish();
                 } else {
-                    Tips.show(this, "再按一次返回", 0);
+                    if(mWebView.canGoBack()){
+                        mWebView.goBack();
+                    }else{
+                        Tips.show(this, "再按一次返回", 0);
+                        mPrevBackTime = time;
+                    }
                 }
-                mPrevBackTime = time;
                 return false;
             case KeyEvent.KEYCODE_DEL:
             case KeyEvent.KEYCODE_MENU:
+                Log.e(TAG, "Refresh requestFocus");
                 mRefresh.requestFocus();
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
+//                time = System.currentTimeMillis();
+//                if ((time - mPrevBackTime) < 500) {
+//                    mWebView.requestFocus();
+//                    Log.e(TAG, "WebView  requestFocus");
+//                }
+//                mPrevBackTime = time;
                 if(!mWebView.hasFocus()){
-                        mWebView.requestFocus();
+                    Log.e(TAG, "WebView requestFocus");
+                    mWebView.requestFocus();
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:

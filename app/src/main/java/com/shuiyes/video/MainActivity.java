@@ -13,11 +13,9 @@ import android.widget.Toast;
 
 import com.shuiyes.video.base.BaseActivity;
 import com.shuiyes.video.iqiyi.IQIyiSoActivity;
-import com.shuiyes.video.iqiyi.IQiyiVActivity;
 import com.shuiyes.video.letv.LetvSoActivity;
-import com.shuiyes.video.letv.LetvVActivity;
+import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.youku.YoukuSoActivity;
-import com.shuiyes.video.youku.YoukuVActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -50,13 +48,22 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_iqiyi:
-                        mVideoUrl = "http://m.iqiyi.com/";
+                        mVideoUrl = "https://www.iqiyi.com/";
                         break;
                     case R.id.rb_letv:
                         mVideoUrl = "http://www.le.com/";
                         break;
                     case R.id.rb_youku:
-                        mVideoUrl = "http://m.youku.com/";
+                        mVideoUrl = "http://www.youku.com/";
+                        break;
+                    case R.id.rb_qq:
+                        mVideoUrl = "https://v.qq.com/";
+                        break;
+                    case R.id.rb_mgtv:
+                        mVideoUrl = "https://www.mgtv.com/";
+                        break;
+                    case R.id.rb_sohu:
+                        mVideoUrl = "https://tv.sohu.com/";
                         break;
                     case R.id.rb_test:
                         mVideoUrl = "http://www.shuiyes.com/misc/UA/";
@@ -110,6 +117,18 @@ public class MainActivity extends BaseActivity {
 
     public void soiqiyi(View view){
         this.startActivity(new Intent(this, IQIyiSoActivity.class));
+    }
+
+    public void soqq(View view){
+        Tips.show(this, "腾讯视频待完善");
+    }
+
+    public void somgtv(View view){
+        Tips.show(this, "芒果视频待完善");
+    }
+
+    public void sohu(View view){
+        Tips.show(this, "搜狐视频待完善");
     }
 
     public void testUrl(View view){

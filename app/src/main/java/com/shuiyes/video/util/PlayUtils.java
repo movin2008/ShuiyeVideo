@@ -23,8 +23,11 @@ public class PlayUtils {
         if(url.contains("mgtv.com")){
             text = "芒果视频";
         }
-        if(url.contains("iqiyi.com")){
-            text = "爱奇艺视频";
+        else if(url.contains("qq.com")){
+            text = "腾讯视频";
+        }
+        else if(url.contains("sohu.com")){
+            text = "搜狐视频";
         }
         return text;
     }

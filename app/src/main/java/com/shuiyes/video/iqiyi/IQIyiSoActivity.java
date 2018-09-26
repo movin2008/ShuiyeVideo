@@ -30,7 +30,7 @@ public class IQIyiSoActivity extends SearchActivity {
         super.onCreate(savedInstanceState);
 
         mSearch.setHint("爱奇艺搜索");
-        mSearch.setText("橙红年代");
+        mSearch.setText("延禧攻略");
     }
 
     @Override
@@ -86,7 +86,7 @@ public class IQIyiSoActivity extends SearchActivity {
                 //Log.e(TAG, result);
 
                 if (TextUtils.isEmpty(result)) {
-                    Log.e(TAG, "Seach "+keyword+" is empty.");
+                    Log.e(TAG, "Search "+keyword+" is empty.");
                     return false;
                 }
 
@@ -151,9 +151,11 @@ public class IQIyiSoActivity extends SearchActivity {
                         }
                     }else if(albumDocInfo.has("video_lib_meta")){
                         JSONObject video_lib_meta = albumDocInfo.getJSONObject("video_lib_meta");
-                        albumTitle = video_lib_meta.getString("title");
-                        albumImg = video_lib_meta.getString("poster");
-                        albumUrl = video_lib_meta.getString("link");
+                        if(video_lib_meta.has("title")){
+                            albumTitle = video_lib_meta.getString("title");
+                            albumImg = video_lib_meta.getString("poster");
+                            albumUrl = video_lib_meta.getString("link");
+                        }
                     }else{
                         throw new Exception("albumDocInfo error.");
                     }
@@ -162,14 +164,21 @@ public class IQIyiSoActivity extends SearchActivity {
                         albumSummary = albumDocInfo.getJSONObject("bookSummary").getString("description");
                     }
 
-
                     List<ListVideo> listVideos = new ArrayList<ListVideo>();
 
                     // 正片
                     if(albumDocInfo.has("videoinfos")) {
                         JSONArray videoinfos = albumDocInfo.getJSONArray("videoinfos");
-                        if(TextUtils.isEmpty(albumUrl) && videoinfos.length() > 0){
-                            albumUrl = ((JSONObject) videoinfos.get(0)).getString("itemLink");
+                        if(videoinfos.length() > 0){
+                            if(TextUtils.isEmpty(albumTitle)){
+                                albumTitle = ((JSONObject) videoinfos.get(0)).getString("itemTitle");
+                            }
+                            if(TextUtils.isEmpty(albumImg)){
+                                albumImg = ((JSONObject) videoinfos.get(0)).getString("itemVImage");
+                            }
+                            if(TextUtils.isEmpty(albumUrl)){
+                                albumUrl = ((JSONObject) videoinfos.get(0)).getString("itemLink");
+                            }
                         }
                         listVideos(listVideos, videoinfos, albumTitle);
                     }
@@ -177,8 +186,16 @@ public class IQIyiSoActivity extends SearchActivity {
                     // 预告
                     if(albumDocInfo.has("prevues")){
                         JSONArray prevues = albumDocInfo.getJSONArray("prevues");
-                        if(TextUtils.isEmpty(albumUrl) && prevues.length() > 0){
-                            albumUrl = ((JSONObject) prevues.get(0)).getString("itemLink");
+                        if(prevues.length() > 0){
+                            if(TextUtils.isEmpty(albumTitle)){
+                                albumTitle = ((JSONObject) prevues.get(0)).getString("itemTitle");
+                            }
+                            if(TextUtils.isEmpty(albumImg)){
+                                albumImg = ((JSONObject) prevues.get(0)).getString("itemVImage");
+                            }
+                            if(TextUtils.isEmpty(albumUrl)){
+                                albumUrl = ((JSONObject) prevues.get(0)).getString("itemLink");
+                            }
                         }
                         listVideos(listVideos, prevues, albumTitle);
                     }

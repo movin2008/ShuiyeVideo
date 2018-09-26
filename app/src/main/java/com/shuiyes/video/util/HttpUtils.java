@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -138,6 +139,49 @@ public class HttpUtils {
                 if(conn != null){
                     conn.disconnect();
                 }
+            }
+        }
+        return null;
+    }
+
+    public static InputStream openInputStream(String url){
+        Log.e(TAG, "open "+url);
+
+        if(url.startsWith("https://")){
+            HttpsURLConnection conn = null;
+            try {
+                conn = (HttpsURLConnection) new URL(url).openConnection();
+                HttpUtils.setURLConnection(conn);
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                int code = conn.getResponseCode();
+                if (code == 200) {
+                    return conn.getInputStream();
+                } else {
+                    Log.e(TAG, "open("+url+") ResponseCode="+code);
+                    printHeaders(conn);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            HttpURLConnection conn = null;
+            try {
+                conn = (HttpURLConnection) new URL(url).openConnection();
+                HttpUtils.setURLConnection(conn);
+                conn.setRequestMethod("GET");
+                conn.connect();
+
+                int code = conn.getResponseCode();
+                if (code == 200) {
+                    return conn.getInputStream();
+                } else {
+                    Log.e(TAG, "open("+url+") ResponseCode="+code);
+                    printHeaders(conn);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return null;
