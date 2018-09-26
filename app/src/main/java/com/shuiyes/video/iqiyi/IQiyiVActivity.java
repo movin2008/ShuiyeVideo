@@ -80,8 +80,12 @@ public class IQiyiVActivity extends PlayActivity implements View.OnClickListener
 
                     if(tvid == null && vid == null){
                         mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
-                        String html = HttpUtils.open(mUrl);
+                        String html = HttpUtils.open(mUrl.replaceAll("http://m.iqiyi.com", "https://www.iqiyi.com"));
 
+                        if(html == null){
+                            fault("未知错误");
+                            return;
+                        }
 
                         // page-info 见附录1
                         key = ":page-info='";
