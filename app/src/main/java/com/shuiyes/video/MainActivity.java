@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.shuiyes.video.base.BaseActivity;
@@ -20,16 +23,54 @@ public class MainActivity extends BaseActivity {
 
     private final String TAG = this.getClass().getSimpleName();
 
+    private EditText mInputUrl;
+
+    private RadioGroup mRadioGroup;
+    private RadioButton mIQiyi;
+    private RadioButton mLetv;
+    private RadioButton mYouku;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Log.e(TAG, "onCreate ========================= ");
+
+        this.findViewById(R.id.text).requestFocus();
+        mInputUrl = (EditText) this.findViewById(R.id.et_input_url);
+
+        mRadioGroup = (RadioGroup) this.findViewById(R.id.rg_video);
+        mIQiyi = (RadioButton) this.findViewById(R.id.rb_iqiyi);
+        mLetv = (RadioButton) this.findViewById(R.id.rb_letv);
+        mYouku = (RadioButton) this.findViewById(R.id.rb_youku);
+
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_iqiyi:
+                        mVideoUrl = "http://m.iqiyi.com/";
+                        break;
+                    case R.id.rb_letv:
+                        mVideoUrl = "http://www.le.com/";
+                        break;
+                    case R.id.rb_youku:
+                        mVideoUrl = "http://m.youku.com/";
+                        break;
+                    case R.id.rb_test:
+                        mVideoUrl = "http://www.shuiyes.com/misc/UA/";
+                        break;
+                }
+                Log.e(TAG, "mVideoUrl = " + mVideoUrl);
+            }
+        });
+        mIQiyi.setChecked(true);
 
         //		Tips.show(this, Build.VERSION.SDK_INT+"/"+Build.MANUFACTURER, 1);
     }
 
+    String mVideoUrl = null;
 
     @Override
     protected void onResume() {
@@ -59,14 +100,6 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void test(View view){
-//        this.startActivity(new Intent(this, YoukuVActivity.class).putExtra("url", "http://v.youku.com/v_show/id_XMzcwNjg5MDUyNA==.html"));
-//        this.startActivity(new Intent(this, LetvVActivity.class).putExtra("url", "http://www.le.com/ptv/vplay/26101788.html"));
-//        this.startActivity(new Intent(this, IQiyiVActivity.class).putExtra("url", "https://www.iqiyi.com/v_19rqzvbyms.html"));
-        this.startActivity(new Intent(this, IQiyiVActivity.class).putExtra("url", "https://www.iqiyi.com/v_19rrc17tj8.html"));
-//        this.startActivity(new Intent(this, IQiyiVActivity.class).putExtra("url", "https://www.iqiyi.com/v_19rr4tgn5c.html"));
-    }
-
     public void soyouku(View view){
         this.startActivity(new Intent(this, YoukuSoActivity.class));
     }
@@ -77,6 +110,13 @@ public class MainActivity extends BaseActivity {
 
     public void soiqiyi(View view){
         this.startActivity(new Intent(this, IQIyiSoActivity.class));
+    }
+
+    public void testUrl(View view){
+    }
+
+    public void testWeb(View view){
+        this.startActivity(new Intent(this, WebActivity.class).putExtra("url", mVideoUrl));
     }
 
 }

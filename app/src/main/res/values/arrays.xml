@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="video_urls">
+        <item>"http://v.youku.com/v_show/id_XMzcwNjg5MDUyNA==.html"</item>
+        <item>"http://www.le.com/ptv/vplay/26101788.html"</item>
+        <item>"https://www.iqiyi.com/v_19rqzvbyms.html"</item>
+        <item>"手动输入"</item>
+    </string-array>
+</resources>

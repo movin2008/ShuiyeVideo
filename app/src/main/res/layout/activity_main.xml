@@ -1,51 +1,137 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:orientation="vertical"
-    tools:context="com.shuiyes.video.MainActivity">
+    android:fadeScrollbars="false">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/app_dpi"/>
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="soiqiyi"
-        android:background="@drawable/btn_rect"
-        android:textSize="30sp"
-        android:layout_margin="10dp"
-        android:text="爱奇艺搜索" />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/app_dpi" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="soletv"
-        android:background="@drawable/btn_rect"
-        android:textSize="30sp"
-        android:layout_margin="10dp"
-        android:text="乐视搜索" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_rect"
+            android:onClick="soiqiyi"
+            android:text="爱奇艺搜索"
+            android:textSize="30sp" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="soyouku"
-        android:textSize="30sp"
-        android:layout_margin="10dp"
-        android:background="@drawable/btn_rect"
-        android:text="优酷搜索" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_rect"
+            android:onClick="soletv"
+            android:text="乐视搜索"
+            android:textSize="30sp" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="test"
-        android:textSize="30sp"
-        android:layout_margin="10dp"
-        android:background="@drawable/btn_rect"
-        android:text="测试" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_rect"
+            android:onClick="soyouku"
+            android:text="优酷搜索"
+            android:textSize="30sp" />
 
-</LinearLayout>
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="#333" />-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <Button
+                android:id="@+id/btn_test_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/btn_rect"
+                android:onClick="testUrl"
+                android:text="测试播放"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/et_input_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/btn_test_url"
+                android:layout_marginRight="10dp"
+                android:hint="输入测试网址" />
+
+            <Spinner
+                android:id="@+id/spin_input_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/btn_test_url"
+                android:layout_marginRight="10dp"
+                android:spinnerMode="dropdown"
+                android:dropDownWidth="match_parent"
+                android:entries="@array/video_urls" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/rg_video"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_iqiyi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="爱奇艺" />
+
+                <RadioButton
+                    android:id="@+id/rb_letv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="乐视" />
+
+                <RadioButton
+                    android:id="@+id/rb_youku"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="优酷" />
+
+                <RadioButton
+                    android:id="@+id/rb_test"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="测试" />
+
+            </RadioGroup>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_rect"
+                android:onClick="testWeb"
+                android:text="网页浏览"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

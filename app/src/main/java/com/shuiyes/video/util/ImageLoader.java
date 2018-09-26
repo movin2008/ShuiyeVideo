@@ -58,7 +58,8 @@ public class ImageLoader {
             public void run() {
                 Bitmap bitmap = BitmapFactory.decodeStream(getInputStreamFromUrl(imageUrl));
                 if (bitmap != null) {
-                    Log.i(TAG, bitmap.getWidth()+"x"+bitmap.getHeight());
+                    bitmap = Utils.scaleImage(bitmap);
+//                    Log.i(TAG, bitmap.getWidth()+"x"+bitmap.getHeight());
                     // 将bitmap放入缓存
                     imageCaches.put(imageUrl, new SoftReference<Bitmap>(bitmap));
                     // //保存图片至SD卡，文件名为图片名称加密串
@@ -94,7 +95,6 @@ public class ImageLoader {
                 return connection.getInputStream();
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }

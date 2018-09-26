@@ -15,6 +15,7 @@ import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.Tips;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -102,13 +103,23 @@ public class IQIyiSoActivity extends SearchActivity {
                     //Log.e(TAG, result);
 
                     if(obj.has("msg")){
-                        Tips.show(mContext, obj.getString("msg"));
+                        String msg = obj.getString("msg");
+                        Log.e(TAG, msg);
+                        mHandler.obtainMessage(Constants.MSG_SHOW_TIPS, msg);
                     }else{
-                        Tips.show(mContext, obj.getJSONObject("ctl").getString("msg"));
+                        String msg = obj.getJSONObject("ctl").getString("msg");
+                        Log.e(TAG, msg);
+                        mHandler.obtainMessage(Constants.MSG_SHOW_TIPS, msg);
                     }
                     return false;
                 }
 
+                if(obj.get("data") instanceof String){
+                    String msg = obj.getString("data");
+                    Log.e(TAG, msg);
+                    mHandler.obtainMessage(Constants.MSG_SHOW_TIPS, msg);
+                    return false;
+                }
 
                 JSONObject data = obj.getJSONObject("data");
                 JSONArray docinfos = data.getJSONArray("docinfos");
@@ -157,63 +168,19 @@ public class IQIyiSoActivity extends SearchActivity {
                     // 正片
                     if(albumDocInfo.has("videoinfos")) {
                         JSONArray videoinfos = albumDocInfo.getJSONArray("videoinfos");
-                        int videoinfosLen = videoinfos.length();
-
-                        for (int j = 0; j < videoinfosLen; j++) {
-                            JSONObject videoinfo = (JSONObject) videoinfos.get(j);
-
-                            String name = videoinfo.getString("itemTitle");
-                            String url = videoinfo.getString("itemLink");
-                            if(TextUtils.isEmpty(albumUrl)){
-                                albumUrl = url;
-                            }
-
-                            if(videoinfo.has("tvId") && videoinfo.has("vid")){
-                                url += "?tvId="+videoinfo.getString("tvId")+"&vid="+videoinfo.getString("vid");
-                            }
-
-                            String id = String.valueOf(j+1);
-                            if(videoinfo.has("itemshortTitle")){
-                                String sTitle = videoinfo.getString("itemshortTitle");
-                                if(!sTitle.contains("第"+id+"集")){
-                                    id = sTitle;
-                                }
-                            }
-
-                            ListVideo listVideo = new ListVideo(id, name, url);
-                            listVideos.add(listVideo);
+                        if(TextUtils.isEmpty(albumUrl) && videoinfos.length() > 0){
+                            albumUrl = ((JSONObject) videoinfos.get(0)).getString("itemLink");
                         }
+                        listVideos(listVideos, videoinfos, albumTitle);
                     }
 
                     // 预告
                     if(albumDocInfo.has("prevues")){
                         JSONArray prevues = albumDocInfo.getJSONArray("prevues");
-                        int prevuesLen = prevues.length();
-
-                        for (int j = 0; j < prevuesLen; j++) {
-                            JSONObject prevue = (JSONObject) prevues.get(j);
-
-                            String name = prevue.getString("itemTitle");
-                            String url = prevue.getString("itemLink");
-                            if(TextUtils.isEmpty(albumUrl)){
-                                albumUrl = url;
-                            }
-
-                            if(prevue.has("tvId") && prevue.has("vid")){
-                                url += "?tvId="+prevue.getString("tvId")+"&vid="+prevue.getString("vid");
-                            }
-
-                            String id = String.valueOf(j+1);
-                            if(prevue.has("itemshortTitle")){
-                                String sTitle = prevue.getString("itemshortTitle");
-                                if(!sTitle.contains("第"+id+"集")){
-                                    id = sTitle;
-                                }
-                            }
-
-                            ListVideo listVideo = new ListVideo(id, name, url);
-                            listVideos.add(listVideo);
+                        if(TextUtils.isEmpty(albumUrl) && prevues.length() > 0){
+                            albumUrl = ((JSONObject) prevues.get(0)).getString("itemLink");
                         }
+                        listVideos(listVideos, prevues, albumTitle);
                     }
 
                     if(TextUtils.isEmpty(albumUrl)){
@@ -249,6 +216,31 @@ public class IQIyiSoActivity extends SearchActivity {
             if (success) {
                 mHandler.sendEmptyMessage(Constants.MSG_LIST_ALBUM);
             }
+        }
+    }
+
+    private void listVideos(List<ListVideo> listVideos, JSONArray jsonArray, String albumTitle) throws Exception {
+        int len = jsonArray.length();
+        for (int j = 0; j < len; j++) {
+            JSONObject obj = (JSONObject) jsonArray.get(j);
+
+            String name = obj.getString("itemTitle");
+            String url = obj.getString("itemLink");
+
+            if(obj.has("tvId") && obj.has("vid")){
+                url += "?tvId="+obj.getString("tvId")+"&vid="+obj.getString("vid");
+            }
+
+            String id = String.valueOf(j+1);
+            if(obj.has("itemshortTitle")){
+                String sTitle = obj.getString("itemshortTitle");
+                if(!sTitle.contains("第"+id+"集")){
+                    id = sTitle.replaceAll(albumTitle, "");
+                }
+            }
+
+            ListVideo listVideo = new ListVideo(id, name, url);
+            listVideos.add(listVideo);
         }
     }
 }

@@ -31,6 +31,9 @@ public abstract class BaseActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                case Constants.MSG_SHOW_TIPS:
+                    Tips.show(mContext, (String)msg.obj);
+                    break;
                 case Constants.MSG_CHECK_PERMISSION:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         List<String> permissions = new ArrayList<String>();
@@ -92,7 +95,7 @@ public abstract class BaseActivity extends Activity {
         super.onPause();
     }
 
-    private long mPrevBackTime;
+    protected long mPrevBackTime;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -109,7 +112,7 @@ public abstract class BaseActivity extends Activity {
                 if ((time - mPrevBackTime) < 2000) {
                     finish();
                 } else {
-                    Tips.show(this, "再按一次退出播放", 0);
+                    Tips.show(this, "再按一次返回", 0);
                 }
                 mPrevBackTime = time;
                 return false;
