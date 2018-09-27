@@ -13,7 +13,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.shuiyes.video.dialog.AlbumDialog;
-import com.shuiyes.video.base.PlayActivity;
+import com.shuiyes.video.base.BasePlayActivity;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
@@ -23,9 +23,7 @@ import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
 
-public class YoukuVActivity extends PlayActivity implements View.OnClickListener {
-
-    private final String TAG = this.getClass().getSimpleName();
+public class YoukuVActivity extends BasePlayActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +45,7 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
         playVideo();
     }
 
-    private String mToken;
-
-    /**
-     * 专辑可选集
-     */
-    private boolean mIsAlbum;
+    private static String mToken;
     private List<YoukuVideo> mUrlList = new ArrayList<YoukuVideo>();
 
     @Override
@@ -79,6 +72,7 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
                     String info = HttpUtils.open(YoukuUtils.getVideoUrl(mVid, mToken));
 
                     if (info == null) {
+                        mToken = null;
                         fault("解析异常请重试");
                         return;
                     }
@@ -88,6 +82,7 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
                     JSONObject data = new JSONObject(info).getJSONObject("data");
 
                     if (data.has("error")) {
+                        mToken = null;
                         fault(data.getJSONObject("error").getString("note"));
                         return;
                     }
@@ -96,8 +91,7 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
 
                     mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, video.getString("title")));
 
-                    mIsAlbum = data.has("videos");
-                    if (mIsAlbum) {
+                    if (data.has("videos")) {
                         JSONObject videos = data.getJSONObject("videos");
 
                         if (videos.has("next")) {
@@ -119,9 +113,10 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
                                 mVideoList.add(new ListVideo(i + 1, title, encodevid));
                             }
                             Log.e(TAG, "VideoList=" + mVideoList.size());
+
+                            mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
                         }
                     }
-                    mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
 
                     JSONArray streams = data.getJSONArray("stream");
                     int streamsLen = streams.length();
@@ -153,7 +148,6 @@ public class YoukuVActivity extends PlayActivity implements View.OnClickListener
                         }
 
                         mCurrentPosition = 0;
-
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mUrlList.get(0)));
                     }
                 } catch (Exception e) {

@@ -3,6 +3,8 @@ package com.shuiyes.video.letv;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.SHA1;
 
+import java.net.URLEncoder;
+
 public class LetvUtils {
 
     private final static String TAG = "LetvUtils";
@@ -44,12 +46,12 @@ public class LetvUtils {
     }
 
     public static String searchVideos(String keyword) throws Exception {
-        return HttpUtils.open("http://so.le.com/s?wd=" + keyword);
+        return HttpUtils.open("http://so.le.com/s?wd=" + URLEncoder.encode(keyword,"utf-8"));
 //        return HttpUtils.open("http://so.le.com/s?wd="+keyword+"&from=pc&index=0&ref=click&click_area=search_button&query="+keyword+"&is_default_query=0&module=suggest_list&eid=undefined&experiment_id=undefined&is_trigger=undefined");
     }
 
     public static String searchUploadVideos(String keyword) throws Exception {
-        return HttpUtils.open("http://search.lekan.letv.com/lekan/apisearch_json.so?wd="+keyword+"&from=pc&jf=1&hl=1&dt=1,2&ph=420001,420002&show=4&pn=1&ps=30");
+        return HttpUtils.open("http://search.lekan.letv.com/lekan/apisearch_json.so?wd="+URLEncoder.encode(keyword,"utf-8")+"&from=pc&jf=1&hl=1&dt=1,2&ph=420001,420002&show=4&pn=1&ps=30");
     }
 
     public static String searchStarVideos(String leId) throws Exception {

@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.shuiyes.video.util.Constants;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public abstract class BaseActivity extends Activity {
 
-    private final String TAG = this.getClass().getSimpleName();
+    protected final String TAG = this.getClass().getSimpleName();
 
     protected Context mContext;
 
@@ -98,7 +99,11 @@ public abstract class BaseActivity extends Activity {
     protected long mPrevBackTime;
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if(event.getAction() == KeyEvent.ACTION_UP){
+            return super.dispatchKeyEvent(event);
+        }
+
         /**
          public static final int KEYCODE_DPAD_UP = 19;
          public static final int KEYCODE_DPAD_DOWN = 20;
@@ -106,7 +111,8 @@ public abstract class BaseActivity extends Activity {
          public static final int KEYCODE_DPAD_RIGHT = 22;
          public static final int KEYCODE_DPAD_CENTER = 23;
          */
-        switch (keyCode) {
+
+        switch (event.getKeyCode()) {
             case KeyEvent.KEYCODE_BACK:
                 long time = System.currentTimeMillis();
                 if ((time - mPrevBackTime) < 2000) {
@@ -116,13 +122,21 @@ public abstract class BaseActivity extends Activity {
                 }
                 mPrevBackTime = time;
                 return false;
+            case KeyEvent.KEYCODE_DEL:
+            case KeyEvent.KEYCODE_MENU:
+                break;
+            case KeyEvent.KEYCODE_DPAD_UP:
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                break;
             default:
 //                Tips.show(this, "onKeyDown=" + keyCode, 0);
-//                Log.e(TAG, "onKeyDown=" + keyCode);
+//                Log.e(TAG, event.toString());
                 break;
         }
 
-        return super.onKeyDown(keyCode, event);
+        return super.dispatchKeyEvent(event);
     }
 
 }

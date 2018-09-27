@@ -14,6 +14,8 @@ import java.util.List;
 
 public class AlbumDialog extends FlowlayoutDialog {
 
+    private final String TAG = this.getClass().getSimpleName();
+
     private List<ListVideo> mVideoList;
 
     public AlbumDialog(Context context, List<ListVideo> videos) {
@@ -31,7 +33,7 @@ public class AlbumDialog extends FlowlayoutDialog {
                 NumberView view = new NumberView(getContext(), t);
                 view.setTextColor(Color.WHITE);
                 view.setOnClickListener(mListener);
-                view.setSize(view.measureWidth(), 120);
+                view.setSize(view.measureWidth(), NumberView.WH);
                 return view;
             }
         });

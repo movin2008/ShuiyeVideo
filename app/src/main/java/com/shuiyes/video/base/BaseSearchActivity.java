@@ -1,5 +1,6 @@
 package com.shuiyes.video.base;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,37 +11,44 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.shuiye.video.util.ResourceDef;
 import com.shuiyes.video.R;
 import com.shuiyes.video.adapter.AlbumAdapter;
-import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.AlbumList;
-import com.shuiyes.video.constants.ResourceDef;
 import com.shuiyes.video.util.Constants;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class SearchActivity extends BaseActivity {
-
-    private final String TAG = this.getClass().getSimpleName();
+public abstract class BaseSearchActivity extends BaseActivity {
 
     protected ListView mListView;
     protected EditText mSearch;
+    protected TextView mNotice;
     protected AlbumAdapter mAlbumAdapter;
     protected int mPosition = -1;
-
+    private InputMethodManager mInputMethodManager = null;
     protected AsyncTask<String, Integer, Boolean> mSearchAsyncTask = null;
+
+    protected static final int MSG_SHOW_NOTICE = 200;
 
     @Override
     public void handleOtherMessage(Message msg) {
         switch (msg.what) {
             case Constants.MSG_LIST_ALBUM:
+
+                mNotice.setText("");
+                if(mAlbums.isEmpty()){
+                    mNotice.setVisibility(View.VISIBLE);
+                }else{
+                    mNotice.setVisibility(View.GONE);
+                }
+
                 mPosition = -1;
                 mAlbumAdapter.listAlbums(mAlbums);
                 break;
@@ -51,6 +59,9 @@ public abstract class SearchActivity extends BaseActivity {
                     imageView.setImageBitmap((Bitmap) msg.obj);
                 }
                 break;
+            case MSG_SHOW_NOTICE:
+               mNotice.setText(mNotice.getText()+"\n"+(String)msg.obj);
+                break;
         }
     }
 
@@ -60,6 +71,8 @@ public abstract class SearchActivity extends BaseActivity {
         setContentView(R.layout.activity_search);
 
         Log.e(TAG, "onCreate ========================= ");
+
+        mInputMethodManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         mAlbumAdapter = new AlbumAdapter(this, mHandler);
         mListView = (ListView) this.findViewById(R.id.lv_result);
@@ -115,7 +128,7 @@ public abstract class SearchActivity extends BaseActivity {
         });
         mListView.setAdapter(mAlbumAdapter);
 
-
+        mNotice = (TextView) this.findViewById(R.id.tv_notice);
         mSearch = (EditText) this.findViewById(R.id.et_seach);
         mSearch.addTextChangedListener(new TextWatcher() {
 
@@ -142,7 +155,7 @@ public abstract class SearchActivity extends BaseActivity {
                     return;
                 }
 
-                Log.e(TAG, "searchVideos=" + keyword);
+                notice("searchVideos=" + keyword);
                 searchVideos(keyword);
             }
         });
@@ -151,13 +164,16 @@ public abstract class SearchActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        if(mInputMethodManager.isActive(mSearch)){
+            mInputMethodManager.hideSoftInputFromWindow(mSearch.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
     }
-
 
     protected String mSearchText;
     protected AlbumList mAlbums = new AlbumList();
@@ -188,8 +204,25 @@ public abstract class SearchActivity extends BaseActivity {
     }
 
     public void clearFocus(View view){
+//        if(mInputMethodManager.isActive(mSearch)){
+//            mInputMethodManager.hideSoftInputFromWindow(mSearch.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//        }else{
+//            mSearch.requestFocus();
+//            //自动弹出键盘
+//            mInputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//        }
+
+        if(mInputMethodManager.isActive(mSearch)){
+            mInputMethodManager.hideSoftInputFromWindow(mSearch.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+
         mSearch.clearFocus();
         view.requestFocus();
+    }
+
+    protected void notice(String text){
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_SHOW_NOTICE, text));
+        Log.e(TAG, text);
     }
 
 }

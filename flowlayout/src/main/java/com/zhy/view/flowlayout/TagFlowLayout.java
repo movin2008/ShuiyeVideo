@@ -3,8 +3,8 @@ package com.zhy.view.flowlayout;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.shuiyes.video.constants.ResourceDef;
-import com.shuiyes.video.util.ResourceUtils;
+import com.shuiye.video.util.ResourceDef;
+import com.shuiye.video.util.ResourceUtils;
 
 public class TagFlowLayout extends FlowLayout
         implements TagAdapter.OnDataChangedListener {

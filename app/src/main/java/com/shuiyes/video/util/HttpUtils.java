@@ -58,7 +58,7 @@ public class HttpUtils {
             for (String value : values) {
                 buf.append(value+",");
             }
-            Log.e(TAG, key+"=" + buf.toString());
+            Log.e(TAG, key+": " + buf.toString());
         }
     }
 
@@ -100,6 +100,8 @@ public class HttpUtils {
                     }
                     in.close();
                     return ret.toString();
+                } else if (code == 302) {
+                    return HttpUtils.open(conn.getHeaderField("Location"));
                 } else {
                     Log.e(TAG, "open("+url+") ResponseCode="+code);
                     printHeaders(conn);
@@ -129,6 +131,8 @@ public class HttpUtils {
                     }
                     in.close();
                     return ret.toString();
+                } else if (code == 302) {
+                    return HttpUtils.open(conn.getHeaderField("Location"));
                 } else {
                     Log.e(TAG, "open("+url+") ResponseCode="+code);
                     printHeaders(conn);
@@ -158,6 +162,8 @@ public class HttpUtils {
                 int code = conn.getResponseCode();
                 if (code == 200) {
                     return conn.getInputStream();
+                } else if (code == 302) {
+                    return HttpUtils.openInputStream(conn.getHeaderField("Location"));
                 } else {
                     Log.e(TAG, "open("+url+") ResponseCode="+code);
                     printHeaders(conn);
@@ -176,6 +182,8 @@ public class HttpUtils {
                 int code = conn.getResponseCode();
                 if (code == 200) {
                     return conn.getInputStream();
+                } else if (code == 302) {
+                    return HttpUtils.openInputStream(conn.getHeaderField("Location"));
                 } else {
                     Log.e(TAG, "open("+url+") ResponseCode="+code);
                     printHeaders(conn);

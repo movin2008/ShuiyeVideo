@@ -31,7 +31,7 @@ public class MiscDialog<T extends PlayVideo> extends FlowlayoutDialog {
                 MiscView view = new MiscView(getContext(), t);
                 view.setTextColor(Color.WHITE);
                 view.setOnClickListener(mListener);
-                view.setSize(view.measureWidth(), 120);
+                view.setSize(view.measureWidth(), MiscView.WH);
                 return view;
             }
         });

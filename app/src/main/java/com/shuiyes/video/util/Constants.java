@@ -2,9 +2,9 @@ package com.shuiyes.video.util;
 
 public class Constants {
 
-    public static final int MSG_LIST_ALBUM = 0;
-    public static final int MSG_SET_IMAGE = 1;
-    public static final int MSG_CHECK_PERMISSION = 2;
-    public static final int MSG_SHOW_TIPS = 3;
+    public static final int MSG_LIST_ALBUM = 100;
+    public static final int MSG_SET_IMAGE = 101;
+    public static final int MSG_CHECK_PERMISSION = 102;
+    public static final int MSG_SHOW_TIPS = 103;
 
 }

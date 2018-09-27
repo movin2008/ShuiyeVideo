@@ -19,6 +19,16 @@
             android:layout_margin="20dp"
             android:src="@drawable/ic_launcher" />
 
+        <TextView
+            android:id="@+id/album_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:layout_margin="20dp"
+            android:background="@drawable/btn_oval"/>
+
         <com.shuiyes.video.widget.MarqueeTextView
             android:id="@+id/album_title"
             android:layout_width="match_parent"

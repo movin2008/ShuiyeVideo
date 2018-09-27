@@ -85,7 +85,7 @@ public class YoukuUtils {
     }
 
     public static String search(String keyword) throws Exception {
-        return HttpUtils.open("http://so.youku.com/search_video/q_" + keyword);
+        return HttpUtils.open("http://so.youku.com/search_video/q_" + URLEncoder.encode(keyword,"utf-8"));
     }
 
 }

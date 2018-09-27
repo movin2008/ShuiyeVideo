@@ -1,21 +1,18 @@
 package com.shuiyes.video.letv;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.dialog.AlbumDialog;
-import com.shuiyes.video.base.PlayActivity;
+import com.shuiyes.video.base.BasePlayActivity;
 import com.shuiyes.video.bean.PlayVideo;
-import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.dialog.MiscDialog;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
-import com.shuiyes.video.widget.Tips;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,9 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class LetvVActivity extends PlayActivity implements View.OnClickListener {
-
-    private final String TAG = this.getClass().getSimpleName();
+public class LetvVActivity extends BasePlayActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +57,7 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
                     String info = HttpUtils.open(LetvUtils.getVideoInfoUrl(mVid));
 
-                    Utils.setFile("/sdcard/LetvStream", info);
+                    Utils.setFile("/sdcard/letv", info);
 
                     JSONObject data = new JSONObject(info).getJSONObject("msgs");
                     if (data.getInt("statuscode") != 1001) {
@@ -126,7 +121,7 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
             return;
         }
 
-        Utils.setFile("/sdcard/LetvSource", video);
+        Utils.setFile("/sdcard/letv", video);
 
         JSONObject data = new JSONObject(video);
         JSONArray streams = data.getJSONArray("nodelist");
@@ -151,7 +146,6 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
             }
 
             mCurrentPosition = 0;
-
             mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mSourceList.get(0)));
         }
     }
@@ -209,29 +203,6 @@ public class LetvVActivity extends PlayActivity implements View.OnClickListener 
                     }
                 });
                 mClarityDialog.show();
-                break;
-            case R.id.btn_select:
-                if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
-                    mAlbumDialog.dismiss();
-                }
-                mAlbumDialog = new AlbumDialog(this, mVideoList);
-                mAlbumDialog.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
-                            mAlbumDialog.dismiss();
-                        }
-
-                        NumberView v = (NumberView) view;
-                        mTitleView.setText(v.getTitle());
-                        mVid = v.getUrl();
-
-                        mVideoView.stopPlayback();
-
-                        playVideo();
-                    }
-                });
-                mAlbumDialog.show();
                 break;
             case R.id.btn_next:
                 playVideo();

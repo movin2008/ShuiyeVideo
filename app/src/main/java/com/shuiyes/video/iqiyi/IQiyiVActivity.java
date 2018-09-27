@@ -1,24 +1,20 @@
 package com.shuiyes.video.iqiyi;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.base.PlayActivity;
+import com.shuiyes.video.base.BasePlayActivity;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.dialog.MiscDialog;
-import com.shuiyes.video.letv.LetvSource;
-import com.shuiyes.video.letv.LetvStream;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
-import com.shuiyes.video.widget.Tips;
-import com.shuiyes.video.youku.YoukuVideo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,9 +24,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class IQiyiVActivity extends PlayActivity implements View.OnClickListener {
-
-    private final String TAG = this.getClass().getSimpleName();
+public class IQiyiVActivity extends BasePlayActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +39,6 @@ public class IQiyiVActivity extends PlayActivity implements View.OnClickListener
         playVideo();
     }
 
-    private List<ListVideo> mVideoList = new ArrayList<ListVideo>();
     private List<IQiyiVideo> mUrlList = new ArrayList<IQiyiVideo>();
 
     @Override
@@ -54,13 +47,6 @@ public class IQiyiVActivity extends PlayActivity implements View.OnClickListener
             @Override
             public void run() {
                 try {
-                    /**
-                     https://cache.video.iqiyi.com/jp/vi/1360228700/ec8be83b8d77aef79e25a983ebee3c6c/
-
-                     视频详情：http://mixer.video.iqiyi.com/jp/mixin/videos/tvid
-                     Exeample：http://mixer.video.iqiyi.com/jp/mixin/videos/1342023800
-                     */
-
                     String tvid = null;
                     String vid = null;
 
@@ -79,11 +65,11 @@ public class IQiyiVActivity extends PlayActivity implements View.OnClickListener
                     }
 
                     if(tvid == null && vid == null){
-                        mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
-                        String html = HttpUtils.open(mUrl.replaceAll("http://m.iqiyi.com", "https://www.iqiyi.com"));
+                        mHandler.sendEmptyMessage(MSG_FETCH_TOKEN);
+                        String html = HttpUtils.open(mUrl);//.replaceAll("http://m.iqiyi.com", "https://www.iqiyi.com")
 
                         if(html == null){
-                            fault("未知错误");
+                            fault("请重试");
                             return;
                         }
 
@@ -126,10 +112,30 @@ public class IQiyiVActivity extends PlayActivity implements View.OnClickListener
                         }
                     }
 
-                    String video = IQiyiUtils.getVMS(tvid, vid);
-
-//                    Log.e(TAG, "video ="+video);
+                    mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
+                    String video = IQiyiUtils.fetchVideo(tvid, vid);
                     Utils.setFile("/sdcard/iqiyi", video);
+
+                    if (TextUtils.isEmpty(video)) {
+                        fault("请重试");
+                        return;
+                    }
+
+                    key = "var tvInfoJs=";
+                    String albumUrl = null;
+                    if(video.contains(key)){
+                        int len = video.indexOf(key);
+                        video = video.substring(len + key.length());
+
+                        JSONObject obj = new JSONObject(video);
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, obj.getString("shortTitle")));
+                        albumUrl = obj.getString("au");
+                    }
+
+                    mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
+                    video = IQiyiUtils.getVMS(tvid, vid);
+                    Utils.setFile("/sdcard/iqiyi", video);
+//                    Log.e(TAG, "video ="+video);
 
                     JSONObject obj = new JSONObject(video);
                     if (!"A00000".equals(obj.getString("code"))) {
@@ -180,8 +186,64 @@ public class IQiyiVActivity extends PlayActivity implements View.OnClickListener
                             }
                         }
 
+                        mVid = vid;
                         mCurrentPosition = 0;
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
+
+                        //  最后获取专辑信息
+                        if(albumUrl != null && albumUrl.contains("iqiyi.com/a_")){
+                            String html = HttpUtils.open(albumUrl);
+
+                            if (TextUtils.isEmpty(html)) {
+                                Log.e(TAG, "Seach album is empty.");
+                                return;
+                            }
+
+                            key = "<ul class=\"site-piclist";
+                            if(html.contains(key)){
+                                int len = html.indexOf(key);
+                                html = html.substring(len + key.length());
+                                html = html.substring(0, html.indexOf("</ul>"));
+
+                                Utils.setFile("/sdcard/iqiyi.html", html);
+
+                                int flag = 1;
+                                List<ListVideo> videoList = new ArrayList<ListVideo>();
+                                String start = "<li data-albumlist-elem=\"playItem\">";
+                                while (html.contains(start)) {
+
+                                    int startIndex = html.indexOf(start);
+                                    int endIndex = html.indexOf(start, startIndex + start.length());
+                                    String data = null;
+                                    if (endIndex != -1) {
+                                        data = html.substring(startIndex, endIndex);
+                                    } else {
+                                        data = html.substring(startIndex);
+                                    }
+
+                                    key = "href=\"";
+                                    data = data.substring(data.indexOf(key) + key.length());
+                                    String url = data.substring(0, data.indexOf("\""));
+
+                                    key = "<p class=\"site-piclist_info_title\">";
+                                    data = data.substring(data.indexOf(key) + key.length());
+                                    key = "\">";
+                                    data = data.substring(data.indexOf(key) + key.length());
+                                    String title = data.substring(0, data.indexOf("</a>")).trim();
+
+                                    videoList.add(new ListVideo(flag++, title, url));
+
+                                    html = html.substring(html.indexOf(start) + start.length());
+                                }
+
+                                if(mVideoList.isEmpty() || videoList.size() > mVideoList.size()){
+                                    mVideoList.clear();
+                                    mVideoList.addAll(videoList);
+                                    mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
+                                }
+                            }
+
+                        }
                     }
                 } catch (Exception e) {
                     fault(e);
@@ -226,10 +288,9 @@ public class IQiyiVActivity extends PlayActivity implements View.OnClickListener
 
                         NumberView v = (NumberView) view;
                         mTitleView.setText(v.getTitle());
-                        mVid = v.getUrl();
+                        mUrl = v.getUrl();
 
                         mVideoView.stopPlayback();
-
                         playVideo();
                     }
                 });

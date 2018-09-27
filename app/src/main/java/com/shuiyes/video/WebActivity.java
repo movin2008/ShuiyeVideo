@@ -1,7 +1,6 @@
 package com.shuiyes.video;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,16 +10,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.shuiyes.video.base.BaseActivity;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.util.Utils;
-import com.shuiyes.video.widget.Tips;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 public class WebActivity extends BaseActivity implements View.OnClickListener {
@@ -68,10 +64,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-                mCssUrl = null;
-                mOverlayCss = false;
-
                 Log.e(TAG, "shouldOverrideUrlLoading " + url);
 
                 mUrl.setText(url);
@@ -102,27 +94,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-//                if (url.contains("iqiyi") && (url.endsWith(".css") || url.endsWith(".jpg"))) {
-////                    Log.e(TAG, "shouldInterceptRequest " + url);
-//                    try {
-//                        if(TextUtils.isEmpty(mCssUrl)){
-//                            Log.e(TAG, "load webkit_tap_highlight.css");
-//                            mCssUrl = url;
-//
-//                            return new WebResourceResponse("text/css", "utf-8", mContext.getAssets().open("css/webkit_tap_highlight.css"));
-//                        }else{
-//                            if(!mOverlayCss){
-//                                mOverlayCss = true;
-////                                return new WebResourceResponse("text/css", "utf-8", HttpUtils.openInputStream(mCssUrl));
-//                            }
-//                        }
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-
                 return super.shouldInterceptRequest(view, url);
             }
 
@@ -151,9 +122,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
-    private boolean mOverlayCss = false;
-    private String mCssUrl = null;
-
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if(event.getAction() == KeyEvent.ACTION_UP){
@@ -161,16 +129,10 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         }
         switch (event.getKeyCode()) {
             case KeyEvent.KEYCODE_BACK:
-                long time = System.currentTimeMillis();
-                if ((time - mPrevBackTime) < 2000) {
-                    finish();
-                } else {
-                    if(mWebView.canGoBack()){
-                        mWebView.goBack();
-                    }else{
-                        Tips.show(this, "再按一次返回", 0);
-                        mPrevBackTime = time;
-                    }
+                if(mWebView.canGoBack()){
+                    mWebView.goBack();
+                }else{
+                    return super.dispatchKeyEvent(event);
                 }
                 return false;
             case KeyEvent.KEYCODE_DEL:
@@ -179,12 +141,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 mRefresh.requestFocus();
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
-//                time = System.currentTimeMillis();
-//                if ((time - mPrevBackTime) < 500) {
-//                    mWebView.requestFocus();
-//                    Log.e(TAG, "WebView  requestFocus");
-//                }
-//                mPrevBackTime = time;
                 if(!mWebView.hasFocus()){
                     Log.e(TAG, "WebView requestFocus");
                     mWebView.requestFocus();
@@ -195,8 +151,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             case KeyEvent.KEYCODE_DPAD_RIGHT:
                 break;
             default:
-//                Tips.show(this, "onKeyDown=" + keyCode, 0);
-                Log.e(TAG, event.toString());
                 break;
         }
 

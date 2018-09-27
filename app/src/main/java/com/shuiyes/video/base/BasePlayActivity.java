@@ -26,9 +26,7 @@ import com.shuiyes.video.widget.Tips;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PlayActivity extends BaseActivity {
-
-    private final String TAG = this.getClass().getSimpleName();
+public abstract class BasePlayActivity extends BaseActivity {
 
     protected Context mContext;
     protected TextView mTitleView;
@@ -176,13 +174,13 @@ public abstract class PlayActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        if(mSourceDialog != null && mSourceDialog.isShowing()){
+        if (mSourceDialog != null && mSourceDialog.isShowing()) {
             mSourceDialog.dismiss();
         }
-        if(mClarityDialog != null && mClarityDialog.isShowing()){
+        if (mClarityDialog != null && mClarityDialog.isShowing()) {
             mClarityDialog.dismiss();
         }
-        if(mAlbumDialog != null && mAlbumDialog.isShowing()){
+        if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
             mAlbumDialog.dismiss();
         }
         super.onDestroy();
@@ -233,7 +231,7 @@ public abstract class PlayActivity extends BaseActivity {
     }
 
     protected void fault(Exception e) {
-        fault(e.getClass().toString()+" "+e.getLocalizedMessage());
+        fault(e.getClass().toString() + " " + e.getLocalizedMessage());
     }
 
     protected final int MSG_FAULT = 0;
@@ -246,88 +244,88 @@ public abstract class PlayActivity extends BaseActivity {
     protected final int MSG_FETCH_VIDEOINFO = 7;
     protected final int MSG_UPDATE_NEXT = 8;
 
-    protected Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_FAULT:
-                    Object error = msg.obj;
-                    mLoadingProgress.setVisibility(View.GONE);
-                    mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : "") /*+ " 5s后返回..."*/);
-//                    mHandler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            finish();
-//                        }
-//                    }, 5555);
-                    break;
-                case MSG_FETCH_TOKEN:
-                    mStateView.setText(mStateView.getText() + "[成功]\n获取Token...");
-                    mStateView.setVisibility(View.VISIBLE);
-                    break;
-                case MSG_FETCH_VIDEOINFO:
-                    mStateView.setText(mStateView.getText() + "[成功]\n获取视频信息...");
-                    mStateView.setVisibility(View.VISIBLE);
-                    break;
-                case MSG_FETCH_VIDEO:
-                    String streamStr = (String) msg.obj;
-                    if(streamStr == null){
-                        mStateView.setText(mStateView.getText() + "[成功]\n解析视频地址...");
-                    }else {
-                        mClarityView.setText(streamStr);
-                        mStateView.setText(mStateView.getText() + "[成功]\n解析" + streamStr + "视频地址...");
-                    }
-                    break;
-                case MSG_CACHE_VIDEO:
-                    PlayVideo video = (PlayVideo) msg.obj;
-                    mStateView.setText(mStateView.getText() + "[成功]\n开始缓存" + video.getText() + "视频...");
-                    cacheVideo(video);
+    @Override
+    public void handleOtherMessage(Message msg) {
+        switch (msg.what) {
+            case MSG_FAULT:
+                Object error = msg.obj;
+                mLoadingProgress.setVisibility(View.GONE);
+                mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : "") /*+ " 5s后返回..."*/);
 
-                    mVideoView.stopPlayback();
-                    Log.e(TAG, "setVideoURI=" + video.getUrl());
-                    mVideoView.setVideoURI(Uri.parse(video.getUrl()));
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        finish();
+//                    }
+//                }, 5555);
+                break;
+            case MSG_FETCH_TOKEN:
+                mStateView.setText(mStateView.getText() + "[成功]\n获取Token...");
+                mStateView.setVisibility(View.VISIBLE);
+                break;
+            case MSG_FETCH_VIDEOINFO:
+                mStateView.setText(mStateView.getText() + "[成功]\n获取视频信息...");
+                mStateView.setVisibility(View.VISIBLE);
+                break;
+            case MSG_FETCH_VIDEO:
+                String streamStr = (String) msg.obj;
+                if (streamStr == null) {
+                    mStateView.setText(mStateView.getText() + "[成功]\n解析视频地址...");
+                } else {
+                    mClarityView.setText(streamStr);
+                    mStateView.setText(mStateView.getText() + "[成功]\n解析" + streamStr + "视频地址...");
+                }
+                break;
+            case MSG_CACHE_VIDEO:
+                PlayVideo video = (PlayVideo) msg.obj;
+                mStateView.setText(mStateView.getText() + "[成功]\n开始缓存" + video.getText() + "视频...");
+                cacheVideo(video);
 
-                    if (mCurrentPosition != 0) {
-                        Log.e(TAG, "seekTo=" + mCurrentPosition);
-                        mVideoView.seekTo(mCurrentPosition);
-                    }
-                    break;
-                case MSG_PALY_VIDEO:
-                    mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mStateView.setText("");
-                        }
-                    }, 2222);
-                    break;
-                case MSG_SET_TITLE:
-                    Log.e(TAG, "setTitle=" + msg.obj);
-                    mTitleView.setText((String) msg.obj);
-                    break;
-                case MSG_UPDATE_SELECT:
-                    if (mVideoList.isEmpty()) {
-                        mSelectView.setVisibility(View.GONE);
-                    } else {
-                        mSelectView.setVisibility(View.VISIBLE);
-                    }
-                    break;
-                case MSG_UPDATE_NEXT:
-                    String nid = (String) msg.obj;
-                    Log.e(TAG, "mVid="+mVid+", next vid=" + nid);
+                mVideoView.stopPlayback();
+                Log.e(TAG, "setVideoURI=" + video.getUrl());
+                mVideoView.setVideoURI(Uri.parse(video.getUrl()));
 
-                    if(mVid.equals(nid)){
-                        mNextView.setVisibility(View.GONE);
-                    }else{
-                        mVid = nid;
-                        mNextView.setVisibility(View.VISIBLE);
+                if (mCurrentPosition != 0) {
+                    Log.e(TAG, "seekTo=" + mCurrentPosition);
+                    mVideoView.seekTo(mCurrentPosition);
+                }
+                break;
+            case MSG_PALY_VIDEO:
+                mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mStateView.setText("");
                     }
-                    break;
-            }
+                }, 2222);
+                break;
+            case MSG_SET_TITLE:
+                Log.e(TAG, "setTitle=" + msg.obj);
+                mTitleView.setText((String) msg.obj);
+                break;
+            case MSG_UPDATE_SELECT:
+                if (mVideoList.isEmpty()) {
+                    mSelectView.setVisibility(View.GONE);
+                } else {
+                    mSelectView.setVisibility(View.VISIBLE);
+                }
+                break;
+            case MSG_UPDATE_NEXT:
+                String nid = (String) msg.obj;
+                Log.e(TAG, "mVid=" + mVid + ", next vid=" + nid);
+
+                if (mVid.equals(nid)) {
+                    mNextView.setVisibility(View.GONE);
+                } else {
+                    mVid = nid;
+                    mNextView.setVisibility(View.VISIBLE);
+                }
+                break;
         }
-    };
+    }
 
     protected abstract void cacheVideo(PlayVideo video);
+
     protected abstract void playVideo();
 
 }

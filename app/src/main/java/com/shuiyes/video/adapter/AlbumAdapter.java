@@ -13,13 +13,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shuiye.video.util.ResourceDef;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
-import com.shuiyes.video.constants.ResourceDef;
 import com.shuiyes.video.util.ImageLoader;
 import com.shuiyes.video.util.PlayUtils;
-import com.shuiyes.video.youku.YoukuUtils;
 import com.shuiyes.video.widget.NumberView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -70,6 +69,7 @@ public class AlbumAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.itemview_search_video, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.img = (ImageView) view.findViewById(R.id.album_image);
+            viewHolder.index = (TextView) view.findViewById(R.id.album_index);
             viewHolder.title = (TextView) view.findViewById(R.id.album_title);
             viewHolder.summary = (TextView) view.findViewById(R.id.album_summary);
             viewHolder.album = (TagFlowLayout) view.findViewById(R.id.album_list);
@@ -89,11 +89,12 @@ public class AlbumAdapter extends BaseAdapter {
             }
         });
 
+        viewHolder.index.setText(position+1+"");
         viewHolder.title.setText(album.getTitle());
         viewHolder.summary.setText(album.getSummary());
 
         viewHolder.img.setTag(album.getImgurl());
-        viewHolder.img.setImageResource(R.drawable.youku);
+        viewHolder.img.setImageResource(R.drawable.ic_launcher);
         Bitmap bitmap = mImageLoader.getBitmap(album.getImgurl(), handler);
         if (bitmap != null) {
             viewHolder.img.setImageBitmap(bitmap);
@@ -125,6 +126,7 @@ public class AlbumAdapter extends BaseAdapter {
 
     class ViewHolder {
         ImageView img;
+        TextView index;
         TextView title;
         TextView summary;
         TagFlowLayout album;

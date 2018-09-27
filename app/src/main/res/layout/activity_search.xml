@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,34 +7,44 @@
     tools:context="com.shuiyes.video.MainActivity">
 
     <LinearLayout
+        android:id="@+id/ll_search"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:gravity="center_vertical"
-        android:layout_margin="@dimen/search_margin_size">
+        android:layout_margin="@dimen/search_margin_size"
+        android:gravity="center_vertical">
 
         <EditText
             android:id="@+id/et_seach"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="请输入搜索关键字"/>
+            android:hint="请输入搜索关键字" />
 
         <Button
-            android:layout_width="35dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginLeft="10dp"
-            android:padding="0dp"
-            android:onClick="clearFocus"
-            android:gravity="center"
-            android:textSize="25dp"
             android:background="@drawable/btn_rect"
-            android:text="C"/>
+            android:gravity="center"
+            android:onClick="clearFocus"
+            android:padding="0dp"
+            android:text="输入法"
+            android:textSize="25dp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="" />
 
     <ListView
         android:id="@+id/lv_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/search_bottom_size"/>
+        android:layout_below="@id/ll_search"
+        android:layout_marginBottom="@dimen/search_bottom_size" />
 
-</LinearLayout>
+</RelativeLayout>

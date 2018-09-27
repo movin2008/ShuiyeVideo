@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.shuiyes.video.base.SearchActivity;
+import com.shuiyes.video.base.BaseSearchActivity;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.Constants;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class LetvSoActivity extends SearchActivity {
+public class LetvSoActivity extends BaseSearchActivity {
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -28,7 +28,7 @@ public class LetvSoActivity extends SearchActivity {
         super.onCreate(savedInstanceState);
 
         mSearch.setHint("乐看搜索");
-        mSearch.setText("胡歌");//延禧宫略
+        mSearch.setText("周星驰");
     }
 
     @Override
@@ -73,29 +73,29 @@ public class LetvSoActivity extends SearchActivity {
         protected Boolean doInBackground(String... args) {
             String keyword = args[0];
             try {
-                if(mCancelled){
-                    Log.e(TAG, "doInBackground has Cancelled.");
+                if (mCancelled) {
+                    notice("doInBackground has Cancelled.");
                     return false;
                 }
 
                 String result = LetvUtils.searchVideos(keyword);
-//					Log.e(TAG, result);
+//					notice(result);
 
                 if (TextUtils.isEmpty(result)) {
-                    Log.e(TAG, "Search "+keyword+", videos is empty.");
+                    notice("Search " + keyword + ", videos is empty.");
                     return false;
                 }
 
-                if(mCancelled){
-                    Log.e(TAG, "Will list albums has Cancelled.");
+                if (mCancelled) {
+                    notice("Will list albums has Cancelled.");
                     return false;
                 }
 
 
-                if(result.contains("play-terminal active j-tui-terminal")){
+                if (result.contains("play-terminal active j-tui-terminal")) {
                     result = result.substring(result.indexOf("play-terminal active j-tui-terminal"));
-                }else{
-                    Log.e(TAG, "解析异常.");
+                } else {
+                    notice("解析异常.");
 
                     Utils.setFile("/sdcard/letv.html", result);
                     return false;
@@ -107,31 +107,31 @@ public class LetvSoActivity extends SearchActivity {
 
                 String starKey = "<div class=\"So-detail Star-so";
                 // 现获取明星的个人作品
-                if(result.contains(starKey)){
-                    try{
-                        String star = result.substring(result.indexOf(starKey)+starKey.length());
-                        //Log.e(TAG, star);
+                if (result.contains(starKey)) {
+                    try {
+                        String star = result.substring(result.indexOf(starKey) + starKey.length());
+                        //notice(star);
 
                         starKey = "data-info=\"";
-                        star = star.substring(star.indexOf(starKey)+starKey.length());
-                        //Log.e(TAG, star);
+                        star = star.substring(star.indexOf(starKey) + starKey.length());
+                        //notice(star);
 
                         String dataInfo = star.substring(0, star.indexOf("\""));
-                        //Log.e(TAG, dataInfo);
+                        //notice(dataInfo);
 
                         JSONObject obj = new JSONObject(dataInfo);
                         String leId = obj.getString("leId");
 
-                        if(!TextUtils.isEmpty(leId)){
+                        if (!TextUtils.isEmpty(leId)) {
                             flag = listStarVideos(leId, flag);
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
 
                 Log.e(TAG, "Albums1 ===== " + mAlbums.size());
-                if(keyword.equals(mSearchText)){
+                if (keyword.equals(mSearchText)) {
                     mHandler.sendEmptyMessage(Constants.MSG_LIST_ALBUM);
                 }
 
@@ -140,7 +140,7 @@ public class LetvSoActivity extends SearchActivity {
                 while (result.contains(start)) {
 
                     if (mCancelled) {
-                        Log.e(TAG, "Listing albums has Cancelled.");
+                        notice("Listing albums has Cancelled.");
                         return false;
                     }
 
@@ -153,7 +153,7 @@ public class LetvSoActivity extends SearchActivity {
                         data = result.substring(startIndex);
                     }
 
-//                    Log.e(TAG, "data"+flag+" ===== "+data);
+//                    notice("data"+flag+" ===== "+data);
 
                     // 专辑播放地址
                     String key = "<a href=\"";
@@ -172,26 +172,26 @@ public class LetvSoActivity extends SearchActivity {
                     // 专辑名称
                     key = "<div class=\"info-tit\">";
                     len = data.indexOf(key);
-                    tmp = data.substring(len+key.length());
+                    tmp = data.substring(len + key.length());
                     key = "\">";
                     len = tmp.indexOf(key);
                     tmp = tmp.substring(len + key.length());
                     len = tmp.indexOf("</a>");
-                    String albumTitle = tmp.substring(0, len).replaceAll("<u>","").replaceAll("</u>","");
+                    String albumTitle = tmp.substring(0, len).replaceAll("<u>", "").replaceAll("</u>", "");
 
                     // 专辑简介
                     key = "<div class=\"info-cnt\" data-statectn=\"typeResult\" data-itemhldr=\"a\">";
                     len = data.indexOf(key);
-                    if(len == -1){
+                    if (len == -1) {
                         key = "<div class=\"info-con\">";
                         len = data.indexOf(key);
                     }
                     String albumSummary = "暂无简介.";
-                    if(len != -1){
+                    if (len != -1) {
                         tmp = data.substring(len + key.length());
                         len = tmp.indexOf("<a");
-                        if(len != -1){
-                            albumSummary = tmp.substring(0, len).replaceAll("<p>","").replaceAll("</p>","").trim();
+                        if (len != -1) {
+                            albumSummary = tmp.substring(0, len).replaceAll("<p>", "").replaceAll("</p>", "").trim();
                         }
                     }
 
@@ -199,44 +199,44 @@ public class LetvSoActivity extends SearchActivity {
                     List<ListVideo> listVideos = new ArrayList<ListVideo>();
                     key = "data-info=\"";
                     len = data.indexOf(key);
-                    if(len != -1){
+                    if (len != -1) {
                         tmp = data.substring(len + key.length());
                         len = tmp.indexOf("\"");
                         String dataInfo = tmp.substring(0, len);
 
-                        try{
+                        try {
                             JSONObject obj = new JSONObject(dataInfo);
 
                             String vidEpisode = obj.getString("vidEpisode");
-//                            Log.e(TAG, "data"+flag+" ===== "+vidEpisode);
+//                            notice("data"+flag+" ===== "+vidEpisode);
 
-                            if(!TextUtils.isEmpty(vidEpisode)){
+                            if (!TextUtils.isEmpty(vidEpisode)) {
 
                                 String[] vidEpisodes = vidEpisode.split(",");
-                                for (int i=0; i< vidEpisodes.length; i++){
+                                for (int i = 0; i < vidEpisodes.length; i++) {
                                     String[] vids = vidEpisodes[i].split("-");
                                     ListVideo listVideo = new ListVideo(vids[0], vids[1], LetvUtils.getVideoPlayUrlFromVid(vids[1]));
                                     listVideos.add(listVideo);
                                 }
                             }
-                        }catch (Exception e){
-//                            Log.e(TAG, "data"+flag+" ===== "+dataInfo);
+                        } catch (Exception e) {
+//                            notice("data"+flag+" ===== "+dataInfo);
                         }
                     }
 
-                    if(listVideos.size() == 0){
+                    if (listVideos.size() == 0) {
                         // 如果没有取到专辑列表信息，则可能是 音乐/综艺 等
                         listMusicOrZongyi(listVideos, data);
                     }
 
 
-                    if(listVideos.size() == 0){
+                    if (listVideos.size() == 0) {
                         // 如果没有取到专辑列表信息，则可能是 **
 
                         String titleKey = "<dl class=\"dl_temp";
-                        while(data.contains(titleKey)){
+                        while (data.contains(titleKey)) {
                             len = data.indexOf(titleKey);
-                            data = data.substring(len+titleKey.length());
+                            data = data.substring(len + titleKey.length());
 
                             len = data.indexOf("</dl>");
                             String dl = data.substring(0, len);
@@ -256,30 +256,30 @@ public class LetvSoActivity extends SearchActivity {
                             ListVideo listVideo = new ListVideo(listTitle, listTitle, listUrl);
                             listVideos.add(listVideo);
 
-//                            Log.e(TAG, "++++++++++++++++ "+listVideo);
+//                            notice("++++++++++++++++ "+listVideo);
                         }
                     }
 
 
-                    if(PlayUtils.isSurpportUrl(albumUrl)){
+                    if (PlayUtils.isSurpportUrl(albumUrl)) {
                         Album album = new Album(flag, albumTitle, albumSummary, albumImg, albumUrl, listVideos);
-                        if(PlayUtils.isSurpportUrl(album.getPlayurl())){
-                            //Log.e(TAG, album.toString());
+                        if (PlayUtils.isSurpportUrl(album.getPlayurl())) {
+                            //notice(album.toString());
 
                             album.setOrder(++flag);
                             mAlbums.add(album);
-                        }else{
-                            Log.e(TAG, "暂不支持专辑 《"+albumTitle+"》" + album.getPlayurl());
+                        } else {
+                            Log.e(TAG, "暂不支持视频 《" + albumTitle + "》" + album.getPlayurl());
                         }
-                    }else{
-                        Log.e(TAG, "暂不支持播放 《"+albumTitle+"》" + albumUrl);
+                    } else {
+                        Log.e(TAG, "暂不支持播放 《" + albumTitle + "》" + albumUrl);
                     }
 
-                    result = result.substring(startIndex+start.length());
+                    result = result.substring(startIndex + start.length());
                 }
 
                 Log.e(TAG, "Albums2 ===== " + mAlbums.size());
-                if(keyword.equals(mSearchText)){
+                if (keyword.equals(mSearchText)) {
                     mHandler.sendEmptyMessage(Constants.MSG_LIST_ALBUM);
                 }
 
@@ -287,7 +287,7 @@ public class LetvSoActivity extends SearchActivity {
                 flag = listUploadVideos(keyword, flag);
 
                 Log.e(TAG, "mAlbums3 ===== " + mAlbums.size());
-                if(keyword.equals(mSearchText)){
+                if (keyword.equals(mSearchText)) {
                     mHandler.sendEmptyMessage(Constants.MSG_LIST_ALBUM);
                 }
 
@@ -306,77 +306,83 @@ public class LetvSoActivity extends SearchActivity {
     private int listVideos(String json, int flag) throws Exception {
         JSONObject obj = new JSONObject(json);
 
+        if(!obj.has("data_list")){
+            Utils.setFile("/sdcard/letv", json);
+            notice("No data list.");
+            return flag;
+        }
+
         JSONArray dataList = obj.getJSONArray("data_list");
         int dataListLen = dataList.length();
-        //Log.e(TAG, "dataListLen ===== " + dataListLen);
+        //notice("dataListLen ===== " + dataListLen);
 
         for (int i = 0; i < dataListLen; i++) {
             JSONObject data = (JSONObject) dataList.get(i);
 
             String albumTitle = data.getString("name");
             String albumSummary = "暂无简介.";
-            if(data.has("description")){
+            if (data.has("description")) {
                 albumSummary = data.getString("description");
             }
             JSONObject images = data.getJSONObject("images");
             String albumImg = "";
-            if(images.has("400*300")){
+            if (images.has("400*300")) {
                 albumImg = images.getString("400*300");
-            }else{
+            } else {
                 Iterator<String> keys = images.keys();
-                while(keys.hasNext()){
+                while (keys.hasNext()) {
                     albumImg = images.getString(keys.next());
                     break;
                 }
             }
 
             String albumUrl = data.getString("url");
-            if(TextUtils.isEmpty(albumUrl)){
-                if(data.has("vid")){
+            if (TextUtils.isEmpty(albumUrl)) {
+                if (data.has("vid")) {
                     String vid = data.getString("vid");
-                    if(!TextUtils.isEmpty(vid)){
+                    if (!TextUtils.isEmpty(vid)) {
                         albumUrl = LetvUtils.getVideoPlayUrlFromVid(vid);
                     }
                 }
             }
 
             List<ListVideo> listVideos = new ArrayList<ListVideo>();
-            if(data.has("vids")){
+            if (data.has("vids")) {
                 /**
                  * 1 电影，2 电视剧，11 综艺
                  */
                 String category = data.getString("category");
 
-                if("11".equals(category)){
+                if ("11".equals(category)) {
                     JSONArray videoList = data.getJSONArray("videoList");
-                    for (int j=0; j<videoList.length(); j++){
+                    for (int j = 0; j < videoList.length(); j++) {
 
                         JSONObject video = videoList.getJSONObject(j);
 
-                        String url = video.getString("url").replaceAll("letv.com","le.com");
+                        String url = video.getString("url").replaceAll("letv.com", "le.com");
 
                         ListVideo listVideo = new ListVideo(video.getString("episodes"), video.getString("subName"), url);
                         listVideos.add(listVideo);
                     }
-                }else if("2".equals(category)){
+                } else if ("2".equals(category)) {
                     String vids = data.getString("vids");
 
-                    if(TextUtils.isEmpty(vids)){
+                    if (TextUtils.isEmpty(vids)) {
                         // 非乐视视频资源，走这里
                         vids = data.getString("videoPlayUrls");
                         String episodes = data.getString("episodes");
                         String[] videoPlayUrls = vids.split(";");
 
                         int count = Integer.parseInt(episodes);
-                        int min = (count<videoPlayUrls.length && count != 0)?count:videoPlayUrls.length;
+                        int min = (count < videoPlayUrls.length && count != 0) ? count : videoPlayUrls.length;
 
-                        for (int j=0; j<min; j++){
+                        for (int j = 0; j < min; j++) {
                             String[] videoPlayUrl = videoPlayUrls[j].split("\\|");
-                            ListVideo listVideo = new ListVideo(j+1, albumTitle+videoPlayUrl[0], videoPlayUrl[1]);
+                            ListVideo listVideo = new ListVideo(j + 1, albumTitle + videoPlayUrl[0], videoPlayUrl[1]);
                             listVideos.add(listVideo);
                         }
-                    }else{
-                        if(TextUtils.isEmpty(albumUrl)){
+                    } else {
+                        if (TextUtils.isEmpty(albumUrl)) {
                             albumUrl = LetvUtils.getAlbumUrlFromVid(data.getString("aid"));
                         }
 
@@ -384,93 +390,112 @@ public class LetvSoActivity extends SearchActivity {
                         String[] vidsArr = vids.split(",");
 
                         int count = Integer.parseInt(episodes);
-                        int min = (count<vidsArr.length && count != 0)?count:vidsArr.length;
+                        int min = (count < vidsArr.length && count != 0) ? count : vidsArr.length;
 
-                        for (int j=0; j<min; j++){
-                            ListVideo listVideo = new ListVideo(j+1, albumTitle+vidsArr[j], LetvUtils.getVideoPlayUrlFromVid(vidsArr[j]));
+                        for (int j = 0; j < min; j++) {
+                            ListVideo listVideo = new ListVideo(j + 1, albumTitle + vidsArr[j], LetvUtils.getVideoPlayUrlFromVid(vidsArr[j]));
                             listVideos.add(listVideo);
                         }
                     }
-                }else if("1".equals(category)){
+                } else if ("1".equals(category)) {
                     String vids = data.getString("vids");
-                    if(TextUtils.isEmpty(albumUrl) && !TextUtils.isEmpty(vids)){
+                    if (TextUtils.isEmpty(albumUrl) && !TextUtils.isEmpty(vids)) {
                         albumUrl = LetvUtils.getVideoPlayUrlFromVid(vids.split(",")[0]);
                     }
                 }
             }
 
 
-            if(TextUtils.isEmpty(albumUrl) && listVideos.size() == 0){
+            if (TextUtils.isEmpty(albumUrl) && listVideos.size() == 0) {
                 throw new Exception("No album url.");
             }
 
             Album album = new Album(flag, albumTitle, albumSummary, albumImg, albumUrl, listVideos);
-            if(PlayUtils.isSurpportUrl(album.getPlayurl())){
-                //Log.e(TAG, album.toString());
+            if (PlayUtils.isSurpportUrl(album.getPlayurl())) {
+                //notice(album.toString());
 
                 album.setOrder(++flag);
                 mAlbums.add(album);
-            }else{
-                Log.e(TAG, "暂不支持视频 《"+albumTitle+"》" + album.getPlayurl());
+            } else {
+                Log.e(TAG, "暂不支持视频 《" + albumTitle + "》" + album.getPlayurl());
             }
         }
         return flag;
     }
 
-    private int listStarVideos(String keyword, int flag){
-        try{
-            String json = LetvUtils.searchStarVideos(keyword);
-            //Log.e(TAG, json);
+    private int listStarVideos(String keyword, int flag) {
+        try {
+            int count = 0;
+            String json = null;
 
+            // 尝试获取3次
+            while (count < 3) {
+                json = LetvUtils.searchStarVideos(keyword);
+                //notice(json);
 
-            if (TextUtils.isEmpty(json)) {
-                Log.e(TAG, "Search "+keyword+", upload videos is empty.");
-                return flag;
+                if (TextUtils.isEmpty(json)) {
+                    notice(count++ + ", Search " + keyword + ", star videos is empty.");
+                    Thread.sleep(200);
+                } else {
+                    break;
+                }
             }
 
-            return listVideos(json, flag);
-        }catch (Exception e){
+            if (!TextUtils.isEmpty(json)) {
+                return listVideos(json, flag);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return flag;
     }
 
-    private int listUploadVideos(String keyword, int flag){
-        try{
-            String json = LetvUtils.searchUploadVideos(keyword);
-            //Log.e(TAG, json);
+    private int listUploadVideos(String keyword, int flag) {
+        try {
+            int count = 0;
+            String json = null;
 
-            if (TextUtils.isEmpty(json)) {
-                Log.e(TAG, "Search "+keyword+", upload videos is empty.");
-                return flag;
+            // 尝试获取3次
+            while (count < 3) {
+                json = LetvUtils.searchUploadVideos(keyword);
+                //notice(json);
+
+                if (TextUtils.isEmpty(json)) {
+                    notice(count++ + ", Search " + keyword + ", upload videos is empty.");
+                    Thread.sleep(200);
+                } else {
+                    break;
+                }
             }
 
-            return listVideos(json, flag);
-        }catch (Exception e){
+            if (!TextUtils.isEmpty(json)) {
+                return listVideos(json, flag);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return flag;
     }
 
-    private void listMusicOrZongyi(List<ListVideo> listVideos, String data){
+    private void listMusicOrZongyi(List<ListVideo> listVideos, String data) {
         String titleKey = "<ul class=\"music_ul";
-        if(!data.contains(titleKey)){
+        if (!data.contains(titleKey)) {
             titleKey = "<ul class=\"zongyi_ul";
-            if(!data.contains(titleKey)){
+            if (!data.contains(titleKey)) {
                 return;
             }
         }
 
         int len = data.indexOf(titleKey);
-        String tmp = data.substring(len+titleKey.length());
+        String tmp = data.substring(len + titleKey.length());
         String key = "</ul>";
         len = tmp.indexOf(key);
         String ul = tmp.substring(0, len + key.length());
 
         titleKey = "<li>";
-        while(ul.contains("<li>")){
+        while (ul.contains("<li>")) {
             len = ul.indexOf(titleKey);
-            ul = ul.substring(len+titleKey.length());
+            ul = ul.substring(len + titleKey.length());
 
             len = ul.indexOf("</li>");
             String li = ul.substring(0, len);
@@ -485,12 +510,12 @@ public class LetvSoActivity extends SearchActivity {
             len = tmp.indexOf(key);
             tmp = tmp.substring(len + key.length());
             len = tmp.indexOf("</a>");
-            String listTitle = tmp.substring(0, len).replaceAll("<span>","").replaceAll("</span>","").split("\\(")[0].trim();
+            String listTitle = tmp.substring(0, len).replaceAll("<span>", "").replaceAll("</span>", "").split("\\(")[0].trim();
 
             ListVideo listVideo = new ListVideo(listTitle, listTitle, listUrl);
             listVideos.add(listVideo);
 
-            //Log.e(TAG, "++++++++++++++++ "+listVideo);
+            //notice("++++++++++++++++ "+listVideo);
         }
 
     }

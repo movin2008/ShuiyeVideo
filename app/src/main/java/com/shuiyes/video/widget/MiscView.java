@@ -9,6 +9,8 @@ import com.zhy.view.flowlayout.TagView;
 
 public class MiscView extends TagView {
 
+    public static final int WH = 100;
+
     public MiscView(Context context) {
         super(context);
 
@@ -33,7 +35,7 @@ public class MiscView extends TagView {
 
     public int measureWidth(){
         int measureWidth = Math.round(getPaint().measureText(getText().toString()))+40;
-        return measureWidth>100?measureWidth:100;
+        return measureWidth>WH?measureWidth:WH;
     }
 
 }

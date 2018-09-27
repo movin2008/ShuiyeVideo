@@ -23,7 +23,8 @@
         android:theme="@style/AppTheme">
 
         <!-- android:windowSoftInputMode="adjustUnspecified|stateHidden" -->
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,34 +34,34 @@
 
         <activity
             android:name=".WebActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".youku.YoukuSoActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".youku.YoukuVActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".letv.LetvSoActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".letv.LetvVActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".iqiyi.IQIyiSoActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".iqiyi.IQiyiVActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
 
     </application>
 

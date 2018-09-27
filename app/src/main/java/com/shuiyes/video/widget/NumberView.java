@@ -9,6 +9,8 @@ import android.view.Gravity;
 
 public class NumberView extends TagView {
 
+    public static final int WH = 120;
+
     private String url;
     private String title;
 
@@ -35,7 +37,7 @@ public class NumberView extends TagView {
 
     public int measureWidth(){
         int measureWidth = Math.round(getPaint().measureText(getText().toString()))+20;
-        return measureWidth>100?measureWidth:100;
+        return measureWidth>WH?measureWidth:WH;
     }
 
 }

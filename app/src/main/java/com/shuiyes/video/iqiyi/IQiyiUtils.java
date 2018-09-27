@@ -13,12 +13,9 @@ public class IQiyiUtils {
 
     private final static String TAG = "IQiyiUtils";
 
-    public static String fetchVideo(String tvid) {
-        return HttpUtils.open(IQiyiUtils.getVideoInfoUrl(tvid));
-    }
-
-    public static String getVideoInfoUrl(String tvid) {
-        return "http://mixer.video.iqiyi.com/jp/mixin/videos/"+tvid;
+    public static String fetchVideo(String tvid, String vid) {
+        String url = String.format("https://cache.video.iqiyi.com/jp/vi/%s/%s/",tvid,vid);
+        return HttpUtils.open(url);
     }
 
     private static final String src = "76f90cbd92f94a2e925d83e8ccd22cb7";
@@ -41,3 +38,15 @@ public class IQiyiUtils {
         return HttpUtils.open(url);
     }
 }
+
+/**
+ 视频详情：
+ http://mixer.video.iqiyi.com/jp/mixin/videos/tvid
+ https://cache.video.iqiyi.com/jp/vi/tvid/vid/
+
+ Exeample：
+ http://mixer.video.iqiyi.com/jp/mixin/videos/1342023800
+ https://cache.video.iqiyi.com/jp/vi/1342023800/2da89a1366f64a809705ebbef07b8d58/
+
+ http://cache.video.iqiyi.com/jp/othlist/205014501/4/desc/
+ */

@@ -12,8 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import com.shuiyes.video.R;
-
 public class FlowLayout extends ViewGroup {
     private static final int LEFT = -1;
     private static final int CENTER = 0;

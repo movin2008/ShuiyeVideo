@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
-import com.shuiyes.video.base.SearchActivity;
+
+import com.shuiyes.video.base.BaseSearchActivity;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.Constants;
@@ -15,9 +16,7 @@ import com.shuiyes.video.util.PlayUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YoukuSoActivity extends SearchActivity {
-
-    private final String TAG = this.getClass().getSimpleName();
+public class YoukuSoActivity extends BaseSearchActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,21 +68,21 @@ public class YoukuSoActivity extends SearchActivity {
         protected Boolean doInBackground(String... args) {
             String keyword = args[0];
             try {
-                if(mCancelled){
-                    Log.e(TAG, "doInBackground has Cancelled.");
+                if (mCancelled) {
+                    notice("doInBackground has Cancelled.");
                     return false;
                 }
 
-                String result = YoukuUtils.search(keyword);
-//					Log.e(TAG, result);
+                String html = YoukuUtils.search(keyword);
+//					Log.e(TAG, html);
 
-                if (TextUtils.isEmpty(result)) {
-                    Log.e(TAG, "Seach "+keyword+" is empty.");
+                if (TextUtils.isEmpty(html)) {
+                    notice("Seach " + keyword + " is empty.");
                     return false;
                 }
 
-                if(mCancelled){
-                    Log.e(TAG, "Will list albums has Cancelled.");
+                if (mCancelled) {
+                    notice("Will list albums has Cancelled.");
                     return false;
                 }
 
@@ -91,20 +90,20 @@ public class YoukuSoActivity extends SearchActivity {
 
                 int flag = 1;
                 String start = "<div class=\\\"sk-mod\\\">";
-                while (result.contains(start)) {
+                while (html.contains(start)) {
 
-                    if(mCancelled){
-                        Log.e(TAG, "Listing albums has Cancelled.");
+                    if (mCancelled) {
+                        notice("Listing albums has Cancelled.");
                         return false;
                     }
 
-                    int startIndex = result.indexOf(start);
-                    int endIndex = result.indexOf(start, startIndex + start.length());
+                    int startIndex = html.indexOf(start);
+                    int endIndex = html.indexOf(start, startIndex + start.length());
                     String data = null;
                     if (endIndex != -1) {
-                        data = result.substring(startIndex, endIndex);
+                        data = html.substring(startIndex, endIndex);
                     } else {
-                        data = result.substring(startIndex);
+                        data = html.substring(startIndex);
                     }
 //        			Log.e(TAG, "data ===== "+data);
 
@@ -114,10 +113,10 @@ public class YoukuSoActivity extends SearchActivity {
 
                     len = tmp.indexOf("\\\"");
                     String albumTitle = tmp.substring(0, len);
-//			        Log.e(TAG, "albumTitle ==================== "+albumTitle);
+//			       notice("albumTitle ==================== "+albumTitle);
 
                     if (TextUtils.isEmpty(albumTitle)) {
-//				        Log.e(TAG, "albumTitle ?????????????? "+tmp);
+//				       notice("albumTitle ?????????????? "+tmp);
 
                         len = tmp.indexOf(">");
                         albumTitle = Html.fromHtml(tmp.substring(len + 1, tmp.indexOf("</a>"))).toString();
@@ -130,7 +129,7 @@ public class YoukuSoActivity extends SearchActivity {
 
                     len = data.indexOf("\\\"");
                     String albumUrl = HttpUtils.FormateUrl(data.substring(0, len));
-//                  Log.e(TAG, flag + " albumUrl ===================== " + albumUrl);
+//                 notice(flag + " albumUrl ===================== " + albumUrl);
 
                     String albumSummary = "暂无简介";
                     key = "<label>简介:</label>";
@@ -140,7 +139,7 @@ public class YoukuSoActivity extends SearchActivity {
 
                         len = tmp.indexOf("</span>\\n\\t");
                         albumSummary = tmp.substring(0, len);
-//				        Log.e(TAG, "albumSummary ===================== "+albumSummary);
+//				       notice("albumSummary ===================== "+albumSummary);
                     }
 
                     key = "\\n\\t\\t<img";
@@ -156,7 +155,7 @@ public class YoukuSoActivity extends SearchActivity {
 
                     len = tmp.indexOf("\\\"");
                     String albumImg = HttpUtils.FormateUrl(tmp.substring(0, len));
-//			        Log.e(TAG, flag+" albumImg ===================== "+albumImg);
+//			       notice(flag+" albumImg ===================== "+albumImg);
 
                     int prev = 0;
                     List<ListVideo> listVideos = new ArrayList<ListVideo>();
@@ -164,8 +163,8 @@ public class YoukuSoActivity extends SearchActivity {
                     String titleKey = "<a title=\\\"";
                     while (data.contains(titleKey)) {
 
-                        if(mCancelled){
-                            Log.e(TAG, "Listing videos has Cancelled.");
+                        if (mCancelled) {
+                            notice("Listing videos has Cancelled.");
                             return false;
                         }
 
@@ -192,7 +191,6 @@ public class YoukuSoActivity extends SearchActivity {
                         len = data.indexOf("</a>");
                         String index = data.substring(0, len);
 
-
                         int id = 0;
                         try {
                             id = Integer.parseInt(index);
@@ -201,9 +199,9 @@ public class YoukuSoActivity extends SearchActivity {
                         if (id != 0 && id - prev != 1) {
                             break;
                         } else if (id == 0) {
-//                          Log.e(TAG, "4 ?????????????? " + name);
-//                          Log.e(TAG, "5 ??????????????  " + url);
-//                          Log.e(TAG, "6 ?????????????? " + index);
+//                         notice("4 ?????????????? " + name);
+//                         notice("5 ??????????????  " + url);
+//                         notice("6 ?????????????? " + index);
                             break;
                         }
                         prev = id;
@@ -211,17 +209,19 @@ public class YoukuSoActivity extends SearchActivity {
                         ListVideo listVideo = new ListVideo(id, name, url);
                         listVideos.add(listVideo);
 
-//				        Log.e(TAG, "++++++++++++++++ "+listVideo);
+//				       notice("++++++++++++++++ "+listVideo);
                     }
-                    result = result.substring(result.indexOf(start) + start.length());
+                    html = html.substring(html.indexOf(start) + start.length());
 
-                    if(PlayUtils.isSurpportUrl(albumUrl)){
+                    if (PlayUtils.isSurpportUrl(albumUrl)) {
                         Album album = new Album(flag++, albumTitle, albumSummary, albumImg, albumUrl, listVideos);
-                        if(PlayUtils.isSurpportUrl(album.getPlayurl())){
+                        if (PlayUtils.isSurpportUrl(album.getPlayurl())) {
                             mAlbums.add(album);
+                        } else {
+                            Log.e(TAG, "暂不支持视频 《" + albumTitle + "》" + album.getPlayurl());
                         }
-                    }else{
-                        Log.e(TAG, "暂不支持播放 《"+albumTitle+"》" + albumUrl);
+                    } else {
+                        Log.e(TAG, "暂不支持播放 《" + albumTitle + "》" + albumUrl);
                     }
                 }
                 Log.e(TAG, "mAlbums ===== " + mAlbums.size());

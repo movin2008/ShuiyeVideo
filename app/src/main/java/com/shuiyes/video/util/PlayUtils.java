@@ -2,8 +2,8 @@ package com.shuiyes.video.util;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
+import com.shuiyes.video.WebActivity;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.iqiyi.IQiyiVActivity;
 import com.shuiyes.video.letv.LetvVActivity;
@@ -15,7 +15,7 @@ public class PlayUtils {
     private static final String TAG = "PlayUtils";
 
     public static boolean isSurpportUrl(String url){
-        return url.contains("youku.com") || url.contains("le.com") || url.contains("iqiyi.com");
+        return url.contains("youku.com") || url.contains("le.com") || url.contains("letv.com") || url.contains("iqiyi.com");
     }
 
     public static String formateUrlSource(String url){
@@ -42,21 +42,25 @@ public class PlayUtils {
                 context.startActivity(new Intent(context, YoukuVActivity.class).putExtra("url", url).putExtra("title", title));
             }else{
                 Tips.show(context, "优酷暂不支持播放 " + url, 1);
+                context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
             }
         }else if (url.contains("le.com")) {
             if(url.contains("le.com/ptv/vplay/")){
                 context.startActivity(new Intent(context, LetvVActivity.class).putExtra("url", url).putExtra("title", title));
             }else{
                 Tips.show(context, "乐视暂不支持播放 " + url, 1);
+                context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
             }
         }else if (url.contains("iqiyi.com")) {
             if(url.contains("iqiyi.com/v_") || url.contains("iqiyi.com/w_")){
                 context.startActivity(new Intent(context, IQiyiVActivity.class).putExtra("url", url).putExtra("title", title));
             }else{
                 Tips.show(context, "爱奇艺暂不支持播放 " + url, 1);
+                context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
             }
         } else {
             Tips.show(context, "暂不支持播放 " + PlayUtils.formateUrlSource(url), 0);
+            context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
         }
     }
 
