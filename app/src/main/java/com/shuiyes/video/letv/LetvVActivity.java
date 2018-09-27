@@ -32,10 +32,12 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
         mSelectView.setOnClickListener(this);
         mNextView.setOnClickListener(this);
 
-        String key = "vplay/";
+        String key = "/vplay/";
         int index = mUrl.indexOf(key);
         if (mUrl.indexOf(".html") != -1) {
             mVid = mUrl.substring(index + key.length(), mUrl.indexOf(".html"));
+            String[] vids = mVid.split("_");
+            mVid = vids[vids.length-1];
         } else {
             mVid = mUrl.substring(index + key.length());
         }
@@ -166,7 +168,6 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                         }
 
                         mStateView.setText("初始化...");
-
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, ((MiscView) view).getPlayVideo()));
                     }
                 });
@@ -186,7 +187,6 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
 
                         mStateView.setText("初始化...");
 
-
                         final LetvStream stream = (LetvStream) ((MiscView) view).getPlayVideo();
                         new Thread(new Runnable() {
                             @Override
@@ -205,6 +205,7 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                 mClarityDialog.show();
                 break;
             case R.id.btn_next:
+                mStateView.setText("初始化...");
                 playVideo();
                 break;
         }

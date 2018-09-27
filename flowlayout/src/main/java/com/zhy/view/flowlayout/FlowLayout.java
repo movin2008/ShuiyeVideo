@@ -3,7 +3,6 @@ package com.zhy.view.flowlayout;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.LayoutDirection;
 import android.view.View;
 import android.view.ViewGroup;
 

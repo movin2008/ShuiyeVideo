@@ -7,4 +7,6 @@ public class Constants {
     public static final int MSG_CHECK_PERMISSION = 102;
     public static final int MSG_SHOW_TIPS = 103;
 
+    public static boolean WEB_FOEGROUND = false;
+
 }

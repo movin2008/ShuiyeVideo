@@ -423,19 +423,23 @@ public class LetvSoActivity extends BaseSearchActivity {
         return flag;
     }
 
+    private final int LIST_MAX = 4;
+
     private int listStarVideos(String keyword, int flag) {
         try {
-            int count = 0;
+            int count = 1;
             String json = null;
 
-            // 尝试获取3次
-            while (count < 3) {
+            // 尝试获取4次
+            while (count < LIST_MAX) {
                 json = LetvUtils.searchStarVideos(keyword);
                 //notice(json);
 
                 if (TextUtils.isEmpty(json)) {
                     notice(count++ + ", Search " + keyword + ", star videos is empty.");
-                    Thread.sleep(200);
+                    if(count <= LIST_MAX){
+                        Thread.sleep(500*count);
+                    }
                 } else {
                     break;
                 }
@@ -452,17 +456,19 @@ public class LetvSoActivity extends BaseSearchActivity {
 
     private int listUploadVideos(String keyword, int flag) {
         try {
-            int count = 0;
+            int count = 1;
             String json = null;
 
             // 尝试获取3次
-            while (count < 3) {
+            while (count <= LIST_MAX) {
                 json = LetvUtils.searchUploadVideos(keyword);
                 //notice(json);
 
                 if (TextUtils.isEmpty(json)) {
                     notice(count++ + ", Search " + keyword + ", upload videos is empty.");
-                    Thread.sleep(200);
+                    if(count <= LIST_MAX){
+                        Thread.sleep(500*count);
+                    }
                 } else {
                     break;
                 }

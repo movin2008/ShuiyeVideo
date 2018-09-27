@@ -50,7 +50,7 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                     String tvid = null;
                     String vid = null;
 
-                    String key = "?tvId=";
+                    String key = "?tvid=";
                     if(mUrl.contains(key)){
                         int len = mUrl.indexOf(key);
                         String tmp = mUrl.substring(len + key.length());
@@ -61,7 +61,7 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                         len = tmp.indexOf(key);
                         vid = tmp.substring(len + key.length());
 
-                        Log.e(TAG, ":url 'tvId="+tvid+", vid="+vid+"'");
+                        Log.e(TAG, ":url 'tvid="+tvid+", vid="+vid+"'");
                     }
 
                     if(tvid == null && vid == null){
@@ -87,7 +87,7 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                                 tvid = obj.getString("tvId");
                                 vid = obj.getString("vid");
 
-                                Log.e(TAG, ":page-info 'tvId="+tvid+", vid="+vid+"'");
+                                Log.e(TAG, ":page-info 'tvid="+tvid+", vid="+vid+"'");
                                 mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, obj.getString("tvName")));
                             }catch (Exception e){
                             }
@@ -117,19 +117,27 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                     Utils.setFile("/sdcard/iqiyi", video);
 
                     if (TextUtils.isEmpty(video)) {
-                        fault("请重试");
+                        fault("空数据,请重试");
                         return;
                     }
 
                     key = "var tvInfoJs=";
                     String albumUrl = null;
+                    String albumId = null;
+                    int albumCount = 0;
                     if(video.contains(key)){
                         int len = video.indexOf(key);
                         video = video.substring(len + key.length());
 
                         JSONObject obj = new JSONObject(video);
-                        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, obj.getString("shortTitle")));
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, obj.getString("vn")));
                         albumUrl = obj.getString("au");
+
+                        albumId = obj.getString("aid");
+                        albumCount = obj.getInt("es");
+                    }else{
+                        fault("数据tvInfoJs异常");
+                        return;
                     }
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
@@ -190,60 +198,59 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                         mCurrentPosition = 0;
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
 
-                        //  最后获取专辑信息
-                        if(albumUrl != null && albumUrl.contains("iqiyi.com/a_")){
-                            String html = HttpUtils.open(albumUrl);
+                        if(albumCount > 1){
+                            int pages = (int) Math.ceil((float)albumCount/50);
+                            int flag = 1;
+                            List<ListVideo> videoList = new ArrayList<ListVideo>();
+                            for (int page=1; page<=pages; page++){
+                                //  最后获取专辑信息
+                                String album = IQiyiUtils.fetchAlbum(albumId, page);
 
-                            if (TextUtils.isEmpty(html)) {
-                                Log.e(TAG, "Seach album is empty.");
-                                return;
-                            }
+                                key = "var tvInfoJs=";
+                                if(album.contains(key)){
+                                    int len = album.indexOf(key);
+                                    album = album.substring(len + key.length());
+                                    obj = new JSONObject(album);
 
-                            key = "<ul class=\"site-piclist";
-                            if(html.contains(key)){
-                                int len = html.indexOf(key);
-                                html = html.substring(len + key.length());
-                                html = html.substring(0, html.indexOf("</ul>"));
+                                    if (!"A00000".equals(obj.getString("code"))) {
 
-                                Utils.setFile("/sdcard/iqiyi.html", html);
-
-                                int flag = 1;
-                                List<ListVideo> videoList = new ArrayList<ListVideo>();
-                                String start = "<li data-albumlist-elem=\"playItem\">";
-                                while (html.contains(start)) {
-
-                                    int startIndex = html.indexOf(start);
-                                    int endIndex = html.indexOf(start, startIndex + start.length());
-                                    String data = null;
-                                    if (endIndex != -1) {
-                                        data = html.substring(startIndex, endIndex);
-                                    } else {
-                                        data = html.substring(startIndex);
+                                        if(obj.has("msg")){
+                                            Log.e(TAG, obj.getString("msg"));
+                                        }else{
+                                            Log.e(TAG, obj.getJSONObject("ctl").getString("msg"));
+                                        }
+                                        continue;
                                     }
 
-                                    key = "href=\"";
-                                    data = data.substring(data.indexOf(key) + key.length());
-                                    String url = data.substring(0, data.indexOf("\""));
+                                    JSONArray vlist = obj.getJSONObject("data").getJSONArray("vlist");
+                                    int vlistLen = vlist.length();
 
-                                    key = "<p class=\"site-piclist_info_title\">";
-                                    data = data.substring(data.indexOf(key) + key.length());
-                                    key = "\">";
-                                    data = data.substring(data.indexOf(key) + key.length());
-                                    String title = data.substring(0, data.indexOf("</a>")).trim();
+                                    for (int i = 0; i < vlistLen; i++) {
+                                        JSONObject stream = (JSONObject) vlist.get(i);
 
-                                    videoList.add(new ListVideo(flag++, title, url));
+                                        String title = stream.getString ("vn");
+                                        String url = stream.getString("vurl")
+                                                +"?tvid="+stream.getString("id")
+                                                +"&vid="+stream.getString("vid");
 
-                                    html = html.substring(html.indexOf(start) + start.length());
+                                        videoList.add(new ListVideo(flag++, title, url));
+                                    }
+                                    Log.e(TAG, "videoList "+videoList.size()+"/"+vlistLen);
+                                }else{
+                                    fault("数据tvInfoJs异常");
+                                    return;
                                 }
 
-                                if(mVideoList.isEmpty() || videoList.size() > mVideoList.size()){
-                                    mVideoList.clear();
-                                    mVideoList.addAll(videoList);
-                                    mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
-                                }
+                            }
+
+                            if(mVideoList.isEmpty() || videoList.size() > mVideoList.size()) {
+                                mVideoList.clear();
+                                mVideoList.addAll(videoList);
+                                mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
                             }
 
                         }
+
                     }
                 } catch (Exception e) {
                     fault(e);
@@ -291,6 +298,8 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                         mUrl = v.getUrl();
 
                         mVideoView.stopPlayback();
+
+                        mStateView.setText("初始化...");
                         playVideo();
                     }
                 });
@@ -311,6 +320,73 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
         }
 
         mClarityView.setText(((IQiyiVideo)video).getType().getProfile());
+    }
+
+    /**
+     * 获取不全，最多50集
+     * @param albumUrl
+     */
+    @Deprecated
+    private void listAlbumUrl(String albumUrl){
+        if(TextUtils.isEmpty(albumUrl)){
+            Log.e(TAG, "list album is empty.");
+            return;
+        }
+        if(!albumUrl.contains("iqiyi.com/a_")){
+            Log.e(TAG, albumUrl+" is illegally.");
+            return;
+        }
+
+        String html = HttpUtils.open(albumUrl);
+
+        if (TextUtils.isEmpty(html)) {
+            Log.e(TAG, "Seach album is empty.");
+            return;
+        }
+
+        String key = "<ul class=\"site-piclist";
+        if(html.contains(key)){
+            int len = html.indexOf(key);
+            html = html.substring(len + key.length());
+            html = html.substring(0, html.indexOf("</ul>"));
+
+            Utils.setFile("/sdcard/iqiyi.html", html);
+
+            int flag = 1;
+            List<ListVideo> videoList = new ArrayList<ListVideo>();
+            String start = "<li data-albumlist-elem=\"playItem\">";
+            while (html.contains(start)) {
+
+                int startIndex = html.indexOf(start);
+                int endIndex = html.indexOf(start, startIndex + start.length());
+                String data = null;
+                if (endIndex != -1) {
+                    data = html.substring(startIndex, endIndex);
+                } else {
+                    data = html.substring(startIndex);
+                }
+
+                key = "href=\"";
+                data = data.substring(data.indexOf(key) + key.length());
+                String url = data.substring(0, data.indexOf("\""));
+
+                key = "<p class=\"site-piclist_info_title\">";
+                data = data.substring(data.indexOf(key) + key.length());
+                key = "\">";
+                data = data.substring(data.indexOf(key) + key.length());
+                String title = data.substring(0, data.indexOf("</a>")).trim();
+
+                videoList.add(new ListVideo(flag++, title, url));
+
+                html = html.substring(html.indexOf(start) + start.length());
+            }
+
+            if(mVideoList.isEmpty() || videoList.size() > mVideoList.size()){
+                mVideoList.clear();
+                mVideoList.addAll(videoList);
+                mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
+            }
+        }
     }
 
 }

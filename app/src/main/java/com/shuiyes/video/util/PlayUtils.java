@@ -41,25 +41,28 @@ public class PlayUtils {
             if(url.contains("youku.com/v_show/")){
                 context.startActivity(new Intent(context, YoukuVActivity.class).putExtra("url", url).putExtra("title", title));
             }else{
-                Tips.show(context, "优酷暂不支持播放 " + url, 1);
-                context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
+                playFail(context, url);
             }
         }else if (url.contains("le.com")) {
-            if(url.contains("le.com/ptv/vplay/")){
+            if(url.contains("le.com") && url.contains("/vplay/")){
                 context.startActivity(new Intent(context, LetvVActivity.class).putExtra("url", url).putExtra("title", title));
             }else{
-                Tips.show(context, "乐视暂不支持播放 " + url, 1);
-                context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
+                playFail(context, url);
             }
         }else if (url.contains("iqiyi.com")) {
             if(url.contains("iqiyi.com/v_") || url.contains("iqiyi.com/w_")){
                 context.startActivity(new Intent(context, IQiyiVActivity.class).putExtra("url", url).putExtra("title", title));
             }else{
-                Tips.show(context, "爱奇艺暂不支持播放 " + url, 1);
-                context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
+                playFail(context, url);
             }
         } else {
-            Tips.show(context, "暂不支持播放 " + PlayUtils.formateUrlSource(url), 0);
+            playFail(context, url);
+        }
+    }
+
+    private static void playFail(Context context, String url){
+        Tips.show(context, "暂不支持播放 " + PlayUtils.formateUrlSource(url)+" 请浏览网页播放", 0);
+        if(!Constants.WEB_FOEGROUND){
             context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
         }
     }

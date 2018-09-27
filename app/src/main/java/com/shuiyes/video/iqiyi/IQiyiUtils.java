@@ -18,6 +18,11 @@ public class IQiyiUtils {
         return HttpUtils.open(url);
     }
 
+    public static String fetchAlbum(String aid, int page) {
+        String url = String.format("http://cache.video.iqiyi.com/jp/avlist/%s/%s/50/",aid,page);
+        return HttpUtils.open(url);
+    }
+
     private static final String src = "76f90cbd92f94a2e925d83e8ccd22cb7";
     private static final String key = "d5fb4bd9d50c4be6948c97edd7254b0e";
 
@@ -41,12 +46,10 @@ public class IQiyiUtils {
 
 /**
  视频详情：
- http://mixer.video.iqiyi.com/jp/mixin/videos/tvid
- https://cache.video.iqiyi.com/jp/vi/tvid/vid/
 
- Exeample：
- http://mixer.video.iqiyi.com/jp/mixin/videos/1342023800
- https://cache.video.iqiyi.com/jp/vi/1342023800/2da89a1366f64a809705ebbef07b8d58/
+ http://mixer.video.iqiyi.com/jp/mixin/videos/1178224700
 
+ https://cache.video.iqiyi.com/jp/vi/1178224700/6c32b745086b7c8e76c89429debc7a37/
+ http://cache.video.iqiyi.com/jp/avlist/207834001/2/50/
  http://cache.video.iqiyi.com/jp/othlist/205014501/4/desc/
  */

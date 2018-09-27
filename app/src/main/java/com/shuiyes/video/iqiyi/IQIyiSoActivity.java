@@ -239,10 +239,15 @@ public class IQIyiSoActivity extends BaseSearchActivity {
             JSONObject obj = (JSONObject) jsonArray.get(j);
 
             String name = obj.getString("itemTitle");
-            String url = obj.getString("itemLink");
+
+            //w_19s0ptu0id
+            String url = "https://www.iqiyi.com/v_19a1b2c3d4.html";
+            if(obj.has("itemLink")){
+                url = obj.getString("itemLink");
+            }
 
             if (obj.has("tvId") && obj.has("vid")) {
-                url += "?tvId=" + obj.getString("tvId") + "&vid=" + obj.getString("vid");
+                url += "?tvid=" + obj.getString("tvId") + "&vid=" + obj.getString("vid");
             }
 
             String id = String.valueOf(j + 1);

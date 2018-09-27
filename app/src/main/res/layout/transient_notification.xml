@@ -22,17 +22,13 @@
     android:background="#131415"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
-
     <TextView
         android:id="@android:id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:minHeight="40dp"
-        android:minWidth="360dp"
+        android:minWidth="600dp"
         android:shadowColor="#BB000000"
         android:shadowRadius="2.75"
         android:textColor="#ffffff"

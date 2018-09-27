@@ -102,11 +102,20 @@ public class HttpUtils {
                     return ret.toString();
                 } else if (code == 302) {
                     return HttpUtils.open(conn.getHeaderField("Location"));
+                } else if (code == 400) {
+                    Thread.sleep(500);
+                    return HttpUtils.open(url);
                 } else {
-                    Log.e(TAG, "open("+url+") ResponseCode="+code);
                     printHeaders(conn);
                 }
-            } catch (IOException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
+                e.printStackTrace();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e1) {
+                }
+                return HttpUtils.open(url);
+            } catch (Exception e) {
                 e.printStackTrace();
             }finally {
                 if(conn != null){
@@ -133,13 +142,22 @@ public class HttpUtils {
                     return ret.toString();
                 } else if (code == 302) {
                     return HttpUtils.open(conn.getHeaderField("Location"));
+                }else if (code == 400) {
+                    Thread.sleep(500);
+                    return HttpUtils.open(url);
                 } else {
-                    Log.e(TAG, "open("+url+") ResponseCode="+code);
                     printHeaders(conn);
                 }
-            } catch (IOException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 e.printStackTrace();
-            }finally {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e1) {
+                }
+                return HttpUtils.open(url);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
                 if(conn != null){
                     conn.disconnect();
                 }
@@ -164,11 +182,20 @@ public class HttpUtils {
                     return conn.getInputStream();
                 } else if (code == 302) {
                     return HttpUtils.openInputStream(conn.getHeaderField("Location"));
+                }else if (code == 400) {
+                    Thread.sleep(500);
+                    return HttpUtils.openInputStream(url);
                 } else {
-                    Log.e(TAG, "open("+url+") ResponseCode="+code);
                     printHeaders(conn);
                 }
-            } catch (IOException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
+                e.printStackTrace();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e1) {
+                }
+                return HttpUtils.openInputStream(url);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }else{
@@ -184,11 +211,20 @@ public class HttpUtils {
                     return conn.getInputStream();
                 } else if (code == 302) {
                     return HttpUtils.openInputStream(conn.getHeaderField("Location"));
+                }else if (code == 400) {
+                    Thread.sleep(500);
+                    return HttpUtils.openInputStream(url);
                 } else {
-                    Log.e(TAG, "open("+url+") ResponseCode="+code);
                     printHeaders(conn);
                 }
-            } catch (IOException e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
+                e.printStackTrace();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e1) {
+                }
+                return HttpUtils.openInputStream(url);
+            }  catch (Exception e) {
                 e.printStackTrace();
             }
         }

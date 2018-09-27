@@ -16,7 +16,6 @@ public class SVApplication extends Application {
         mContext = this.getApplicationContext();
         
 //        CrashReport.initCrashReport(getApplicationContext(), "a96983310d", true);
-
     }
 
     public static Context getAppContext(){

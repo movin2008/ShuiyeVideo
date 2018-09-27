@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.shuiyes.video.base.BaseActivity;
+import com.shuiyes.video.util.Constants;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.util.Utils;
@@ -120,6 +121,20 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 super.onProgressChanged(view, newProgress);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Constants.WEB_FOEGROUND = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Constants.WEB_FOEGROUND = false;
     }
 
     @Override

@@ -197,12 +197,14 @@ public class YoukuVActivity extends BasePlayActivity implements View.OnClickList
 
                         mVideoView.stopPlayback();
 
+                        mStateView.setText("初始化...");
                         playVideo();
                     }
                 });
                 mAlbumDialog.show();
                 break;
             case R.id.btn_next:
+                mStateView.setText("初始化...");
                 playVideo();
                 break;
         }
