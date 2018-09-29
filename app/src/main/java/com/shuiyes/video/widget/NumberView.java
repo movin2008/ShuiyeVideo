@@ -21,7 +21,7 @@ public class NumberView extends TagView {
         this.title = video.getTitle();
 
         this.setBackgroundResource(R.drawable.btn_rect);
-        this.setText(video.getId());
+        this.setText(video.getText());
         this.setGravity(Gravity.CENTER);
         this.setPadding(0, 0, 0, 0);
         this.setTextSize(25);

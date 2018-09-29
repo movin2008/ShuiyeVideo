@@ -219,7 +219,7 @@ public class QQVActivity extends BasePlayActivity implements View.OnClickListene
             public void run() {
                 ListVideo v = mSectionList.get(index);
                 try {
-                    playSection(v.getId(), v.getTitle(), v.getUrl());
+                    playSection(v.getText(), v.getTitle(), v.getUrl());
                 } catch (Exception e) {
                     fault(e);
                     e.printStackTrace();

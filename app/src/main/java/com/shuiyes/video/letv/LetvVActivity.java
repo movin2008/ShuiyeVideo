@@ -112,6 +112,11 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                     }
 
                     playUrl(streamUrl, prevStreamID + "P");
+
+
+                    // TODO
+                    // http://d-api-m.le.com/card/dynamic?platform=pc&vid=25214343&cid=2&id=84390&pagesize=100&type=episode&isvip=0&page=1&_=1538233546437
+
                 } catch (Exception e) {
                     fault(e);
                     e.printStackTrace();

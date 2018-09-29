@@ -43,8 +43,8 @@ public class PlayUtils {
             }else{
                 playFail(context, url);
             }
-        }else if (url.contains("le.com")) {
-            if(url.contains("le.com") && url.contains("/vplay/")){
+        }else if (url.contains("le.com") || url.contains("letv.com")) {
+            if(url.contains("/vplay/")){
                 context.startActivity(new Intent(context, LetvVActivity.class).putExtra("url", url).putExtra("title", title));
             }else{
                 playFail(context, url);

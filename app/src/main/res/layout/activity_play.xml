@@ -112,7 +112,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:text="time"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>

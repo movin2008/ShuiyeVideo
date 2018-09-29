@@ -359,9 +359,9 @@ public class LetvSoActivity extends BaseSearchActivity {
 
                         JSONObject video = videoList.getJSONObject(j);
 
-                        String url = video.getString("url").replaceAll("letv.com", "le.com");
+                        String url = video.getString("url");//.replaceAll("letv.com", "le.com")
 
-                        ListVideo listVideo = new ListVideo(video.getString("episodes"), video.getString("subName"), url);
+                        ListVideo listVideo = new ListVideo(video.getString("episodes"), video.getString("name"), url);
                         listVideos.add(listVideo);
                     }
                 } else if ("2".equals(category)) {
@@ -398,6 +398,17 @@ public class LetvSoActivity extends BaseSearchActivity {
                         }
                     }
                 } else if ("1".equals(category)) {
+                    JSONArray videoList = data.getJSONArray("videoList");
+                    for (int j = 0; j < videoList.length(); j++) {
+
+                        JSONObject video = videoList.getJSONObject(j);
+
+                        String url = video.getString("url");//.replaceAll("letv.com", "le.com")
+
+                        ListVideo listVideo = new ListVideo(video.getString("name"), video.getString("name"), url);
+                        listVideos.add(listVideo);
+                    }
+
                     String vids = data.getString("vids");
                     if (TextUtils.isEmpty(albumUrl) && !TextUtils.isEmpty(vids)) {
                         albumUrl = LetvUtils.getVideoPlayUrlFromVid(vids.split(",")[0]);
@@ -430,14 +441,14 @@ public class LetvSoActivity extends BaseSearchActivity {
             int count = 1;
             String json = null;
 
-            // 尝试获取4次
+            // 尝试获取
             while (count < LIST_MAX) {
                 json = LetvUtils.searchStarVideos(keyword);
                 //notice(json);
 
                 if (TextUtils.isEmpty(json)) {
-                    notice(count++ + ", Search " + keyword + ", star videos is empty.");
-                    if(count <= LIST_MAX){
+                    notice(count + ", Search " + keyword + ", star videos is empty.");
+                    if(count++ < LIST_MAX){
                         Thread.sleep(500*count);
                     }
                 } else {
@@ -459,14 +470,14 @@ public class LetvSoActivity extends BaseSearchActivity {
             int count = 1;
             String json = null;
 
-            // 尝试获取3次
+            // 尝试获取
             while (count <= LIST_MAX) {
                 json = LetvUtils.searchUploadVideos(keyword);
                 //notice(json);
 
                 if (TextUtils.isEmpty(json)) {
-                    notice(count++ + ", Search " + keyword + ", upload videos is empty.");
-                    if(count <= LIST_MAX){
+                    notice(count + ", Search " + keyword + ", upload videos is empty.");
+                    if(count++ < LIST_MAX){
                         Thread.sleep(500*count);
                     }
                 } else {

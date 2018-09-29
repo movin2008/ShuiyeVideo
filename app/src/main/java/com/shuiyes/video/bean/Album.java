@@ -23,6 +23,7 @@ public class Album {
 
         // 一个视频不需要展示列表
         if(listVideos.size() == 1){
+            this.title = listVideos.get(0).getText();
             listVideos.clear();
         }
     }

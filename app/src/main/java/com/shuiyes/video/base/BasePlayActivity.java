@@ -24,6 +24,7 @@ import com.shuiyes.video.dialog.MiscDialog;
 import com.shuiyes.video.widget.Tips;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public abstract class BasePlayActivity extends BaseActivity {
@@ -174,11 +175,12 @@ public abstract class BasePlayActivity extends BaseActivity {
         super.onResume();
 
         if (mPrepared && !mVideoView.isPlaying()) {
+            mLoadingProgress.setVisibility(View.VISIBLE);
+            if(mStateView.getText().length() == 0){
+                mStateView.setText("加载中...");
+            }
             if (mCurrentPosition > 0) {
                 mVideoView.seekTo(mCurrentPosition);
-            }
-            if(mStateView.getText().length() == 0){
-                mStateView.setText("缓存中...");
             }
             mVideoView.start();
         }
@@ -265,6 +267,9 @@ public abstract class BasePlayActivity extends BaseActivity {
 
     private void playUrl(String url){
         mPlayUrl = url;
+
+        mLoadingProgress.setVisibility(View.VISIBLE);
+
         mVideoView.stopPlayback();
         Log.e(TAG, "setVideoURI=" + url);
         mVideoView.setVideoURI(Uri.parse(url));
@@ -291,12 +296,8 @@ public abstract class BasePlayActivity extends BaseActivity {
     public void handleOtherMessage(Message msg) {
         switch (msg.what) {
             case MSG_UPDATE_TIME:
-                long currentTimeMillis = System.currentTimeMillis()/1000;
-                long hour = currentTimeMillis / 3600;
-                long min = currentTimeMillis % 3600;
-                long sec = min % 60;
-                min = min / 60;
-                mTimeView.setText(mBatName+" "+hour+":"+min+":"+sec);
+                Calendar now = Calendar.getInstance();
+                mTimeView.setText(String.format("%s %02d:%02d:%02d", mBatName,now.get(Calendar.HOUR_OF_DAY),now.get(Calendar.MINUTE),now.get(Calendar.SECOND)));
                 mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 1000);
                 break;
             case MSG_FAULT:
@@ -340,6 +341,7 @@ public abstract class BasePlayActivity extends BaseActivity {
                 playUrl(url);
                 break;
             case MSG_PALY_VIDEO:
+                mLoadingProgress.setVisibility(View.GONE);
                 mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");
                 mHandler.postDelayed(new Runnable() {
                     @Override
@@ -376,6 +378,8 @@ public abstract class BasePlayActivity extends BaseActivity {
     protected void playVideo(String title, String url){
         mTitleView.setText(title);
         mIntentUrl = url;
+
+        mLoadingProgress.setVisibility(View.VISIBLE);
 
         mVideoView.stopPlayback();
         mStateView.setText("初始化...");

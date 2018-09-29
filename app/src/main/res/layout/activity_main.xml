@@ -89,17 +89,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/btn_rect"
-            android:onClick="soiqiyi"
-            android:text="爱奇艺搜索"
-            android:textSize="30sp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_rect"
             android:onClick="soletv"
-            android:text="乐视搜索"
+            android:text="乐视搜索(支持VIP)"
             android:textSize="30sp" />
 
         <Button
@@ -109,6 +100,15 @@
             android:background="@drawable/btn_rect"
             android:onClick="soyouku"
             android:text="优酷搜索"
+            android:textSize="30sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_rect"
+            android:onClick="soiqiyi"
+            android:text="爱奇艺搜索"
             android:textSize="30sp" />
 
         <Button

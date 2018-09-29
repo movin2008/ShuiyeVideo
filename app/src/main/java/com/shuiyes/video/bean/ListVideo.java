@@ -2,7 +2,7 @@ package com.shuiyes.video.bean;
 
 public class ListVideo {
 
-    private String id;
+    private String text;
     private String title;
     private String url;
 
@@ -10,18 +10,18 @@ public class ListVideo {
         this(id+"", title, url);
     }
 
-    public ListVideo(String id, String title, String url) {
-        this.id = id;
+    public ListVideo(String text, String title, String url) {
+        this.text = text;
         this.title = title;
         this.url = url;
     }
 
-    public String getId() {
-        return id;
+    public String getText() {
+        return text;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getTitle() {
@@ -42,7 +42,7 @@ public class ListVideo {
 
     @Override
     public String toString() {
-        return "ListVideo [id=" + id + ", title='" + title + "', url='" + url + "']";
+        return "ListVideo [text=" + text + ", title='" + title + "', url='" + url + "']";
     }
 
 }

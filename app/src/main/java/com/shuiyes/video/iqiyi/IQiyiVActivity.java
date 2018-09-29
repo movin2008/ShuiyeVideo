@@ -155,10 +155,17 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                     if (!"A00000".equals(obj.getString("code"))) {
 //                        Log.e(TAG, info);
 
+                        String msg = null;
                         if(obj.has("msg")){
-                            fault(obj.getString("msg"));
+                            msg = obj.getString("msg");
                         }else{
-                            fault(obj.getJSONObject("ctl").getString("msg"));
+                            msg = obj.getJSONObject("ctl").getString("msg");
+                        }
+
+                        if("server return err-data.".equals(msg)){
+                            fault("VIP 视频暂不支持播放");
+                        }else{
+                            fault(msg);
                         }
                         return;
                     }
@@ -195,7 +202,7 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                             Log.i(TAG, v.toStr(mContext));
 
                             // TODO 4K 较卡，要改成可配置
-                            if(playVideo == null && v.getType().getScreenSize() < IQiyiVideo.UHD_SZ){
+                            if((playVideo == null || v.getType().getProfile().equals(mStream)) && v.getType().getScreenSize() < IQiyiVideo.UHD_SZ){
                                 playVideo = v;
                             }
                         }
@@ -243,7 +250,7 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                                     }
                                     Log.e(TAG, "videoList "+videoList.size()+"/"+vlistLen);
                                 }else{
-                                    fault("数据tvInfoJs异常");
+                                    Log.e(TAG, "数据tvInfoJs异常");
                                     return;
                                 }
 
@@ -266,6 +273,8 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
         }).start();
     }
 
+    private String mStream = null;
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -281,8 +290,11 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                             mClarityDialog.dismiss();
                         }
 
+                        MiscView v = (MiscView) view;
+
                         mStateView.setText("初始化...");
-                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, ((MiscView) view).getPlayVideo()));
+                        mStream = v.getPlayVideo().getText();
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, v.getPlayVideo()));
                     }
                 });
                 mClarityDialog.show();
@@ -304,9 +316,6 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                     }
                 });
                 mAlbumDialog.show();
-                break;
-            case R.id.btn_next:
-                playVideo();
                 break;
         }
     }

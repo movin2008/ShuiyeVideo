@@ -240,7 +240,6 @@ public class IQIyiSoActivity extends BaseSearchActivity {
 
             String name = obj.getString("itemTitle");
 
-            //w_19s0ptu0id
             String url = "https://www.iqiyi.com/v_19a1b2c3d4.html";
             if(obj.has("itemLink")){
                 url = obj.getString("itemLink");
@@ -250,15 +249,21 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                 url += "?tvid=" + obj.getString("tvId") + "&vid=" + obj.getString("vid");
             }
 
-            String id = String.valueOf(j + 1);
-            if (obj.has("itemshortTitle")) {
-                String sTitle = obj.getString("itemshortTitle");
-                if (!sTitle.contains("第" + id + "集")) {
-                    id = sTitle.replaceAll(albumTitle, "");
+            String text = name;
+            if (name.contains(albumTitle)) {
+                if(name.equals(albumTitle)){
+                }else if(name.equals(albumTitle+"第" + (j + 1) + "集")){
+                    text = String.valueOf(j + 1);
+                }else{
+                    text = name.replaceAll(albumTitle, "");
                 }
             }
 
-            ListVideo listVideo = new ListVideo(id, name, url);
+            if(obj.has("is_vip") && obj.getBoolean("is_vip")){
+                text += "(VIP)";
+            }
+
+            ListVideo listVideo = new ListVideo(text, name, url);
             listVideos.add(listVideo);
         }
     }
