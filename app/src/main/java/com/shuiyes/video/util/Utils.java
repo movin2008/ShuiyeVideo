@@ -36,13 +36,15 @@ public class Utils {
         return null;
     }
 
-    public static void setFile(String path, String info) {
+    public static void setFile(String filename, String info) {
         try {
-            File file = new File(path);
+            File file = new File("/sdcard/.shuiyes/"+filename);
             if (file.exists()) {
                 file.delete();
             }else{
-                file.mkdirs();
+                if (!file.getParentFile().exists()){
+                    file.getParentFile().mkdirs();
+                }
             }
 
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));

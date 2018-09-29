@@ -91,7 +91,7 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                 }
 
 
-                Utils.setFile("/sdcard/iqiyi", result);
+                Utils.setFile("iqiyi", result);
 
                 JSONObject obj = new JSONObject(result);
                 if (!"A00000".equals(obj.getString("code"))) {
@@ -218,7 +218,7 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                 return keyword.equals(mSearchText);
             } catch (Exception e) {
                 if (albumDocInfo != null) {
-                    Utils.setFile("/sdcard/iqiyi", albumDocInfo.toString());
+                    Utils.setFile("iqiyi", albumDocInfo.toString());
                 }
                 e.printStackTrace();
                 return false;

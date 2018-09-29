@@ -30,6 +30,8 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mBatName = "爱奇艺视频";
+
         mSourceView.setOnClickListener(this);
         mClarityView.setOnClickListener(this);
         mClarityView.setEnabled(false);
@@ -37,6 +39,10 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
         mNextView.setOnClickListener(this);
 
         playVideo();
+    }
+
+    @Override
+    protected void playNextSection(int index) {
     }
 
     private List<IQiyiVideo> mUrlList = new ArrayList<IQiyiVideo>();
@@ -51,9 +57,9 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                     String vid = null;
 
                     String key = "?tvid=";
-                    if(mUrl.contains(key)){
-                        int len = mUrl.indexOf(key);
-                        String tmp = mUrl.substring(len + key.length());
+                    if(mIntentUrl.contains(key)){
+                        int len = mIntentUrl.indexOf(key);
+                        String tmp = mIntentUrl.substring(len + key.length());
                         len = tmp.indexOf("&");
                         tvid = tmp.substring(0, len);
 
@@ -66,9 +72,9 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
 
                     if(tvid == null && vid == null){
                         mHandler.sendEmptyMessage(MSG_FETCH_TOKEN);
-                        String html = HttpUtils.open(mUrl);//.replaceAll("http://m.iqiyi.com", "https://www.iqiyi.com")
+                        String html = HttpUtils.open(mIntentUrl);//.replaceAll("http://m.iqiyi.com", "https://www.iqiyi.com")
 
-                        if(html == null){
+                        if(TextUtils.isEmpty(html)){
                             fault("请重试");
                             return;
                         }
@@ -114,7 +120,7 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
                     String video = IQiyiUtils.fetchVideo(tvid, vid);
-                    Utils.setFile("/sdcard/iqiyi", video);
+                    Utils.setFile("iqiyi", video);
 
                     if (TextUtils.isEmpty(video)) {
                         fault("空数据,请重试");
@@ -142,7 +148,7 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
                     video = IQiyiUtils.getVMS(tvid, vid);
-                    Utils.setFile("/sdcard/iqiyi", video);
+                    Utils.setFile("iqiyi", video);
 //                    Log.e(TAG, "video ="+video);
 
                     JSONObject obj = new JSONObject(video);
@@ -294,13 +300,7 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                         }
 
                         NumberView v = (NumberView) view;
-                        mTitleView.setText(v.getTitle());
-                        mUrl = v.getUrl();
-
-                        mVideoView.stopPlayback();
-
-                        mStateView.setText("初始化...");
-                        playVideo();
+                        playVideo(v.getTitle(), v.getUrl());
                     }
                 });
                 mAlbumDialog.show();
@@ -350,7 +350,7 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
             html = html.substring(len + key.length());
             html = html.substring(0, html.indexOf("</ul>"));
 
-            Utils.setFile("/sdcard/iqiyi.html", html);
+            Utils.setFile("iqiyi.html", html);
 
             int flag = 1;
             List<ListVideo> videoList = new ArrayList<ListVideo>();

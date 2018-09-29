@@ -1,18 +1,17 @@
 package com.shuiyes.video.letv;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.base.BasePlayActivity;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.MiscDialog;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.MiscView;
-import com.shuiyes.video.widget.NumberView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,23 +26,30 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mBatName = "乐视视频";
+
         mSourceView.setOnClickListener(this);
         mClarityView.setOnClickListener(this);
         mSelectView.setOnClickListener(this);
         mNextView.setOnClickListener(this);
 
         String key = "/vplay/";
-        int index = mUrl.indexOf(key);
-        if (mUrl.indexOf(".html") != -1) {
-            mVid = mUrl.substring(index + key.length(), mUrl.indexOf(".html"));
+        int index = mIntentUrl.indexOf(key);
+        if (mIntentUrl.indexOf(".html") != -1) {
+            mVid = mIntentUrl.substring(index + key.length(), mIntentUrl.indexOf(".html"));
             String[] vids = mVid.split("_");
             mVid = vids[vids.length-1];
         } else {
-            mVid = mUrl.substring(index + key.length());
+            mVid = mIntentUrl.substring(index + key.length());
         }
-        Log.e(TAG, "now mVid=" + mVid);
+        Log.e(TAG, "play mVid=" + mVid);
 
         playVideo();
+    }
+
+    @Override
+    protected void playNextSection(int index) {
+
     }
 
     private List<LetvStream> mUrlList = new ArrayList<LetvStream>();
@@ -59,7 +65,7 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
                     String info = HttpUtils.open(LetvUtils.getVideoInfoUrl(mVid));
 
-                    Utils.setFile("/sdcard/letv", info);
+                    Utils.setFile("letv", info);
 
                     JSONObject data = new JSONObject(info).getJSONObject("msgs");
                     if (data.getInt("statuscode") != 1001) {
@@ -118,12 +124,12 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
         mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIDEO, streamStr));
         String video = HttpUtils.open(LetvUtils.getVideoPlayUrl(url, mVid));
 
-        if (video == null) {
+        if (TextUtils.isEmpty(video)) {
             fault("解析异常请重试");
             return;
         }
 
-        Utils.setFile("/sdcard/letv", video);
+        Utils.setFile("letv", video);
 
         JSONObject data = new JSONObject(video);
         JSONArray streams = data.getJSONArray("nodelist");

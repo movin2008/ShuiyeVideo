@@ -97,7 +97,7 @@ public class LetvSoActivity extends BaseSearchActivity {
                 } else {
                     notice("解析异常.");
 
-                    Utils.setFile("/sdcard/letv.html", result);
+                    Utils.setFile("letv.html", result);
                     return false;
                 }
 
@@ -307,7 +307,7 @@ public class LetvSoActivity extends BaseSearchActivity {
         JSONObject obj = new JSONObject(json);
 
         if(!obj.has("data_list")){
-            Utils.setFile("/sdcard/letv", json);
+            Utils.setFile("letv", json);
             notice("No data list.");
             return flag;
         }

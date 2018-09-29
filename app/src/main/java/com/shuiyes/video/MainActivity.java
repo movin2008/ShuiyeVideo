@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.shuiyes.video.base.BaseActivity;
 import com.shuiyes.video.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.letv.LetvSoActivity;
+import com.shuiyes.video.qq.QQVActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.youku.YoukuSoActivity;
 
@@ -132,6 +133,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void testUrl(View view){
+        this.startActivity(new Intent(this, QQVActivity.class).putExtra("url", "https://v.qq.com/x/cover/lcpwn26degwm7t3.html"));
     }
 
     public void testWeb(View view){

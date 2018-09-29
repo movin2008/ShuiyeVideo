@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -29,20 +30,27 @@ public class YoukuVActivity extends BasePlayActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mBatName = "优酷视频";
+
         mClarityView.setOnClickListener(this);
         mSelectView.setOnClickListener(this);
         mNextView.setOnClickListener(this);
 
         String key = "show/id_";
-        int index = mUrl.indexOf(key);
-        if (mUrl.indexOf(".html") != -1) {
-            mVid = mUrl.substring(index + key.length(), mUrl.indexOf(".html"));
+        int index = mIntentUrl.indexOf(key);
+        if (mIntentUrl.indexOf(".html") != -1) {
+            mVid = mIntentUrl.substring(index + key.length(), mIntentUrl.indexOf(".html"));
         } else {
-            mVid = mUrl.substring(index + key.length());
+            mVid = mIntentUrl.substring(index + key.length());
         }
-        Log.e(TAG, "now mVid=" + mVid);
+        Log.e(TAG, "play mVid=" + mVid);
 
         playVideo();
+    }
+
+    @Override
+    protected void playNextSection(int index) {
+
     }
 
     private static String mToken;
@@ -71,13 +79,13 @@ public class YoukuVActivity extends BasePlayActivity implements View.OnClickList
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
                     String info = HttpUtils.open(YoukuUtils.getVideoUrl(mVid, mToken));
 
-                    if (info == null) {
+                    if (TextUtils.isEmpty(info)) {
                         mToken = null;
                         fault("解析异常请重试");
                         return;
                     }
 
-                    Utils.setFile("/sdcard/youku", info);
+                    Utils.setFile("youku", info);
 
                     JSONObject data = new JSONObject(info).getJSONObject("data");
 

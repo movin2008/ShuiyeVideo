@@ -4,8 +4,8 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -29,12 +29,13 @@ import java.util.List;
 public abstract class BasePlayActivity extends BaseActivity {
 
     protected Context mContext;
-    protected TextView mTitleView;
-    protected TextView mStateView;
     protected VideoView mVideoView;
-    protected boolean mPrepared = false;
     protected ProgressBar mLoadingProgress;
+    protected TextView mTitleView, mStateView, mTimeView;
     protected Button mSourceView, mClarityView, mSelectView, mNextView;
+
+    protected boolean mPrepared = false;
+    protected String mBatName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public abstract class BasePlayActivity extends BaseActivity {
 
         mTitleView = (TextView) findViewById(R.id.tv_title);
         mStateView = (TextView) findViewById(R.id.tv_state);
+        mTimeView = (TextView) findViewById(R.id.tv_time);
 
         mVideoView = (VideoView) findViewById(R.id.vitamio_videoView);
         MediaController controller = new MediaController(this);
@@ -136,13 +138,33 @@ public abstract class BasePlayActivity extends BaseActivity {
                 Log.e(TAG, " =========================== onCompletion");
                 if (!mIsError) {
                     mLoadingProgress.setVisibility(View.VISIBLE);
-                    playVideo();
+
+                    if(mSectionList.size() > 0){
+                        mSectionIndex++;
+                        Log.d(TAG, "playNextSection "+ mSectionIndex+"/"+mSectionList.size());
+                        if(mSectionIndex == mSectionList.size()){
+                            mSectionIndex = 0;
+                        }
+                        playNextSection(mSectionIndex);
+                    }else if(mVideoList.size() > 0){
+                        int index = 0;
+                        for (int i=0; i<mVideoList.size()-1; i++){
+                            if(mIntentUrl.equals(mVideoList.get(i).getUrl())){
+                                index = i+1;
+                                break;
+                            }
+                        }
+
+                        playVideo(mVideoList.get(index).getTitle(), mVideoList.get(index).getUrl());
+                    }else{
+                        playVideo();
+                    }
                 }
             }
         });
 
-        mUrl = getIntent().getStringExtra("url");
-        Log.e(TAG, "now url=" + mUrl);
+        mIntentUrl = getIntent().getStringExtra("url");
+        Log.e(TAG, "play mIntentUrl=" + mIntentUrl);
 
         mTitleView.setText(getIntent().getStringExtra("title"));
     }
@@ -155,8 +177,12 @@ public abstract class BasePlayActivity extends BaseActivity {
             if (mCurrentPosition > 0) {
                 mVideoView.seekTo(mCurrentPosition);
             }
+            if(mStateView.getText().length() == 0){
+                mStateView.setText("缓存中...");
+            }
             mVideoView.start();
         }
+        mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 1000);
     }
 
     @Override
@@ -166,6 +192,7 @@ public abstract class BasePlayActivity extends BaseActivity {
         if (mVideoView.isPlaying()) {
             mVideoView.pause();
         }
+        mHandler.removeMessages(MSG_UPDATE_TIME);
     }
 
     protected MiscDialog mSourceDialog;
@@ -206,8 +233,10 @@ public abstract class BasePlayActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    protected String mVid, mUrl;
+    protected String mVid, mIntentUrl, mPlayUrl;
+    protected int mSectionIndex = 0;
     protected List<ListVideo> mVideoList = new ArrayList<ListVideo>();
+    protected List<ListVideo> mSectionList = new ArrayList<ListVideo>();
 
     protected int mCurrentPosition;
     protected MediaPlayer.OnBufferingUpdateListener mBufferingUpdateListener = new MediaPlayer.OnBufferingUpdateListener() {
@@ -234,6 +263,18 @@ public abstract class BasePlayActivity extends BaseActivity {
         fault(e.getClass().toString() + " " + e.getLocalizedMessage());
     }
 
+    private void playUrl(String url){
+        mPlayUrl = url;
+        mVideoView.stopPlayback();
+        Log.e(TAG, "setVideoURI=" + url);
+        mVideoView.setVideoURI(Uri.parse(url));
+
+        if (mCurrentPosition != 0) {
+            Log.e(TAG, "seekTo=" + mCurrentPosition);
+            mVideoView.seekTo(mCurrentPosition);
+        }
+    }
+
     protected final int MSG_FAULT = 0;
     protected final int MSG_FETCH_TOKEN = 1;
     protected final int MSG_FETCH_VIDEO = 2;
@@ -243,10 +284,21 @@ public abstract class BasePlayActivity extends BaseActivity {
     protected final int MSG_UPDATE_SELECT = 6;
     protected final int MSG_FETCH_VIDEOINFO = 7;
     protected final int MSG_UPDATE_NEXT = 8;
+    protected final int MSG_CACHE_URL = 9;
+    protected final int MSG_UPDATE_TIME = 10;
 
     @Override
     public void handleOtherMessage(Message msg) {
         switch (msg.what) {
+            case MSG_UPDATE_TIME:
+                long currentTimeMillis = System.currentTimeMillis()/1000;
+                long hour = currentTimeMillis / 3600;
+                long min = currentTimeMillis % 3600;
+                long sec = min % 60;
+                min = min / 60;
+                mTimeView.setText(mBatName+" "+hour+":"+min+":"+sec);
+                mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 1000);
+                break;
             case MSG_FAULT:
                 Object error = msg.obj;
                 mLoadingProgress.setVisibility(View.GONE);
@@ -260,7 +312,7 @@ public abstract class BasePlayActivity extends BaseActivity {
 //                }, 5555);
                 break;
             case MSG_FETCH_TOKEN:
-                mStateView.setText(mStateView.getText() + "[成功]\n获取Token...");
+                mStateView.setText(mStateView.getText() + "[成功]\n获取通行证...");
                 mStateView.setVisibility(View.VISIBLE);
                 break;
             case MSG_FETCH_VIDEOINFO:
@@ -269,7 +321,7 @@ public abstract class BasePlayActivity extends BaseActivity {
                 break;
             case MSG_FETCH_VIDEO:
                 String streamStr = (String) msg.obj;
-                if (streamStr == null) {
+                if (TextUtils.isEmpty(streamStr)) {
                     mStateView.setText(mStateView.getText() + "[成功]\n解析视频地址...");
                 } else {
                     mClarityView.setText(streamStr);
@@ -280,15 +332,12 @@ public abstract class BasePlayActivity extends BaseActivity {
                 PlayVideo video = (PlayVideo) msg.obj;
                 mStateView.setText(mStateView.getText() + "[成功]\n开始缓存" + video.getText() + "视频...");
                 cacheVideo(video);
-
-                mVideoView.stopPlayback();
-                Log.e(TAG, "setVideoURI=" + video.getUrl());
-                mVideoView.setVideoURI(Uri.parse(video.getUrl()));
-
-                if (mCurrentPosition != 0) {
-                    Log.e(TAG, "seekTo=" + mCurrentPosition);
-                    mVideoView.seekTo(mCurrentPosition);
-                }
+                playUrl(video.getUrl());
+                break;
+            case MSG_CACHE_URL:
+                String url = (String) msg.obj;
+                mStateView.setText(mStateView.getText() + "[成功]\n开始缓存视频...");
+                playUrl(url);
                 break;
             case MSG_PALY_VIDEO:
                 mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");
@@ -323,6 +372,17 @@ public abstract class BasePlayActivity extends BaseActivity {
                 break;
         }
     }
+
+    protected void playVideo(String title, String url){
+        mTitleView.setText(title);
+        mIntentUrl = url;
+
+        mVideoView.stopPlayback();
+        mStateView.setText("初始化...");
+        playVideo();
+    }
+
+    protected abstract void playNextSection(int index);
 
     protected abstract void cacheVideo(PlayVideo video);
 
