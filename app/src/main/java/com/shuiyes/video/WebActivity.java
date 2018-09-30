@@ -185,7 +185,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 mWebView.reload();
                 break;
             case R.id.btn_play:
-                PlayUtils.play(this, mWebView.getUrl(), "播放网页");
+                PlayUtils.play(this, mWebView.getUrl(), mWebView.getTitle());
                 break;
         }
     }

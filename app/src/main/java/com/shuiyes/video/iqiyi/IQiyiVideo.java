@@ -1,7 +1,5 @@
 package com.shuiyes.video.iqiyi;
 
-import android.content.Context;
-
 import com.shuiyes.video.bean.PlayVideo;
 
 public class IQiyiVideo extends PlayVideo{
@@ -68,14 +66,14 @@ public class IQiyiVideo extends PlayVideo{
 
     public enum VideoType {
         UHD("4k", "m3u8", "4K", 4096*2160),
-        BD("BD", "m3u8", "1080p", 1920*1080),
-        TD("TD", "m3u8", "720p", 1080*720),
-        TD_H265("TD_H265", "m3u8", "720p H265", 1280*720),
+        BD("BD", "m3u8", "1080P", 1920*1080),
+        TD("TD", "m3u8", "720P", 1080*720),
+        TD_H265("TD_H265", "m3u8", "720P H265", 1280*720),
 
-        HD("HD", "m3u8", "540p", 896*504),
-        HD_H265("HD_H265", "m3u8", "540p H265", 896*504),
-        SD("SD", "m3u8", "360p", 640*360),
-        LD("LD", "m3u8", "210p", 384*216);
+        HD("HD", "m3u8", "540P", 896*504),
+        HD_H265("HD_H265", "m3u8", "540P H265", 896*504),
+        SD("SD", "m3u8", "360P", 640*360),
+        LD("LD", "m3u8", "210P", 384*216);
 
         private String type, ext, profile;
         private int screenSize;
@@ -122,7 +120,7 @@ public class IQiyiVideo extends PlayVideo{
         return type;
     }
 
-    public String toStr(Context ctx) {
+    public String toStr() {
         return "IQiyiVideo{" + type +
 //                ", url='" + url + '\'' +
                 '}';

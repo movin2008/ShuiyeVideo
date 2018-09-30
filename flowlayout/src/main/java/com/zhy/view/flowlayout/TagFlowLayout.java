@@ -23,6 +23,11 @@ public class TagFlowLayout extends FlowLayout
         this(context, null);
     }
 
+    private int mResId = ResourceDef.ID_TAG_BTN;
+    public void setResourceID(int id) {
+        mResId = id;
+    }
+
     public void setAdapter(TagAdapter adapter) {
         mTagAdapter = adapter;
         mTagAdapter.setOnDataChangedListener(this);
@@ -32,10 +37,9 @@ public class TagFlowLayout extends FlowLayout
     private void updateAdapter() {
         removeAllViews();
         for (int i = 0; i < mTagAdapter.getCount(); i++) {
-            int id = i + ResourceDef.ID_TAG_BTN;
             TagView tagView = mTagAdapter.getView(this, i, mTagAdapter.getItem(i));
             tagView.setFocusable(true);
-            tagView.setId(id);
+            tagView.setId(mResId + i);
 
             int width = tagView.getSetWidth();
             int height = tagView.getSetHeight();

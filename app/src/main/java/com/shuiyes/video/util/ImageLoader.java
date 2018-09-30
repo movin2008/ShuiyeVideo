@@ -4,16 +4,15 @@ import java.io.InputStream;
 import java.lang.ref.SoftReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.MessageDigest;
 import java.util.HashMap;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 
 public class ImageLoader {
     protected static final String TAG = "ImageLoader";
@@ -58,7 +57,7 @@ public class ImageLoader {
             public void run() {
                 Bitmap bitmap = BitmapFactory.decodeStream(getInputStreamFromUrl(imageUrl));
                 if (bitmap != null) {
-                    bitmap = Utils.scaleImage(bitmap);
+                    bitmap = scaleImage(bitmap);
 //                    Log.i(TAG, bitmap.getWidth()+"x"+bitmap.getHeight());
                     // 将bitmap放入缓存
                     imageCaches.put(imageUrl, new SoftReference<Bitmap>(bitmap));
@@ -99,34 +98,40 @@ public class ImageLoader {
         return null;
     }
 
-    /**
-     * MD5加密路径
-     */
-    public static String md5(String paramString) {
-        String returnStr;
-        try {
-            MessageDigest localMessageDigest = MessageDigest.getInstance("MD5");
-            localMessageDigest.update(paramString.getBytes());
-            returnStr = byteToHexString(localMessageDigest.digest());
-            return returnStr;
-        } catch (Exception e) {
-            return paramString;
-        }
-    }
-
-    /*
-     * 将指定byte数组转换成16进制字符串
-     */
-    public static String byteToHexString(byte[] b) {
-        StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < b.length; i++) {
-            String hex = Integer.toHexString(b[i] & 0xFF);
-            if (hex.length() == 1) {
-                hex = '0' + hex;
+    public static Bitmap scaleImage(Bitmap b) {
+        int width = b.getWidth();
+        int height = b.getHeight();
+        float scaleWidth = 0;
+        float scaleHeight = 0;
+        if (width > height) {
+            if (width <= 400 && height <= 300) {
+                // 小图片扩放到 320*240
+                scaleWidth = 320;
+                scaleHeight = 240;
+            }else{
+                // 大图片缩放到 400x300
+                scaleWidth = 400;
+                scaleHeight = 300;
             }
-            hexString.append(hex.toUpperCase());
+        } else {
+            if (width <= 300 && height <= 400) {
+                // 小图片扩放到 240*320
+                scaleWidth = 240;
+                scaleHeight = 320;
+            }else{
+                // 大图片缩放到 300x400
+                scaleWidth = 300;
+                scaleHeight = 400;
+            }
         }
-        return hexString.toString();
+
+        float aspectW = scaleWidth / ((float) width);
+        float aspectH = scaleHeight / ((float) height);
+        float aspect = aspectW > aspectH ? aspectH : aspectW;
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(aspect, aspect);
+        return Bitmap.createBitmap(b, 0, 0, width, height, matrix, true);
     }
 
 }

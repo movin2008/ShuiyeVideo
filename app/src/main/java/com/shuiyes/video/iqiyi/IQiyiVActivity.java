@@ -24,7 +24,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class IQiyiVActivity extends BasePlayActivity implements View.OnClickListener {
+public class IQiyiVActivity extends BasePlayActivity {
+
+    private List<IQiyiVideo> mUrlList = new ArrayList<IQiyiVideo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +44,48 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
     }
 
     @Override
-    protected void playNextSection(int index) {
-    }
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_clarity:
+                if (mClarityDialog != null && mClarityDialog.isShowing()) {
+                    mClarityDialog.dismiss();
+                }
+                mClarityDialog = new MiscDialog(this, mUrlList);
+                mClarityDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mClarityDialog != null && mClarityDialog.isShowing()) {
+                            mClarityDialog.dismiss();
+                        }
 
-    private List<IQiyiVideo> mUrlList = new ArrayList<IQiyiVideo>();
+                        mStateView.setText("初始化...");
+                        MiscView v = (MiscView) view;
+                        mStream = v.getPlayVideo().getText();
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, v.getPlayVideo()));
+                    }
+                });
+                mClarityDialog.show();
+                break;
+            case R.id.btn_select:
+                if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
+                    mAlbumDialog.dismiss();
+                }
+                mAlbumDialog = new AlbumDialog(this, mVideoList);
+                mAlbumDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
+                            mAlbumDialog.dismiss();
+                        }
+
+                        NumberView v = (NumberView) view;
+                        playNextVideo(v.getTitle(), v.getUrl());
+                    }
+                });
+                mAlbumDialog.show();
+                break;
+        }
+    }
 
     @Override
     protected void playVideo() {
@@ -199,7 +239,7 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
 
                         IQiyiVideo playVideo = null;
                         for (IQiyiVideo v : mUrlList) {
-                            Log.i(TAG, v.toStr(mContext));
+                            Log.i(TAG, v.toStr()+" mStream="+mStream);
 
                             // TODO 4K 较卡，要改成可配置
                             if((playVideo == null || v.getType().getProfile().equals(mStream)) && v.getType().getScreenSize() < IQiyiVideo.UHD_SZ){
@@ -207,14 +247,11 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                             }
                         }
 
-                        mVid = vid;
-                        mCurrentPosition = 0;
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
 
-                        if(albumCount > 1){
-                            int pages = (int) Math.ceil((float)albumCount/50);
+                        if(mVideoList.isEmpty() && albumCount > 1){
                             int flag = 1;
-                            List<ListVideo> videoList = new ArrayList<ListVideo>();
+                            int pages = (int) Math.ceil((float)albumCount/50);
                             for (int page=1; page<=pages; page++){
                                 //  最后获取专辑信息
                                 String album = IQiyiUtils.fetchAlbum(albumId, page);
@@ -246,24 +283,16 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                                                 +"?tvid="+stream.getString("id")
                                                 +"&vid="+stream.getString("vid");
 
-                                        videoList.add(new ListVideo(flag++, title, url));
+                                        mVideoList.add(new ListVideo(flag++, title, url));
                                     }
-                                    Log.e(TAG, "videoList "+videoList.size()+"/"+vlistLen);
+                                    Log.e(TAG, "videoList "+mVideoList.size()+"/"+vlistLen);
                                 }else{
                                     Log.e(TAG, "数据tvInfoJs异常");
-                                    return;
+                                    continue;
                                 }
-
                             }
-
-                            if(mVideoList.isEmpty() || videoList.size() > mVideoList.size()) {
-                                mVideoList.clear();
-                                mVideoList.addAll(videoList);
-                                mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
-                            }
-
+                            mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
                         }
-
                     }
                 } catch (Exception e) {
                     fault(e);
@@ -271,53 +300,6 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
                 }
             }
         }).start();
-    }
-
-    private String mStream = null;
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_clarity:
-                if (mClarityDialog != null && mClarityDialog.isShowing()) {
-                    mClarityDialog.dismiss();
-                }
-                mClarityDialog = new MiscDialog(this, mUrlList);
-                mClarityDialog.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (mClarityDialog != null && mClarityDialog.isShowing()) {
-                            mClarityDialog.dismiss();
-                        }
-
-                        MiscView v = (MiscView) view;
-
-                        mStateView.setText("初始化...");
-                        mStream = v.getPlayVideo().getText();
-                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, v.getPlayVideo()));
-                    }
-                });
-                mClarityDialog.show();
-                break;
-            case R.id.btn_select:
-                if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
-                    mAlbumDialog.dismiss();
-                }
-                mAlbumDialog = new AlbumDialog(this, mVideoList);
-                mAlbumDialog.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
-                            mAlbumDialog.dismiss();
-                        }
-
-                        NumberView v = (NumberView) view;
-                        playVideo(v.getTitle(), v.getUrl());
-                    }
-                });
-                mAlbumDialog.show();
-                break;
-        }
     }
 
     @Override
@@ -331,71 +313,14 @@ public class IQiyiVActivity extends BasePlayActivity implements View.OnClickList
         mClarityView.setText(((IQiyiVideo)video).getType().getProfile());
     }
 
-    /**
-     * 获取不全，最多50集
-     * @param albumUrl
-     */
-    @Deprecated
-    private void listAlbumUrl(String albumUrl){
-        if(TextUtils.isEmpty(albumUrl)){
-            Log.e(TAG, "list album is empty.");
-            return;
-        }
-        if(!albumUrl.contains("iqiyi.com/a_")){
-            Log.e(TAG, albumUrl+" is illegally.");
-            return;
-        }
+    @Override
+    protected void playNextSection(int index) {
+    }
 
-        String html = HttpUtils.open(albumUrl);
-
-        if (TextUtils.isEmpty(html)) {
-            Log.e(TAG, "Seach album is empty.");
-            return;
-        }
-
-        String key = "<ul class=\"site-piclist";
-        if(html.contains(key)){
-            int len = html.indexOf(key);
-            html = html.substring(len + key.length());
-            html = html.substring(0, html.indexOf("</ul>"));
-
-            Utils.setFile("iqiyi.html", html);
-
-            int flag = 1;
-            List<ListVideo> videoList = new ArrayList<ListVideo>();
-            String start = "<li data-albumlist-elem=\"playItem\">";
-            while (html.contains(start)) {
-
-                int startIndex = html.indexOf(start);
-                int endIndex = html.indexOf(start, startIndex + start.length());
-                String data = null;
-                if (endIndex != -1) {
-                    data = html.substring(startIndex, endIndex);
-                } else {
-                    data = html.substring(startIndex);
-                }
-
-                key = "href=\"";
-                data = data.substring(data.indexOf(key) + key.length());
-                String url = data.substring(0, data.indexOf("\""));
-
-                key = "<p class=\"site-piclist_info_title\">";
-                data = data.substring(data.indexOf(key) + key.length());
-                key = "\">";
-                data = data.substring(data.indexOf(key) + key.length());
-                String title = data.substring(0, data.indexOf("</a>")).trim();
-
-                videoList.add(new ListVideo(flag++, title, url));
-
-                html = html.substring(html.indexOf(start) + start.length());
-            }
-
-            if(mVideoList.isEmpty() || videoList.size() > mVideoList.size()){
-                mVideoList.clear();
-                mVideoList.addAll(videoList);
-                mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
-            }
-        }
+    @Override
+    protected void playNextVideo(String title, String url) {
+        super.playNextVideo(title, url);
+        playVideo();
     }
 
 }

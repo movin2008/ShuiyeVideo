@@ -1,7 +1,5 @@
 package com.shuiyes.video.letv;
 
-import android.content.Context;
-
 import com.shuiyes.video.bean.PlayVideo;
 
 public class LetvSource extends PlayVideo {
@@ -24,7 +22,7 @@ public class LetvSource extends PlayVideo {
         return source;
     }
 
-    public String toStr(Context ctx) {
+    public String toStr() {
         return "LetvSource{" + stream +
                 ", source=" + source +
 //                ", url='" + url + '\'' +

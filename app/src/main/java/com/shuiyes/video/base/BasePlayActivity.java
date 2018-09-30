@@ -21,13 +21,14 @@ import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.dialog.MiscDialog;
+import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public abstract class BasePlayActivity extends BaseActivity {
+public abstract class BasePlayActivity extends BaseActivity implements View.OnClickListener {
 
     protected Context mContext;
     protected VideoView mVideoView;
@@ -138,26 +139,20 @@ public abstract class BasePlayActivity extends BaseActivity {
             public void onCompletion(MediaPlayer mp) {
                 Log.e(TAG, " =========================== onCompletion");
                 if (!mIsError) {
+                    mCurrentPosition = 0;
                     mLoadingProgress.setVisibility(View.VISIBLE);
 
-                    if(mSectionList.size() > 0){
+                    if (mSectionList.size() > 0) {
                         mSectionIndex++;
-                        Log.d(TAG, "playNextSection "+ mSectionIndex+"/"+mSectionList.size());
-                        if(mSectionIndex == mSectionList.size()){
+                        Log.d(TAG, "playNextSection " + mSectionIndex + "/" + mSectionList.size());
+                        if (mSectionIndex == mSectionList.size()) {
                             mSectionIndex = 0;
                         }
                         playNextSection(mSectionIndex);
-                    }else if(mVideoList.size() > 0){
-                        int index = 0;
-                        for (int i=0; i<mVideoList.size()-1; i++){
-                            if(mIntentUrl.equals(mVideoList.get(i).getUrl())){
-                                index = i+1;
-                                break;
-                            }
-                        }
-
-                        playVideo(mVideoList.get(index).getTitle(), mVideoList.get(index).getUrl());
-                    }else{
+                    } else if (mVideoList.size() > 0) {
+                        ListVideo video = mVideoList.get(getPlayIndex());
+                        playNextVideo(video.getTitle(), video.getUrl());
+                    } else {
                         playVideo();
                     }
                 }
@@ -165,9 +160,12 @@ public abstract class BasePlayActivity extends BaseActivity {
         });
 
         mIntentUrl = getIntent().getStringExtra("url");
-        Log.e(TAG, "play mIntentUrl=" + mIntentUrl);
+        Log.e(TAG, "play url=" + mIntentUrl);
 
-        mTitleView.setText(getIntent().getStringExtra("title"));
+        String title = getIntent().getStringExtra("title");
+        Log.e(TAG, "play title=" + title);
+
+        mTitleView.setText(title);
     }
 
     @Override
@@ -176,15 +174,15 @@ public abstract class BasePlayActivity extends BaseActivity {
 
         if (mPrepared && !mVideoView.isPlaying()) {
             mLoadingProgress.setVisibility(View.VISIBLE);
-            if(mStateView.getText().length() == 0){
-                mStateView.setText("加载中...");
+            if (mStateView.getText().length() == 0) {
+                mStateView.setText("恢复中...");
             }
             if (mCurrentPosition > 0) {
                 mVideoView.seekTo(mCurrentPosition);
             }
             mVideoView.start();
         }
-        mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 1000);
+        mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 100);
     }
 
     @Override
@@ -197,8 +195,7 @@ public abstract class BasePlayActivity extends BaseActivity {
         mHandler.removeMessages(MSG_UPDATE_TIME);
     }
 
-    protected MiscDialog mSourceDialog;
-    protected MiscDialog mClarityDialog;
+    protected MiscDialog mSourceDialog, mClarityDialog;
     protected AlbumDialog mAlbumDialog;
 
     @Override
@@ -212,6 +209,7 @@ public abstract class BasePlayActivity extends BaseActivity {
         if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
             mAlbumDialog.dismiss();
         }
+        mVideoView.stopPlayback();;
         super.onDestroy();
     }
 
@@ -235,8 +233,37 @@ public abstract class BasePlayActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    protected String mVid, mIntentUrl, mPlayUrl;
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_select:
+                if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
+                    mAlbumDialog.dismiss();
+                }
+                mAlbumDialog = new AlbumDialog(this, mVideoList);
+                mAlbumDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
+                            mAlbumDialog.dismiss();
+                        }
+
+                        NumberView v = (NumberView) view;
+                        playNextVideo(v.getTitle(), v.getUrl());
+                    }
+                });
+                mAlbumDialog.show(getPlayIndex());
+                break;
+            case R.id.btn_next:
+                playNextVideo();
+                break;
+            default:
+                break;
+        }
+    }
+
     protected int mSectionIndex = 0;
+    protected String mVid, mIntentUrl, mPlayUrl, mStream;
     protected List<ListVideo> mVideoList = new ArrayList<ListVideo>();
     protected List<ListVideo> mSectionList = new ArrayList<ListVideo>();
 
@@ -252,7 +279,6 @@ public abstract class BasePlayActivity extends BaseActivity {
         }
     };
 
-
     protected boolean mIsError;
 
     protected void fault(String text) {
@@ -265,8 +291,9 @@ public abstract class BasePlayActivity extends BaseActivity {
         fault(e.getClass().toString() + " " + e.getLocalizedMessage());
     }
 
-    private void playUrl(String url){
+    private void playUrl(String url) {
         mPlayUrl = url;
+        mPrepared = false;
 
         mLoadingProgress.setVisibility(View.VISIBLE);
 
@@ -278,6 +305,39 @@ public abstract class BasePlayActivity extends BaseActivity {
             Log.e(TAG, "seekTo=" + mCurrentPosition);
             mVideoView.seekTo(mCurrentPosition);
         }
+    }
+
+    private int getPlayIndex(){
+        int index = 0;
+        for (int i = 0; i < mVideoList.size() - 1; i++) {
+            if (mIntentUrl.equals(mVideoList.get(i).getUrl())) {
+                index = i + 1;
+                break;
+            }
+        }
+        return index;
+    }
+
+    private void playNextVideo() {
+        mVideoView.stopPlayback();
+        mStateView.setText("初始化...");
+        mLoadingProgress.setVisibility(View.VISIBLE);
+
+        mPrepared = false;
+        mCurrentPosition = 0;
+
+        playVideo();
+    }
+
+    protected void playNextVideo(String title, String url) {
+        mVideoView.stopPlayback();
+        mTitleView.setText(title);
+        mStateView.setText("初始化...");
+        mLoadingProgress.setVisibility(View.VISIBLE);
+
+        mIntentUrl = url;
+        mPrepared = false;
+        mCurrentPosition = 0;
     }
 
     protected final int MSG_FAULT = 0;
@@ -297,7 +357,7 @@ public abstract class BasePlayActivity extends BaseActivity {
         switch (msg.what) {
             case MSG_UPDATE_TIME:
                 Calendar now = Calendar.getInstance();
-                mTimeView.setText(String.format("%s %02d:%02d:%02d", mBatName,now.get(Calendar.HOUR_OF_DAY),now.get(Calendar.MINUTE),now.get(Calendar.SECOND)));
+                mTimeView.setText(String.format("%s %02d:%02d:%02d", mBatName, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), now.get(Calendar.SECOND)));
                 mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 1000);
                 break;
             case MSG_FAULT:
@@ -342,13 +402,15 @@ public abstract class BasePlayActivity extends BaseActivity {
                 break;
             case MSG_PALY_VIDEO:
                 mLoadingProgress.setVisibility(View.GONE);
-                mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mStateView.setText("");
-                    }
-                }, 2222);
+                if(mStateView.getText().length() != 0){
+                    mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mStateView.setText("");
+                        }
+                    }, 2222);
+                }
                 break;
             case MSG_SET_TITLE:
                 Log.e(TAG, "setTitle=" + msg.obj);
@@ -375,21 +437,10 @@ public abstract class BasePlayActivity extends BaseActivity {
         }
     }
 
-    protected void playVideo(String title, String url){
-        mTitleView.setText(title);
-        mIntentUrl = url;
-
-        mLoadingProgress.setVisibility(View.VISIBLE);
-
-        mVideoView.stopPlayback();
-        mStateView.setText("初始化...");
-        playVideo();
-    }
-
-    protected abstract void playNextSection(int index);
+    protected abstract void playVideo();
 
     protected abstract void cacheVideo(PlayVideo video);
 
-    protected abstract void playVideo();
+    protected abstract void playNextSection(int index);
 
 }

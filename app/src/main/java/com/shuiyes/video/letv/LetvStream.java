@@ -1,26 +1,30 @@
 package com.shuiyes.video.letv;
 
-import android.content.Context;
-
 import com.shuiyes.video.bean.PlayVideo;
 
 public class LetvStream extends PlayVideo{
 
-    private String stream;
+    private int stream;
+    private String streamStr;
 
     public LetvStream(int stream, String url) {
         super(stream + "P", url);
-        this.stream = stream + "P";
+        this.streamStr = stream + "P";
+        this.stream = stream;
         this.url = url;
     }
 
-    public String getStream() {
+    public int getStream() {
         return stream;
     }
 
-    public String toStr(Context ctx) {
+    public String getStreamStr() {
+        return streamStr;
+    }
+
+    public String toStr() {
         return "LetvSource{" +
-                "stream=" + stream +
+                "stream=" + streamStr +
 //                ", url='" + url + '\'' +
                 '}';
     }

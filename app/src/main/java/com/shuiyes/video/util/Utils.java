@@ -1,8 +1,6 @@
 package com.shuiyes.video.util;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.security.MessageDigest;
 
 public class Utils {
 
@@ -54,40 +53,34 @@ public class Utils {
         }
     }
 
-    public static Bitmap scaleImage(Bitmap b) {
-        int width = b.getWidth();
-        int height = b.getHeight();
-        float scaleWidth = 0;
-        float scaleHeight = 0;
-        if (width > height) {
-            if (width <= 400 && height <= 300) {
-                // 小图片扩放到 320*240
-                scaleWidth = 320;
-                scaleHeight = 240;
-            }else{
-                // 大图片缩放到 400x300
-                scaleWidth = 400;
-                scaleHeight = 300;
-            }
-        } else {
-            if (width <= 300 && height <= 400) {
-                // 小图片扩放到 240*320
-                scaleWidth = 240;
-                scaleHeight = 320;
-            }else{
-                // 大图片缩放到 300x400
-                scaleWidth = 300;
-                scaleHeight = 400;
-            }
+    /**
+     * MD5加密路径
+     */
+    public static String md5(String paramString) {
+        String returnStr;
+        try {
+            MessageDigest localMessageDigest = MessageDigest.getInstance("MD5");
+            localMessageDigest.update(paramString.getBytes());
+            returnStr = byteToHexString(localMessageDigest.digest());
+            return returnStr;
+        } catch (Exception e) {
+            return paramString;
         }
+    }
 
-        float aspectW = scaleWidth / ((float) width);
-        float aspectH = scaleHeight / ((float) height);
-        float aspect = aspectW > aspectH ? aspectH : aspectW;
-
-        Matrix matrix = new Matrix();
-        matrix.postScale(aspect, aspect);
-        return Bitmap.createBitmap(b, 0, 0, width, height, matrix, true);
+    /*
+     * 将指定byte数组转换成16进制字符串
+     */
+    public static String byteToHexString(byte[] b) {
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < b.length; i++) {
+            String hex = Integer.toHexString(b[i] & 0xFF);
+            if (hex.length() == 1) {
+                hex = '0' + hex;
+            }
+            hexString.append(hex.toUpperCase());
+        }
+        return hexString.toString();
     }
 
 }

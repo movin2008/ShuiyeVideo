@@ -16,6 +16,7 @@ public  class SHA1 {
         }
         return buf.toString();
     }
+
     public static String encode(String str) {
         if (str == null) {
             return null;

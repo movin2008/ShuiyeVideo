@@ -1,13 +1,17 @@
 package com.shuiyes.video.iqiyi;
 
-import android.text.Html;
+import android.text.TextUtils;
+import android.util.Log;
 
+import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.MD5;
+import com.shuiyes.video.util.Utils;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IQiyiUtils {
 
@@ -42,6 +46,68 @@ public class IQiyiUtils {
         url += "&key="+ URLEncoder.encode(keyword,"utf-8");
         return HttpUtils.open(url);
     }
+
+    /**
+     * 获取不全，最多50集
+     * @param albumUrl
+     */
+    @Deprecated
+    private void listAlbumUrl(String albumUrl){
+        if(TextUtils.isEmpty(albumUrl)){
+            Log.e(TAG, "list album is empty.");
+            return;
+        }
+        if(!albumUrl.contains("iqiyi.com/a_")){
+            Log.e(TAG, albumUrl+" is illegally.");
+            return;
+        }
+
+        String html = HttpUtils.open(albumUrl);
+
+        if (TextUtils.isEmpty(html)) {
+            Log.e(TAG, "Seach album is empty.");
+            return;
+        }
+
+        String key = "<ul class=\"site-piclist";
+        if(html.contains(key)){
+            int len = html.indexOf(key);
+            html = html.substring(len + key.length());
+            html = html.substring(0, html.indexOf("</ul>"));
+
+            Utils.setFile("iqiyi.html", html);
+
+            int flag = 1;
+            List<ListVideo> videoList = new ArrayList<ListVideo>();
+            String start = "<li data-albumlist-elem=\"playItem\">";
+            while (html.contains(start)) {
+
+                int startIndex = html.indexOf(start);
+                int endIndex = html.indexOf(start, startIndex + start.length());
+                String data = null;
+                if (endIndex != -1) {
+                    data = html.substring(startIndex, endIndex);
+                } else {
+                    data = html.substring(startIndex);
+                }
+
+                key = "href=\"";
+                data = data.substring(data.indexOf(key) + key.length());
+                String url = data.substring(0, data.indexOf("\""));
+
+                key = "<p class=\"site-piclist_info_title\">";
+                data = data.substring(data.indexOf(key) + key.length());
+                key = "\">";
+                data = data.substring(data.indexOf(key) + key.length());
+                String title = data.substring(0, data.indexOf("</a>")).trim();
+
+                videoList.add(new ListVideo(flag++, title, url));
+
+                html = html.substring(html.indexOf(start) + start.length());
+            }
+        }
+    }
+
 }
 
 /**

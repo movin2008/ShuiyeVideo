@@ -3,7 +3,10 @@ package com.shuiyes.video.dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
+import com.shuiye.video.util.ResourceDef;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.widget.NumberView;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -26,7 +29,6 @@ public class AlbumDialog extends FlowlayoutDialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mView.setAdapter(new TagAdapter<ListVideo>(mVideoList) {
             @Override
             public TagView getView(FlowLayout parent, int position, ListVideo t) {
@@ -37,6 +39,16 @@ public class AlbumDialog extends FlowlayoutDialog {
                 return view;
             }
         });
+    }
+
+    public void show(int index) {
+        super.show();
+        NumberView view = (NumberView) this.findViewById(ResourceDef.ID_TAG_BTN + index);
+        Log.e(TAG, "show("+index+") view="+view);
+        if(view != null){
+            view.requestFocus();
+            view.setChecked(true);
+        }
     }
 
     @Override

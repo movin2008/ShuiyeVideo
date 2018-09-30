@@ -118,8 +118,6 @@ public class AlbumAdapter extends BaseAdapter {
                 return view;
             }
         });
-//        if(listVideos.size() > 1){
-//        }
 
         return view;
     }

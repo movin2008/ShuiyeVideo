@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.base.BasePlayActivity;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
@@ -22,9 +21,11 @@ import com.shuiyes.video.dialog.MiscDialog;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.MiscView;
-import com.shuiyes.video.widget.NumberView;
 
-public class YoukuVActivity extends BasePlayActivity implements View.OnClickListener {
+public class YoukuVActivity extends BasePlayActivity {
+
+    private static String mToken;
+    private List<YoukuVideo> mUrlList = new ArrayList<YoukuVideo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +50,31 @@ public class YoukuVActivity extends BasePlayActivity implements View.OnClickList
     }
 
     @Override
-    protected void playNextSection(int index) {
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_clarity:
+                if (mClarityDialog != null && mClarityDialog.isShowing()) {
+                    mClarityDialog.dismiss();
+                }
+                mClarityDialog = new MiscDialog(this, mUrlList);
+                mClarityDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mClarityDialog != null && mClarityDialog.isShowing()) {
+                            mClarityDialog.dismiss();
+                        }
 
+                        mStateView.setText("初始化...");
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, ((MiscView) view).getPlayVideo()));
+                    }
+                });
+                mClarityDialog.show();
+                break;
+            default:
+                super.onClick(view);
+                break;
+        }
     }
-
-    private static String mToken;
-    private List<YoukuVideo> mUrlList = new ArrayList<YoukuVideo>();
 
     @Override
     protected void playVideo() {
@@ -155,7 +175,6 @@ public class YoukuVActivity extends BasePlayActivity implements View.OnClickList
                             Log.i(TAG, v.toStr(mContext));
                         }
 
-                        mCurrentPosition = 0;
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mUrlList.get(0)));
                     }
                 } catch (Exception e) {
@@ -167,58 +186,6 @@ public class YoukuVActivity extends BasePlayActivity implements View.OnClickList
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_clarity:
-                if (mClarityDialog != null && mClarityDialog.isShowing()) {
-                    mClarityDialog.dismiss();
-                }
-                mClarityDialog = new MiscDialog(this, mUrlList);
-                mClarityDialog.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (mClarityDialog != null && mClarityDialog.isShowing()) {
-                            mClarityDialog.dismiss();
-                        }
-
-                        mStateView.setText("初始化...");
-                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, ((MiscView) view).getPlayVideo()));
-                    }
-                });
-                mClarityDialog.show();
-                break;
-            case R.id.btn_select:
-                if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
-                    mAlbumDialog.dismiss();
-                }
-                mAlbumDialog = new AlbumDialog(this, mVideoList);
-                mAlbumDialog.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
-                            mAlbumDialog.dismiss();
-                        }
-
-                        NumberView v = (NumberView) view;
-                        mTitleView.setText(v.getTitle());
-                        mVid = v.getUrl();
-
-                        mVideoView.stopPlayback();
-
-                        mStateView.setText("初始化...");
-                        playVideo();
-                    }
-                });
-                mAlbumDialog.show();
-                break;
-            case R.id.btn_next:
-                mStateView.setText("初始化...");
-                playVideo();
-                break;
-        }
-    }
-
-    @Override
     protected void cacheVideo(PlayVideo video) {
         if (mUrlList.size() < 2) {
             mClarityView.setEnabled(false);
@@ -227,6 +194,17 @@ public class YoukuVActivity extends BasePlayActivity implements View.OnClickList
         }
 
         mClarityView.setText(((YoukuVideo)video).getType().getProfile());
+    }
+
+    @Override
+    protected void playNextSection(int index) {
+    }
+
+    @Override
+    protected void playNextVideo(String title, String url) {
+        super.playNextVideo(title, url);
+        mVid = url;
+        playVideo();
     }
 
 }

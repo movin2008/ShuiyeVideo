@@ -34,7 +34,7 @@
 
         <activity
             android:name=".WebActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTop"
             android:screenOrientation="landscape" />
 
         <activity

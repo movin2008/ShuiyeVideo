@@ -15,7 +15,11 @@ import com.shuiyes.video.util.Utils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class QQVActivity extends BasePlayActivity implements View.OnClickListener {
+public class QQVActivity extends BasePlayActivity {
+
+    public String mHost;
+    public String mFvkey;
+    public String mFn_pre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +33,17 @@ public class QQVActivity extends BasePlayActivity implements View.OnClickListene
 
         playVideo();
     }
-    public String mHost;
-    public String mFvkey;
-    public String mFn_pre;
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_clarity:
+                break;
+            default:
+                super.onClick(view);
+                break;
+        }
+    }
 
     @Override
     protected void playVideo() {
@@ -171,14 +183,6 @@ public class QQVActivity extends BasePlayActivity implements View.OnClickListene
         }).start();
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_clarity:
-                break;
-        }
-    }
-
     private void playSection(String part_format_id, String vid, String filename) throws Exception {
         mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
         String part_info = QQUtils.fetchUrl(part_format_id, vid, filename);
@@ -205,8 +209,11 @@ public class QQVActivity extends BasePlayActivity implements View.OnClickListene
             url = String.format("%s%s?vkey=%s", mHost, mFn_pre+".mp4", vkey);
         }
 
-        mCurrentPosition = 0;
         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_URL, url));
+    }
+
+    @Override
+    protected void cacheVideo(PlayVideo video) {
     }
 
     @Override
@@ -226,10 +233,6 @@ public class QQVActivity extends BasePlayActivity implements View.OnClickListene
                 }
             }
         }).start();
-    }
-
-    @Override
-    protected void cacheVideo(PlayVideo video) {
     }
 
 }
