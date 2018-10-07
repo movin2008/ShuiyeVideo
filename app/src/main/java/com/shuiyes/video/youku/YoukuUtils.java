@@ -88,4 +88,17 @@ public class YoukuUtils {
         return HttpUtils.open("http://so.youku.com/search_video/q_" + URLEncoder.encode(keyword,"utf-8"));
     }
 
+    public static String getPlayVid(String url) {
+        String vid = "unkown";
+        String key = "show/id_";
+        int index = url.indexOf(key);
+        if (url.indexOf(".html") != -1) {
+            vid = url.substring(index + key.length(), url.indexOf(".html"));
+        } else {
+            vid = url.substring(index + key.length());
+        }
+        Log.e(TAG, "getPlayVid(" + url + ")=" + vid);
+        return vid;
+    }
+
 }

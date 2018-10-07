@@ -12,6 +12,10 @@ import java.security.MessageDigest;
 
 public class Utils {
 
+    public static long tm(){
+        return System.currentTimeMillis()/1000;
+    }
+
     public static InputStream isTransparentHighlightCss(Context context, String url) {
         try {
             String cssPath = context.getCacheDir().getAbsolutePath()+"/tmp.css";

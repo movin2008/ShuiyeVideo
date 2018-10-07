@@ -32,20 +32,7 @@ public class YoukuVActivity extends BasePlayActivity {
         super.onCreate(savedInstanceState);
 
         mBatName = "优酷视频";
-
-        mClarityView.setOnClickListener(this);
-        mSelectView.setOnClickListener(this);
-        mNextView.setOnClickListener(this);
-
-        String key = "show/id_";
-        int index = mIntentUrl.indexOf(key);
-        if (mIntentUrl.indexOf(".html") != -1) {
-            mVid = mIntentUrl.substring(index + key.length(), mIntentUrl.indexOf(".html"));
-        } else {
-            mVid = mIntentUrl.substring(index + key.length());
-        }
-        Log.e(TAG, "play mVid=" + mVid);
-
+        mVid = YoukuUtils.getPlayVid(mIntentUrl);
         playVideo();
     }
 
@@ -194,10 +181,6 @@ public class YoukuVActivity extends BasePlayActivity {
         }
 
         mClarityView.setText(((YoukuVideo)video).getType().getProfile());
-    }
-
-    @Override
-    protected void playNextSection(int index) {
     }
 
     @Override

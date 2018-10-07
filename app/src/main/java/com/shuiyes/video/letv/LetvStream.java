@@ -23,7 +23,7 @@ public class LetvStream extends PlayVideo{
     }
 
     public String toStr() {
-        return "LetvSource{" +
+        return "PlaySource{" +
                 "stream=" + streamStr +
 //                ", url='" + url + '\'' +
                 '}';

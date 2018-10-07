@@ -26,7 +26,9 @@ import com.shuiyes.video.widget.Tips;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class BasePlayActivity extends BaseActivity implements View.OnClickListener {
 
@@ -46,16 +48,21 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
         mContext = this;
 
-        mLoadingProgress = (ProgressBar) findViewById(R.id.loading);
         mSourceView = (Button) findViewById(R.id.btn_source);
         mClarityView = (Button) findViewById(R.id.btn_clarity);
         mSelectView = (Button) findViewById(R.id.btn_select);
         mNextView = (Button) findViewById(R.id.btn_next);
 
+        mSourceView.setOnClickListener(this);
+        mClarityView.setOnClickListener(this);
+        mSelectView.setOnClickListener(this);
+        mNextView.setOnClickListener(this);
+
         mTitleView = (TextView) findViewById(R.id.tv_title);
         mStateView = (TextView) findViewById(R.id.tv_state);
         mTimeView = (TextView) findViewById(R.id.tv_time);
 
+        mLoadingProgress = (ProgressBar) findViewById(R.id.loading);
         mVideoView = (VideoView) findViewById(R.id.vitamio_videoView);
         MediaController controller = new MediaController(this);
         controller.setOnHoverListener(new View.OnHoverListener() {
@@ -142,19 +149,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                     mCurrentPosition = 0;
                     mLoadingProgress.setVisibility(View.VISIBLE);
 
-                    if (mSectionList.size() > 0) {
-                        mSectionIndex++;
-                        Log.d(TAG, "playNextSection " + mSectionIndex + "/" + mSectionList.size());
-                        if (mSectionIndex == mSectionList.size()) {
-                            mSectionIndex = 0;
-                        }
-                        playNextSection(mSectionIndex);
-                    } else if (mVideoList.size() > 0) {
-                        ListVideo video = mVideoList.get(getPlayIndex());
-                        playNextVideo(video.getTitle(), video.getUrl());
-                    } else {
-                        playVideo();
-                    }
+                    completionToPlayNextVideo();
                 }
             }
         });
@@ -340,6 +335,15 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         mCurrentPosition = 0;
     }
 
+    protected void completionToPlayNextVideo() {
+        if (mVideoList.size() > 0) {
+            ListVideo video = mVideoList.get(getPlayIndex());
+            playNextVideo(video.getTitle(), video.getUrl());
+        } else {
+            playVideo();
+        }
+    }
+
     protected final int MSG_FAULT = 0;
     protected final int MSG_FETCH_TOKEN = 1;
     protected final int MSG_FETCH_VIDEO = 2;
@@ -351,6 +355,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected final int MSG_UPDATE_NEXT = 8;
     protected final int MSG_CACHE_URL = 9;
     protected final int MSG_UPDATE_TIME = 10;
+    protected final int MSG_FETCH_VIDEOID = 11;
 
     @Override
     public void handleOtherMessage(Message msg) {
@@ -373,7 +378,11 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 //                }, 5555);
                 break;
             case MSG_FETCH_TOKEN:
-                mStateView.setText(mStateView.getText() + "[成功]\n获取通行证...");
+                mStateView.setText(mStateView.getText() + "[成功]\n获取授权信息...");
+                mStateView.setVisibility(View.VISIBLE);
+                break;
+            case MSG_FETCH_VIDEOID:
+                mStateView.setText(mStateView.getText() + "[成功]\n获取视频ID...");
                 mStateView.setVisibility(View.VISIBLE);
                 break;
             case MSG_FETCH_VIDEOINFO:
@@ -440,7 +449,5 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected abstract void playVideo();
 
     protected abstract void cacheVideo(PlayVideo video);
-
-    protected abstract void playNextSection(int index);
 
 }

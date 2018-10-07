@@ -15,6 +15,7 @@ import com.shuiyes.video.base.BaseActivity;
 import com.shuiyes.video.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.letv.LetvSoActivity;
 import com.shuiyes.video.qq.QQVActivity;
+import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.youku.YoukuSoActivity;
 
@@ -75,6 +76,13 @@ public class MainActivity extends BaseActivity {
         });
         mIQiyi.setChecked(true);
 
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                HttpUtils.testPost("https://vi.l.qq.com/proxyhttp");
+//            }
+//        }).start();
+
         //		Tips.show(this, Build.VERSION.SDK_INT+"/"+Build.MANUFACTURER, 1);
     }
 
@@ -133,7 +141,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void testUrl(View view){
-        this.startActivity(new Intent(this, QQVActivity.class).putExtra("url", "https://v.qq.com/x/cover/lcpwn26degwm7t3.html"));
+        this.startActivity(new Intent(this, QQVActivity.class).putExtra("url", "https://v.qq.com/x/cover/6983f15b7g5xch7.html"));
     }
 
     public void testWeb(View view){

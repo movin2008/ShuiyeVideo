@@ -15,7 +15,6 @@ import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.MiscView;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -27,19 +26,13 @@ import java.util.List;
 public class LetvVActivity extends BasePlayActivity implements View.OnClickListener {
 
     private List<LetvStream> mUrlList = new ArrayList<LetvStream>();
-    private List<LetvSource> mSourceList = new ArrayList<LetvSource>();
+    private List<PlayVideo> mSourceList = new ArrayList<PlayVideo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mBatName = "乐视视频";
-
-        mSourceView.setOnClickListener(this);
-        mClarityView.setOnClickListener(this);
-        mSelectView.setOnClickListener(this);
-        mNextView.setOnClickListener(this);
-
         mVid = LetvUtils.getPlayVid(mIntentUrl);
         playVideo();
     }
@@ -182,6 +175,43 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
         }).start();
     }
 
+    private void playUrl(String url, String streamStr) throws Exception {
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIDEO, streamStr));
+        String video = HttpUtils.open(LetvUtils.getVideoPlayUrl(url, mVid));
+
+        if (TextUtils.isEmpty(video)) {
+            fault("解析异常请重试");
+            return;
+        }
+
+        Utils.setFile("letv", video);
+
+        JSONObject data = new JSONObject(video);
+        JSONArray nodelist = data.getJSONArray("nodelist");
+        int nodelistLen = nodelist.length();
+
+        mSourceList.clear();
+        for (int i = 0; i < nodelistLen; i++) {
+            JSONObject node = (JSONObject) nodelist.get(i);
+
+            String m3u8Url = node.getString("location");
+            String name = node.getString("name").replace("中国", "").replaceAll("-", "");
+
+            mSourceList.add(new PlayVideo(name, m3u8Url));
+        }
+
+        Log.e(TAG, "SourceList=" + mSourceList.size() + "/" + nodelistLen);
+        if (mSourceList.isEmpty()) {
+            fault("无视频源地址");
+        } else {
+            for (PlayVideo v : mSourceList) {
+                Log.i(TAG, v.toStr());
+            }
+
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mSourceList.get(0)));
+        }
+    }
+
     private void listAlbum(int albumCount){
         if(mVideoList.isEmpty() && albumCount > 1){
             boolean find = false;
@@ -242,43 +272,6 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
 
     }
 
-    private void playUrl(String url, String streamStr) throws Exception {
-        mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIDEO, streamStr));
-        String video = HttpUtils.open(LetvUtils.getVideoPlayUrl(url, mVid));
-
-        if (TextUtils.isEmpty(video)) {
-            fault("解析异常请重试");
-            return;
-        }
-
-        Utils.setFile("letv", video);
-
-        JSONObject data = new JSONObject(video);
-        JSONArray streams = data.getJSONArray("nodelist");
-        int streamsLen = streams.length();
-
-        mSourceList.clear();
-        for (int i = 0; i < streamsLen; i++) {
-            JSONObject stream = (JSONObject) streams.get(i);
-
-            String m3u8Url = stream.getString("location");
-            String name = stream.getString("name").replace("中国", "").replaceAll("-", "");
-
-            mSourceList.add(new LetvSource(streamStr, name, m3u8Url));
-        }
-
-        Log.e(TAG, "UrlList=" + mSourceList.size() + "/" + streamsLen);
-        if (mSourceList.isEmpty()) {
-            fault("无视频源地址");
-        } else {
-            for (LetvSource v : mSourceList) {
-                Log.i(TAG, v.toStr());
-            }
-
-            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mSourceList.get(0)));
-        }
-    }
-
     @Override
     protected void cacheVideo(PlayVideo video) {
         if (mSourceList.isEmpty()) {
@@ -286,10 +279,6 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
         } else {
             mSourceView.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    protected void playNextSection(int index) {
     }
 
     @Override

@@ -33,13 +33,6 @@ public class IQiyiVActivity extends BasePlayActivity {
         super.onCreate(savedInstanceState);
 
         mBatName = "爱奇艺视频";
-
-        mSourceView.setOnClickListener(this);
-        mClarityView.setOnClickListener(this);
-        mClarityView.setEnabled(false);
-        mSelectView.setOnClickListener(this);
-        mNextView.setOnClickListener(this);
-
         playVideo();
     }
 
@@ -311,10 +304,6 @@ public class IQiyiVActivity extends BasePlayActivity {
         }
 
         mClarityView.setText(((IQiyiVideo)video).getType().getProfile());
-    }
-
-    @Override
-    protected void playNextSection(int index) {
     }
 
     @Override

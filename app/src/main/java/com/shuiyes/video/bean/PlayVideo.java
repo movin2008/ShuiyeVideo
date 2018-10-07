@@ -26,4 +26,10 @@ public class PlayVideo {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public String toStr() {
+        return "PlayVideo{" + text +
+//                ", url='" + url + '\'' +
+                '}';
+    }
 }
