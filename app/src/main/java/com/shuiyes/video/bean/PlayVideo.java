@@ -28,8 +28,8 @@ public class PlayVideo {
     }
 
     public String toStr() {
-        return "PlayVideo{" + text +
-//                ", url='" + url + '\'' +
-                '}';
+        return "PlayVideo{" + text
+//                + ", url='" + url + '\''
+                + '}';
     }
 }

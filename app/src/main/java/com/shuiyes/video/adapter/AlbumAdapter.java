@@ -100,7 +100,6 @@ public class AlbumAdapter extends BaseAdapter {
             viewHolder.img.setImageBitmap(bitmap);
         }
 
-
         List<ListVideo> listVideos = album.getListVideos();
         viewHolder.album.setAdapter(new TagAdapter<ListVideo>(listVideos) {
             @Override

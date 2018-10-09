@@ -112,10 +112,10 @@ public class YoukuVideo extends PlayVideo{
         return size;
     }
 
-    public String toStr(Context ctx) {
-        return "YoukuVideo{" + type +
-                ", size=" + Formatter.formatFileSize(ctx, Long.valueOf(size)) +
-//                ", url='" + url + '\'' +
-                '}';
+    @Override
+    public String toStr() {
+        return "YoukuVideo{" + type
+                + ", size=" + Formatter.formatFileSize(SVApplication.getAppContext(), Long.valueOf(size))
+                + '}';
     }
 }

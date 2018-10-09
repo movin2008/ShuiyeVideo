@@ -159,7 +159,7 @@ public class YoukuVActivity extends BasePlayActivity {
                         });
 
                         for (YoukuVideo v : mUrlList) {
-                            Log.i(TAG, v.toStr(mContext));
+                            Log.i(TAG, v.toStr());
                         }
 
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mUrlList.get(0)));

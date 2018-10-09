@@ -7,6 +7,7 @@ import com.shuiyes.video.WebActivity;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.iqiyi.IQiyiVActivity;
 import com.shuiyes.video.letv.LetvVActivity;
+import com.shuiyes.video.qq.QQVActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.youku.YoukuVActivity;
 
@@ -15,7 +16,11 @@ public class PlayUtils {
     private static final String TAG = "PlayUtils";
 
     public static boolean isSurpportUrl(String url){
-        return url.contains("youku.com") || url.contains("le.com") || url.contains("letv.com") || url.contains("iqiyi.com");
+        return url.contains("youku.com")
+                || url.contains("qq.com")
+                || url.contains("le.com")
+                || url.contains("letv.com")
+                || url.contains("iqiyi.com");
     }
 
     public static String formateUrlSource(String url){
@@ -28,6 +33,15 @@ public class PlayUtils {
         }
         else if(url.contains("sohu.com")){
             text = "搜狐视频";
+        }
+        else if(url.contains("youku.com")){
+            text = "优酷视频";
+        }
+        else if(url.contains("le.com") || url.contains("letv.com")){
+            text = "乐视视频";
+        }
+        else if(url.contains("iqiyi.com")){
+            text = "爱奇艺视频";
         }
         return text;
     }
@@ -55,13 +69,20 @@ public class PlayUtils {
             }else{
                 playFail(context, url);
             }
+        }else if (url.contains("qq.com")) {
+            if(url.contains("qq.com/x/cover")){
+                context.startActivity(new Intent(context, QQVActivity.class).putExtra("url", url).putExtra("title", title));
+            }else{
+                playFail(context, url);
+            }
         } else {
             playFail(context, url);
         }
     }
 
     private static void playFail(Context context, String url){
-        Tips.show(context, "暂不支持播放 " + PlayUtils.formateUrlSource(url)+" 请浏览网页播放", 0);
+//        Tips.show(context, "暂不支持播放 " + PlayUtils.formateUrlSource(url), 0);
+        Tips.show(context, "暂不支持 " + url+" 请浏览至播放网页重试",1);
         if(!Constants.WEB_FOEGROUND){
             context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
         }

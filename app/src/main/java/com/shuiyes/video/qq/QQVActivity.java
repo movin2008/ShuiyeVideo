@@ -23,7 +23,7 @@ import java.util.List;
 
 public class QQVActivity extends BasePlayActivity {
 
-    private List<LetvStream> mUrlList = new ArrayList<LetvStream>();
+    private List<QQStream> mUrlList = new ArrayList<QQStream>();
     private List<PlayVideo> mSourceList = new ArrayList<PlayVideo>();
 
     @Override
@@ -69,9 +69,23 @@ public class QQVActivity extends BasePlayActivity {
 
                         mStateView.setText("初始化...");
                         MiscView v = (MiscView) view;
-                        mStream = v.getPlayVideo().getText();
 
-                        final LetvStream stream = (LetvStream) v.getPlayVideo();
+                        QQStream stream = (QQStream) v.getPlayVideo();
+
+                        mClarityView.setText(stream.getCname());
+                        mDefn = stream.getUrl();
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    playVideoByDefn();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    fault(e);
+                                }
+                            }
+                        }).start();
 
                     }
                 });
@@ -111,68 +125,19 @@ public class QQVActivity extends BasePlayActivity {
                         Log.e(TAG, "rurl=" + mIntentUrl);
                     }
 
-                    key = "<title>";
-                    if (html.contains(key)) {
-                        int len = html.indexOf(key);
-                        String tmp = html.substring(len + key.length());
-                        len = tmp.indexOf("</title>");
-                        String title = tmp.substring(0, len);
-
-                        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, title));
-                    }
-
-                    mVid = QQUtils.getPlayVid(mIntentUrl);
+//                    key = "<title>";
+//                    if (html.contains(key)) {
+//                        int len = html.indexOf(key);
+//                        String tmp = html.substring(len + key.length());
+//                        len = tmp.indexOf("</title>");
+//                        String title = tmp.substring(0, len);
+//
+//                        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, title));
+//                    }
 
 //                     playMp4Video();
-                    mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
-                    String video = QQUtils.fetchVideo(mIntentUrl, mVid);
+                    playVideoByDefn();
 
-                    if (TextUtils.isEmpty(video)) {
-                        fault("请重试");
-                        return;
-                    }
-
-                    Utils.setFile("qq", video);
-
-                    JSONObject obj = new JSONObject(video);
-
-                    if (obj.has("msg")) {
-                        fault(obj.getString("msg"));
-                        return;
-                    }
-
-
-                    JSONObject vl = obj.getJSONObject("vl");
-                    JSONArray vis = vl.getJSONArray("vi");
-                    JSONObject vi = (JSONObject) vis.get(0);
-                    JSONArray uis = vi.getJSONObject("ul").getJSONArray("ui");
-
-                    mSourceList.clear();
-                    for (int i = 0; i < uis.length(); i++) {
-                        JSONObject ui = (JSONObject) uis.get(i);
-
-                        String pt = ui.getJSONObject("hls").getString("pt");
-
-                        String[] pts = pt.split("_");
-                        String m3u8Url = ui.getString("url")+pts[pts.length-1];
-
-//                        String m3u8Url = ui.getString("url")+pt;
-
-//                        m3u8Url = "https://ltsydzd.qq.com/uwMRJfz-r5jAYaQXGdGnC2_ppdhgmrDlPaRvaV7F2Ic/F_KkOPZpF0QlddYFemuxG-z2A6E_LgdzCDexhv80gVdNa0tK0FtgeYHv7P7wXMvYgAh_UGlJGCpgAhF1eOTbq7J7HMDsEzhpY95iGGIe1wEHfIyO5-6xiXxMKfQ2I0ruy8skgy745uue9x9ydSgQVFM8pzjv8m5w/i002726odns.321002.ts.m3u8?ver=4";
-
-                        mSourceList.add(new PlayVideo(QQUtils.formatSource(m3u8Url), m3u8Url));
-                    }
-
-                    Log.e(TAG, "SourceList=" + mSourceList.size() + "/" + uis.length());
-                    if (mSourceList.isEmpty()) {
-                        fault("无视频源地址");
-                    } else {
-                        for (PlayVideo v : mSourceList) {
-                            Log.i(TAG, v.toStr());
-                        }
-
-                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mSourceList.get(0)));
-                    }
                 } catch (Exception e) {
                     fault(e);
                     e.printStackTrace();
@@ -181,12 +146,96 @@ public class QQVActivity extends BasePlayActivity {
         }).start();
     }
 
+    private String mDefn = "";
+    private void playVideoByDefn() throws Exception{
+        playVideoByDefn(mDefn);
+    }
+
+    private void playVideoByDefn(String defn) throws Exception{
+        mDefn = defn;
+
+        mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
+        String video = QQUtils.fetchVideo(mIntentUrl, defn);
+
+        if (TextUtils.isEmpty(video)) {
+            fault("请重试");
+            return;
+        }
+
+        Utils.setFile("qq", video);
+
+        JSONObject obj = new JSONObject(video);
+
+        if (obj.has("msg")) {
+            fault(obj.getString("msg"));
+            return;
+        }
+
+        JSONObject fl = obj.getJSONObject("fl");
+        JSONArray fis = fl.getJSONArray("fi");
+
+        mUrlList.clear();
+        for (int i = 0; i < fis.length(); i++) {
+            JSONObject fi = (JSONObject) fis.get(i);
+
+            int stream = fi.getInt("id");
+            String streamStr = fi.getString("name");
+            String cname = fi.getString("cname");
+            int size = fi.getInt("fs");
+
+            mUrlList.add(new QQStream(stream, streamStr, cname, size));
+        }
+
+        for (QQStream v : mUrlList) {
+            Log.i(TAG, v.toStr());
+        }
+
+        JSONObject vl = obj.getJSONObject("vl");
+        JSONArray vis = vl.getJSONArray("vi");
+        JSONObject vi = (JSONObject) vis.get(0);
+
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, vi.getString("ti")));
+
+        mSourceList.clear();
+        JSONArray uis = vi.getJSONObject("ul").getJSONArray("ui");
+        for (int i = 0; i < uis.length(); i++) {
+            JSONObject ui = (JSONObject) uis.get(i);
+
+            String pt = ui.getJSONObject("hls").getString("pt");
+            String m3u8Url = ui.getString("url") + pt;
+
+            mSourceList.add(new PlayVideo(QQUtils.formatSource(m3u8Url), m3u8Url));
+
+            if(i == 0){
+                for (QQStream v : mUrlList) {
+                    if(pt.contains(String.valueOf(v.getStream()))){
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIDEO, v.getCname()));
+                        break;
+                    }
+                }
+            }
+        }
+
+        Log.e(TAG, "SourceList=" + mSourceList.size() + "/" + uis.length());
+        if (mSourceList.isEmpty()) {
+            fault("无视频源地址");
+        } else {
+            for (PlayVideo v : mSourceList) {
+                Log.i(TAG, v.toStr());
+            }
+
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mSourceList.get(0)));
+        }
+    }
+
     /**
      * MP4 视频缓存服务器很卡
      */
     @Deprecated
     private void playMp4Video(){
         try{
+            mVid = QQUtils.getPlayVid(mIntentUrl);
+
             mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
             String video = null;
             for (String platform : QQUtils.PLATFORMS) {
