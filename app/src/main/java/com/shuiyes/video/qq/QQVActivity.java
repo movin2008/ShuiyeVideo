@@ -167,7 +167,11 @@ public class QQVActivity extends BasePlayActivity {
         JSONObject obj = new JSONObject(video);
 
         if (obj.has("msg")) {
-            fault(obj.getString("msg"));
+            if("not pay".equals(obj.getString("msg"))){
+                fault("暂不支持VIP视频");
+            }else{
+                fault(obj.getString("msg"));
+            }
             return;
         }
 
