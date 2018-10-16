@@ -132,8 +132,8 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-                Log.e(TAG, " =========================== onError(" + i + "," + i1 + ")");
-                String err = "视频无法播放(" + i + "," + i1 + ")";
+                String err = "onError(" + i + "," + i1 + ")";
+                Log.e(TAG, " =========================== "+err);
                 Tips.show(mContext, err, 0);
                 fault(err);
                 return false;
@@ -167,10 +167,10 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected void onResume() {
         super.onResume();
 
-        if (mPrepared && !mVideoView.isPlaying()) {
+        if (mPrepared && !mIsError && !mVideoView.isPlaying()) {
             mLoadingProgress.setVisibility(View.VISIBLE);
             if (mStateView.getText().length() == 0) {
-                mStateView.setText("恢复中...");
+                mStateView.setText("视频恢复中...");
             }
             if (mCurrentPosition > 0) {
                 mVideoView.seekTo(mCurrentPosition);

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -24,7 +25,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    private TextView mUrl, mProgress;
+    private TextView mTitle, mUrl, mProgress;
     private WebView mWebView;
     protected Button mBack, mForward, mRefresh, mPlay;
 
@@ -45,6 +46,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         String url = getIntent().getStringExtra("url");
 
         mProgress = (TextView) this.findViewById(R.id.tv_progress);
+        mTitle = (TextView) this.findViewById(R.id.tv_title);
         mUrl = (TextView) this.findViewById(R.id.tv_url);
         mUrl.setText(url);
 
@@ -68,6 +70,8 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 Log.e(TAG, "shouldOverrideUrlLoading " + url);
 
                 mUrl.setText(url);
+
+//                view.loadUrl("about:blank");
                 view.loadUrl(url);
 
                 // 返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
@@ -108,6 +112,9 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 //                        "style.innerHTML = window.atob('html{-webkit-tap-highlight-color: grey;}');" +
 //                        "parent.appendChild(style)" +
 //                        "})()");
+
+                mUrl.setText(view.getUrl());
+                mTitle.setText(view.getTitle());
 
                 super.onPageFinished(view, url);
             }

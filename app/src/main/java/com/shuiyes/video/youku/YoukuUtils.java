@@ -20,13 +20,15 @@ public class YoukuUtils {
      # Found in http://g.alicdn.com/player/ykplayer/0.5.64/youku-player.min.js
      # grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
      */
-    public static String CCODE = "0511";
+    public static String CCODE = "0516"; // 0511
 
     /**
      * Found in http://g.alicdn.com/player/ykplayer/0.5.28/youku-player.min.js
      * grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
      */
     public static String CKEY = "DIl58SLFxFNndSV1GFNnMQVYkx1PP5tKe1siZu/86PR1u/Wh1Ptd+WOZsHHWxysSfAOhNJpdVWsdVJNsfJ8Sxd8WKVvNfAS8aS8fAOzYARzPyPc3JvtnPHjTdKfESTdnuTW6ZPvk2pNDh4uFzotgdMEFkzQ5wZVXl2Pf1/Y6hLK0OnCNxBj3+nb0v72gZ6b0td+WOZsHHWxysSo/0y9D2K42SaB8Y/+aD2K42SaB8Y/+ahU+WOZsHcrxysooUeND";
+
+    // 网页端 CCODE=0502, 而 CKEY 是动态的，加密规则未知
 //    public static String CKEY = "112#Fi74GW4WoHA+4BdXFWqaTAEPoz8pDk+eqMX154DIp+sAijGgYtWDfdP7/zRVNHnGkX9OS+WsmfbwBBYqwh6Jr35o4622Xqxdk/cA+AEpe8//4c7ATAlwUVkLtKZIIqxD97ZEV/+hvRKPMl1VpYetEgVsaKcnu76Fn71mJ0hRHsjwy3iN8ClrJHHISXTTF8IlzuVFGBgJzGTxkbCRXJiZwbPzNFhEXL8vISKOHlOV+bqBCGuF7624kdxle8odQAELza4rGkRb0W5Xz4DHfXiyYgBqaP4aksTB2VJ0yxkqIjfxt7tSLWEdwzaczAsz1eXn1fwSK/kL3+Z9pAGSJL6m76+CV6Y9Q4cf2+HxPKUGJfQWW9Gz/cOCCnZqpOMgMKZnuA3eUnJ0Eg6XseAwGOWjjDeXVoGu2cEI1IDOUpcYOnj+E37gtTF8PAMW9eh7dZZdDlN7EWi2Mj+9CTkCI6gkRB67WSk3PwkwNKbE13+2zsMMiYyde1YYW5scylK24y3v/NYMYxzuBvPgirTj4VywXYNklQrTH4C+LHB8B4DiGXT/bT8rSGIM2NJBvwk+LAN=";
 
     public static String getVideoUrl(String vid, String cna) {
@@ -39,6 +41,12 @@ public class YoukuUtils {
 //        url += "&version=0.5.79";
         return url;
     }
+
+    public static String fetchVideo(String vid, String cna) {
+        return HttpUtils.open(YoukuUtils.getVideoUrl(vid, cna));
+    }
+
+
 
     public static String fetchCna() {
         HttpURLConnection conn = null;

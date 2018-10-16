@@ -17,6 +17,7 @@ import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -59,23 +60,8 @@ public class IQiyiVActivity extends BasePlayActivity {
                 });
                 mClarityDialog.show();
                 break;
-            case R.id.btn_select:
-                if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
-                    mAlbumDialog.dismiss();
-                }
-                mAlbumDialog = new AlbumDialog(this, mVideoList);
-                mAlbumDialog.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
-                            mAlbumDialog.dismiss();
-                        }
-
-                        NumberView v = (NumberView) view;
-                        playNextVideo(v.getTitle(), v.getUrl());
-                    }
-                });
-                mAlbumDialog.show();
+            default:
+                super.onClick(view);
                 break;
         }
     }
@@ -88,6 +74,7 @@ public class IQiyiVActivity extends BasePlayActivity {
                 try {
                     String tvid = null;
                     String vid = null;
+                    String albumUrl = null;
 
                     String key = "?tvid=";
                     if(mIntentUrl.contains(key)){
@@ -103,52 +90,61 @@ public class IQiyiVActivity extends BasePlayActivity {
                         Log.e(TAG, ":url 'tvid="+tvid+", vid="+vid+"'");
                     }
 
-                    if(tvid == null && vid == null){
-                        mHandler.sendEmptyMessage(MSG_FETCH_TOKEN);
-                        String html = HttpUtils.open(mIntentUrl);//.replaceAll("http://m.iqiyi.com", "https://www.iqiyi.com")
+                    mHandler.sendEmptyMessage(MSG_FETCH_TOKEN);
+                    String html = HttpUtils.open(mIntentUrl);
+                    Utils.setFile("iqiyi.html", html);
+                    if(TextUtils.isEmpty(html) && tvid == null && vid == null){
+                        fault("请稍后重试");
+                        return;
+                    }
 
-                        if(TextUtils.isEmpty(html)){
-                            fault("请重试");
-                            return;
-                        }
+                    key = "\"albumUrl\":\"";
+                    if(html.contains(key)){
+                        String tmp = html.substring(html.indexOf(key) + key.length());
+                        albumUrl = tmp.substring(0, tmp.indexOf("\""));
+                        Log.e(TAG, ":html albumUrl="+albumUrl);
+                    }
 
-                        // page-info 见附录1
-                        key = ":page-info='";
-                        if(html.contains(key)){
-                            int len = html.indexOf(key);
-                            String tmp = html.substring(len + key.length());
-                            len = tmp.indexOf("'");
-                            String pageInfo = tmp.substring(0, len);
+                    key = ":page-info='";
+                    if(html.contains(key) && (albumUrl == null || tvid == null || vid == null)){
+                        int len = html.indexOf(key);
+                        String tmp = html.substring(len + key.length());
+                        len = tmp.indexOf("'");
+                        String pageInfo = tmp.substring(0, len);
 
-                            try{
-                                JSONObject obj = new JSONObject(pageInfo);
+                        try{
+                            JSONObject obj = new JSONObject(pageInfo);
 
+                            if(tvid == null || vid == null){
                                 tvid = obj.getString("tvId");
                                 vid = obj.getString("vid");
-
                                 Log.e(TAG, ":page-info 'tvid="+tvid+", vid="+vid+"'");
-                                mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, obj.getString("tvName")));
-                            }catch (Exception e){
                             }
+                            if(albumUrl == null){
+                                albumUrl = obj.getString("albumUrl");
+                                Log.e(TAG, ":page-info albumUrl="+albumUrl);
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
+                    }
 
-                        key = "param['tvid'] = \"";
-                        if(tvid == null && html.contains(key)){
-                            int len = html.indexOf(key);
-                            String tmp = html.substring(len + key.length());
-                            len = tmp.indexOf("\"");
-                            tvid = tmp.substring(0, len);
-                            Log.e(TAG, "param['tvid'] = "+tvid);
-                        }
+                    key = "param['tvid'] = \"";
+                    if(tvid == null && html.contains(key)){
+                        int len = html.indexOf(key);
+                        String tmp = html.substring(len + key.length());
+                        len = tmp.indexOf("\"");
+                        tvid = tmp.substring(0, len);
+                        Log.e(TAG, ":param['tvid'] = "+tvid);
+                    }
 
-                        key = "param['vid'] = \"";
-                        if(vid == null && html.contains(key)){
-                            int len = html.indexOf(key);
-                            String tmp = html.substring(len + key.length());
-                            len = tmp.indexOf("\"");
-                            vid = tmp.substring(0, len);
-                            Log.e(TAG, "param['vid'] = "+vid);
-                        }
+                    key = "param['vid'] = \"";
+                    if(vid == null && html.contains(key)){
+                        int len = html.indexOf(key);
+                        String tmp = html.substring(len + key.length());
+                        len = tmp.indexOf("\"");
+                        vid = tmp.substring(0, len);
+                        Log.e(TAG, ":param['vid'] = "+vid);
                     }
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
@@ -161,19 +157,28 @@ public class IQiyiVActivity extends BasePlayActivity {
                     }
 
                     key = "var tvInfoJs=";
-                    String albumUrl = null;
                     String albumId = null;
                     int albumCount = 0;
+                    int showChannelId = 0;
                     if(video.contains(key)){
                         int len = video.indexOf(key);
                         video = video.substring(len + key.length());
 
                         JSONObject obj = new JSONObject(video);
-                        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, obj.getString("vn")));
-                        albumUrl = obj.getString("au");
 
                         albumId = obj.getString("aid");
                         albumCount = obj.getInt("es");
+                        showChannelId = obj.getInt("showChannelId");
+
+                        String title = null;
+                        if(showChannelId == IQiyiUtils.Channel.dianshiju){
+                            title = obj.getString("vn")+" - "+obj.getString("subt");
+                        }else if(showChannelId == IQiyiUtils.Channel.zongyi){
+                            title = obj.getJSONObject("ppsInfo").getString("name");
+                        }else{
+                            title = obj.getString("vn");
+                        }
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, title));
                     }else{
                         fault("数据tvInfoJs异常");
                         return;
@@ -242,50 +247,23 @@ public class IQiyiVActivity extends BasePlayActivity {
 
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
 
-                        if(mVideoList.isEmpty() && albumCount > 1){
-                            int flag = 1;
-                            int pages = (int) Math.ceil((float)albumCount/50);
-                            for (int page=1; page<=pages; page++){
-                                //  最后获取专辑信息
-                                String album = IQiyiUtils.fetchAlbum(albumId, page);
+                        Log.e(TAG, "Album showChannelId="+showChannelId+", count="+albumCount+"/"+mVideoList.size());
 
-                                key = "var tvInfoJs=";
-                                if(album.contains(key)){
-                                    int len = album.indexOf(key);
-                                    album = album.substring(len + key.length());
-                                    obj = new JSONObject(album);
-
-                                    if (!"A00000".equals(obj.getString("code"))) {
-
-                                        if(obj.has("msg")){
-                                            Log.e(TAG, obj.getString("msg"));
-                                        }else{
-                                            Log.e(TAG, obj.getJSONObject("ctl").getString("msg"));
-                                        }
-                                        continue;
-                                    }
-
-                                    JSONArray vlist = obj.getJSONObject("data").getJSONArray("vlist");
-                                    int vlistLen = vlist.length();
-
-                                    for (int i = 0; i < vlistLen; i++) {
-                                        JSONObject stream = (JSONObject) vlist.get(i);
-
-                                        String title = stream.getString ("vn");
-                                        String url = stream.getString("vurl")
-                                                +"?tvid="+stream.getString("id")
-                                                +"&vid="+stream.getString("vid");
-
-                                        mVideoList.add(new ListVideo(flag++, title, url));
-                                    }
-                                    Log.e(TAG, "videoList "+mVideoList.size()+"/"+vlistLen);
-                                }else{
-                                    Log.e(TAG, "数据tvInfoJs异常");
-                                    continue;
-                                }
-                            }
-                            mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
+                        if(!mVideoList.isEmpty()){
+                            return;
                         }
+
+                        //  最后获取专辑信息
+                        if(albumCount > 1 && showChannelId != IQiyiUtils.Channel.zongyi){
+                            // showChannelId = QiyiUtils.Channel.dianshiju
+                            fetchAlbumsOfAvlist(albumCount, albumId);
+                        }
+
+                        if(mVideoList.isEmpty()){
+                            // showChannelId == IQiyiUtils.Channel.zongyi
+                            fetchAlbumsOfHtmlData(albumUrl, html);
+                        }
+                        mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
                     }
                 } catch (Exception e) {
                     fault(e);
@@ -293,6 +271,92 @@ public class IQiyiVActivity extends BasePlayActivity {
                 }
             }
         }).start();
+    }
+
+    private void fetchAlbumsOfHtmlData(String albumUrl, String albumHtml){
+        String key = ":initialized-data='";
+        if(albumHtml.contains(key)){
+            int len = albumHtml.indexOf(key);
+            String tmp = albumHtml.substring(len + key.length());
+            len = tmp.indexOf("'");
+            String data = tmp.substring(0, len);
+
+            try{
+                JSONArray arr = new JSONArray(data);
+                int vlistLen = arr.length();
+
+                for(int i=0; i<vlistLen; i++){
+                    JSONObject obj = (JSONObject) arr.get(i);
+
+                    String text = obj.getString("subtitle");
+                    String title = obj.getString("name");
+                    String url = obj.getString("url");
+
+                    mVideoList.add(new ListVideo(text, title, url));
+                }
+                Log.e(TAG, "ZONGYI VideoList "+mVideoList.size()+"/"+vlistLen);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        if(!mVideoList.isEmpty()){
+            return;
+        }
+
+        if(!albumUrl.startsWith("http")){
+            albumUrl = "https:"+albumUrl;
+        }
+        String album = HttpUtils.open(albumUrl);
+        Utils.setFile("iqiyi.html", album);
+        if (TextUtils.isEmpty(album)) {
+            Log.e(TAG, "fetchAlbumsOfZongyi 空数据");
+            return;
+        }
+    }
+
+    private void fetchAlbumsOfAvlist(int albumCount,String albumId) throws Exception {
+        int pages  = (int) Math.ceil((float)albumCount/50);
+        for (int page=1; page<=pages; page++){
+            String album = IQiyiUtils.fetchAvlist(albumId, page);
+            String key = "var tvInfoJs=";
+            if(album.contains(key)){
+                int len = album.indexOf(key);
+                album = album.substring(len + key.length());
+                JSONObject obj = new JSONObject(album);
+
+                if (!"A00000".equals(obj.getString("code"))) {
+
+                    if(obj.has("msg")){
+                        Log.e(TAG, obj.getString("msg"));
+                    }else{
+                        Log.e(TAG, obj.getJSONObject("ctl").getString("msg"));
+                    }
+                    continue;
+                }
+
+                JSONArray vlist = obj.getJSONObject("data").getJSONArray("vlist");
+                int vlistLen = vlist.length();
+
+                for (int i = 0; i < vlistLen; i++) {
+                    JSONObject stream = (JSONObject) vlist.get(i);
+
+                    String pds = stream.getString ("pds");
+                    int payMark = stream.getInt("payMark");
+                    String title = stream.getString ("vn");
+                    String url = stream.getString("vurl")
+                            +"?tvid="+stream.getString("id")
+                            +"&vid="+stream.getString("vid");
+                    String text = pds + (payMark == 1?"(VIP)":"");
+
+                    mVideoList.add(new ListVideo(text, title, url));
+                }
+                Log.e(TAG, "TV VideoList "+mVideoList.size()+"/"+vlistLen);
+            }else{
+                Log.e(TAG, "数据tvInfoJs异常");
+                continue;
+            }
+        }
     }
 
     @Override

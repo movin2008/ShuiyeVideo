@@ -9,19 +9,33 @@
         android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/tv_url"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#44000000"
-        android:textColor="@android:color/white" />
-
-    <TextView
         android:id="@+id/tv_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0%"
-        android:paddingRight="10dp"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:background="#44000000"
         android:layout_alignParentRight="true"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#44000000"
+        android:singleLine="true"
+        android:text="网页标题"
+        android:layout_toLeftOf="@id/tv_progress"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/tv_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#44000000"
+        android:text="地址"
+        android:layout_below="@id/tv_title"
         android:textColor="@android:color/white" />
 
     <RelativeLayout

@@ -22,7 +22,7 @@ public class IQiyiUtils {
         return HttpUtils.open(url);
     }
 
-    public static String fetchAlbum(String aid, int page) {
+    public static String fetchAvlist(String aid, int page) {
         String url = String.format("http://cache.video.iqiyi.com/jp/avlist/%s/%s/50/",aid,page);
         return HttpUtils.open(url);
     }
@@ -37,11 +37,22 @@ public class IQiyiUtils {
         return HttpUtils.open(url);
     }
 
-    public static String search(String keyword) throws UnsupportedEncodingException {
-        String url = "https://search.video.iqiyi.com/o?if=html5&pageNum=1&pageSize=30&video_allow_3rd=1";
-        // 电影,1;电视剧,2;纪录片,3;动漫,4;音乐,5;综艺,6;娱乐,7;游戏,8;旅游,9;片花,10;
+    public interface Channel {
+        // 电影,1; 电视剧,2; 纪录片,3; 动漫,4;音乐,5;综艺,6;娱乐,7;游戏,8;旅游,9;片花,10;
         // 公开课,11;教育,12;时尚,13;时尚综艺,14;少儿综艺,15;微电影,16;体育,17;奥运,18;直播,19;广告,20;
         // 生活,21;搞笑,22;奇葩,23",
+        int dianying = 1;
+        int dianshiju = 2;
+        int jilupian = 3;
+        int dongman = 4;
+        int yinyue = 5;
+        int zongyi = 6;
+        int yule = 7;
+        int youxi = 8;
+    }
+
+    public static String search(String keyword) throws UnsupportedEncodingException {
+        String url = "https://search.video.iqiyi.com/o?if=html5&pageNum=1&pageSize=30&video_allow_3rd=1";
         url += "&channel_name=";
         url += "&key="+ URLEncoder.encode(keyword,"utf-8");
         return HttpUtils.open(url);
@@ -116,6 +127,6 @@ public class IQiyiUtils {
  http://mixer.video.iqiyi.com/jp/mixin/videos/1178224700
 
  https://cache.video.iqiyi.com/jp/vi/1178224700/6c32b745086b7c8e76c89429debc7a37/
- http://cache.video.iqiyi.com/jp/avlist/207834001/2/50/
+ http://cache.video.iqiyi.com/jp/avlist/207834001/1/50/
  http://cache.video.iqiyi.com/jp/othlist/205014501/4/desc/
  */

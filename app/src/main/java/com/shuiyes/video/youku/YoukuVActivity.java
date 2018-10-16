@@ -84,7 +84,7 @@ public class YoukuVActivity extends BasePlayActivity {
                     }
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
-                    String info = HttpUtils.open(YoukuUtils.getVideoUrl(mVid, mToken));
+                    String info = YoukuUtils.fetchVideo(mVid, mToken);
 
                     if (TextUtils.isEmpty(info)) {
                         mToken = null;

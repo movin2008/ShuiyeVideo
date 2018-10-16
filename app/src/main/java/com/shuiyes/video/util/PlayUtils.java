@@ -2,6 +2,7 @@ package com.shuiyes.video.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.shuiyes.video.WebActivity;
 import com.shuiyes.video.bean.Album;
@@ -82,7 +83,10 @@ public class PlayUtils {
 
     private static void playFail(Context context, String url){
 //        Tips.show(context, "暂不支持播放 " + PlayUtils.formateUrlSource(url), 0);
-        Tips.show(context, "暂不支持 " + url+" 请浏览至播放网页重试",1);
+
+        String text = "暂不支持 " + url+"\n 请浏览至播放网页重试";
+        Tips.show(context, text,1);
+        Log.e(TAG, text);
         if(!Constants.WEB_FOEGROUND){
             context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
         }
