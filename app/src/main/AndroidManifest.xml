@@ -13,9 +13,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".SVApplication"
+        android:name=".ui.SVApplication"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@drawable/ic_launcher"
@@ -24,50 +25,43 @@
 
         <!-- android:windowSoftInputMode="adjustUnspecified|stateHidden" -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".WebActivity"
+            android:name=".ui.WebActivity"
             android:launchMode="singleTop"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".youku.YoukuSoActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".youku.YoukuVActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".letv.LetvSoActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".letv.LetvVActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".iqiyi.IQIyiSoActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".iqiyi.IQiyiVActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".qq.QQVActivity"
             android:screenOrientation="landscape" />
-
+        <activity android:name=".ui.SettingsActivity"></activity>
     </application>
 
 </manifest>

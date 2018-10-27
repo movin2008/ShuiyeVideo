@@ -1,9 +1,8 @@
 package com.shuiyes.video.youku;
 
-import android.content.Context;
 import android.text.format.Formatter;
 
-import com.shuiyes.video.SVApplication;
+import com.shuiyes.video.ui.SVApplication;
 import com.shuiyes.video.bean.PlayVideo;
 
 public class YoukuVideo extends PlayVideo{

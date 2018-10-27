@@ -20,7 +20,7 @@ public class YoukuUtils {
      # Found in http://g.alicdn.com/player/ykplayer/0.5.64/youku-player.min.js
      # grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
      */
-    public static String CCODE = "0516"; // 0511
+    public static String CCODE = "0511"; // 0516
 
     /**
      * Found in http://g.alicdn.com/player/ykplayer/0.5.28/youku-player.min.js

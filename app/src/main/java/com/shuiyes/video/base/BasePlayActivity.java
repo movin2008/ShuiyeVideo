@@ -341,6 +341,8 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         mIntentUrl = url;
         mPrepared = false;
         mCurrentPosition = 0;
+
+        playVideo();
     }
 
     protected void completionToPlayNextVideo() {

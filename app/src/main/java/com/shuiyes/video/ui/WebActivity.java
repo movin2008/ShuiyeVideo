@@ -1,4 +1,4 @@
-package com.shuiyes.video;
+package com.shuiyes.video.ui;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.shuiyes.video.R;
 import com.shuiyes.video.base.BaseActivity;
 import com.shuiyes.video.util.Constants;
 import com.shuiyes.video.util.HttpUtils;

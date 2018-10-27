@@ -249,7 +249,12 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                     String url = stream.getString("url");
                     if(TextUtils.isEmpty(episode) || Integer.parseInt(episode) > 100){
                         if(stream.has("subTitle")){
-                            episode = stream.getString ("subTitle");
+                            String subTitle = stream.getString ("subTitle");
+                            if(title.contains(subTitle)){
+                                episode = title;
+                            }else{
+                                episode = stream.getString ("subTitle");
+                            }
                         }else{
                             episode = title;
                         }
@@ -274,10 +279,10 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
 
     @Override
     protected void cacheVideo(PlayVideo video) {
-        if (mSourceList.isEmpty()) {
-            mSourceView.setVisibility(View.GONE);
-        } else {
+        if (mSourceList.size() > 1) {
             mSourceView.setVisibility(View.VISIBLE);
+        } else {
+            mSourceView.setVisibility(View.GONE);
         }
     }
 

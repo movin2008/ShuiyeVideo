@@ -138,43 +138,16 @@
             android:text="搜狐搜索"
             android:textSize="30sp" />
 
-        <RelativeLayout
+        <Button
+            android:id="@+id/btn_test_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_margin="10dp">
-
-            <Button
-                android:id="@+id/btn_test_url"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/btn_rect"
-                android:onClick="testUrl"
-                android:text="测试播放"
-                android:textSize="30sp" />
-
-            <EditText
-                android:id="@+id/et_input_url"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/btn_test_url"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:hint="输入测试网址" />
-
-            <Spinner
-                android:id="@+id/spin_input_url"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/btn_test_url"
-                android:layout_marginRight="10dp"
-                android:spinnerMode="dropdown"
-                android:layout_marginTop="5dp"
-                android:dropDownWidth="match_parent"
-                android:entries="@array/video_urls" />
-        </RelativeLayout>
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_rect"
+            android:onClick="testUrl"
+            android:text="测试播放"
+            android:textSize="30sp" />
 
         <TextView
             android:layout_width="match_parent"

@@ -10,12 +10,12 @@ import com.shuiyes.video.base.BasePlayActivity;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.MiscDialog;
-import com.shuiyes.video.letv.LetvStream;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.MiscView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -105,37 +105,46 @@ public class QQVActivity extends BasePlayActivity {
             public void run() {
                 try {
 
-                    mHandler.sendEmptyMessage(MSG_FETCH_VIDEOID);
-                    String html = HttpUtils.open(mIntentUrl);
+                    if(!QQUtils.hasPlayVid(mIntentUrl) || mVideoList.isEmpty()){
+                        mHandler.sendEmptyMessage(MSG_FETCH_VIDEOID);
+                        String html = HttpUtils.open(mIntentUrl);
 
-                    if (TextUtils.isEmpty(html)) {
-                        fault("请重试");
-                        return;
+                        if (TextUtils.isEmpty(html)) {
+                            fault("请重试");
+                            return;
+                        }
+
+                        Utils.setFile("qq.html", html);
+
+                        String key = "<link rel=\"canonical\" href=\"";
+                        if (html.contains(key)) {
+                            int len = html.indexOf(key);
+                            String tmp = html.substring(len + key.length());
+                            len = tmp.indexOf("\"");
+                            mIntentUrl = tmp.substring(0, len);
+
+                            Log.e(TAG, "rurl=" + mIntentUrl);
+                        }
+
+                        key = "<title>";
+                        if (html.contains(key)) {
+                            int len = html.indexOf(key);
+                            String tmp = html.substring(len + key.length());
+                            len = tmp.indexOf("</title>");
+                            String title = tmp.substring(0, len);
+
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, title));
+                        }
+
+                        if(mVideoList.isEmpty()){
+                            //listHtmlAlbums(html);
+                            listJsonAlbums(html);
+                            Log.e(TAG, "VideoList=" + mVideoList.size());
+                            mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
+                        }
                     }
 
-                    Utils.setFile("qq.html", html);
-
-                    String key = "<link rel=\"canonical\" href=\"";
-                    if (html.contains(key)) {
-                        int len = html.indexOf(key);
-                        String tmp = html.substring(len + key.length());
-                        len = tmp.indexOf("\"");
-                        mIntentUrl = tmp.substring(0, len);
-
-                        Log.e(TAG, "rurl=" + mIntentUrl);
-                    }
-
-//                    key = "<title>";
-//                    if (html.contains(key)) {
-//                        int len = html.indexOf(key);
-//                        String tmp = html.substring(len + key.length());
-//                        len = tmp.indexOf("</title>");
-//                        String title = tmp.substring(0, len);
-//
-//                        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, title));
-//                    }
-
-//                     playMp4Video();
+                    //playMp4Video();
                     playVideoByDefn();
 
                 } catch (Exception e) {
@@ -182,7 +191,8 @@ public class QQVActivity extends BasePlayActivity {
         for (int i = 0; i < fis.length(); i++) {
             JSONObject fi = (JSONObject) fis.get(i);
 
-            int stream = fi.getInt("id");
+            //int stream = fi.getInt("id");
+            int stream = fi.getInt("br");
             String streamStr = fi.getString("name");
             String cname = fi.getString("cname");
             int size = fi.getInt("fs");
@@ -202,22 +212,36 @@ public class QQVActivity extends BasePlayActivity {
 
         mSourceList.clear();
         JSONArray uis = vi.getJSONObject("ul").getJSONArray("ui");
+        int br = vi.getInt("br");
+        String fn = null;
+        String fvkey = null;
         for (int i = 0; i < uis.length(); i++) {
             JSONObject ui = (JSONObject) uis.get(i);
 
-            String pt = ui.getJSONObject("hls").getString("pt");
-            String m3u8Url = ui.getString("url") + pt;
-
-            mSourceList.add(new PlayVideo(QQUtils.formatSource(m3u8Url), m3u8Url));
+            String m3u8Url = ui.getString("url");
+            if(ui.has("hls")){
+                String pt = ui.getJSONObject("hls").getString("pt");
+                m3u8Url += pt;
+            }else{
+                if(fn == null){
+                    fn = vi.getString("fn");
+                }
+                if(fvkey == null){
+                    fvkey = vi.getString("fvkey");
+                }
+                m3u8Url = String.format("%s%s?vkey=%s", m3u8Url, fn, fvkey);
+            }
 
             if(i == 0){
                 for (QQStream v : mUrlList) {
-                    if(pt.contains(String.valueOf(v.getStream()))){
+                    if(br == v.getStreams()){
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIDEO, v.getCname()));
                         break;
                     }
                 }
             }
+
+            mSourceList.add(new PlayVideo(QQUtils.formatSource(m3u8Url), m3u8Url));
         }
 
         Log.e(TAG, "SourceList=" + mSourceList.size() + "/" + uis.length());
@@ -229,6 +253,83 @@ public class QQVActivity extends BasePlayActivity {
             }
 
             mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mSourceList.get(0)));
+        }
+    }
+
+    private void listJsonAlbums(String html){
+        String key = "var COVER_INFO = ";
+        if(html.contains(key)){
+            String tmp = html.substring(html.indexOf(key)+key.length());
+            key = "var COLUMN_INFO = ";
+            if(tmp.contains(key)){
+                tmp = tmp.substring(0, tmp.indexOf(key));
+            }
+
+            Utils.setFile("album.qq", tmp);
+
+
+            try{
+                JSONObject obj = new JSONObject(tmp);
+                JSONArray arr = (JSONArray) obj.get("nomal_ids");
+                for (int i=0; i<arr.length(); i++){
+                    JSONObject video = arr.getJSONObject(i);
+                    int index = video.getInt("E");
+                    int type = video.getInt("F");
+                    String vid = video.getString("V");
+
+                    String text = ""+index;
+                    if(type == 7){
+                        text += "(VIP)";
+                    }else if(type == 0 || type == 4){
+                        text += "(预告)";
+                    }
+
+                    if("电影".equals(obj.getString("type_name"))){
+                        text = obj.getString("title")+text;
+                    }
+
+                    mVideoList.add(new ListVideo(text, text, QQUtils.getVideoPlayUrlFromVid(mIntentUrl, vid)));
+                }
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 获取不全，最多30集数据
+     * @param html
+     */
+    @Deprecated
+    private void listHtmlAlbums(String html){
+        String span = "<span __wind";
+        while (html.contains(span)) {
+            html = html.substring(html.indexOf(span) + span.length());
+
+            int len = html.indexOf("/x/cover/");
+            String altStr = html.substring(0, len);
+            html = html.substring(len);
+            String href = html.substring(0, html.indexOf("\""));
+
+
+            String key = "alt=\"";
+            String alt = "";
+            if(altStr.contains(key)){
+                altStr = altStr.substring(html.indexOf(key)+key.length());
+                alt = altStr.substring(0, altStr.indexOf("\""));
+                if(TextUtils.isEmpty(alt) || "更新".equals(alt)){
+                    alt = "";
+                }else{
+                    alt = "("+alt+")";
+                }
+            }
+
+
+            key = "\">";
+            html = html.substring(html.indexOf(key)+key.length());
+            String index = html.substring(0, html.indexOf("</a>")).trim();
+
+            mVideoList.add(new ListVideo(index+alt, index+alt,QQUtils.HOST+href));
         }
     }
 
@@ -379,10 +480,10 @@ public class QQVActivity extends BasePlayActivity {
 
     @Override
     protected void cacheVideo(PlayVideo video) {
-        if (mSourceList.isEmpty()) {
-            mSourceView.setVisibility(View.GONE);
-        } else {
+        if (mSourceList.size() > 1) {
             mSourceView.setVisibility(View.VISIBLE);
+        } else {
+            mSourceView.setVisibility(View.GONE);
         }
     }
 

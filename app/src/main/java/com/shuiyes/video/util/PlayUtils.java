@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.shuiyes.video.WebActivity;
+import com.shuiyes.video.ui.WebActivity;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.iqiyi.IQiyiVActivity;
 import com.shuiyes.video.letv.LetvVActivity;

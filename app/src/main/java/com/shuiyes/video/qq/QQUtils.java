@@ -11,6 +11,8 @@ public class QQUtils {
 
     private final static String TAG = "QQUtils";
 
+    public final static String HOST = "https://v.qq.com";
+
     public static final String[] PLATFORMS = {"4100201", "11", "10901"};
 
     //https://s.video.qq.com/get_playsource?id=1wbx6hb4d3icse8&plat=2&type=4&data_type=2&video_type=2&range=1-100&plname=qq&otype=json&num_mod_cnt=20&callback=cb&_t=1539077995589
@@ -23,12 +25,12 @@ public class QQUtils {
         String url = "http://vv.video.qq.com/getinfo?";
         url += "vid="+QQUtils.getPlayVid(playUrl);
         // 10901/11 视频很卡，4100201 视频都只有3分钟,参数暂未明白,所以两个合在一起
+        url += "&defn="+defn;
         url += "&platform=11";
         url += "&platform=4100201";
         url += "&dtype=3&spwm=4";
         url += "&otype=ojson";
         url += "&appVer=3.6.1";
-        url += "&defn="+defn;
         url += "&spgzip=&dlver=";
         url += "&ehost="+ URLEncoder.encode(playUrl, "utf-8");
         url += "&host=v.qq.com&refer=v.qq.com";
@@ -63,6 +65,14 @@ public class QQUtils {
         return HttpUtils.open(url);
     }
 
+    public static boolean hasPlayVid(String url) {
+        String key = "/x/cover/";
+        url = url.substring(url.indexOf(key)+key.length());
+        boolean vid = url.contains("/");
+        Log.e(TAG, "hasPlayVid(" + url + ")=" + vid);
+        return vid;
+    }
+
     public static String getPlayVid(String url) {
         String vid = "unkown";
         String key = "/";
@@ -74,7 +84,10 @@ public class QQUtils {
         }
         Log.e(TAG, "getPlayVid(" + url + ")=" + vid);
         return vid;
+    }
 
+    public static String getVideoPlayUrlFromVid(String url, String vid) {
+        return url.substring(0, url.lastIndexOf("/")+1)+vid+".html";
     }
 
     public static String formatJson(String html) {

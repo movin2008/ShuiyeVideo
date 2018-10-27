@@ -1,4 +1,4 @@
-package com.shuiyes.video;
+package com.shuiyes.video.ui;
 
 import android.app.Application;
 import android.content.Context;

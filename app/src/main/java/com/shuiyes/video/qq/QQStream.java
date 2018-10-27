@@ -2,7 +2,7 @@ package com.shuiyes.video.qq;
 
 import android.text.format.Formatter;
 
-import com.shuiyes.video.SVApplication;
+import com.shuiyes.video.ui.SVApplication;
 import com.shuiyes.video.bean.PlayVideo;
 
 public class QQStream extends PlayVideo{
@@ -80,7 +80,7 @@ public class QQStream extends PlayVideo{
         this.stream = stream;
     }
 
-    public int getStream() {
+    public int getStreams() {
         return stream;
     }
 

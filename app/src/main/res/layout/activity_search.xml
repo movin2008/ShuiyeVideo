@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
-    android:orientation="vertical"
-    tools:context="com.shuiyes.video.MainActivity">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_search"
