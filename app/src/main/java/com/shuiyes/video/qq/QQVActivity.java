@@ -290,7 +290,7 @@ public class QQVActivity extends BasePlayActivity {
 
                     mVideoList.add(new ListVideo(text, text, QQUtils.getVideoPlayUrlFromVid(mIntentUrl, vid)));
                 }
-            }catch (JSONException e){
+            }catch (Exception e){
                 e.printStackTrace();
             }
         }

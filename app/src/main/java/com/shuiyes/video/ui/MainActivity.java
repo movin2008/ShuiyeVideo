@@ -37,7 +37,6 @@ public class MainActivity extends BaseActivity {
         Log.e(TAG, "onCreate ========================= ");
 
         this.findViewById(R.id.text).requestFocus();
-        mInputUrl = (EditText) this.findViewById(R.id.et_input_url);
 
         mRadioGroup = (RadioGroup) this.findViewById(R.id.rg_video);
         mIQiyi = (RadioButton) this.findViewById(R.id.rb_iqiyi);
@@ -108,7 +107,7 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
+                this.startActivity(new Intent(this, SettingsActivity.class));
                 break;
             default:
                 break;

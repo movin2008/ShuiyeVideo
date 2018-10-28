@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="video_urls">
-        <item>"http://v.youku.com/v_show/id_XMzcwNjg5MDUyNA==.html"</item>
-        <item>"http://www.le.com/ptv/vplay/26101788.html"</item>
-        <item>"https://www.iqiyi.com/v_19rqzvbyms.html"</item>
-        <item>"手动输入"</item>
+    <string-array name="CCODE">
+        <item>"0501"</item>
+        <item>"0502"</item>
+        <item>"0503"</item>
+        <item>"0504"</item>
+        <item>"0505"</item>
+        <item>"0506"</item>
+        <item>"0507"</item>
+        <item>"0508"</item>
+        <item>"0509"</item>
+        <item>"0510"</item>
+        <item>"0511"</item>
+        <item>"0512"</item>
+        <item>"0513"</item>
+        <item>"0514"</item>
+        <item>"0515"</item>
+        <item>"0516"</item>
+        <item>"0517"</item>
+        <item>"0518"</item>
+        <item>"0519"</item>
     </string-array>
 </resources>

@@ -96,6 +96,14 @@ public class YoukuUtils {
         return HttpUtils.open("http://so.youku.com/search_video/q_" + URLEncoder.encode(keyword,"utf-8"));
     }
 
+    public static String listAlbums(String vid) throws Exception {
+        return HttpUtils.open("http://v.youku.com/page/playlist?videoEncodeId="+URLEncoder.encode(vid,"utf-8")+"&page=1&videoCategoryId=96&componentid=38011&isSimple=false");
+    }
+
+    public static String getPlayUrlByVid(String vid){
+        return "http://v.youku.com/v_show/id_"+vid+".html";
+    }
+
     public static String getPlayVid(String url) {
         String vid = "unkown";
         String key = "show/id_";

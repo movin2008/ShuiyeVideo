@@ -302,7 +302,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         }
     }
 
-    private int getPlayIndex(){
+    protected int getPlayIndex(){
         int index = 0;
         for (int i = 0; i < mVideoList.size() - 1; i++) {
             if (mIntentUrl.equals(mVideoList.get(i).getUrl())) {

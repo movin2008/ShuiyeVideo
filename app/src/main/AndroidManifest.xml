@@ -61,7 +61,9 @@
         <activity
             android:name=".qq.QQVActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".ui.SettingsActivity"></activity>
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
