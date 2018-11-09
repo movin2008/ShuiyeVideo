@@ -68,8 +68,6 @@ public class HttpUtils {
     }
 
     public static String open(String url, boolean print){
-        Log.e(TAG, "open "+url);
-
 //        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
 ////        conn.setRequestProperty("Cookie", "cna=" + cna);
 //        conn.setRequestProperty("Upgrade-Insecure-Requests", "1");
@@ -92,6 +90,8 @@ public class HttpUtils {
                 conn.connect();
 
                 int code = conn.getResponseCode();
+                Log.e(TAG, "open "+url +" ret="+code);
+
                 if (code == 200) {
                     StringBuffer ret = new StringBuffer();
                     BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
@@ -132,6 +132,8 @@ public class HttpUtils {
                 conn.connect();
 
                 int code = conn.getResponseCode();
+                Log.e(TAG, "open "+url +" ret="+code);
+
                 if (code == 200) {
                     StringBuffer ret = new StringBuffer();
                     BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));

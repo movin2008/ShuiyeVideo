@@ -67,8 +67,8 @@ public class QQUtils {
 
     public static boolean hasPlayVid(String url) {
         String key = "/x/cover/";
-        url = url.substring(url.indexOf(key)+key.length());
-        boolean vid = url.contains("/");
+        String tmp = url.substring(url.indexOf(key)+key.length());
+        boolean vid = tmp.contains("/");
         Log.e(TAG, "hasPlayVid(" + url + ")=" + vid);
         return vid;
     }

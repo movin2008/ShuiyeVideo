@@ -267,7 +267,6 @@ public class QQVActivity extends BasePlayActivity {
 
             Utils.setFile("album.qq", tmp);
 
-
             try{
                 JSONObject obj = new JSONObject(tmp);
                 JSONArray arr = (JSONArray) obj.get("nomal_ids");

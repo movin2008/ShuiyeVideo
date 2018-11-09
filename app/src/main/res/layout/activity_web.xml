@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:background="#44000000"
         android:text="地址"
+        android:maxLines="2"
         android:layout_below="@id/tv_title"
         android:textColor="@android:color/white" />
 
