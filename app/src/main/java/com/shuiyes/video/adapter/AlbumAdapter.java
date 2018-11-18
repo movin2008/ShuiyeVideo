@@ -94,7 +94,7 @@ public class AlbumAdapter extends BaseAdapter {
         viewHolder.summary.setText(album.getSummary());
 
         viewHolder.img.setTag(album.getImgurl());
-        viewHolder.img.setImageResource(R.drawable.ic_launcher);
+        viewHolder.img.setImageResource(R.drawable.logo);
         Bitmap bitmap = mImageLoader.getBitmap(album.getImgurl(), handler);
         if (bitmap != null) {
             viewHolder.img.setImageBitmap(bitmap);

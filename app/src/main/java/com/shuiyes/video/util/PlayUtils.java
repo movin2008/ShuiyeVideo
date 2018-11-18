@@ -71,7 +71,7 @@ public class PlayUtils {
                 playFail(context, url);
             }
         }else if (url.contains("qq.com")) {
-            if(url.contains("qq.com/x/cover")){
+            if(url.contains("qq.com/x/")){
                 context.startActivity(new Intent(context, QQVActivity.class).putExtra("url", url).putExtra("title", title));
             }else{
                 playFail(context, url);

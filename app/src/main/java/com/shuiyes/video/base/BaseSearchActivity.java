@@ -218,6 +218,7 @@ public abstract class BaseSearchActivity extends BaseActivity {
 
         mSearch.clearFocus();
         view.requestFocus();
+//        mInputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     protected void notice(String text){

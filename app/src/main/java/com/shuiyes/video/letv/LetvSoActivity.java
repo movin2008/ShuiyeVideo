@@ -32,16 +32,6 @@ public class LetvSoActivity extends BaseSearchActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
     protected void searchVideos(String keyword) {
         mSearchAsyncTask = new SearchAsyncTask();
         mSearchAsyncTask.execute(keyword);

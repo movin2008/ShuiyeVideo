@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/album_index"

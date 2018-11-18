@@ -15,6 +15,7 @@ import com.shuiyes.video.R;
 import com.shuiyes.video.base.BaseActivity;
 import com.shuiyes.video.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.letv.LetvSoActivity;
+import com.shuiyes.video.qq.QQSoActivity;
 import com.shuiyes.video.qq.QQVActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.youku.YoukuSoActivity;
@@ -128,7 +129,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void soqq(View view){
-        Tips.show(this, "腾讯视频待完善");
+        this.startActivity(new Intent(this, QQSoActivity.class));
     }
 
     public void somgtv(View view){
