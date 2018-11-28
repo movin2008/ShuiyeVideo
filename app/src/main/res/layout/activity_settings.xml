@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,4 +35,13 @@
             android:hint="CCODE" />
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="系统信息"
+        android:onClick="systeminfo"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/linearLayout" />
+
 </RelativeLayout>

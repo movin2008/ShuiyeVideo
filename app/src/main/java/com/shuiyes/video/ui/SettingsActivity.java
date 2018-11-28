@@ -1,31 +1,27 @@
 package com.shuiyes.video.ui;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.DataSetObserver;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.base.BaseActivity;
+import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.youku.YoukuUtils;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
 public class SettingsActivity extends BaseActivity {
 
@@ -42,9 +38,7 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
 
         mEditText = (EditText) this.findViewById(R.id.et_ccode);
         mEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -108,5 +102,29 @@ public class SettingsActivity extends BaseActivity {
 //            mSpinner.setEnabled(false);
             mSpinner.setVisibility(View.GONE);
         }
+    }
+
+    public void systeminfo(View view) {
+        String text = Utils.getAndroidInc()
+                + "\n型号：" + Build.MODEL
+                + "\n主板：" + Build.BOARD
+                + "\n设备：" + Build.DEVICE
+                + "\n产品：" + Build.PRODUCT
+                + "\n制造商：" + Build.BRAND
+                + "\nCPU核数：" + Build.CPU_ABI
+                + "\nCPU型号：" + Utils.getCpuInc()
+                + "\n编译用户：" + Build.USER
+                + "\n编译版本：" + Build.ID
+                + "\n内核版本：" + Utils.getLinuxCoreVer()
+                + "\n编译时间：" + new Date(Build.TIME)
+                + "\n内存：" + Utils.getMemoryInfo(this)
+                + "\n存储：" + Utils.getStorageInfo(this)
+                + "\n屏幕尺寸：" + Utils.getDisplayMetrics(this)
+                + "\n开机时间：" + Utils.elapsedRealtime();
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        dialog.setTitle("系统信息");
+        dialog.setMessage(text);
+        dialog.show();
     }
 }

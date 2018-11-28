@@ -101,6 +101,8 @@ public class HttpUtils {
                     }
                     in.close();
                     return ret.toString();
+                } else if (code == 301) {
+                    return HttpUtils.open(conn.getHeaderField("Location"));
                 } else if (code == 302) {
                     return HttpUtils.open(conn.getHeaderField("Location"));
                 } else if (code == 400) {
@@ -143,6 +145,8 @@ public class HttpUtils {
                     }
                     in.close();
                     return ret.toString();
+                } else if (code == 301) {
+                    return HttpUtils.open(conn.getHeaderField("Location"));
                 } else if (code == 302) {
                     return HttpUtils.open(conn.getHeaderField("Location"));
                 }else if (code == 400) {

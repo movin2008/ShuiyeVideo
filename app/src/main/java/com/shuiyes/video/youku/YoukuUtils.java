@@ -17,13 +17,14 @@ public class YoukuUtils {
     private final static String TAG = "YoukuUtils";
 
     /**
-     # Found in http://g.alicdn.com/player/ykplayer/0.5.64/youku-player.min.js
+     # Found in http://g.alicdn.com/player/beta-ykplayer/0.6.2/youku-player.min.js
      # grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
      */
-    public static String CCODE = "0511"; // 0516
+    public static String CCODE = "0519";
+    public static String VERSION = "0.5.85";
 
     /**
-     * Found in http://g.alicdn.com/player/ykplayer/0.5.28/youku-player.min.js
+     * Found in http://g.alicdn.com/player/beta-ykplayer/0.6.2/youku-player.min.js
      * grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
      */
     public static String CKEY = "DIl58SLFxFNndSV1GFNnMQVYkx1PP5tKe1siZu/86PR1u/Wh1Ptd+WOZsHHWxysSfAOhNJpdVWsdVJNsfJ8Sxd8WKVvNfAS8aS8fAOzYARzPyPc3JvtnPHjTdKfESTdnuTW6ZPvk2pNDh4uFzotgdMEFkzQ5wZVXl2Pf1/Y6hLK0OnCNxBj3+nb0v72gZ6b0td+WOZsHHWxysSo/0y9D2K42SaB8Y/+aD2K42SaB8Y/+ahU+WOZsHcrxysooUeND";
@@ -34,11 +35,11 @@ public class YoukuUtils {
     public static String getVideoUrl(String vid, String cna) {
         String url = "https://ups.youku.com/ups/get.json?vid=" + vid;
         url += "&ccode=" + CCODE;
+        url += "&version=" + VERSION;
         url += "&client_ip=192.168.1.1";
         url += "&utid=" + URLEncoder.encode(cna);
         url += "&client_ts=" + System.currentTimeMillis() / 1000;
         url += "&ckey=" + URLEncoder.encode(CKEY);
-//        url += "&version=0.5.79";
         return url;
     }
 

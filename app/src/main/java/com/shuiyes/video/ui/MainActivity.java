@@ -9,14 +9,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.base.BaseActivity;
 import com.shuiyes.video.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.letv.LetvSoActivity;
 import com.shuiyes.video.qq.QQSoActivity;
-import com.shuiyes.video.qq.QQVActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.youku.YoukuSoActivity;
 
@@ -44,7 +42,7 @@ public class MainActivity extends BaseActivity {
         mLetv = (RadioButton) this.findViewById(R.id.rb_letv);
         mYouku = (RadioButton) this.findViewById(R.id.rb_youku);
 
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -116,35 +114,35 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void soyouku(View view){
+    public void soyouku(View view) {
         this.startActivity(new Intent(this, YoukuSoActivity.class));
     }
 
-    public void soletv(View view){
+    public void soletv(View view) {
         this.startActivity(new Intent(this, LetvSoActivity.class));
     }
 
-    public void soiqiyi(View view){
+    public void soiqiyi(View view) {
         this.startActivity(new Intent(this, IQIyiSoActivity.class));
     }
 
-    public void soqq(View view){
+    public void soqq(View view) {
         this.startActivity(new Intent(this, QQSoActivity.class));
     }
 
-    public void somgtv(View view){
+    public void somgtv(View view) {
         Tips.show(this, "芒果视频待完善");
     }
 
-    public void sohu(View view){
+    public void sohu(View view) {
         Tips.show(this, "搜狐视频待完善");
     }
 
-    public void testUrl(View view){
-        this.startActivity(new Intent(this, QQVActivity.class).putExtra("url", "https://v.qq.com/x/cover/6983f15b7g5xch7.html"));
+    public void testUrl(View view) {
+//        this.startActivity(new Intent(this, QQVActivity.class).putExtra("url", "https://v.qq.com/x/cover/6983f15b7g5xch7html"));
     }
 
-    public void testWeb(View view){
+    public void testWeb(View view) {
         this.startActivity(new Intent(this, WebActivity.class).putExtra("url", mVideoUrl));
     }
 
