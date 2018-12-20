@@ -69,7 +69,6 @@ public class HttpUtils {
 
     public static String open(String url, boolean print){
 //        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
-////        conn.setRequestProperty("Cookie", "cna=" + cna);
 //        conn.setRequestProperty("Upgrade-Insecure-Requests", "1");
 //        conn.setRequestProperty("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
 //        conn.setRequestProperty("accept-encoding", "gzip, deflate, br");
@@ -86,11 +85,12 @@ public class HttpUtils {
             try {
                 conn = (HttpsURLConnection) new URL(url).openConnection();
                 HttpUtils.setURLConnection(conn);
+                conn.setRequestProperty("Cookie", "PM_CHKID=85ba1603eed038f2; __random_seed=0.43250110831513666; mba_deviceid=c16fdec8-21e8-2687-2334-4417ac565fda; mba_sessionid=3b748ff5-b6ce-aa1b-013d-2d1fef41230b; sessionid=1543543636005; __STKUUID=34813411-2c2e-484e-bd0a-def138a9547a; MQGUID=1068324601584611328; __MQGUID=1068324601584611328; mba_last_action_time=1543544543108; PLANB_FREQUENCY=XACe5UqVH0Qzrxj2; lastActionTime=1543544559122");
                 conn.setRequestMethod("GET");
                 conn.connect();
 
                 int code = conn.getResponseCode();
-                Log.e(TAG, "open "+url +" ret="+code);
+                Log.e(TAG, "open "+url +" code="+code);
 
                 if (code == 200) {
                     StringBuffer ret = new StringBuffer();

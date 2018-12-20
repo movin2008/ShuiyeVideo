@@ -1,13 +1,20 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ccc"
     android:fadeScrollbars="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="statusbar" />
 
         <TextView
             android:id="@+id/text"
@@ -27,7 +34,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginRight="10dp"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -70,7 +76,7 @@
                     android:id="@+id/rb_test"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="测试" />
+                    android:text="UA" />
 
             </RadioGroup>
 

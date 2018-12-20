@@ -1,11 +1,14 @@
 package com.shuiyes.video.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -14,9 +17,12 @@ import com.shuiyes.video.R;
 import com.shuiyes.video.base.BaseActivity;
 import com.shuiyes.video.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.letv.LetvSoActivity;
+import com.shuiyes.video.mgtv.MgtvVActivity;
 import com.shuiyes.video.qq.QQSoActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.youku.YoukuSoActivity;
+
+import java.io.UnsupportedEncodingException;
 
 public class MainActivity extends BaseActivity {
 
@@ -32,11 +38,23 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Log.e(TAG, "onCreate ========================= ");
 
-        this.findViewById(R.id.text).requestFocus();
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
+        this.findViewById(R.id.text).requestFocus();
         mRadioGroup = (RadioGroup) this.findViewById(R.id.rg_video);
         mIQiyi = (RadioButton) this.findViewById(R.id.rb_iqiyi);
         mLetv = (RadioButton) this.findViewById(R.id.rb_letv);
@@ -138,12 +156,13 @@ public class MainActivity extends BaseActivity {
         Tips.show(this, "搜狐视频待完善");
     }
 
-    public void testUrl(View view) {
-//        this.startActivity(new Intent(this, QQVActivity.class).putExtra("url", "https://v.qq.com/x/cover/6983f15b7g5xch7html"));
+    public void testUrl(View view) throws UnsupportedEncodingException {
+        this.startActivity(new Intent(this, MgtvVActivity.class).putExtra("url", "https://www.mgtv.com/b/303114/4343078.html"));
     }
 
     public void testWeb(View view) {
         this.startActivity(new Intent(this, WebActivity.class).putExtra("url", mVideoUrl));
     }
+
 
 }

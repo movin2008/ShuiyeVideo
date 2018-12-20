@@ -26,6 +26,7 @@
         <!-- android:windowSoftInputMode="adjustUnspecified|stateHidden" -->
         <activity
             android:name=".ui.MainActivity"
+            android:theme="@style/ActTheme"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,6 +73,15 @@
 
         <activity
             android:name=".qq.QQSoActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".mgtv.MgtvVActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".mgtv.MgtvSoActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
 
