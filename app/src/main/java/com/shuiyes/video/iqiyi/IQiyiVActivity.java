@@ -93,7 +93,9 @@ public class IQiyiVActivity extends BasePlayActivity {
                     mHandler.sendEmptyMessage(MSG_FETCH_TOKEN);
                     String html = HttpUtils.open(mIntentUrl);
                     Utils.setFile("iqiyi.html", html);
-                    if(TextUtils.isEmpty(html) && tvid == null && vid == null){
+
+                    //&& tvid == null && vid == null
+                    if(TextUtils.isEmpty(html)){
                         fault("请稍后重试");
                         return;
                     }

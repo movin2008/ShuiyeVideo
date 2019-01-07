@@ -217,15 +217,16 @@ public class Utils {
     }
 
     public static String elapsedRealtime(){
-        long time = SystemClock.elapsedRealtime()/1000;
-        long s = time%60;
-        long m = time/60;
+        long time = SystemClock.elapsedRealtime() / 1000;
+        long s = time % 60;
+        long m = time / 60;
 
-        if(m < 60){
-            return m+" 分钟 "+s+" 秒";
-        }else{
-            long h = m/60;
-            return h+" 小时 "+m+" 分钟 "+s+" 秒";
+        if (m < 60) {
+            return m + " 分钟 " + s + " 秒";
+        } else {
+            long h = m / 60;
+            m = m % 60;
+            return h + " 小时 " + m + " 分钟 " + s + " 秒";
         }
     }
 

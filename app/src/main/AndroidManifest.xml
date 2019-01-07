@@ -26,68 +26,57 @@
         <!-- android:windowSoftInputMode="adjustUnspecified|stateHidden" -->
         <activity
             android:name=".ui.MainActivity"
-            android:theme="@style/ActTheme"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:theme="@style/ActTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.WebActivity"
             android:launchMode="singleTop"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".youku.YoukuSoActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".youku.YoukuVActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".letv.LetvSoActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".letv.LetvVActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".iqiyi.IQIyiSoActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".iqiyi.IQiyiVActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".qq.QQVActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".qq.QQSoActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".mgtv.MgtvVActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".mgtv.MgtvSoActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".ui.SettingsActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".ui.TestActivity"></activity>
     </application>
 
 </manifest>

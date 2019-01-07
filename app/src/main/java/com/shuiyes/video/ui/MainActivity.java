@@ -1,9 +1,16 @@
 package com.shuiyes.video.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.base.BaseActivity;
@@ -29,7 +37,6 @@ public class MainActivity extends BaseActivity {
     private final String TAG = this.getClass().getSimpleName();
 
     private EditText mInputUrl;
-
     private RadioGroup mRadioGroup;
     private RadioButton mIQiyi;
     private RadioButton mLetv;
@@ -102,8 +109,6 @@ public class MainActivity extends BaseActivity {
         //		Tips.show(this, Build.VERSION.SDK_INT+"/"+Build.MANUFACTURER, 1);
     }
 
-    String mVideoUrl = null;
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -113,6 +118,8 @@ public class MainActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
     }
+
+    String mVideoUrl = null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -157,12 +164,12 @@ public class MainActivity extends BaseActivity {
     }
 
     public void testUrl(View view) throws UnsupportedEncodingException {
-        this.startActivity(new Intent(this, MgtvVActivity.class).putExtra("url", "https://www.mgtv.com/b/303114/4343078.html"));
+//        this.startActivity(new Intent(this, MgtvVActivity.class).putExtra("url", "https://www.mgtv.com/b/303114/4343078.html"));
+        this.startActivity(new Intent(this, TestActivity.class));
     }
 
     public void testWeb(View view) {
         this.startActivity(new Intent(this, WebActivity.class).putExtra("url", mVideoUrl));
     }
-
 
 }

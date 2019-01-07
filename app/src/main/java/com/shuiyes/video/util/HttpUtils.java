@@ -90,7 +90,7 @@ public class HttpUtils {
                 conn.connect();
 
                 int code = conn.getResponseCode();
-                Log.e(TAG, "open "+url +" code="+code);
+                Log.e(TAG, "httpOpen "+url +" code="+code);
 
                 if (code == 200) {
                     StringBuffer ret = new StringBuffer();
@@ -134,7 +134,7 @@ public class HttpUtils {
                 conn.connect();
 
                 int code = conn.getResponseCode();
-                Log.e(TAG, "open "+url +" ret="+code);
+                Log.e(TAG, "httpsOpen "+url +" ret="+code);
 
                 if (code == 200) {
                     StringBuffer ret = new StringBuffer();

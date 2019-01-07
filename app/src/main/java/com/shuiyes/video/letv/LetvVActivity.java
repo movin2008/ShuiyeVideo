@@ -166,7 +166,9 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                         playUrl(playVideo.getUrl(), playVideo.getText());
                     }
 
-                    listAlbum(playurl.getInt("total"));
+                    if(playurl.has("total")){
+                        listAlbum(playurl.getInt("total"));
+                    }
                 } catch (Exception e) {
                     fault(e);
                     e.printStackTrace();
