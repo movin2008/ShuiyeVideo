@@ -20,6 +20,7 @@
             android:hint="请输入搜索关键字" />
 
         <Button
+            android:id="@+id/btn_clear_focus"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginLeft="10dp"

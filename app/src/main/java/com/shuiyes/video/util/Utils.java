@@ -27,7 +27,7 @@ import java.security.MessageDigest;
 
 public class Utils {
 
-    public static long tm(){
+    public static long timestamp(){
         return System.currentTimeMillis()/1000;
     }
 

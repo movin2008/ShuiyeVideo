@@ -25,6 +25,8 @@ import com.shuiyes.video.R;
 import com.shuiyes.video.base.BaseActivity;
 import com.shuiyes.video.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.letv.LetvSoActivity;
+import com.shuiyes.video.mdd.MDDSoActivity;
+import com.shuiyes.video.mdd.MDDVActivity;
 import com.shuiyes.video.mgtv.MgtvVActivity;
 import com.shuiyes.video.qq.QQSoActivity;
 import com.shuiyes.video.widget.Tips;
@@ -36,11 +38,7 @@ public class MainActivity extends BaseActivity {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    private EditText mInputUrl;
     private RadioGroup mRadioGroup;
-    private RadioButton mIQiyi;
-    private RadioButton mLetv;
-    private RadioButton mYouku;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +61,6 @@ public class MainActivity extends BaseActivity {
 
         this.findViewById(R.id.text).requestFocus();
         mRadioGroup = (RadioGroup) this.findViewById(R.id.rg_video);
-        mIQiyi = (RadioButton) this.findViewById(R.id.rb_iqiyi);
-        mLetv = (RadioButton) this.findViewById(R.id.rb_letv);
-        mYouku = (RadioButton) this.findViewById(R.id.rb_youku);
 
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
@@ -97,7 +92,7 @@ public class MainActivity extends BaseActivity {
                 Log.e(TAG, "mVideoUrl = " + mVideoUrl);
             }
         });
-        mIQiyi.setChecked(true);
+        mRadioGroup.check(R.id.rb_iqiyi);
 
 //        new Thread(new Runnable() {
 //            @Override
@@ -155,6 +150,10 @@ public class MainActivity extends BaseActivity {
         this.startActivity(new Intent(this, QQSoActivity.class));
     }
 
+    public void mdd(View view) {
+        this.startActivity(new Intent(this, MDDSoActivity.class));
+    }
+
     public void somgtv(View view) {
         Tips.show(this, "芒果视频待完善");
     }
@@ -164,8 +163,6 @@ public class MainActivity extends BaseActivity {
     }
 
     public void testUrl(View view) throws UnsupportedEncodingException {
-//        this.startActivity(new Intent(this, MgtvVActivity.class).putExtra("url", "https://www.mgtv.com/b/303114/4343078.html"));
-        this.startActivity(new Intent(this, TestActivity.class));
     }
 
     public void testWeb(View view) {

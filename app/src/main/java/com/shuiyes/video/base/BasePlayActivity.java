@@ -291,8 +291,11 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         mLoadingProgress.setVisibility(View.VISIBLE);
 
         mVideoView.stopPlayback();
-        Log.e(TAG, "setVideoURI=" + url);
-        mVideoView.setVideoURI(Uri.parse(url));
+        try{
+            mVideoView.setVideoURI(Uri.parse(url));
+        }catch (Exception e){
+            Log.e(TAG, "setVideoURI("+url+") " + e.getLocalizedMessage());
+        }
 
         if (mCurrentPosition != 0) {
             Log.e(TAG, "seekTo=" + mCurrentPosition);
@@ -426,7 +429,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                         public void run() {
                             mStateView.setText("");
                         }
-                    }, 2222);
+                    }, 3333);
                 }
                 break;
             case MSG_SET_TITLE:

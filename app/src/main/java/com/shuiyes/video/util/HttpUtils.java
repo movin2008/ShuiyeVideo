@@ -4,7 +4,6 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -69,15 +68,6 @@ public class HttpUtils {
 
     public static String open(String url, boolean print){
 //        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
-//        conn.setRequestProperty("Upgrade-Insecure-Requests", "1");
-//        conn.setRequestProperty("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-//        conn.setRequestProperty("accept-encoding", "gzip, deflate, br");
-//        conn.setRequestProperty("accept-language", "zh-CN,zh;q=0.9");
-//        conn.setRequestProperty("cache-control", "max-age=0");
-//        conn.setRequestProperty(":authority", conn.getURL().getAuthority());
-//        conn.setRequestProperty(":path", conn.getURL().getPath()+"?"+conn.getURL().getQuery());
-//        conn.setRequestProperty(":scheme", "https");
-//        conn.setRequestProperty(":method", "GET");
 
 
         if(url.startsWith("https://")){
@@ -85,7 +75,7 @@ public class HttpUtils {
             try {
                 conn = (HttpsURLConnection) new URL(url).openConnection();
                 HttpUtils.setURLConnection(conn);
-                conn.setRequestProperty("Cookie", "PM_CHKID=85ba1603eed038f2; __random_seed=0.43250110831513666; mba_deviceid=c16fdec8-21e8-2687-2334-4417ac565fda; mba_sessionid=3b748ff5-b6ce-aa1b-013d-2d1fef41230b; sessionid=1543543636005; __STKUUID=34813411-2c2e-484e-bd0a-def138a9547a; MQGUID=1068324601584611328; __MQGUID=1068324601584611328; mba_last_action_time=1543544543108; PLANB_FREQUENCY=XACe5UqVH0Qzrxj2; lastActionTime=1543544559122");
+//                conn.setRequestProperty("Cookie", "PM_CHKID=85ba1603eed038f2; __random_seed=0.43250110831513666; mba_deviceid=c16fdec8-21e8-2687-2334-4417ac565fda; mba_sessionid=3b748ff5-b6ce-aa1b-013d-2d1fef41230b; sessionid=1543543636005; __STKUUID=34813411-2c2e-484e-bd0a-def138a9547a; MQGUID=1068324601584611328; __MQGUID=1068324601584611328; mba_last_action_time=1543544543108; PLANB_FREQUENCY=XACe5UqVH0Qzrxj2; lastActionTime=1543544559122");
                 conn.setRequestMethod("GET");
                 conn.connect();
 
@@ -208,7 +198,7 @@ public class HttpUtils {
             url += "&platform=11";
             url += "&ehost="+ URLEncoder.encode("https://v.qq.com/x/cover/lcpwn26degwm7t3/a002708679j.html", "utf-8");
             url += "&vid=a002708679j";
-            url += "&tm="+ Utils.tm();
+            url += "&timestamp="+ Utils.timestamp();
 
             String param="vinfoparam="+ URLEncoder.encode(vinfoparam,"UTF-8");
             param += ";adparam="+URLEncoder.encode("pf=in&ad_type=LD%7CKB%7CPVL&pf_ex=pc&url=https%3A%2F%2Fv.qq.com%2Fx%2Fcover%2Flcpwn26degwm7t3%2Fz0027injhcq.html&refer=https%3A%2F%2Fv.qq.com%2Ftv%2F&ty=web&plugin=1.0.0&v=3.6.1&coverid=lcpwn26degwm7t3&vid=c00278xguy9&pt=&flowid=91bd8fcf1c0ebd25b8c1d5aea73230d5_10901&vptag=www_baidu_com%7Cvideolist%3Aclick&pu=-1&chid=0&adaptor=2&dtype=1&live=0&resp_type=json&guid=7bc7120ffc74caf9985f7f3a7a829312&req_type=1&from=0&appversion=1.0.130&platform=10901&tpid=2&rfid=669eb114150738d23aa55ff35d49f05c_1538408946", "utf-8");
@@ -249,71 +239,6 @@ public class HttpUtils {
         }finally {
             if(conn != null){
                 conn.disconnect();
-            }
-        }
-        return null;
-    }
-
-    public static InputStream openInputStream(String url){
-        Log.e(TAG, "open "+url);
-
-        if(url.startsWith("https://")){
-            HttpsURLConnection conn = null;
-            try {
-                conn = (HttpsURLConnection) new URL(url).openConnection();
-                HttpUtils.setURLConnection(conn);
-                conn.setRequestMethod("GET");
-                conn.connect();
-
-                int code = conn.getResponseCode();
-                if (code == 200) {
-                    return conn.getInputStream();
-                } else if (code == 302) {
-                    return HttpUtils.openInputStream(conn.getHeaderField("Location"));
-                }else if (code == 400) {
-                    Thread.sleep(500);
-                    return HttpUtils.openInputStream(url);
-                } else {
-                    printHeaders(conn);
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                e.printStackTrace();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e1) {
-                }
-                return HttpUtils.openInputStream(url);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }else{
-            HttpURLConnection conn = null;
-            try {
-                conn = (HttpURLConnection) new URL(url).openConnection();
-                HttpUtils.setURLConnection(conn);
-                conn.setRequestMethod("GET");
-                conn.connect();
-
-                int code = conn.getResponseCode();
-                if (code == 200) {
-                    return conn.getInputStream();
-                } else if (code == 302) {
-                    return HttpUtils.openInputStream(conn.getHeaderField("Location"));
-                }else if (code == 400) {
-                    Thread.sleep(500);
-                    return HttpUtils.openInputStream(url);
-                } else {
-                    printHeaders(conn);
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                e.printStackTrace();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e1) {
-                }
-                return HttpUtils.openInputStream(url);
-            }  catch (Exception e) {
-                e.printStackTrace();
             }
         }
         return null;

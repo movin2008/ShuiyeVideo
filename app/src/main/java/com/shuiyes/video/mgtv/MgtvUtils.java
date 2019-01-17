@@ -10,9 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLEncoder;
-import java.util.UUID;
 
 public class MgtvUtils {
 
@@ -47,7 +45,7 @@ public class MgtvUtils {
     },
      */
     public static String tk2() {
-        String tk2 = "did=" + DID + "|ver=" + VER + "|pno=" + PNO + "|clit=" + Utils.tm();
+        String tk2 = "did=" + DID + "|ver=" + VER + "|pno=" + PNO + "|clit=" + Utils.timestamp();
         try {
             tk2 = Base64.encodeToString(tk2.getBytes("utf-8"), Base64.DEFAULT);
         } catch (UnsupportedEncodingException e) {

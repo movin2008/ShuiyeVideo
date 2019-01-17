@@ -17,7 +17,7 @@ public class QQUtils {
 
     public static String fetchVideo(String playUrl, String defn) throws Exception{
         /**
-         charge=0&defaultfmt=auto&otype=ojson&guid=7bc7120ffc74caf9985f7f3a7a829312&flowid=e539d2024e3b2411dd4f872a255a1ab2_10901&platform=10901&sdtfrom=v1010&defnpayver=1&appVer=3.6.1&host=v.qq.com&ehost=https%3A%2F%2Fv.qq.com%2Fx%2Fcover%2Flcpwn26degwm7t3%2Fz002760mclr.html&refer=v.qq.com&sphttps=1&tm=1538408946&spwm=4&unid=0098ade3f51311e79d19a0429186d00a&vid=z0027injhcq&defn=&fhdswitch=0&show1080p=1&isHLS=1&dtype=3&sphls=1&spgzip=&dlver=&drm=32&spau=1&spaudio=15&defsrc=1&encryptVer=7.1&cKey=c0149f3c5eba754514cf853615ac36eb&fp2p=1
+         charge=0&defaultfmt=auto&otype=ojson&guid=7bc7120ffc74caf9985f7f3a7a829312&flowid=e539d2024e3b2411dd4f872a255a1ab2_10901&platform=10901&sdtfrom=v1010&defnpayver=1&appVer=3.6.1&host=v.qq.com&ehost=https%3A%2F%2Fv.qq.com%2Fx%2Fcover%2Flcpwn26degwm7t3%2Fz002760mclr.html&refer=v.qq.com&sphttps=1&timestamp=1538408946&spwm=4&unid=0098ade3f51311e79d19a0429186d00a&vid=z0027injhcq&defn=&fhdswitch=0&show1080p=1&isHLS=1&dtype=3&sphls=1&spgzip=&dlver=&drm=32&spau=1&spaudio=15&defsrc=1&encryptVer=7.1&cKey=c0149f3c5eba754514cf853615ac36eb&fp2p=1
          */
         String url = "http://vv.video.qq.com/getinfo?";
         url += "vid="+QQUtils.getPlayVid(playUrl);
@@ -31,7 +31,7 @@ public class QQUtils {
         url += "&spgzip=&dlver=";
         url += "&ehost="+ URLEncoder.encode(playUrl, "utf-8");
         url += "&host=v.qq.com&refer=v.qq.com";
-        url += "&tm="+ Utils.tm();
+        url += "&timestamp="+ Utils.timestamp();
         url += "&charge=0&defaultfmt=auto&sdtfrom=v1010&defnpayver=1&sphttps=1&fhdswitch=0&show1080p=1&isHLS=1&sphls=1&drm=32&spau=1&spaudio=15&defsrc=1&encryptVer=7.1&fp2p=1";
 
         return HttpUtils.open(url);

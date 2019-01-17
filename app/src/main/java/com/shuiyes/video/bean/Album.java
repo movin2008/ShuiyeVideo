@@ -20,12 +20,6 @@ public class Album {
         this.albumUrl = albumUrl;
         this.listVideos = listVideos;
         this.playurl = getListPlayurl();
-
-        // 一个视频不需要展示列表
-        if(listVideos.size() == 1){
-            this.title = listVideos.get(0).getText();
-            listVideos.clear();
-        }
     }
 
     public String getTitle() {
@@ -86,11 +80,18 @@ public class Album {
 
     public void setListVideos(List<ListVideo> listVideos) {
         this.listVideos = listVideos;
+        this.playurl = getListPlayurl();
     }
 
     private String getListPlayurl() {
         if(listVideos != null && listVideos.size() > 0){
-            return listVideos.get(0).getUrl();
+            ListVideo video = listVideos.get(0);
+            // 一个视频不需要展示列表
+            if(listVideos.size() == 1){
+                this.title = video.getTitle();
+                listVideos.clear();
+            }
+            return video.getUrl();
         }else{
             return albumUrl;
         }

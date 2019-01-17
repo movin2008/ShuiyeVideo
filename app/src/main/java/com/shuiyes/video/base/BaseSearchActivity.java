@@ -38,34 +38,6 @@ public abstract class BaseSearchActivity extends BaseActivity {
     protected static final int MSG_SHOW_NOTICE = 200;
 
     @Override
-    public void handleOtherMessage(Message msg) {
-        switch (msg.what) {
-            case Constants.MSG_LIST_ALBUM:
-
-                mNotice.setText("");
-                if(mAlbums.isEmpty()){
-                    mNotice.setVisibility(View.VISIBLE);
-                }else{
-                    mNotice.setVisibility(View.GONE);
-                }
-
-                mPosition = -1;
-                mAlbumAdapter.listAlbums(mAlbums);
-                break;
-            case Constants.MSG_SET_IMAGE:
-                // 通过tag找到ImageView
-                ImageView imageView = (ImageView) mListView.findViewWithTag(msg.getData().getString("imageUrl"));
-                if (imageView != null) {
-                    imageView.setImageBitmap((Bitmap) msg.obj);
-                }
-                break;
-            case MSG_SHOW_NOTICE:
-               mNotice.setText(mNotice.getText()+"\n"+(String)msg.obj);
-                break;
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
@@ -159,6 +131,41 @@ public abstract class BaseSearchActivity extends BaseActivity {
                 searchVideos(keyword);
             }
         });
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                clearFocus(findViewById(R.id.btn_clear_focus));
+            }
+        }, 500);
+    }
+
+    @Override
+    public void handleOtherMessage(Message msg) {
+        switch (msg.what) {
+            case Constants.MSG_LIST_ALBUM:
+
+                mNotice.setText("");
+                if(mAlbums.isEmpty()){
+                    mNotice.setVisibility(View.VISIBLE);
+                }else{
+                    mNotice.setVisibility(View.GONE);
+                }
+
+                mPosition = -1;
+                mAlbumAdapter.listAlbums(mAlbums);
+                break;
+            case Constants.MSG_SET_IMAGE:
+                // 通过tag找到ImageView
+                ImageView imageView = (ImageView) mListView.findViewWithTag(msg.getData().getString("imageUrl"));
+                if (imageView != null) {
+                    imageView.setImageBitmap((Bitmap) msg.obj);
+                }
+                break;
+            case MSG_SHOW_NOTICE:
+               mNotice.setText(mNotice.getText()+"\n"+(String)msg.obj);
+                break;
+        }
     }
 
     @Override

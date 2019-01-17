@@ -11,16 +11,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="statusbar" />
-
-        <TextView
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
             android:text="@string/app_dpi" />
 
         <LinearLayout
@@ -76,6 +71,7 @@
                     android:id="@+id/rb_test"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:text="UA" />
 
             </RadioGroup>
@@ -124,6 +120,15 @@
             android:background="@drawable/btn_rect"
             android:onClick="soqq"
             android:text="腾讯搜索"
+            android:textSize="30sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_rect"
+            android:onClick="mdd"
+            android:text="埋堆堆港剧"
             android:textSize="30sp" />
 
         <Button

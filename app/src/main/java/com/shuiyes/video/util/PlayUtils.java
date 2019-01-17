@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.shuiyes.video.mdd.MDDVActivity;
 import com.shuiyes.video.ui.WebActivity;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.iqiyi.IQiyiVActivity;
@@ -76,6 +77,8 @@ public class PlayUtils {
             }else{
                 playFail(context, url);
             }
+        } else if(url.contains("mdd.com")){
+            context.startActivity(new Intent(context, MDDVActivity.class).putExtra("url", url).putExtra("title", title));
         } else {
             playFail(context, url);
         }

@@ -10,7 +10,6 @@ public class PlayVideo {
         this.url = url;
     }
 
-
     public String getText() {
         return text;
     }
