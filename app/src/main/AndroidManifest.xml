@@ -43,50 +43,56 @@
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".youku.YoukuSoActivity"
+            android:name=".ui.youku.YoukuSoActivity"
+            android:configChanges="keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".youku.YoukuVActivity"
+            android:name=".ui.youku.YoukuVActivity"
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".letv.LetvSoActivity"
+            android:name=".ui.letv.LetvSoActivity"
+            android:configChanges="keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".letv.LetvVActivity"
+            android:name=".ui.letv.LetvVActivity"
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".iqiyi.IQIyiSoActivity"
+            android:name=".ui.iqiyi.IQIyiSoActivity"
+            android:configChanges="keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".iqiyi.IQiyiVActivity"
+            android:name=".ui.iqiyi.IQiyiVActivity"
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".qq.QQVActivity"
+            android:name=".ui.qq.QQVActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".qq.QQSoActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name=".mgtv.MgtvVActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".mgtv.MgtvSoActivity"
+            android:name=".ui.qq.QQSoActivity"
+            android:configChanges="keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".mdd.MDDVActivity"
+            android:name=".ui.mgtv.MgtvVActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".mdd.MDDSoActivity"
+            android:name=".ui.mgtv.MgtvSoActivity"
+            android:configChanges="keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.mdd.MDDVActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.mdd.MDDSoActivity"
+            android:configChanges="keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize" />
 
@@ -94,6 +100,18 @@
             android:name=".ui.SettingsActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".ui.TestActivity"></activity>
+
+        <activity
+            android:name=".ui.tvlive.TVLiveActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppCompat" />
+
+        <activity
+            android:name=".ui.tvlive.TVPlayActivity"
+            android:configChanges="keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenAppCompat" />
+
     </application>
 
 </manifest>

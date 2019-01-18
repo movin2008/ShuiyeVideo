@@ -14,8 +14,8 @@
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
             android:text="@string/app_dpi" />
 
         <LinearLayout
@@ -71,8 +71,8 @@
                     android:id="@+id/rb_test"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:text="UA" />
+                    android:text="UA"
+                    android:visibility="gone" />
 
             </RadioGroup>
 
@@ -100,8 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/btn_rect"
-            android:onClick="soyouku"
-            android:text="优酷搜索"
+            android:onClick="soiqiyi"
+            android:text="爱奇艺搜索"
             android:textSize="30sp" />
 
         <Button
@@ -109,8 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/btn_rect"
-            android:onClick="soiqiyi"
-            android:text="爱奇艺搜索"
+            android:onClick="mdd"
+            android:text="埋堆堆港剧"
             android:textSize="30sp" />
 
         <Button
@@ -127,8 +127,17 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/btn_rect"
-            android:onClick="mdd"
-            android:text="埋堆堆港剧"
+            android:onClick="soyouku"
+            android:text="优酷搜索"
+            android:textSize="30sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_rect"
+            android:onClick="tvlive"
+            android:text="电视直播"
             android:textSize="30sp" />
 
         <Button
@@ -153,8 +162,8 @@
             android:id="@+id/btn_test_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
             android:background="@drawable/btn_rect"
             android:onClick="testUrl"
             android:text="测试播放"
@@ -164,8 +173,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:visibility="invisible"
-            android:text="." />
+            android:text="."
+            android:visibility="invisible" />
     </LinearLayout>
 
 </ScrollView>

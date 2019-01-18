@@ -437,7 +437,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 mTitleView.setText((String) msg.obj);
                 break;
             case MSG_UPDATE_SELECT:
-                if (mVideoList.isEmpty()) {
+                if (mVideoList.size() < 2) {
                     mSelectView.setVisibility(View.GONE);
                 } else {
                     mSelectView.setVisibility(View.VISIBLE);

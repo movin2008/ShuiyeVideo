@@ -1,36 +1,23 @@
 package com.shuiyes.video.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.base.BaseActivity;
-import com.shuiyes.video.iqiyi.IQIyiSoActivity;
-import com.shuiyes.video.letv.LetvSoActivity;
-import com.shuiyes.video.mdd.MDDSoActivity;
-import com.shuiyes.video.mdd.MDDVActivity;
-import com.shuiyes.video.mgtv.MgtvVActivity;
-import com.shuiyes.video.qq.QQSoActivity;
+import com.shuiyes.video.ui.iqiyi.IQIyiSoActivity;
+import com.shuiyes.video.ui.letv.LetvSoActivity;
+import com.shuiyes.video.ui.mdd.MDDSoActivity;
+import com.shuiyes.video.ui.qq.QQSoActivity;
+import com.shuiyes.video.ui.tvlive.TVLiveActivity;
 import com.shuiyes.video.widget.Tips;
-import com.shuiyes.video.youku.YoukuSoActivity;
+import com.shuiyes.video.ui.youku.YoukuSoActivity;
 
 import java.io.UnsupportedEncodingException;
 
@@ -152,6 +139,10 @@ public class MainActivity extends BaseActivity {
 
     public void mdd(View view) {
         this.startActivity(new Intent(this, MDDSoActivity.class));
+    }
+
+    public void tvlive(View view) {
+        this.startActivity(new Intent(this, TVLiveActivity.class));
     }
 
     public void somgtv(View view) {

@@ -4,14 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.shuiyes.video.mdd.MDDVActivity;
+import com.shuiyes.video.ui.mdd.MDDVActivity;
 import com.shuiyes.video.ui.WebActivity;
 import com.shuiyes.video.bean.Album;
-import com.shuiyes.video.iqiyi.IQiyiVActivity;
-import com.shuiyes.video.letv.LetvVActivity;
-import com.shuiyes.video.qq.QQVActivity;
+import com.shuiyes.video.ui.iqiyi.IQiyiVActivity;
+import com.shuiyes.video.ui.letv.LetvVActivity;
+import com.shuiyes.video.ui.qq.QQVActivity;
 import com.shuiyes.video.widget.Tips;
-import com.shuiyes.video.youku.YoukuVActivity;
+import com.shuiyes.video.ui.youku.YoukuVActivity;
 
 public class PlayUtils {
 
