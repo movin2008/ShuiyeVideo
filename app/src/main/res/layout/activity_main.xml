@@ -86,88 +86,103 @@
                 android:textSize="30sp" />
         </LinearLayout>
 
-        <Button
+        <com.zhy.view.flowlayout.FlowLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_rect"
-            android:onClick="soletv"
-            android:text="乐视搜索(支持VIP)"
-            android:textSize="30sp" />
+            android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_rect"
-            android:onClick="soiqiyi"
-            android:text="爱奇艺搜索"
-            android:textSize="30sp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_rect"
+                android:onClick="soletv"
+                android:text="乐视搜索(支持VIP)"
+                android:textSize="30sp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_rect"
-            android:onClick="mdd"
-            android:text="埋堆堆港剧"
-            android:textSize="30sp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_rect"
+                android:onClick="soiqiyi"
+                android:text="爱奇艺搜索"
+                android:textSize="30sp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_rect"
-            android:onClick="soqq"
-            android:text="腾讯搜索"
-            android:textSize="30sp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_rect"
+                android:onClick="soqq"
+                android:text="腾讯搜索"
+                android:textSize="30sp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_rect"
-            android:onClick="soyouku"
-            android:text="优酷搜索"
-            android:textSize="30sp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_rect"
+                android:onClick="soyouku"
+                android:text="优酷搜索"
+                android:textSize="30sp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_rect"
-            android:onClick="tvlive"
-            android:text="电视直播"
-            android:textSize="30sp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_rect"
+                android:onClick="mdd"
+                android:text="埋堆堆港剧"
+                android:textSize="30sp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_rect"
-            android:onClick="somgtv"
-            android:text="芒果搜索"
-            android:textSize="30sp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_rect"
+                android:onClick="suzhouCMCCIPTV"
+                android:text="苏州移动IPTV源"
+                android:textSize="30sp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_rect"
-            android:onClick="sohu"
-            android:text="搜狐搜索"
-            android:textSize="30sp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_rect"
+                android:onClick="iviBupt"
+                android:text="北邮IVI测试源"
+                android:textSize="30sp" />
 
-        <Button
-            android:id="@+id/btn_test_url"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_rect"
-            android:onClick="testUrl"
-            android:text="测试播放"
-            android:textSize="30sp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_rect"
+                android:onClick="somgtv"
+                android:text="芒果搜索"
+                android:textSize="30sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_rect"
+                android:onClick="sohu"
+                android:text="搜狐搜索"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/btn_test_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_rect"
+                android:onClick="testUrl"
+                android:text="测试播放"
+                android:textSize="30sp" />
+
+        </com.zhy.view.flowlayout.FlowLayout>
 
         <TextView
             android:layout_width="match_parent"

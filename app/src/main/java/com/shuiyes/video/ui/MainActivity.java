@@ -15,7 +15,8 @@ import com.shuiyes.video.ui.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;
 import com.shuiyes.video.ui.qq.QQSoActivity;
-import com.shuiyes.video.ui.tvlive.TVLiveActivity;
+import com.shuiyes.video.ui.tvlive.BuptIVIActivity;
+import com.shuiyes.video.ui.tvlive.SuzhouCMCCIPTVActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuSoActivity;
 
@@ -141,8 +142,12 @@ public class MainActivity extends BaseActivity {
         this.startActivity(new Intent(this, MDDSoActivity.class));
     }
 
-    public void tvlive(View view) {
-        this.startActivity(new Intent(this, TVLiveActivity.class));
+    public void suzhouCMCCIPTV(View view) {
+        startActivity(new Intent(this, SuzhouCMCCIPTVActivity.class));
+    }
+
+    public void iviBupt(View view) {
+        startActivity(new Intent(this, BuptIVIActivity.class));
     }
 
     public void somgtv(View view) {

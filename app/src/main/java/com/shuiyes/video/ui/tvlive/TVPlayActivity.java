@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -13,12 +12,14 @@ import com.devlin_n.floatWindowPermission.FloatWindowManager;
 import com.devlin_n.yinyangplayer.controller.StandardVideoController;
 import com.devlin_n.yinyangplayer.player.YinYangPlayer;
 import com.shuiyes.video.R;
+import com.shuiyes.video.base.BaseActivity;
+import com.shuiyes.video.base.BaseAppCompatActivity;
 
 /**
  * Created by wang on 2017/6/22.
  */
 
-public class TVPlayActivity extends AppCompatActivity {
+public class TVPlayActivity extends BaseAppCompatActivity {
     private YinYangPlayer yinYangPlayer;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
