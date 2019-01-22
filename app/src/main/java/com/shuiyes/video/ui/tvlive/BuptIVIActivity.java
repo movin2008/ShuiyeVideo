@@ -1,189 +1,60 @@
 package com.shuiyes.video.ui.tvlive;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import com.shuiyes.video.base.BaseTVLiveActivity;
+import com.shuiyes.video.bean.ListVideo;
 
-import com.shuiyes.video.R;
-import com.shuiyes.video.ui.WebActivity;
-import com.shuiyes.video.util.OkHttpManager;
-import com.shuiyes.video.util.Utils;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-
-public class BuptIVIActivity extends Activity implements Callback {
-
-    private final String TAG = this.getClass().getSimpleName();
-
-    private final String HOST = "http://ivi.bupt.edu.cn";
-
-    private ListView mListView;
-
-    private Handler mHandler = new Handler();
-    private ArrayList<String> mTitles = new ArrayList<String>();
-    private HashMap<String, String> mUrls = new HashMap<String, String>();
-    private OkHttpClient Client = OkHttpManager.getNormalClient();
+public class BuptIVIActivity extends BaseTVLiveActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bupt_ivi);
-
-        mListView = (ListView) this.findViewById(R.id.lv_result);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String title = mTitles.get(position);
-                startActivity(new Intent(BuptIVIActivity.this, TVPlayActivity.class)
-                        .putExtra("name", title)
-                        .putExtra("url", mUrls.get(title)));
-            }
-        });
-
-        Request request = new Request.Builder().url(HOST).build();
-        Client.newCall(request).enqueue(this);
-    }
-
-    public void cctv1(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                        .putExtra("name", "CCTV1")
-                        .putExtra("url", "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8"));
-    }
-    public void cctv2(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                        .putExtra("name", "CCTV12")
-                        .putExtra("url", "http://ivi.bupt.edu.cn/hls/cctv2hd.m3u8"));
-    }
-    public void cctv3(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                        .putExtra("name", "CCTV3")
-                        .putExtra("url", "http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8"));
-    }
-    public void cctv4(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                        .putExtra("name", "CCTV4")
-                        .putExtra("url", "http://ivi.bupt.edu.cn/hls/cctv4hd.m3u8"));
-    }
-    public void cctv5(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                        .putExtra("name", "CCTV5")
-                        .putExtra("url", "http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8"));
-    }
-    public void cctv6(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                        .putExtra("name", "CCTV6")
-                        .putExtra("url", "http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8"));
     }
 
     @Override
-    public void onFailure(Call call, IOException e) {
-        fail("更多源加载失败: " + e.getLocalizedMessage());
-    }
-
-    private void fail(String error) {
-        ((TextView) this.findViewById(R.id.tv_result)).setText(error);
+    public String getApi() {
+        return "http://ivi.bupt.edu.cn";
     }
 
     @Override
-    public void onResponse(Call call, Response response) throws IOException {
-        try {
-            String action = call.request().url().url().getPath();
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                Log.e(TAG, "onResponse(null): " + action);
-                fail("更多源请求失败.");
-            }
+    public String getPlayUrl(String tv) {
+        return "http://ivi.bupt.edu.cn/hls/cctv" + tv + "hd.m3u8";
+    }
 
-            String html = responseBody.string();
-            Utils.setFile("ivi.html", html);
+    @Override
+    public void refreshVideos(String result) throws Exception {
+        String start = "<div class=\"2u";
+        while (result.contains(start)) {
 
-            if (TextUtils.isEmpty(html)) {
-                fail("更多源加载失败.");
+            int startIndex = result.indexOf(start);
+            int endIndex = result.indexOf("</div>", startIndex + start.length());
+            String data = null;
+            if (endIndex != -1) {
+                data = result.substring(startIndex, endIndex);
             } else {
-                String start = "<div class=\"2u";
-                while (html.contains(start)) {
-
-                    int startIndex = html.indexOf(start);
-                    int endIndex = html.indexOf("</div>", startIndex + start.length());
-                    String data = null;
-                    if (endIndex != -1) {
-                        data = html.substring(startIndex, endIndex);
-                    } else {
-                        data = html.substring(startIndex);
-                    }
-
-//                    Log.e(TAG, data);
-
-                    // 直播源名称
-                    String key = "<p>";
-                    int len = data.indexOf(key);
-                    String tmp = data.substring(len + key.length());
-                    len = tmp.indexOf("</p>");
-                    String title = tmp.substring(0, len);
-                    mTitles.add(title);
-
-                    // 直播源地址
-                    key = "href=\"";
-                    len = data.indexOf(key);
-                    len = data.indexOf(key, len + key.length());
-                    tmp = data.substring(len + key.length());
-                    len = tmp.indexOf("\"");
-                    String url = tmp.substring(0, len);
-                    mUrls.put(title, HOST + url);
-
-//                    Log.e(TAG, title+" - "+url);
-
-                    html = html.substring(startIndex + start.length());
-                }
-
-                if (mTitles.isEmpty()) {
-                    fail("更多源加载为空.");
-                    return;
-                }
-
-                Collections.sort(mTitles, new Comparator<String>() {
-                    @Override
-                    public int compare(String o1, String o2) {
-                        o1 = o1.substring(0, 4);
-                        o2 = o2.substring(0, 4);
-                        return o1.compareTo(o2);
-                    }
-                });
-
-                final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mTitles.toArray());
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mListView.setVisibility(View.VISIBLE);
-                        mListView.setAdapter(adapter);
-                    }
-                });
+                data = result.substring(startIndex);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
+            // 直播源名称
+            String key = "<p>";
+            int len = data.indexOf(key);
+            String tmp = data.substring(len + key.length());
+            len = tmp.indexOf("</p>");
+            String title = tmp.substring(0, len);
+
+            // 直播源地址
+            key = "href=\"";
+            len = data.indexOf(key);
+            len = data.indexOf(key, len + key.length());
+            tmp = data.substring(len + key.length());
+            len = tmp.indexOf("\"");
+            String href = tmp.substring(0, len);
+            mVideos.add(new ListVideo(title, title, getApi() + href));
+
+            result = result.substring(startIndex + start.length());
+        }
     }
+
 }
 
 /*

@@ -1,157 +1,54 @@
 package com.shuiyes.video.ui.tvlive;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.shuiyes.video.R;
-import com.shuiyes.video.util.OkHttpManager;
+import com.shuiyes.video.base.BaseTVLiveActivity;
+import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.Utils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-
-public class SuzhouCMCCIPTVActivity extends Activity implements Callback {
-
-    private final String TAG = this.getClass().getSimpleName();
+public class SuzhouCMCCActivity extends BaseTVLiveActivity {
 
     private final String HOST = "http://183.207.248.71:80/cntv/live1/";
-
-    private ListView mListView;
-
-    private Handler mHandler = new Handler();
-    private ArrayList<String> mTitles = new ArrayList<String>();
-    private HashMap<String, String> mUrls = new HashMap<String, String>();
-    private OkHttpClient Client = OkHttpManager.getNormalClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bupt_ivi);
-
-        mListView = (ListView) this.findViewById(R.id.lv_result);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String title = mTitles.get(position);
-                startActivity(new Intent(SuzhouCMCCIPTVActivity.this, TVPlayActivity.class)
-                        .putExtra("name", title)
-                        .putExtra("url", mUrls.get(title)));
-            }
-        });
-
-        String api = "http://looktvepg.jsa.bcs.ottcn.com:8080/ysten-lvoms-epg/epg/getChannelIndexs.shtml?deviceGroupId=1697";
-        Request request = new Request.Builder().url(api).build();
-        Client.newCall(request).enqueue(this);
-    }
-
-    public void cctv1(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                .putExtra("name", "CCTV1")
-                .putExtra("url", "http://183.207.248.71:80/cntv/live1/cctv-1/cctv-1"));
-    }
-    public void cctv2(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                .putExtra("name", "CCTV12")
-                .putExtra("url", "http://183.207.248.71:80/cntv/live1/cctv-2/cctv-2"));
-    }
-    public void cctv3(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                .putExtra("name", "CCTV3")
-                .putExtra("url", "http://183.207.248.71:80/cntv/live1/cctv-3/cctv-3"));
-    }
-    public void cctv4(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                .putExtra("name", "CCTV4")
-                .putExtra("url", "http://183.207.248.71:80/cntv/live1/cctv-4/cctv-4"));
-    }
-    public void cctv5(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                .putExtra("name", "CCTV5")
-                .putExtra("url", "http://183.207.248.71:80/cntv/live1/cctv-5/cctv-5"));
-    }
-    public void cctv6(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                .putExtra("name", "CCTV6")
-                .putExtra("url", "http://183.207.248.71:80/cntv/live1/cctv-6/cctv-6"));
     }
 
     @Override
-    public void onFailure(Call call, IOException e) {
-        fail("更多源加载失败: " + e.getLocalizedMessage());
-    }
-
-    private void fail(String error) {
-        ((TextView) this.findViewById(R.id.tv_result)).setText(error);
+    public String getApi() {
+        return "http://looktvepg.jsa.bcs.ottcn.com:8080/ysten-lvoms-epg/epg/getChannelIndexs.shtml?deviceGroupId=1697";
     }
 
     @Override
-    public void onResponse(Call call, Response response) throws IOException {
-        try {
-            String action = call.request().url().url().getPath();
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                Log.e(TAG, "onResponse(null): " + action);
-                fail("更多源请求失败.");
-            }
+    public String getPlayUrl(String tv) {
+        return "http://183.207.248.71:80/cntv/live1/cctv-" + tv + "/cctv-" + tv;
+    }
 
-            String html = responseBody.string();
-            Utils.setFile("suzhou.cmcc.iptv", html);
+    @Override
+    public void refreshVideos(String result) throws Exception {
+        Utils.setFile("suzhou.cmcc.iptv", result);
 
-            JSONObject obj = new JSONObject(html);
-            Iterator<String> iterator = obj.keys();
-            while(iterator.hasNext()){
-                String key = iterator.next();
-                JSONObject channel = obj.getJSONObject(key);
+        JSONObject obj = new JSONObject(result);
+        Iterator<String> iterator = obj.keys();
+        mVideos.clear();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            JSONObject channel = obj.getJSONObject(key);
 
-                String channelName = channel.getString("channelName");
-                mTitles.add(channelName);
+            String channelName = channel.getString("channelName");
+            String uuid = channel.getString("uuid");
 
-                // http://183.207.248.71:80/cntv/live1/channelName/uuid
-                String uuid = channel.getString("uuid");
-                mUrls.put(channelName, HOST + channelName+"/"+uuid);
-            }
-
-            if (mTitles.isEmpty()) {
-                fail("更多源加载为空.");
-                return;
-            }
-
-            final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mTitles.toArray());
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mListView.setVisibility(View.VISIBLE);
-                    mListView.setAdapter(adapter);
-                }
-            });
-        } catch (Exception e) {
-            fail("更多源请求失败："+e.getLocalizedMessage());
+            // http://183.207.248.71:80/cntv/live1/channelName/uuid
+            mVideos.add(new ListVideo(channelName, channelName, HOST + channelName + "/" + uuid));
         }
-
     }
+
 }
 
 /*

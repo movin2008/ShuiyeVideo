@@ -16,7 +16,8 @@ import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;
 import com.shuiyes.video.ui.qq.QQSoActivity;
 import com.shuiyes.video.ui.tvlive.BuptIVIActivity;
-import com.shuiyes.video.ui.tvlive.SuzhouCMCCIPTVActivity;
+import com.shuiyes.video.ui.tvlive.SuzhouCMCCActivity;
+import com.shuiyes.video.ui.tvlive.TVListActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuSoActivity;
 
@@ -142,8 +143,30 @@ public class MainActivity extends BaseActivity {
         this.startActivity(new Intent(this, MDDSoActivity.class));
     }
 
-    public void suzhouCMCCIPTV(View view) {
-        startActivity(new Intent(this, SuzhouCMCCIPTVActivity.class));
+    // PotPlayer 可以播放，Android 播放失败，原因未知
+    @Deprecated
+    public void bilibili(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "bilibili.list"));
+    }
+
+    public void newtv(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "newtv.list"));
+    }
+
+    public void jscmcc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "jscmcc.dpl"));
+    }
+
+    public void zhanqi(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "zhanqi.list"));
+    }
+
+    public void cnlive(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "cnlive.dpl"));
+    }
+
+    public void suzhouCMCC(View view) {
+        startActivity(new Intent(this, SuzhouCMCCActivity.class));
     }
 
     public void iviBupt(View view) {

@@ -42,4 +42,11 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="Button">
+        <item name="android:background">@drawable/btn_rect</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>

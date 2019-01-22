@@ -92,10 +92,13 @@
             android:name=".ui.SettingsActivity"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".ui.tvlive.TVListActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".ui.tvlive.BuptIVIActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ui.tvlive.SuzhouCMCCIPTVActivity"
+            android:name=".ui.tvlive.SuzhouCMCCActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".ui.tvlive.TVPlayActivity"
