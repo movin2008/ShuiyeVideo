@@ -3,5 +3,7 @@
 
     <string name="app_name">水也视频</string>
     <string name="app_dpi">水也视频-nodpi</string>
+    <string name="ivi_bupt">北邮IVI测试源</string>
+    <string name="sz_cmcc">苏州移动源</string>
 
 </resources>

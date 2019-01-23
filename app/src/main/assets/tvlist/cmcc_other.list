@@ -1,0 +1,38 @@
+117.169.120.210 江西省宜春市 移动
+CCTV-1,http://117.169.120.210:8080/live/cctv-1/.m3u8
+CCTV-2,http://117.169.120.210:8080/live/cctv-2/.m3u8
+CCTV-3,http://117.169.120.210:8080/live/cctv-3/.m3u8
+CCTV-4,http://117.169.120.210:8080/live/cctv-4/.m3u8
+CCTV-5,http://117.169.120.210:8080/live/cctv-5/.m3u8
+CCTV-6,http://117.169.120.210:8080/live/cctv-6/.m3u8
+CCTV-7,http://117.169.120.210:8080/live/cctv-7/.m3u8
+CCTV-8,http://117.169.120.210:8080/live/cctv-8/.m3u8
+CCTV-9,http://117.169.120.210:8080/live/cctv-9/.m3u8
+CCTV-10,http://117.169.120.210:8080/live/cctv-10/.m3u8
+CCTV-11,http://117.169.120.210:8080/live/cctv-11/.m3u8
+CCTV-12,http://117.169.120.210:8080/live/cctv-12/.m3u8
+CCTV-13,http://117.169.120.210:8080/live/cctv-13/.m3u8
+CCTV-14,http://117.169.120.210:8080/live/cctv-14/.m3u8
+CCTV-15,http://117.169.120.210:8080/live/cctv-15/.m3u8
+凤凰中文HD,http://117.169.120.217:8080/live/fhchinese/.m3u8
+凤凰中文HD,http://117.169.120.209:8080/live/fhchinese/.m3u8
+CCTV-1,http://117.169.79.101:8080/PLTV/88888888/224/3221225760/index.m3u8
+CCTV-2,http://117.169.79.101:8080/PLTV/88888888/224/3221225798/index.m3u8
+
+
+183.251.61.197福建省福州市 移动
+凤凰资讯HD,http://183.251.61.197/PLTV/88888888/224/3221225901/index.m3u8
+凤凰资讯HD,http://183.251.61.221/PLTV/88888888/224/3221225901/index.m3u8
+CCTV-6,http://183.251.61.207/PLTV/88888888/224/3221225804/index.m3u8
+
+
+112.17.0.10浙江省杭州市 移动
+凤凰中文HD,http://112.17.0.10:8085/ysten-business/live/fhchinese/yst.m3u8
+
+39.135.32.28广西壮族自治区南宁市 移动
+CCTV-1,http://39.135.32.28:6610/000000001000/1000000001000021973/1000000001000021973.m3u8?IASHttpSessionId=OTT1711620180826111042033637&channel-id=ystenlive
+
+111.44.138.251青海省西宁市 移动
+CCTV-4,http://111.44.138.251:16416/contents40/live/CHANNEL4ff3d770b713424e9dafa96da0390915/HD_2013552811240083238/live.m3u8
+
+

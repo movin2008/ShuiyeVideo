@@ -149,23 +149,23 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "bilibili.list"));
     }
 
-    public void newtv(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "newtv.list"));
+    public void jscmcc1(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "南京移动源_183.207.X.X.list"));
     }
 
-    public void jscmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "jscmcc.dpl"));
+    public void jscmcc2(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "南京移动源_223.110.X.X.list"));
     }
 
-    public void zhanqi(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "zhanqi.list"));
+    public void jxcmcc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "jxcmcc.list"));
     }
 
-    public void cnlive(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "cnlive.dpl"));
+    public void otherTV(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "other.list"));
     }
 
-    public void suzhouCMCC(View view) {
+    public void szcmcc(View view) {
         startActivity(new Intent(this, SuzhouCMCCActivity.class));
     }
 

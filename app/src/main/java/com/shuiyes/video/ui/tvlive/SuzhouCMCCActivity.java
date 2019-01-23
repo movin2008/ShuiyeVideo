@@ -27,6 +27,7 @@ public class SuzhouCMCCActivity extends BaseTVLiveActivity {
 
     @Override
     public String getPlayUrl(String tv) {
+        //http://183.207.248.71/cntv/live1/HD-2500k-1080P-cctv1/HD-2500k-1080P-cctv1
         return "http://183.207.248.71:80/cntv/live1/cctv-" + tv + "/cctv-" + tv;
     }
 

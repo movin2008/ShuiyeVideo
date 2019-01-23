@@ -14,14 +14,15 @@
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginTop="30dp"
             android:text="@string/app_dpi" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="horizontal">
 
             <RadioGroup
@@ -77,116 +78,110 @@
             </RadioGroup>
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="testWeb"
-                android:text="网页浏览"
-                style="@style/Button"/>
+                android:text="网页浏览" />
         </LinearLayout>
 
         <com.zhy.view.flowlayout.FlowLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="20dp">
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="soletv"
-                android:text="乐视搜索(支持VIP)"
-                style="@style/Button" />
+                android:text="乐视搜索(支持VIP)" />
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="soiqiyi"
-                android:text="爱奇艺搜索"
-                style="@style/Button" />
+                android:text="爱奇艺搜索" />
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="soqq"
-                android:text="腾讯搜索"
-                style="@style/Button" />
+                android:text="腾讯搜索" />
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="soyouku"
-                android:text="优酷搜索"
-                style="@style/Button" />
+                android:text="优酷搜索" />
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="mdd"
-                android:text="埋堆堆港剧"
-                style="@style/Button" />
+                android:text="埋堆堆港剧" />
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="jscmcc"
-                android:text="南京移动源"
-                style="@style/Button" />
+                android:onClick="iviBupt"
+                android:text="@string/ivi_bupt" />
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="suzhouCMCC"
-                android:text="苏州移动源"
-                style="@style/Button" />
+                android:onClick="jscmcc1"
+                android:text="南京移动源 183.207.X.X" />
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="newtv"
-                android:text="Newtv移动源"
-                style="@style/Button" />
+                android:onClick="szcmcc"
+                android:text="苏州移动源" />
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="cnlive"
-                android:text="\@TV 直播源"
-                style="@style/Button" />
+                android:onClick="jscmcc2"
+                android:text="南京移动源 223.110.X.X" />
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="zhanqi"
-                android:text="战旗直播源"
-                style="@style/Button" />
+                android:onClick="jxcmcc"
+                android:text="江西移动源" />
 
             <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:onClick="otherTV"
+                android:text="其他直播源" />
+
+            <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="bilibili"
                 android:text="哔哩哔哩 直播源"
-                android:visibility="gone"
-                style="@style/Button" />
+                android:visibility="gone" />
 
             <Button
-                android:layout_width="wrap_content"
-                android:onClick="iviBupt"
-                android:text="北邮IVI测试源"
-                style="@style/Button" />
-
-            <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="somgtv"
-                android:text="芒果搜索"
-                style="@style/Button" />
+                android:text="芒果搜索" />
 
             <Button
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="sohu"
-                android:text="搜狐搜索"
-                style="@style/Button" />
+                android:text="搜狐搜索" />
 
             <Button
                 android:id="@+id/btn_test_url"
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="testUrl"
-                android:text="测试播放"
-                style="@style/Button" />
+                android:text="测试播放" />
 
         </com.zhy.view.flowlayout.FlowLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="."
-            android:visibility="invisible" />
     </LinearLayout>
 
 </ScrollView>

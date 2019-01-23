@@ -96,9 +96,11 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".ui.tvlive.BuptIVIActivity"
+            android:label="@string/ivi_bupt"
             android:screenOrientation="landscape" />
         <activity
             android:name=".ui.tvlive.SuzhouCMCCActivity"
+            android:label="@string/sz_cmcc"
             android:screenOrientation="landscape" />
         <activity
             android:name=".ui.tvlive.TVPlayActivity"
