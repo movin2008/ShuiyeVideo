@@ -149,6 +149,10 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "bilibili.list"));
     }
 
+    public void wxcmcc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "无锡移动源.list"));
+    }
+
     public void jscmcc1(View view) {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "南京移动源_183.207.X.X.list"));
     }
@@ -157,8 +161,16 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "南京移动源_223.110.X.X.list"));
     }
 
-    public void jxcmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "jxcmcc.list"));
+    public void othercmcc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "cmcc_other.list"));
+    }
+
+    public void cbchot(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "中广热点云的资源.list"));
+    }
+
+    public void fmlist(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fm.list"));
     }
 
     public void otherTV(View view) {

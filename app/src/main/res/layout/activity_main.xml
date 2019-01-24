@@ -122,8 +122,8 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="iviBupt"
-                android:text="@string/ivi_bupt" />
+                android:onClick="wxcmcc"
+                android:text="无锡移动源" />
 
             <Button
                 style="@style/Button"
@@ -146,8 +146,26 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="jxcmcc"
-                android:text="江西移动源" />
+                android:onClick="othercmcc"
+                android:text="其他移动源" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:onClick="fmlist"
+                android:text="收音机源" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:onClick="cbchot"
+                android:text="中广热点云的资源" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:onClick="iviBupt"
+                android:text="@string/ivi_bupt" />
 
             <Button
                 style="@style/Button"
