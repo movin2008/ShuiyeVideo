@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.base.BasePlayActivity;
+import com.shuiyes.video.base.BasePlayerExoActivity;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.MiscDialog;
@@ -23,7 +24,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class LetvVActivity extends BasePlayActivity implements View.OnClickListener {
+public class LetvVActivity extends BasePlayerExoActivity implements View.OnClickListener {
 
     private List<LetvStream> mUrlList = new ArrayList<LetvStream>();
     private List<PlayVideo> mSourceList = new ArrayList<PlayVideo>();

@@ -21,16 +21,15 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "com.android.support:appcompat-v7:25.3.1"
-    compile "tv.danmaku.ijk.media:ijkplayer-java:0.8.0"
-//    compile "tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.0"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "tv.danmaku.ijk.media:ijkplayer-java:0.8.8"
+//    compile "tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8"
 
     // https://github.com/danikula/AndroidVideoCache
-    compile 'com.danikula:videocache:2.7.0'
+    implementation 'com.danikula:videocache:2.7.0'
     // https://github.com/DevlinChiu/FloatWindowPermission
-    compile 'com.github.DevlinChiu:FloatWindowPermission:1.1'
+    api 'com.github.DevlinChiu:FloatWindowPermission:1.1'
     // https://github.com/Bilibili/DanmakuFlameMaster
-    compile 'com.github.ctiao:DanmakuFlameMaster:0.8.3'
-    compile 'com.github.ctiao:ndkbitmap-armv7a:0.8.3'
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.8.3'
+    implementation 'com.github.ctiao:ndkbitmap-armv7a:0.8.3'
 }

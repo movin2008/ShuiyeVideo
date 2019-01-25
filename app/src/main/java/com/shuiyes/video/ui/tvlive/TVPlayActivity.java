@@ -3,7 +3,7 @@ package com.shuiyes.video.ui.tvlive;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -12,14 +12,11 @@ import com.devlin_n.floatWindowPermission.FloatWindowManager;
 import com.devlin_n.yinyangplayer.controller.StandardVideoController;
 import com.devlin_n.yinyangplayer.player.YinYangPlayer;
 import com.shuiyes.video.R;
-import com.shuiyes.video.base.BaseActivity;
-import com.shuiyes.video.base.BaseAppCompatActivity;
 
 /**
  * Created by wang on 2017/6/22.
  */
-
-public class TVPlayActivity extends BaseAppCompatActivity {
+public class TVPlayActivity extends AppCompatActivity {
     private YinYangPlayer yinYangPlayer;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,11 +27,6 @@ public class TVPlayActivity extends BaseAppCompatActivity {
         String url = getIntent().getStringExtra("url");
         String name = getIntent().getStringExtra("name");
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(name);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
         StandardVideoController controller = new StandardVideoController(this);
         controller.setLive(true);
         Glide.with(this).load("http://7xqblc.com1.z0.glb.clouddn.com/tvlive.jpg")

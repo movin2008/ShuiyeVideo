@@ -457,6 +457,9 @@ public class QQVActivity extends BasePlayActivity {
 
     }
 
+    private int mSectionIndex = 0;
+
+    private List<ListVideo> mSectionList = new ArrayList<ListVideo>();
     private void playNextSection(final int index) {
         if(mStateView.getText().length() == 0){
             mStateView.setText("缓存第"+(index+1)+"章节...");
