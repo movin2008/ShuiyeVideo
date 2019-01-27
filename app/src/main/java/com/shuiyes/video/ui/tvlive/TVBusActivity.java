@@ -36,46 +36,31 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
+import java.util.Formatter;
 
-public abstract class TVBusActivity extends BaseActivity implements View.OnClickListener {
+public class TVBusActivity extends BaseActivity {
 
     protected Context mContext;
-    private ProgressBar mLoadingView;
-    protected TextView mTitleView, mStateView, mTimeView;
-    protected Button mSourceView, mClarityView, mSelectView, mNextView;
-
-    protected boolean mPrepared = false;
-    protected String mBatName = null;
+    protected TextView mTitleView, mTimeView, mStatusView;
+    private String mUrl = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player_exo);
+        setContentView(R.layout.activity_player_tvbus);
 
         mContext = this;
 
-        mSourceView = (Button) findViewById(R.id.btn_source);
-        mClarityView = (Button) findViewById(R.id.btn_clarity);
-        mSelectView = (Button) findViewById(R.id.btn_select);
-        mNextView = (Button) findViewById(R.id.btn_next);
-
-        mSourceView.setOnClickListener(this);
-        mClarityView.setOnClickListener(this);
-        mSelectView.setOnClickListener(this);
-        mNextView.setOnClickListener(this);
-
         mTitleView = (TextView) findViewById(R.id.tv_title);
-        mStateView = (TextView) findViewById(R.id.tv_state);
         mTimeView = (TextView) findViewById(R.id.tv_time);
-
-        mLoadingView = (ProgressBar) findViewById(R.id.loading);
+        mStatusView = (TextView) findViewById(R.id.tv_status);
 
         initExoPlayer();
 
         startTVBusService();
 
-        String url = getIntent().getStringExtra("url");
-        Log.e(TAG, "play url=" + url);
+        mUrl = getIntent().getStringExtra("url");
+        Log.e(TAG, "play url=" + mUrl);
 
         String title = getIntent().getStringExtra("title");
         Log.e(TAG, "play title=" + title);
@@ -88,6 +73,7 @@ public abstract class TVBusActivity extends BaseActivity implements View.OnClick
         super.onResume();
 
         mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 100);
+        startChannel(mUrl, null);
     }
 
     @Override
@@ -95,11 +81,16 @@ public abstract class TVBusActivity extends BaseActivity implements View.OnClick
         super.onPause();
 
         mHandler.removeMessages(MSG_UPDATE_TIME);
+        player.setPlayWhenReady(false);
+        mTVCore.stop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        player.release();
+        player = null;
+
     }
 
     private SimpleExoPlayer player;
@@ -190,6 +181,8 @@ public abstract class TVBusActivity extends BaseActivity implements View.OnClick
         mMPCheckTime = Long.MAX_VALUE;
         mTmPlayerConn = mBuffer = 0;
 
+        Log.e(TAG, address+" "+accessCode);
+
         if(accessCode == null) {
             mTVCore.start(address);
         }
@@ -238,6 +231,8 @@ public abstract class TVBusActivity extends BaseActivity implements View.OnClick
                 DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(mContext, "tvbus",null);
                 MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url));
 
+                Log.e(TAG, "startPlayback "+url);
+
                 player.prepare(videoSource);
                 player.setPlayWhenReady(true);
             }
@@ -258,10 +253,11 @@ public abstract class TVBusActivity extends BaseActivity implements View.OnClick
             return false;
         }
 
+        Log.e(TAG, result);
 
         if("onInited".equals(event)){
             if ((jsonObj.optInt("tvcore", 1)) == 0) {
-                statusMessage = "Ready to go!";
+                statusMessage = "Init success!";
             }
             else {
                 statusMessage = "Init error!";
@@ -276,7 +272,7 @@ public abstract class TVBusActivity extends BaseActivity implements View.OnClick
             mTmPlayerConn = jsonObj.optInt("hls_last_conn", 0);
             mBuffer = jsonObj.optInt("buffer", 0);
 
-            statusMessage = "" + mBuffer + "  " + jsonObj.optInt("download_rate", 0) * 8 / 1000 +"K";
+            statusMessage = android.text.format.Formatter.formatFileSize(mContext, jsonObj.optInt("download_rate", 0))+"/s";
         }else if("onStop".equals(event)){
             if(jsonObj.optInt("errno", 1) < 0) {
                 statusMessage = "stop: " + jsonObj.optInt("errno", 1);
@@ -285,9 +281,20 @@ public abstract class TVBusActivity extends BaseActivity implements View.OnClick
         }
 
         if(statusMessage != null) {
-            Log.e(TAG, statusMessage);
+            updateStatusView(statusMessage);
         }
         return true;
+    }
+
+    private void updateStatusView(String status) {
+        final String fStatus = status;
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mStatusView.setText(fStatus);
+            }
+        });
     }
 
     protected final int MSG_UPDATE_TIME = 10;
@@ -297,7 +304,7 @@ public abstract class TVBusActivity extends BaseActivity implements View.OnClick
         switch (msg.what) {
             case MSG_UPDATE_TIME:
                 Calendar now = Calendar.getInstance();
-                mTimeView.setText(String.format("%s %02d:%02d:%02d", mBatName, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), now.get(Calendar.SECOND)));
+                mTimeView.setText(String.format("TVBus %02d:%02d:%02d", now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), now.get(Calendar.SECOND)));
                 mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 1000);
                 break;
         }

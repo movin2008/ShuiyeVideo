@@ -170,6 +170,12 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
+                android:onClick="avbus"
+                android:text="香蕉台资源" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
                 android:onClick="otherTV"
                 android:text="其他直播源" />
 

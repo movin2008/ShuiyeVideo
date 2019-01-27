@@ -32,6 +32,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.PlayerActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/PlayerTheme">
+            <intent-filter>
+                <action android:name="com.google.android.exoplayer.demo.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+                <data android:scheme="content"/>
+                <data android:scheme="asset"/>
+                <data android:scheme="file"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.android.exoplayer.demo.action.VIEW_LIST"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".ui.WebActivity"
             android:launchMode="singleTop"
@@ -91,6 +112,12 @@
             android:name=".ui.tvlive.TVListActivity"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".ui.tvlive.AVListActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.tvlive.TVBusActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".ui.tvlive.BuptIVIActivity"
             android:label="@string/ivi_bupt"
             android:screenOrientation="landscape" />
@@ -103,6 +130,8 @@
             android:configChanges="keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenAppCompat" />
+        <service android:name="com.tvbus.engine.TVService"/>
+
     </application>
 
 </manifest>

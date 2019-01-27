@@ -101,12 +101,12 @@ public abstract class BasePlayerExoActivity extends BaseActivity implements View
             if (mStateView.getText().length() == 0) {
                 mStateView.setText("视频恢复中...");
             }
-            if (mCurrentPosition > 0) {
-                mExoPlayer.seekTo(mCurrentPosition);
-            }
         }
         if (mPlayerView != null) {
             mPlayerView.onResume();
+        }
+        if(mExoPlayer != null){
+            mExoPlayer.setPlayWhenReady(true);
         }
         mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 100);
     }
@@ -118,7 +118,9 @@ public abstract class BasePlayerExoActivity extends BaseActivity implements View
         if (mPlayerView != null) {
             mPlayerView.onPause();
         }
-        mExoPlayer.stop();
+        if(mExoPlayer != null){
+            mExoPlayer.setPlayWhenReady(false);
+        }
         mHandler.removeMessages(MSG_UPDATE_TIME);
     }
 
@@ -292,7 +294,7 @@ public abstract class BasePlayerExoActivity extends BaseActivity implements View
 
         mLoadingProgress.setVisibility(View.VISIBLE);
 
-        mExoPlayer.stop();
+        mExoPlayer.stop(true);
         startPlayback(url);
 
         if (mCurrentPosition != 0) {
@@ -321,7 +323,7 @@ public abstract class BasePlayerExoActivity extends BaseActivity implements View
     }
 
     private void playNextVideo() {
-        mExoPlayer.stop();
+        mExoPlayer.stop(true);
         mStateView.setText("初始化...");
         mLoadingProgress.setVisibility(View.VISIBLE);
 
@@ -332,7 +334,7 @@ public abstract class BasePlayerExoActivity extends BaseActivity implements View
     }
 
     protected void playNextVideo(String title, String url) {
-        mExoPlayer.stop();
+        mExoPlayer.stop(true);
         mTitleView.setText(title);
         mStateView.setText("初始化...");
         mLoadingProgress.setVisibility(View.VISIBLE);

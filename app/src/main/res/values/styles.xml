@@ -49,4 +49,13 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="PlayerTheme" parent="android:Theme.Holo">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <style name="PlayerTheme.Spherical">
+        <item name="surface_type">spherical_view</item>
+    </style>
+
 </resources>

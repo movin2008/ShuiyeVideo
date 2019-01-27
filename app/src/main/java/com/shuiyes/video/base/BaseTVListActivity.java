@@ -2,6 +2,7 @@ package com.shuiyes.video.base;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
+import com.shuiyes.video.ui.PlayerActivity;
+import com.shuiyes.video.ui.tvlive.TVBusActivity;
 import com.shuiyes.video.ui.tvlive.TVPlayActivity;
 import com.shuiyes.video.widget.NumberView;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -84,8 +87,16 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
     @Override
     public void onClick(View v) {
         NumberView view = (NumberView) v;
-        startActivity(new Intent(this, TVPlayActivity.class)
-                .putExtra("name", view.getTitle())
+//        startActivity(new Intent(this, TVPlayActivity.class)
+//                .putExtra("name", view.getTitle())
+//                .putExtra("url", view.getUrl()));
+
+//        startActivity(new Intent(this, PlayerActivity.class)
+//                .setAction(PlayerActivity.ACTION_VIEW)
+//                .setData(Uri.parse(view.getUrl())));
+
+        startActivity(new Intent(this, TVBusActivity.class)
+                .putExtra("title", view.getTitle())
                 .putExtra("url", view.getUrl()));
     }
 }

@@ -3,6 +3,7 @@ package com.tvbus.engine;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 public class TVService extends Service {
 	final static String TAG = "TVBusService";
@@ -10,6 +11,8 @@ public class TVService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		Log.e(TAG, "onCreate");
 
 		TVServer server = new TVServer();
 		Thread thread = new Thread(server);
