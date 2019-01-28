@@ -17,26 +17,32 @@ import com.shuiyes.video.R;
  * Created by wang on 2017/6/22.
  */
 public class TVPlayActivity extends AppCompatActivity {
-    private YinYangPlayer yinYangPlayer;
+
+    private YinYangPlayer mYinYangPlayer;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_tvplay);
-        yinYangPlayer = (YinYangPlayer) findViewById(R.id.player);
+        mYinYangPlayer = (YinYangPlayer) findViewById(R.id.player);
 
         String url = getIntent().getStringExtra("url");
-        String name = getIntent().getStringExtra("name");
+        String title = getIntent().getStringExtra("title");
 
         StandardVideoController controller = new StandardVideoController(this);
         controller.setLive(true);
+
         Glide.with(this).load("http://7xqblc.com1.z0.glb.clouddn.com/tvlive.jpg")
                 .asBitmap()
                 .animate(R.anim.anim_alpha_in)
                 .placeholder(android.R.color.black)
                 .into(controller.getThumb());
-        yinYangPlayer.alwaysFullScreen()
+
+        mYinYangPlayer.alwaysFullScreen()
 //                .useAndroidMediaPlayer()
                 .setUrl(url)
+                .setTitle(title)
                 .setVideoController(controller)
                 .start();
     }
@@ -52,25 +58,25 @@ public class TVPlayActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        yinYangPlayer.pause();
+        mYinYangPlayer.pause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        yinYangPlayer.resume();
-        yinYangPlayer.stopFloatWindow();
+        mYinYangPlayer.resume();
+        mYinYangPlayer.stopFloatWindow();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        yinYangPlayer.release();
+        mYinYangPlayer.release();
     }
 
     @Override
     public void onBackPressed() {
-        if (!yinYangPlayer.onBackPressed()) {
+        if (!mYinYangPlayer.onBackPressed()) {
             super.onBackPressed();
         }
     }
@@ -79,7 +85,7 @@ public class TVPlayActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == FloatWindowManager.PERMISSION_REQUEST_CODE) {
             if (FloatWindowManager.getInstance().checkPermission(this)) {
-                yinYangPlayer.startFloatWindow();
+                mYinYangPlayer.startFloatWindow();
             } else {
                 Toast.makeText(TVPlayActivity.this, "权限授予失败，无法开启悬浮窗", Toast.LENGTH_SHORT).show();
             }

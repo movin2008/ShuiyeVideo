@@ -14,6 +14,7 @@ import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.ui.PlayerActivity;
 import com.shuiyes.video.ui.tvlive.TVBusActivity;
 import com.shuiyes.video.ui.tvlive.TVPlayActivity;
+import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.widget.NumberView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -87,16 +88,6 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
     @Override
     public void onClick(View v) {
         NumberView view = (NumberView) v;
-//        startActivity(new Intent(this, TVPlayActivity.class)
-//                .putExtra("name", view.getTitle())
-//                .putExtra("url", view.getUrl()));
-
-//        startActivity(new Intent(this, PlayerActivity.class)
-//                .setAction(PlayerActivity.ACTION_VIEW)
-//                .setData(Uri.parse(view.getUrl())));
-
-        startActivity(new Intent(this, TVBusActivity.class)
-                .putExtra("title", view.getTitle())
-                .putExtra("url", view.getUrl()));
+        PlayUtils.play(this, view.getUrl(), view.getTitle(), true);
     }
 }

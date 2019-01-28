@@ -1,9 +1,9 @@
 package com.tvbus.engine;
 
 import android.content.Context;
+import android.util.Log;
 
 public class TVCore {
-    private TVListener tvListener = null;
 
     public static synchronized TVCore getInstance() {
         if (inst == null) {
@@ -11,6 +11,7 @@ public class TVCore {
             try {
                 nativeHandle = inst.initialise();
             } catch (Throwable e) {
+                e.printStackTrace();
                 return null;
             }
 
@@ -24,11 +25,10 @@ public class TVCore {
 
     // set params
     public void setTVListener(TVListener listener) {
-        tvListener = listener;
         try {
             setListener(nativeHandle, listener);
         } catch (Throwable e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -37,6 +37,7 @@ public class TVCore {
         try {
             setPlayPort(nativeHandle, iPort);
         } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 
@@ -44,15 +45,18 @@ public class TVCore {
         try {
             setServPort(nativeHandle, iPort);
         } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 
     // actions
     public void start(String url) {
+        Log.e("HAHA", url.length()+", "+url);
+
         try {
             start(nativeHandle, url);
         } catch (Throwable e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -60,7 +64,7 @@ public class TVCore {
         try {
             start2(nativeHandle, url, accessCode);
         } catch (Throwable e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -68,7 +72,7 @@ public class TVCore {
         try {
             stop(nativeHandle);
         } catch (Throwable e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -76,6 +80,7 @@ public class TVCore {
         try {
             return init(nativeHandle, context);
         } catch (Throwable e) {
+            e.printStackTrace();
             return -1;
         }
     }
@@ -84,6 +89,7 @@ public class TVCore {
         try {
             return run(nativeHandle);
         } catch (Throwable e) {
+            e.printStackTrace();
             return -1;
         }
     }
@@ -92,7 +98,7 @@ public class TVCore {
         try {
             quit(nativeHandle);
         } catch (Throwable e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -100,7 +106,7 @@ public class TVCore {
         try {
             System.loadLibrary("tvcore");
         } catch (Throwable error) {
-
+            error.printStackTrace();
         }
     }
 

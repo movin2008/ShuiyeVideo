@@ -6,9 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.C;
@@ -36,7 +33,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
-import java.util.Formatter;
 
 public class TVBusActivity extends BaseActivity {
 
@@ -55,9 +51,9 @@ public class TVBusActivity extends BaseActivity {
         mTimeView = (TextView) findViewById(R.id.tv_time);
         mStatusView = (TextView) findViewById(R.id.tv_status);
 
-        initExoPlayer();
-
         startTVBusService();
+
+        initExoPlayer();
 
         mUrl = getIntent().getStringExtra("url");
         Log.e(TAG, "play url=" + mUrl);
@@ -73,7 +69,12 @@ public class TVBusActivity extends BaseActivity {
         super.onResume();
 
         mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 100);
-        startChannel(mUrl, null);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startChannel(mUrl, null);
+            }
+        },555);
     }
 
     @Override
@@ -95,13 +96,13 @@ public class TVBusActivity extends BaseActivity {
 
     private SimpleExoPlayer player;
     private long mMPCheckTime = 0;
+
     private void initExoPlayer() {
         PlayerView playerView = (PlayerView) this.findViewById(R.id.exoplayer_view);
         playerView.requestFocus();
         playerView.setControllerAutoShow(false);
         playerView.setUseController(false);
         playerView.setKeepScreenOn(true);
-
 
         DefaultRenderersFactory rendererFactory = new DefaultRenderersFactory(this,
                 DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER);
@@ -151,7 +152,7 @@ public class TVBusActivity extends BaseActivity {
 
             @Override
             public void onPrepared(String result) {
-                if(parseCallbackInfo("onPrepared", result)) {
+                if (parseCallbackInfo("onPrepared", result)) {
                     startPlayback(playbackUrl);
                 }
             }
@@ -181,12 +182,10 @@ public class TVBusActivity extends BaseActivity {
         mMPCheckTime = Long.MAX_VALUE;
         mTmPlayerConn = mBuffer = 0;
 
-        Log.e(TAG, address+" "+accessCode);
-
-        if(accessCode == null) {
+        mTVCore.stop();
+        if (accessCode == null) {
             mTVCore.start(address);
-        }
-        else {
+        } else {
             mTVCore.start(address, accessCode);
         }
     }
@@ -198,13 +197,13 @@ public class TVBusActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(mTmPlayerConn > 20 && mBuffer > 50) {
+                if (mTmPlayerConn > 20 && mBuffer > 50) {
                     stoPlayback();
                 }
 
-                if(System.nanoTime() > mMPCheckTime) {
+                if (System.nanoTime() > mMPCheckTime) {
                     int playbackState = player.getPlaybackState();
-                    if (! (playbackState != Player.STATE_IDLE && playbackState != Player.STATE_ENDED)) {
+                    if (!(playbackState != Player.STATE_IDLE && playbackState != Player.STATE_ENDED)) {
                         startPlayback(playbackUrl);
                     }
                 }
@@ -216,28 +215,31 @@ public class TVBusActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                player.stop();
+                player.stop(true);
             }
         });
     }
 
     // 10 second
     private final static long MP_START_CHECK_INTERVAL = 10 * 1000 * 1000 * 1000L;
+
     private void startPlayback(String url) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mMPCheckTime = System.nanoTime() + MP_START_CHECK_INTERVAL;
-                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(mContext, "tvbus",null);
+                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(mContext, "tvbus", null);
                 MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url));
 
-                Log.e(TAG, "startPlayback "+url);
+                Log.e(TAG, "startPlayback " + url);
 
                 player.prepare(videoSource);
                 player.setPlayWhenReady(true);
             }
         });
-    };
+    }
+
+    ;
 
     private boolean parseCallbackInfo(String event, String result) {
         JSONObject jsonObj = null;
@@ -249,38 +251,35 @@ public class TVBusActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        if(jsonObj == null) {
+        if (jsonObj == null) {
             return false;
         }
 
-        Log.e(TAG, result);
-
-        if("onInited".equals(event)){
+        if ("onInited".equals(event)) {
             if ((jsonObj.optInt("tvcore", 1)) == 0) {
                 statusMessage = "Init success!";
-            }
-            else {
+            } else {
                 statusMessage = "Init error!";
             }
-        }else if("onStart".equals(event)){
+        } else if ("onStart".equals(event)) {
 
-        }else if("onPrepared".equals(event)){
-            if(jsonObj.optString("http", null) != null) {
+        } else if ("onPrepared".equals(event)) {
+            if (jsonObj.optString("http", null) != null) {
                 playbackUrl = jsonObj.optString("http", null);
             }
-        }else if("onInfo".equals(event)){
+        } else if ("onInfo".equals(event)) {
             mTmPlayerConn = jsonObj.optInt("hls_last_conn", 0);
             mBuffer = jsonObj.optInt("buffer", 0);
 
-            statusMessage = android.text.format.Formatter.formatFileSize(mContext, jsonObj.optInt("download_rate", 0))+"/s";
-        }else if("onStop".equals(event)){
-            if(jsonObj.optInt("errno", 1) < 0) {
-                statusMessage = "stop: " + jsonObj.optInt("errno", 1);
+            statusMessage = android.text.format.Formatter.formatFileSize(mContext, jsonObj.optInt("download_rate", 0)) + "/s";
+        } else if ("onStop".equals(event)) {
+            if (jsonObj.optInt("errno", 1) < 0) {
+                statusMessage = "errno: " + jsonObj.optInt("errno", 1);
             }
-        }else if("onQut".equals(event)){
+        } else if ("onQut".equals(event)) {
         }
 
-        if(statusMessage != null) {
+        if (statusMessage != null) {
             updateStatusView(statusMessage);
         }
         return true;

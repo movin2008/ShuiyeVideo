@@ -46,6 +46,7 @@ public class TVService extends Service {
 		public void run() {
 		    int retv = tvcore.init(getApplicationContext());
 
+		    Log.e("HAHA", "tvcore init " + retv);
 		    if(retv == 0) {
 				tvcore.run();
 		    }

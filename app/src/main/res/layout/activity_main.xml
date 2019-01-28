@@ -171,7 +171,7 @@
                 style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="avbus"
-                android:text="香蕉台资源" />
+                android:text="Tvbus 直播源" />
 
             <Button
                 style="@style/Button"
