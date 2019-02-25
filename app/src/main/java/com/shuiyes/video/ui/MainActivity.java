@@ -170,6 +170,10 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "中广热点云的资源.list"));
     }
 
+    public void fulibus(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fulibus.list"));
+    }
+
     public void fmlist(View view) {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fm.list"));
     }

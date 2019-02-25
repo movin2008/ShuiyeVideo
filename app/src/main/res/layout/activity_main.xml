@@ -164,6 +164,12 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
+                android:onClick="fulibus"
+                android:text="FULIBUS整理资源" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
                 android:onClick="iviBupt"
                 android:text="@string/ivi_bupt" />
 

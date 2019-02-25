@@ -44,6 +44,10 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
 
                         String text = null;
                         while ((text = br.readLine()) != null) {
+                            if(text.startsWith("##")){
+                                // 注释
+                                continue;
+                            }
                             if (text.contains(",")) {
                                 String[] tmp = text.split(",");
                                 mVideos.add(new ListVideo(tmp[0], tmp[0], tmp[1]));
@@ -55,6 +59,11 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                         String text = null;
                         String url = null;
                         while ((text = br.readLine()) != null) {
+                            if(text.startsWith("##")){
+                                // 注释
+                                continue;
+                            }
+
                             if (text.contains("*")) {
                                 String[] tmp = text.split("\\*");
                                 if ("file".equals(tmp[1])) {
