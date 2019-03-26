@@ -38,7 +38,6 @@ public class TVBusActivity extends BaseActivity {
 
     protected Context mContext;
     protected TextView mTitleView, mTimeView, mStatusView;
-    private String mUrl = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,21 +46,17 @@ public class TVBusActivity extends BaseActivity {
 
         mContext = this;
 
+        if(!TVService.RUN){
+            startService(new Intent(this, TVService.class));
+        }
+
+        mStatusView = (TextView) findViewById(R.id.tv_status);
         mTitleView = (TextView) findViewById(R.id.tv_title);
         mTimeView = (TextView) findViewById(R.id.tv_time);
-        mStatusView = (TextView) findViewById(R.id.tv_status);
-
-        startTVBusService();
+        mTitleView.setText(getIntent().getStringExtra("title"));
 
         initExoPlayer();
-
-        mUrl = getIntent().getStringExtra("url");
-        Log.e(TAG, "play url=" + mUrl);
-
-        String title = getIntent().getStringExtra("title");
-        Log.e(TAG, "play title=" + title);
-
-        mTitleView.setText(title);
+        initTVCore();
     }
 
     @Override
@@ -69,12 +64,6 @@ public class TVBusActivity extends BaseActivity {
         super.onResume();
 
         mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 100);
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startChannel(mUrl, null);
-            }
-        },555);
     }
 
     @Override
@@ -134,7 +123,7 @@ public class TVBusActivity extends BaseActivity {
     private static String playbackUrl;
 
     // tvbus p2p module related
-    private void startTVBusService() {
+    private void initTVCore() {
         mTVCore = TVCore.getInstance();
         assert mTVCore != null;
 
@@ -174,7 +163,9 @@ public class TVBusActivity extends BaseActivity {
             }
         });
 
-        startService(new Intent(this, TVService.class));
+        String url = getIntent().getStringExtra("url");
+        Log.e(TAG, "play url=" + url);
+        startChannel(url, null);
     }
 
     private void startChannel(String address, String accessCode) {
@@ -231,7 +222,7 @@ public class TVBusActivity extends BaseActivity {
                 DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(mContext, "tvbus", null);
                 MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url));
 
-                Log.e(TAG, "startPlayback " + url);
+//                Log.e(TAG, "startPlayback " + url);
 
                 player.prepare(videoSource);
                 player.setPlayWhenReady(true);
@@ -264,14 +255,29 @@ public class TVBusActivity extends BaseActivity {
         } else if ("onStart".equals(event)) {
 
         } else if ("onPrepared".equals(event)) {
-            if (jsonObj.optString("http", null) != null) {
+//            Log.e(TAG, "onPrepared " + result);
+
+            if (jsonObj.has("http")) {
                 playbackUrl = jsonObj.optString("http", null);
+            } else {
+                return false;
             }
         } else if ("onInfo".equals(event)) {
+//            Log.e(TAG, "onInfo " + result);
+
             mTmPlayerConn = jsonObj.optInt("hls_last_conn", 0);
             mBuffer = jsonObj.optInt("buffer", 0);
 
-            statusMessage = android.text.format.Formatter.formatFileSize(mContext, jsonObj.optInt("download_rate", 0)) + "/s";
+            if(mTmPlayerConn == 0){
+                statusMessage =  "";
+            }else{
+                int rate = jsonObj.optInt("download_rate", 0);
+                if(rate < 512 * 1024 && mBuffer < 100){
+                    statusMessage =  android.text.format.Formatter.formatFileSize(mContext, rate) + "/s " + mBuffer+ "%";
+                } else{
+                    statusMessage =  android.text.format.Formatter.formatFileSize(mContext, rate) + "/s";
+                }
+            }
         } else if ("onStop".equals(event)) {
             if (jsonObj.optInt("errno", 1) < 0) {
                 statusMessage = "errno: " + jsonObj.optInt("errno", 1);

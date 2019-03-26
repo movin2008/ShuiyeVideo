@@ -1,11 +1,13 @@
 package com.shuiyes.video.util;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.util.Log;
 
-import com.shuiyes.video.ui.PlayerActivity;
 import com.shuiyes.video.ui.mdd.MDDVActivity;
 import com.shuiyes.video.ui.WebActivity;
 import com.shuiyes.video.bean.Album;
@@ -16,6 +18,11 @@ import com.shuiyes.video.ui.tvlive.TVBusActivity;
 import com.shuiyes.video.ui.tvlive.TVPlayActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuVActivity;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class PlayUtils {
 
@@ -40,11 +47,55 @@ public class PlayUtils {
     public static void play(Context context, String url, String title, boolean isHLS) {
         if (isHLS) {
             if (url.startsWith("tvbus://")) {
-//                context.startActivity(new Intent(context, TVBusActivity.class)
-//                        .putExtra("title", title)
-//                        .putExtra("url", url));
-                context.startActivity(new Intent("io.binstream.action.tvbus")
-                        .putExtra("channel", url));
+//                try {
+//                    context.startActivity(new Intent("io.binstream.action.tvbus")
+//                            .putExtra("channel", url));
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+
+                try {
+                    context.createPackageContext("io.binstream.github.demo", 0);
+                    context.startActivity(new Intent(context, TVBusActivity.class)
+                            .putExtra("title", title)
+                            .putExtra("url", url));
+                } catch (PackageManager.NameNotFoundException e) {
+                    final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                    dialog.setMessage("TVBus 播放插件尚未安装");
+                    dialog.setPositiveButton("安装", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                            try {
+                                InputStream in = context.getResources().getAssets().open("TVBus.apk");
+                                byte[] buffer = new byte[in.available()];
+                                in.read(buffer);
+                                in.close();
+
+                                File tmp = new File("/sdcard/.shuiyes/tmp.apk");
+                                tmp.delete();
+
+                                OutputStream outStream = new FileOutputStream(tmp);
+                                outStream.write(buffer);
+                                outStream.close();
+
+                                Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                                intent.setData(Uri.fromFile(tmp));
+                                context.startActivity(intent);
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    });
+                    dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+                }
             } else {
                 context.startActivity(new Intent(context, TVPlayActivity.class)
                         .putExtra("title", title)

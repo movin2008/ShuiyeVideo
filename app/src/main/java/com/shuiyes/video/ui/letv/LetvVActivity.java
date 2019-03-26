@@ -24,7 +24,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class LetvVActivity extends BasePlayerExoActivity implements View.OnClickListener {
+public class LetvVActivity extends BasePlayActivity implements View.OnClickListener {
 
     private List<LetvStream> mUrlList = new ArrayList<LetvStream>();
     private List<PlayVideo> mSourceList = new ArrayList<PlayVideo>();

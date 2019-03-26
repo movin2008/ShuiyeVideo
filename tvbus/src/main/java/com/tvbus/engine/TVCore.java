@@ -51,7 +51,7 @@ public class TVCore {
 
     // actions
     public void start(String url) {
-        Log.e("HAHA", url.length()+", "+url);
+//        Log.e("HAHA", url.length()+", "+url);
 
         try {
             start(nativeHandle, url);
