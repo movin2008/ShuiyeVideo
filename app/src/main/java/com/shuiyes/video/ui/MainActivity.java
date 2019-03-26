@@ -15,7 +15,6 @@ import com.shuiyes.video.ui.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;
 import com.shuiyes.video.ui.qq.QQSoActivity;
-import com.shuiyes.video.ui.tvlive.AVListActivity;
 import com.shuiyes.video.ui.tvlive.BuptIVIActivity;
 import com.shuiyes.video.ui.tvlive.SuzhouCMCCActivity;
 import com.shuiyes.video.ui.tvlive.TVListActivity;
@@ -179,7 +178,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void avbus(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(AVListActivity.EXTRA, "avbus.list"));
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvbus.list"));
     }
 
     public void otherTV(View view) {
