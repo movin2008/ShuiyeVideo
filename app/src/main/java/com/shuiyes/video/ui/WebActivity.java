@@ -1,5 +1,6 @@
 package com.shuiyes.video.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -64,6 +65,12 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         Log.e(TAG, settings.getUserAgentString());
         settings.setJavaScriptEnabled(true);
 
+        if(Build.VERSION.SDK_INT >= 19) {
+            settings.setLoadsImagesAutomatically(true);
+        } else {
+            settings.setLoadsImagesAutomatically(false);
+        }
+
         mWebView.loadUrl(url);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -105,6 +112,10 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onPageFinished(WebView view, String url) {
+
+                if(!view.getSettings().getLoadsImagesAutomatically()) {
+                    view.getSettings().setLoadsImagesAutomatically(true);
+                }
 
 //                view.loadUrl("javascript:(function() {" +
 //                        "var parent = document.getElementsByTagName('head').item(0);" +

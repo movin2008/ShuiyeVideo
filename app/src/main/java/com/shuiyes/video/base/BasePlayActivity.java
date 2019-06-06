@@ -304,6 +304,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected int getPlayIndex(){
         int index = 0;
         for (int i = 0; i < mVideoList.size() - 1; i++) {
+            Log.e(TAG, i + ", getPlayIndex("+mIntentUrl+") " + mVideoList.get(i).getUrl());
             if (mIntentUrl.equals(mVideoList.get(i).getUrl())) {
                 index = i;
                 break;
@@ -313,7 +314,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     }
 
     private int getNextIndex(){
-        int index = getPlayIndex();
+        int index = getPlayIndex() + 1;
         if(index == mVideoList.size()){
             index = 0;
         }
@@ -345,6 +346,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     }
 
     protected void completionToPlayNextVideo() {
+        Log.e(TAG, "completionToPlayNextVideo "+mVideoList.size());
         if (mVideoList.size() > 0) {
             ListVideo video = mVideoList.get(getNextIndex());
             playNextVideo(video.getTitle(), video.getUrl());
