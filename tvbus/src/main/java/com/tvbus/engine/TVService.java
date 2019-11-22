@@ -52,8 +52,10 @@ public class TVService extends Service {
 
 		@Override
 		public void run() {
-			int retv = -1;
 			try {
+
+				this.tvcore.setPlayPort(8902);
+				this.tvcore.setServPort(4010);
 
 //				String pkg = getApplicationContext().getPackageName();
 //				Class ContextImpl = Class.forName("android.app.ContextImpl");
@@ -67,11 +69,10 @@ public class TVService extends Service {
 //				mPackageName.setAccessible(true);
 //				mPackageName.set(loadedApk, "io.binstream.github.demo");
 //				Log.e("HAHA", getApplicationContext().getPackageName());
-//
-//				getApplicationContext().getPackageManager().getPackageInfo(getApplication().getPackageName(), 0);
 
-				retv = tvcore.init(getApplicationContext().createPackageContext("io.binstream.github.demo", Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE));
-//				retv = tvcore.init(getApplicationContext());
+//				int retv = tvcore.init(getApplicationContext());
+//				int retv = tvcore.init(getApplicationContext().createPackageContext("tv.sopplus.android", Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE));
+				int retv = tvcore.init(getApplicationContext().createPackageContext("io.binstream.github.demo", Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE));
 
 //				mPackageName.set(loadedApk, pkg);
 //				Log.e("HAHA", getApplicationContext().getPackageName());

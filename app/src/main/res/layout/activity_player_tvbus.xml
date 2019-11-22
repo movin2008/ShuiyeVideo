@@ -33,6 +33,7 @@
             android:paddingRight="20dp"
             android:gravity="center_vertical"
             android:singleLine="true"
+            android:text="Initing..."
             android:textColor="@android:color/white" />
 
     </LinearLayout>

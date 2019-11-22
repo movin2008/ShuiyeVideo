@@ -3,23 +3,29 @@ package com.shuiyes.video.util;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Build;
+import android.os.ParcelFileDescriptor;
 import android.os.SystemClock;
+import android.support.v4.provider.DocumentFile;
 import android.text.format.Formatter;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.Display;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -27,20 +33,78 @@ import java.security.MessageDigest;
 
 public class Utils {
 
-    public static long timestamp(){
-        return System.currentTimeMillis()/1000;
+    public static long timestamp() {
+        return System.currentTimeMillis() / 1000;
+    }
+
+    public static void installTVBus(Context context) {
+        try {
+            InputStream in = context.getResources().getAssets().open("TVBus.apk");
+            byte[] buffer = new byte[in.available()];
+            in.read(buffer);
+            in.close();
+
+            File apkFile = new File("/sdcard/.shuiyes/tvbus.apk");
+            apkFile.delete();
+
+            OutputStream outStream = new FileOutputStream(apkFile);
+            outStream.write(buffer);
+            outStream.close();
+
+            Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+            intent.setData(Uri.fromFile(apkFile));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "TVBus 播放插件安装失败 " + e.getLocalizedMessage(), 0).show();
+        }
+    }
+
+    public static void installTVBus2(Context context) {
+        try {
+            InputStream in = context.getResources().getAssets().open("TVBus.apk");
+            byte[] buffer = new byte[in.available()];
+            in.read(buffer);
+            in.close();
+
+            File apkFile = new File("/sdcard/.shuiyes/tvbus.apk");
+            apkFile.delete();
+
+            OutputStream outStream = null;
+            if (Build.VERSION.SDK_INT >= 28) {
+                DocumentFile sdcard = DocumentFile.fromFile(new File("/sdcard/"));
+                DocumentFile shuiyes = sdcard.createDirectory(".shuiyes");
+                DocumentFile apkPath = shuiyes.createFile("application/vnd.android.package-archive", "tvbus");//
+                ParcelFileDescriptor pfd = context.getContentResolver().openFileDescriptor(apkPath.getUri(), "rw");
+                FileDescriptor fd = pfd.getFileDescriptor();
+                outStream = new FileOutputStream(fd);
+            } else {
+                outStream = new FileOutputStream(apkFile);
+            }
+            outStream.write(buffer);
+            outStream.close();
+
+            Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+            intent.setData(Uri.fromFile(apkFile));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "TVBus 播放插件安装失败 " + e.getLocalizedMessage(), 0).show();
+        }
     }
 
     public static InputStream isTransparentHighlightCss(Context context, String url) {
         try {
-            String cssPath = context.getCacheDir().getAbsolutePath()+"/tmp.css";
+            String cssPath = context.getCacheDir().getAbsolutePath() + "/tmp.css";
             File file = new File(cssPath);
             if (file.exists()) {
                 file.delete();
             }
 
             String css = HttpUtils.open(url);
-            if(css != null && css.contains("-webkit-tap-highlight-color:transparent")){
+            if (css != null && css.contains("-webkit-tap-highlight-color:transparent")) {
                 css = css.replace("-webkit-tap-highlight-color:transparent", "-webkit-tap-highlight-color:rgb(0,0,255,0.1)");
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
                 bw.write(css);
@@ -56,11 +120,11 @@ public class Utils {
 
     public static void setFile(String filename, String info) {
         try {
-            File file = new File("/sdcard/.shuiyes/"+filename);
+            File file = new File("/sdcard/.shuiyes/" + filename);
             if (file.exists()) {
                 file.delete();
-            }else{
-                if (!file.getParentFile().exists()){
+            } else {
+                if (!file.getParentFile().exists()) {
                     file.getParentFile().mkdirs();
                 }
             }
@@ -137,7 +201,7 @@ public class Utils {
         int realHeight = size.y;
         float xdpi = dm.xdpi;
         float ydpi = dm.ydpi;
-        double inch = formatDouble(Math.sqrt((realWidth/xdpi) * (realWidth /xdpi) + (realHeight/ydpi) * (realHeight / ydpi)),1);
+        double inch = formatDouble(Math.sqrt((realWidth / xdpi) * (realWidth / xdpi) + (realHeight / ydpi) * (realHeight / ydpi)), 1);
 
         return dm.widthPixels + " * " + dm.heightPixels + " px / " + dm.densityDpi + " dp / " + inch + " 英寸";
     }
@@ -204,9 +268,9 @@ public class Utils {
                 int index = result.indexOf(Keyword);
                 line = result.substring(index + Keyword.length());
                 index = line.indexOf(" ");
-                if(index != -1){
+                if (index != -1) {
                     kernelVersion = line.substring(0, index);
-                }else{
+                } else {
                     kernelVersion = result;
                 }
             }
@@ -216,7 +280,7 @@ public class Utils {
         return kernelVersion;
     }
 
-    public static String elapsedRealtime(){
+    public static String elapsedRealtime() {
         long time = SystemClock.elapsedRealtime() / 1000;
         long s = time % 60;
         long m = time / 60;

@@ -127,6 +127,7 @@
             android:configChanges="keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenAppCompat" />
+
         <service android:name="com.tvbus.engine.TVService"/>
 
     </application>

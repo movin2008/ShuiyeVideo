@@ -17,6 +17,7 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
@@ -98,8 +99,7 @@ public class TVBusActivity extends BaseActivity {
         TrackSelector trackSelector = new DefaultTrackSelector();
         DefaultLoadControl.Builder builder = new DefaultLoadControl.Builder();
         builder.setAllocator(new DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE));
-        builder.setBufferDurationsMs(2000, 15000, 1500, 0
-        );
+        builder.setBufferDurationsMs(2000, 15000, 1500, 0);
         LoadControl loadControl = builder.createDefaultLoadControl();
 
         player = ExoPlayerFactory.newSimpleInstance(this, rendererFactory, trackSelector, loadControl);
@@ -113,13 +113,28 @@ public class TVBusActivity extends BaseActivity {
                 mMPCheckTime = System.nanoTime();
             }
         });
+        player.setPlayWhenReady(true);
+        player.addListener(new Player.EventListener(){
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                switch (playbackState){
+                    case Player.STATE_BUFFERING:
+                        mBuffering = true;
+                        break;
+                    case Player.STATE_READY:
+                        mBuffering = false;
+                        break;
+                }
+            }
+
+        });
 
         playerView.setPlayer(player);
     }
 
     private TVCore mTVCore = null;
-    private int mBuffer;
-    private int mTmPlayerConn;
+    private int mBuffer, mTmPlayerConn;
+    private boolean mBuffering;
     private static String playbackUrl;
 
     // tvbus p2p module related
@@ -215,17 +230,24 @@ public class TVBusActivity extends BaseActivity {
     private final static long MP_START_CHECK_INTERVAL = 10 * 1000 * 1000 * 1000L;
 
     private void startPlayback(String url) {
+        if(url == null){
+            return;
+        }
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mMPCheckTime = System.nanoTime() + MP_START_CHECK_INTERVAL;
                 DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(mContext, "tvbus", null);
-                MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url));
 
 //                Log.e(TAG, "startPlayback " + url);
 
-                player.prepare(videoSource);
-                player.setPlayWhenReady(true);
+                if(url.contains("m3u8")){
+                    HlsMediaSource hlsSource = new HlsMediaSource(Uri.parse(url), dataSourceFactory, null, null);
+                    player.prepare(hlsSource);
+                }else{
+                    MediaSource extSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url));
+                    player.prepare(extSource);
+                }
             }
         });
     }
@@ -233,6 +255,8 @@ public class TVBusActivity extends BaseActivity {
     ;
 
     private boolean parseCallbackInfo(String event, String result) {
+//        Log.e(TAG, event+" "+result);
+
         JSONObject jsonObj = null;
         String statusMessage = null;
 
@@ -247,42 +271,47 @@ public class TVBusActivity extends BaseActivity {
         }
 
         if ("onInited".equals(event)) {
+            // {"tvcore":"0"}
             if ((jsonObj.optInt("tvcore", 1)) == 0) {
                 statusMessage = "Init success!";
             } else {
                 statusMessage = "Init error!";
             }
         } else if ("onStart".equals(event)) {
-
+            // {"address":"tvbus://3CrMPFZqaFxTGeDtQX2E5gkF6ZdVKk2bj72ff3RTSwJdYWwhg6","mkcache":"","peers":"40"}
         } else if ("onPrepared".equals(event)) {
-//            Log.e(TAG, "onPrepared " + result);
-
+            // {"hls":"http://127.0.0.1:8902/70016/index.m3u8"}
             if (jsonObj.has("http")) {
                 playbackUrl = jsonObj.optString("http", null);
+            } else if (jsonObj.has("hls")) {
+                playbackUrl = jsonObj.optString("hls", null);
             } else {
                 return false;
             }
         } else if ("onInfo".equals(event)) {
-//            Log.e(TAG, "onInfo " + result);
-
-            mTmPlayerConn = jsonObj.optInt("hls_last_conn", 0);
+            // {"buffer":"96","download_rate":"1175423","download_total":"8","hls_last_conn":"1","upload_rate":"0","upload_total":"0"}
+            // {"buffer":"100","download_rate":"1175423","download_total":"9","hls_last_conn":"2","upload_rate":"0","upload_total":"0"}
             mBuffer = jsonObj.optInt("buffer", 0);
-
-            if(mTmPlayerConn == 0){
-                statusMessage =  "";
-            }else{
+            mTmPlayerConn = jsonObj.optInt("hls_last_conn", 0);
+            if(mBuffering){
                 int rate = jsonObj.optInt("download_rate", 0);
-                if(rate < 512 * 1024 && mBuffer < 100){
+                if(mBuffer < 50 || (rate < 100 * 1024 && mBuffer < 99)){
                     statusMessage =  android.text.format.Formatter.formatFileSize(mContext, rate) + "/s " + mBuffer+ "%";
-                } else{
+                } else {
                     statusMessage =  android.text.format.Formatter.formatFileSize(mContext, rate) + "/s";
                 }
+            }else{
+                statusMessage = "";
             }
         } else if ("onStop".equals(event)) {
-            if (jsonObj.optInt("errno", 1) < 0) {
-                statusMessage = "errno: " + jsonObj.optInt("errno", 1);
+            // {"errno":"0"}
+
+            int errno = jsonObj.optInt("errno", 0);
+            if (errno < 0) {
+                statusMessage = "errno: " + errno + ((errno == -104)?"[源失效]":"");
             }
         } else if ("onQut".equals(event)) {
+            //
         }
 
         if (statusMessage != null) {
