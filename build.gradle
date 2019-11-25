@@ -2,11 +2,13 @@
 
 buildscript {
     repositories {
-        jcenter()
         maven {
-            url 'https://maven.google.com/'
-            name 'Google'
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
         }
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+
         google()
     }
 
@@ -23,10 +25,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
         google()
         maven { url 'https://jitpack.io' }
     }
@@ -40,5 +38,5 @@ ext {
     minSdkVersion = 18
     targetSdkVersion = 18
     compileSdkVersion = 29
-    buildToolsVersion = '26.0.2'
+    buildToolsVersion = '27.0.3'
 }

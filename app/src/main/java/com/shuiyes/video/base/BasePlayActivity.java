@@ -1,6 +1,9 @@
 package com.shuiyes.video.base;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.shuiyes.video.R;
@@ -34,7 +38,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected VideoView mVideoView;
     protected ProgressBar mLoadingProgress;
     protected TextView mTitleView, mStateView, mTimeView;
-    protected Button mSourceView, mClarityView, mSelectView, mNextView;
+    protected Button mDownloadView, mSourceView, mClarityView, mSelectView, mNextView;
 
     protected boolean mPrepared = false;
     protected String mBatName = null;
@@ -46,15 +50,29 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
         mContext = this;
 
+        mDownloadView = (Button) findViewById(R.id.btn_download);
         mSourceView = (Button) findViewById(R.id.btn_source);
         mClarityView = (Button) findViewById(R.id.btn_clarity);
         mSelectView = (Button) findViewById(R.id.btn_select);
         mNextView = (Button) findViewById(R.id.btn_next);
 
+        mDownloadView.setOnClickListener(this);
         mSourceView.setOnClickListener(this);
         mClarityView.setOnClickListener(this);
         mSelectView.setOnClickListener(this);
         mNextView.setOnClickListener(this);
+
+        mDownloadView.setOnLongClickListener(new View.OnLongClickListener(){
+
+            @Override
+            public boolean onLongClick(View v) {
+                final Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(mPlayUrl));
+                startActivity(intent);
+                return true;
+            }
+        });
 
         mTitleView = (TextView) findViewById(R.id.tv_title);
         mStateView = (TextView) findViewById(R.id.tv_state);
@@ -131,7 +149,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
                 String err = "onError(" + i + "," + i1 + ")";
-                Log.e(TAG, " =========================== "+err);
+                Log.e(TAG, " =========================== " + err);
                 Tips.show(mContext, err, 0);
                 fault(err);
                 return false;
@@ -202,7 +220,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
             mAlbumDialog.dismiss();
         }
-        mVideoView.stopPlayback();;
+        mVideoView.stopPlayback();
         super.onDestroy();
     }
 
@@ -250,6 +268,15 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
             case R.id.btn_next:
                 playNextVideo();
                 break;
+            case R.id.btn_download:
+
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData mClipData = ClipData.newPlainText("Label", mPlayUrl);
+                cm.setPrimaryClip(mClipData);
+
+                Toast.makeText(this, "视频网址已复制到剪切板，到下载软件粘贴。 也可长按打开浏览器播放",1).show();
+
+
             default:
                 break;
         }
@@ -287,12 +314,13 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         mPrepared = false;
 
         mLoadingProgress.setVisibility(View.VISIBLE);
+        mDownloadView.setVisibility(View.VISIBLE);
 
         mVideoView.stopPlayback();
-        try{
+        try {
             mVideoView.setVideoURI(Uri.parse(url));
-        }catch (Exception e){
-            Log.e(TAG, "setVideoURI("+url+") " + e.getLocalizedMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "setVideoURI(" + url + ") " + e.getLocalizedMessage());
         }
 
         if (mCurrentPosition != 0) {
@@ -301,10 +329,10 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         }
     }
 
-    protected int getPlayIndex(){
+    protected int getPlayIndex() {
         int index = 0;
         for (int i = 0; i < mVideoList.size() - 1; i++) {
-            Log.e(TAG, i + ", getPlayIndex("+mIntentUrl+") " + mVideoList.get(i).getUrl());
+            Log.e(TAG, i + ", getPlayIndex(" + mIntentUrl + ") " + mVideoList.get(i).getUrl());
             if (mIntentUrl.equals(mVideoList.get(i).getUrl())) {
                 index = i;
                 break;
@@ -313,9 +341,9 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         return index;
     }
 
-    private int getNextIndex(){
+    private int getNextIndex() {
         int index = getPlayIndex() + 1;
-        if(index == mVideoList.size()){
+        if (index == mVideoList.size()) {
             index = 0;
         }
         return index;
@@ -346,7 +374,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     }
 
     protected void completionToPlayNextVideo() {
-        Log.e(TAG, "completionToPlayNextVideo "+mVideoList.size());
+        Log.e(TAG, "completionToPlayNextVideo " + mVideoList.size());
         if (mVideoList.size() > 0) {
             ListVideo video = mVideoList.get(getNextIndex());
             playNextVideo(video.getTitle(), video.getUrl());
@@ -422,7 +450,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 break;
             case MSG_PALY_VIDEO:
                 mLoadingProgress.setVisibility(View.GONE);
-                if(mStateView.getText().length() != 0){
+                if (mStateView.getText().length() != 0) {
                     mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");
                     mHandler.postDelayed(new Runnable() {
                         @Override
