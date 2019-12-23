@@ -87,8 +87,7 @@ public class YoukuVActivity extends BasePlayActivity {
                     }
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
-                    final String vid = mVid;
-                    String info = YoukuUtils.fetchVideo(vid, mToken);
+                    String info = YoukuUtils.fetchVideo(mVid, mToken);
 
                     if (TextUtils.isEmpty(info)) {
                         mToken = null;
@@ -120,8 +119,7 @@ public class YoukuVActivity extends BasePlayActivity {
                             String nid = next.getString("encodevid");
                             mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo(ntitle, nid)));
                         } else {
-                            Log.e(TAG, "No next video.");
-                            mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo(title, vid)));
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo(title, mVid)));
                         }
 //                        Log.e(TAG, "videos=" + videos);
 
@@ -179,7 +177,7 @@ public class YoukuVActivity extends BasePlayActivity {
                     }
 
 //                    listJsonAlbums();
-                    listHtmlAlbums(vid);
+                    listHtmlAlbums(mVid);
                     Log.e(TAG, "VideoList=" + mVideoList.size());
                     mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
                 } catch (Exception e) {
@@ -242,7 +240,7 @@ public class YoukuVActivity extends BasePlayActivity {
     }
 
     /**
-     * 最多获取前后30集
+     * 获取前后共30集
      */
     private void listHtmlAlbums(String vid) {
         try {

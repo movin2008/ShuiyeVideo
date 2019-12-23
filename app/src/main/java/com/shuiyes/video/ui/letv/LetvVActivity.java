@@ -116,19 +116,23 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                         return;
                     }
 
+                    if(!data.has("playurl")){
+                        fault("解析异常(no playurl)，等待完善");
+                        return;
+                    }
                     JSONObject playurl = data.getJSONObject("playurl");
+                    String title = playurl.getString("title");
 
-                    mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, playurl.getString("title")));
+                    mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, title));
 
                     JSONArray domain = playurl.getJSONArray("domain");
                     JSONObject dispatch = playurl.getJSONObject("dispatch");
 
                     if (playurl.has("nextvid")) {
                         String nid = playurl.getInt("nextvid") + "";
-                        Log.e(TAG, "next vid=" + nid);
-                        mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, nid));
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo("下一集读取中", nid)));
                     }else{
-                        Log.e(TAG, "No next video.");
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo(title, mVid)));
                     }
 
                     String host = domain.getString(0);

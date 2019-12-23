@@ -279,8 +279,8 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         }
     }
 
+    private PlayVideo mNextPlayVideo;// for youku letv
     protected String mVid, mIntentUrl, mPlayUrl, mStream;
-    protected PlayVideo mNextPlayVideo;// just for youku
     protected List<ListVideo> mVideoList = new ArrayList<ListVideo>();
 
     protected int mCurrentPosition;
