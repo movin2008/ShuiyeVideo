@@ -62,7 +62,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         mSelectView.setOnClickListener(this);
         mNextView.setOnClickListener(this);
 
-        mDownloadView.setOnLongClickListener(new View.OnLongClickListener(){
+        mDownloadView.setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View v) {
@@ -269,20 +269,18 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 playNextVideo();
                 break;
             case R.id.btn_download:
-
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData mClipData = ClipData.newPlainText("Label", mPlayUrl);
                 cm.setPrimaryClip(mClipData);
 
-                Toast.makeText(this, "视频网址已复制到剪切板，到下载软件粘贴。 也可长按打开浏览器播放",1).show();
-
-
+                Toast.makeText(this, "视频网址已复制到剪切板，到下载软件粘贴。 也可长按打开浏览器播放", 1).show();
             default:
                 break;
         }
     }
 
     protected String mVid, mIntentUrl, mPlayUrl, mStream;
+    protected PlayVideo mNextPlayVideo;// just for youku
     protected List<ListVideo> mVideoList = new ArrayList<ListVideo>();
 
     protected int mCurrentPosition;
@@ -349,15 +347,8 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         return index;
     }
 
-    private void playNextVideo() {
-        mVideoView.stopPlayback();
-        mStateView.setText("初始化...");
-        mLoadingProgress.setVisibility(View.VISIBLE);
-
-        mPrepared = false;
-        mCurrentPosition = 0;
-
-        playVideo();
+    protected void playNextVideo() {
+        playNextVideo(mNextPlayVideo.getText(), mNextPlayVideo.getUrl());
     }
 
     protected void playNextVideo(String title, String url) {
@@ -472,13 +463,13 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 }
                 break;
             case MSG_UPDATE_NEXT:
-                String nid = (String) msg.obj;
-                Log.e(TAG, "mVid=" + mVid + ", next vid=" + nid);
+                PlayVideo nVideo = (PlayVideo) msg.obj;
+                Log.e(TAG, "mVid=" + mVid + ", next vid=" + nVideo.getUrl());
 
-                if (mVid.equals(nid)) {
+                if (mVid.equals(nVideo.getUrl())) {
                     mNextView.setVisibility(View.GONE);
                 } else {
-                    mVid = nid;
+                    mNextPlayVideo = nVideo;
                     mNextView.setVisibility(View.VISIBLE);
                 }
                 break;

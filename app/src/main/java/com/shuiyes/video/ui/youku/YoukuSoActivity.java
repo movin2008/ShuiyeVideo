@@ -18,6 +18,8 @@ import java.util.List;
 
 public class YoukuSoActivity extends BaseSearchActivity {
 
+    private static final boolean DEBUG = false;// true false
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +75,22 @@ public class YoukuSoActivity extends BaseSearchActivity {
                     return false;
                 }
 
-                String html = YoukuUtils.search(keyword);
-//					Log.e(TAG, html);
+                String ctoken = YoukuUtils.fetchCToken();
+                if (TextUtils.isEmpty(ctoken)) {
+                    notice("Fetch ctoken error, please try again.");
+                }
+                Log.e(TAG, ctoken);
+
+                String cna = YoukuUtils.fetchCna();
+                if (TextUtils.isEmpty(ctoken)) {
+                    notice("Fetch cna error, please try again.");
+                }
+                Log.e(TAG, "cna:" + cna);
+
+                String html = YoukuUtils.search(keyword, ctoken + " cna=" + cna + ";");
+                if (DEBUG) {
+                    Log.e(TAG, html);
+                }
 
                 if (TextUtils.isEmpty(html)) {
                     notice("Seach " + keyword + " is empty.");
@@ -99,24 +115,34 @@ public class YoukuSoActivity extends BaseSearchActivity {
 
                     int startIndex = html.indexOf(start);
                     int endIndex = html.indexOf(start, startIndex + start.length());
-                    String data = null;
+                    String data;
                     if (endIndex != -1) {
                         data = html.substring(startIndex, endIndex);
                     } else {
                         data = html.substring(startIndex);
                     }
-//        			Log.e(TAG, "data ===== "+data);
+                    if (DEBUG) {
+                        Log.e(TAG, "data ===== " + data);
+                    }
 
-                    String key = "data-spm=\\\"dtitle\\\" title=\\\"";
+                    String key = "data-spm=\\\"dtitle\\\"";
                     int len = data.indexOf(key);
                     String tmp = data.substring(len + key.length());
 
-                    len = tmp.indexOf("\\\"");
-                    String albumTitle = tmp.substring(0, len);
-//			       notice("albumTitle ==================== "+albumTitle);
+                    key = "\\\">";
+                    len = tmp.indexOf(key);
+                    tmp = tmp.substring(len + key.length());
+
+                    len = tmp.indexOf("</a>");
+                    String albumTitle = tmp.substring(0, len).replaceAll("<em class=\\\\\"hl\\\\\">", "").replaceAll("</em>", "");
+                    if (DEBUG) {
+                        Log.e(TAG, "albumTitle ==================== " + albumTitle);
+                    }
 
                     if (TextUtils.isEmpty(albumTitle)) {
-//				       notice("albumTitle ?????????????? "+tmp);
+                        if (DEBUG) {
+                            Log.e(TAG, "albumTitle ?????????????? " + tmp);
+                        }
 
                         len = tmp.indexOf(">");
                         albumTitle = Html.fromHtml(tmp.substring(len + 1, tmp.indexOf("</a>"))).toString();
@@ -129,7 +155,9 @@ public class YoukuSoActivity extends BaseSearchActivity {
 
                     len = data.indexOf("\\\"");
                     String albumUrl = HttpUtils.FormateUrl(data.substring(0, len));
-//                 notice(flag + " albumUrl ===================== " + albumUrl);
+                    if (DEBUG) {
+                        Log.e(TAG, flag + " albumUrl ===================== " + albumUrl);
+                    }
 
                     String albumSummary = "暂无简介";
                     key = "<label>简介:</label>";
@@ -139,7 +167,9 @@ public class YoukuSoActivity extends BaseSearchActivity {
 
                         len = tmp.indexOf("</span>\\n\\t");
                         albumSummary = tmp.substring(0, len);
-//				       notice("albumSummary ===================== "+albumSummary);
+                        if (DEBUG) {
+                            Log.e(TAG, "albumSummary ===================== " + albumSummary);
+                        }
                     }
 
                     key = "\\n\\t\\t<img";
@@ -154,8 +184,13 @@ public class YoukuSoActivity extends BaseSearchActivity {
                     tmp = tmp.substring(len + key.length());
 
                     len = tmp.indexOf("\\\"");
-                    String albumImg = HttpUtils.FormateUrl(tmp.substring(0, len));
-//			       notice(flag+" albumImg ===================== "+albumImg);
+                    String albumImg = HttpUtils.FormateUrl(tmp.substring(0, len)).trim();
+                    if (!albumImg.startsWith("http")) {
+                        albumImg = "https:" + albumImg;
+                    }
+                    if (DEBUG) {
+                        Log.e(TAG, flag + " albumImg ===================== " + albumImg);
+                    }
 
                     int prev = 0;
                     List<ListVideo> listVideos = new ArrayList<ListVideo>();

@@ -87,7 +87,8 @@ public class YoukuVActivity extends BasePlayActivity {
                     }
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
-                    String info = YoukuUtils.fetchVideo(mVid, mToken);
+                    final String vid = mVid;
+                    String info = YoukuUtils.fetchVideo(vid, mToken);
 
                     if (TextUtils.isEmpty(info)) {
                         mToken = null;
@@ -106,18 +107,21 @@ public class YoukuVActivity extends BasePlayActivity {
                     }
 
                     JSONObject video = data.getJSONObject("video");
+                    String title = video.getString("title");
 
-                    mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, video.getString("title")));
+                    mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, title));
 
                     if (data.has("videos")) {
                         JSONObject videos = data.getJSONObject("videos");
 
                         if (videos.has("next")) {
-                            String nid = videos.getJSONObject("next").getString("encodevid");
-                            mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, nid));
-                        }else{
+                            JSONObject next = videos.getJSONObject("next");
+                            String ntitle = next.getString("title");
+                            String nid = next.getString("encodevid");
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo(ntitle, nid)));
+                        } else {
                             Log.e(TAG, "No next video.");
-                            mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, mVid));
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo(title, vid)));
                         }
 //                        Log.e(TAG, "videos=" + videos);
 
@@ -128,8 +132,8 @@ public class YoukuVActivity extends BasePlayActivity {
                             for (int i = 0; i < videoList.length(); i++) {
                                 JSONObject listVideo = (JSONObject) videoList.get(i);
                                 String encodevid = listVideo.getString("encodevid");
-                                String title = listVideo.getString("title");
-                                mVideoList.add(new ListVideo(i + 1, title, encodevid));
+                                String listTitle = listVideo.getString("title");
+                                mVideoList.add(new ListVideo((i + 1) + " " + listTitle, listTitle, encodevid));
                             }
                             Log.e(TAG, "VideoList=" + mVideoList.size());
 
@@ -164,9 +168,9 @@ public class YoukuVActivity extends BasePlayActivity {
 
                         YoukuVideo playVideo = null;
                         for (YoukuVideo v : mUrlList) {
-                            Log.i(TAG, v.toStr()+" mStream="+mStream);
+                            Log.i(TAG, v.toStr() + " mStream=" + mStream);
 
-                            if(playVideo == null || v.getType().getType().equals(mStream)){
+                            if (playVideo == null || v.getType().getType().equals(mStream)) {
                                 playVideo = v;
                             }
                         }
@@ -174,8 +178,8 @@ public class YoukuVActivity extends BasePlayActivity {
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
                     }
 
-                    //listHtmlAlbums();
-                    listJsonAlbums();
+//                    listJsonAlbums();
+                    listHtmlAlbums(vid);
                     Log.e(TAG, "VideoList=" + mVideoList.size());
                     mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
                 } catch (Exception e) {
@@ -186,10 +190,11 @@ public class YoukuVActivity extends BasePlayActivity {
         }).start();
     }
 
-    private void listJsonAlbums(){
-        try{
+    @Deprecated
+    private void listJsonAlbums() {
+        try {
             String html = YoukuUtils.listAlbums(mVid);
-            if(TextUtils.isEmpty(html)){
+            if (TextUtils.isEmpty(html)) {
                 Log.e(TAG, "listJsonAlbums is empty.");
                 return;
             }
@@ -197,35 +202,41 @@ public class YoukuVActivity extends BasePlayActivity {
             Utils.setFile("album.youku", html);
 
             JSONObject obj = new JSONObject(html);
+            if (obj.getInt("error") == 1) {
+                Log.e(TAG, "listJsonAlbums maybe deprecated.");
+                return;
+            }
+
+
             html = obj.getString("html");
 
             String key = "item item-";
-            if(html.contains(key)){
+            if (html.contains(key)) {
                 mVideoList.clear();
-                while(html.contains(key)){
+                while (html.contains(key)) {
 
-                    html = html.substring(html.indexOf(key)+key.length());
+                    html = html.substring(html.indexOf(key) + key.length());
 
                     String s = "seq=\"";
-                    String tmp = html.substring(html.indexOf(s)+s.length());
+                    String tmp = html.substring(html.indexOf(s) + s.length());
                     s = "\"";
                     String seq = tmp.substring(0, tmp.indexOf(s));
 
                     s = "item-id=\"item_";
-                    tmp = html.substring(html.indexOf(s)+s.length());
+                    tmp = html.substring(html.indexOf(s) + s.length());
                     s = "\"";
                     String vid = tmp.substring(0, tmp.indexOf(s));
 
 
                     s = "title=\"";
-                    tmp = html.substring(html.indexOf(s)+s.length());
+                    tmp = html.substring(html.indexOf(s) + s.length());
                     s = "\"";
                     String title = tmp.substring(0, tmp.indexOf(s));
 
                     mVideoList.add(new ListVideo(seq, title, vid));
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -233,22 +244,21 @@ public class YoukuVActivity extends BasePlayActivity {
     /**
      * 最多获取前后30集
      */
-    private void listHtmlAlbums(){
-        try{
-            String html = HttpUtils.open(YoukuUtils.getPlayUrlByVid(mVid));
-            if(TextUtils.isEmpty(html)){
+    private void listHtmlAlbums(String vid) {
+        try {
+            String html = HttpUtils.open(YoukuUtils.getPlayUrlByVid(vid));
+            if (TextUtils.isEmpty(html)) {
                 Log.e(TAG, "listHtmlAlbums is empty.");
                 return;
             }
 
             Utils.setFile("youku.html", html);
 
-
-            String key = "window.playerAnthology= ";
-            if(html.contains(key)){
-                String tmp = html.substring(html.indexOf(key)+key.length());
-                key = "</script>";
-                if(tmp.contains(key)){
+            String key = "window.playerAnthology=";
+            if (html.contains(key)) {
+                String tmp = html.substring(html.indexOf(key) + key.length());
+                key = ";";
+                if (tmp.contains(key)) {
                     tmp = tmp.substring(0, tmp.indexOf(key));
                 }
 
@@ -256,21 +266,21 @@ public class YoukuVActivity extends BasePlayActivity {
 
                 JSONObject obj = new JSONObject(tmp);
                 JSONArray arr = (JSONArray) obj.get("list");
-                if(arr.length() > 0){
+                if (arr.length() > 0) {
                     mVideoList.clear();
-                    for (int i=0; i<arr.length(); i++){
+                    for (int i = 0; i < arr.length(); i++) {
                         JSONObject video = arr.getJSONObject(i);
                         String index = video.getString("seq");
-                        String vid = video.getString("encodevid");
+                        String evid = video.getString("encodevid");
                         String title = video.getString("title");
 
-                        mVideoList.add(new ListVideo(index, title, vid));
+                        mVideoList.add(new ListVideo(index, title, evid));
                     }
                 }
-            }else{
+            } else {
                 Log.e(TAG, "listHtmlAlbums not album.");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -279,11 +289,11 @@ public class YoukuVActivity extends BasePlayActivity {
     protected void cacheVideo(PlayVideo video) {
         if (mUrlList.size() < 2) {
             mClarityView.setEnabled(false);
-        }else{
+        } else {
             mClarityView.setEnabled(true);
         }
 
-        mClarityView.setText(((YoukuVideo)video).getType().getProfile());
+        mClarityView.setText(((YoukuVideo) video).getType().getProfile());
     }
 
     @Override
@@ -301,7 +311,7 @@ public class YoukuVActivity extends BasePlayActivity {
     }
 
     @Override
-    protected int getPlayIndex(){
+    protected int getPlayIndex() {
         int index = 0;
         for (int i = 0; i < mVideoList.size() - 1; i++) {
             if (mVid.equals(mVideoList.get(i).getUrl())) {

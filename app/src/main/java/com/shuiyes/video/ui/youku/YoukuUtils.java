@@ -20,7 +20,7 @@ public class YoukuUtils {
      # Found in http://g.alicdn.com/player/beta-ykplayer/0.6.2/youku-player.min.js
      # grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
      */
-    public static String CCODE = "0590";
+    public static String CCODE = "0519";//0590
     public static String VERSION = "0.5.85";
 
     /**
@@ -46,8 +46,6 @@ public class YoukuUtils {
     public static String fetchVideo(String vid, String cna) {
         return HttpUtils.open(YoukuUtils.getVideoUrl(vid, cna));
     }
-
-
 
     public static String fetchCna() {
         HttpURLConnection conn = null;
@@ -93,16 +91,20 @@ public class YoukuUtils {
         return null;
     }
 
-    public static String search(String keyword) throws Exception {
-        return HttpUtils.open("http://so.youku.com/search_video/q_" + URLEncoder.encode(keyword,"utf-8"));
+    public static String fetchCToken(){
+        return HttpUtils.open("https://youku.com/", true);
+    }
+
+    public static String search(String keyword, String cookie) throws Exception {
+        return HttpUtils.open("https://so.youku.com/search_video/q_" + URLEncoder.encode(keyword,"utf-8"), cookie, false);
     }
 
     public static String listAlbums(String vid) throws Exception {
-        return HttpUtils.open("http://v.youku.com/page/playlist?videoEncodeId="+URLEncoder.encode(vid,"utf-8")+"&page=1&videoCategoryId=96&componentid=38011&isSimple=false");
+        return HttpUtils.open("https://v.youku.com/page/playlist?videoEncodeId="+URLEncoder.encode(vid,"utf-8")+"&page=1&videoCategoryId=96&componentid=38011&isSimple=false");
     }
 
     public static String getPlayUrlByVid(String vid){
-        return "http://v.youku.com/v_show/id_"+vid+".html";
+        return "https://v.youku.com/v_show/id_"+vid+".html";
     }
 
     public static String getPlayVid(String url) {

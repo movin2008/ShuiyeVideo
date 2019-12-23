@@ -1,5 +1,6 @@
 package com.shuiyes.video.util;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -26,7 +27,6 @@ public class HttpUtils {
         }
         return url;
     }
-
 
     public static final String UA_WIN = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36";
     public static final String UA_WX = "Mozilla/5.0 (Linux; Android 8.0; MI 6 Build/OPR1.170623.027; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/6.2 TBS/044208 Mobile Safari/537.36 MicroMessenger/6.7.2.1340(0x2607023A) NetType/4G Language/zh_CN";
@@ -66,30 +66,48 @@ public class HttpUtils {
         return HttpUtils.open(url ,false);
     }
 
-    public static String open(String url, boolean print){
-//        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
+    public static String open(String url, boolean forCookie){
+        return HttpUtils.open(url , null, forCookie);
+    }
 
+    public static String open(String url, String cookie, boolean forCookie){
+//        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
 
         if(url.startsWith("https://")){
             HttpsURLConnection conn = null;
             try {
                 conn = (HttpsURLConnection) new URL(url).openConnection();
                 HttpUtils.setURLConnection(conn);
-//                conn.setRequestProperty("Cookie", "PM_CHKID=85ba1603eed038f2; __random_seed=0.43250110831513666; mba_deviceid=c16fdec8-21e8-2687-2334-4417ac565fda; mba_sessionid=3b748ff5-b6ce-aa1b-013d-2d1fef41230b; sessionid=1543543636005; __STKUUID=34813411-2c2e-484e-bd0a-def138a9547a; MQGUID=1068324601584611328; __MQGUID=1068324601584611328; mba_last_action_time=1543544543108; PLANB_FREQUENCY=XACe5UqVH0Qzrxj2; lastActionTime=1543544559122");
                 conn.setRequestMethod("GET");
+                if(!TextUtils.isEmpty(cookie)){
+                    conn.setRequestProperty("Cookie", cookie);
+                }
                 conn.connect();
 
                 int code = conn.getResponseCode();
-                Log.e(TAG, "httpOpen "+url +" code="+code);
+                Log.e(TAG, "httpsOpen "+url +" code="+code);
 
                 if (code == 200) {
                     StringBuffer ret = new StringBuffer();
-                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-                    String read = null;
-                    while ((read = in.readLine()) != null) {
-                        ret.append(read);
+                    if(forCookie){
+                        Map<String, List<String>> headers = conn.getHeaderFields();
+                        List<String> setCookies =  headers.get("set-cookie");
+                        if(setCookies.size() > 0){
+                            String setCookie = setCookies.get(0);
+                            ret.append(setCookie.substring(0, setCookie.indexOf(";") + 1));
+                        }else{
+                            printHeaders(conn);
+                        }
+                        conn.disconnect();
+                    }else{
+                        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        String read = null;
+                        while ((read = in.readLine()) != null) {
+                            ret.append(read);
+                        }
+                        in.close();
                     }
-                    in.close();
+
                     return ret.toString();
                 } else if (code == 301) {
                     return HttpUtils.open(conn.getHeaderField("Location"));
@@ -121,6 +139,9 @@ public class HttpUtils {
                 conn = (HttpURLConnection) new URL(url).openConnection();
                 HttpUtils.setURLConnection(conn);
                 conn.setRequestMethod("GET");
+                if(!TextUtils.isEmpty(cookie)){
+                    conn.setRequestProperty("Cookie", cookie);
+                }
                 conn.connect();
 
                 int code = conn.getResponseCode();
