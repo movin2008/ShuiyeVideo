@@ -33,9 +33,9 @@ public class MiscView extends TagView {
         return playVideo;
     }
 
-    public int measureWidth(){
-        int measureWidth = Math.round(getPaint().measureText(getText().toString()))+40;
-        return measureWidth>WH?measureWidth:WH;
+    public int measureWidth() {
+        int measureWidth = Math.round(getPaint().measureText(getText().toString())) + 40;
+        return measureWidth > WH ? measureWidth : WH;
     }
 
 }

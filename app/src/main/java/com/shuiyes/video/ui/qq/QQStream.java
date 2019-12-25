@@ -68,20 +68,23 @@ public class QQStream extends PlayVideo{
 
     // 321002
     private int stream;
+    // 50
+    private int br;
     // 328843960
     private int size;
     // 高清;(480P)
     private String cname;
 
-    public QQStream(int stream, String streamStr, String cname, int size) {
+    public QQStream(int stream, int br, String streamStr, String cname, int size) {
         super(cname+"(" + Formatter.formatFileSize(SVApplication.getAppContext(), size) + ")", streamStr);
+        this.stream = stream;
+        this.br = br;
         this.size = size;
         this.cname = cname;
-        this.stream = stream;
     }
 
-    public int getStreams() {
-        return stream;
+    public int getBr() {
+        return br;
     }
 
     public int getSize() {
@@ -94,8 +97,8 @@ public class QQStream extends PlayVideo{
 
     @Override
     public String toStr() {
-        return "QQStream{" + stream
-                + ", stream=" + cname
+        return "QQStream{" + url
+                + ", cname=" + cname
                 + ", size=" + Formatter.formatFileSize(SVApplication.getAppContext(), size)
                 + '}';
     }

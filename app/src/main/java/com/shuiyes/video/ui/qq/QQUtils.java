@@ -13,7 +13,16 @@ public class QQUtils {
 
     public final static String HOST = "https://v.qq.com";
 
-    public static final String[] PLATFORMS = {"10201", "4100201", "11", "10901"};
+    /**
+     * 10203 标清 270p
+     * 10212 高清 480p
+     * 10201 超清 720p
+     * 10209 蓝光 1080p
+     *
+     * 4100201
+     */
+    public static final String[] PLATFORMS = {"10201","10203","10212","10209",
+            "4100201", "11", "10901"};
 
     public static String fetchVideo(String playUrl, String defn) throws Exception{
         /**
@@ -48,12 +57,12 @@ public class QQUtils {
     /**
      * 只能获取 MP4 格式视频
      * @param platform
+     * @param defn
      * @param vid
      * @return
      */
-    @Deprecated
-    public static String fetchMp4Video(String platform, String vid) {
-        String url = String.format("https://vv.video.qq.com/getinfo?otype=json&appver=3.2.19.333&platform=%s&defnpayver=1&defn=shd&vid=%s", platform, vid);
+    public static String fetchMp4Video(String platform, String defn, String vid) {
+        String url = String.format("https://vv.video.qq.com/getinfo?otype=ojson&appver=3.2.19.333&platform=%s&defnpayver=1&defn=%s&vid=%s", platform, defn, vid);
         return HttpUtils.open(url);
     }
 
@@ -64,9 +73,8 @@ public class QQUtils {
      * @param filename
      * @return
      */
-    @Deprecated
     public static String fetchMp4Token(String formatId, String vid, String filename) {
-        String url = String.format("https://vv.video.qq.com/getkey?otype=json&appver=3.2.19.333&platform=11&format=%s&vid=%s&filename=%s", formatId, vid, filename);
+        String url = String.format("https://vv.video.qq.com/getkey?otype=ojson&appver=3.2.19.333&platform=11&format=%s&vid=%s&filename=%s", formatId, vid, filename);
         return HttpUtils.open(url);
     }
 

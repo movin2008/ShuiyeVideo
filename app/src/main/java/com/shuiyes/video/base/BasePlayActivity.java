@@ -38,7 +38,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected VideoView mVideoView;
     protected ProgressBar mLoadingProgress;
     protected TextView mTitleView, mStateView, mTimeView;
-    protected Button mDownloadView, mSourceView, mClarityView, mSelectView, mNextView;
+    protected Button mDownloadView, mSourceView, mClarityView, mSelectView, mNextView, mSectionView;
 
     protected boolean mPrepared = false;
     protected String mBatName = null;
@@ -50,12 +50,14 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
         mContext = this;
 
+        mSectionView = (Button) findViewById(R.id.btn_section);
         mDownloadView = (Button) findViewById(R.id.btn_download);
         mSourceView = (Button) findViewById(R.id.btn_source);
         mClarityView = (Button) findViewById(R.id.btn_clarity);
         mSelectView = (Button) findViewById(R.id.btn_select);
         mNextView = (Button) findViewById(R.id.btn_next);
 
+        mSectionView.setOnClickListener(this);
         mDownloadView.setOnClickListener(this);
         mSourceView.setOnClickListener(this);
         mClarityView.setOnClickListener(this);
@@ -206,7 +208,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         mHandler.removeMessages(MSG_UPDATE_TIME);
     }
 
-    protected MiscDialog mSourceDialog, mClarityDialog;
+    protected MiscDialog mSourceDialog, mClarityDialog, mSectionDialog;
     protected AlbumDialog mAlbumDialog;
 
     @Override
@@ -330,7 +332,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected int getPlayIndex() {
         int index = 0;
         for (int i = 0; i < mVideoList.size() - 1; i++) {
-            Log.e(TAG, i + ", getPlayIndex(" + mIntentUrl + ") " + mVideoList.get(i).getUrl());
+            //Log.e(TAG, i + ", getPlayIndex(" + mIntentUrl + ") " + mVideoList.get(i).getUrl());
             if (mIntentUrl.equals(mVideoList.get(i).getUrl())) {
                 index = i;
                 break;
