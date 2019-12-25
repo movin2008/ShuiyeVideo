@@ -85,7 +85,7 @@ public class YoukuSoActivity extends BaseSearchActivity {
                 if (TextUtils.isEmpty(ctoken)) {
                     notice("Fetch cna error, please try again.");
                 }
-                Log.e(TAG, "cna:" + cna);
+                Log.e(TAG, "cna=" + cna);
 
                 String html = YoukuUtils.search(keyword, ctoken + " cna=" + cna + ";");
                 if (DEBUG) {

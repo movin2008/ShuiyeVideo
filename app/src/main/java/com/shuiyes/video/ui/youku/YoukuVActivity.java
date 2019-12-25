@@ -24,7 +24,6 @@ import com.shuiyes.video.widget.MiscView;
 
 public class YoukuVActivity extends BasePlayActivity {
 
-    private static String mToken;
     private List<YoukuVideo> mUrlList = new ArrayList<YoukuVideo>();
 
     @Override
@@ -74,23 +73,18 @@ public class YoukuVActivity extends BasePlayActivity {
                 try {
 
                     mHandler.sendEmptyMessage(MSG_FETCH_TOKEN);
-                    if (mToken == null) {
-                        mToken = YoukuUtils.fetchCna();
-                        Log.e(TAG, "new mToken=" + mToken);
-                    } else {
-                        Log.e(TAG, "prev mToken=" + mToken);
-                    }
+                    String token = YoukuUtils.fetchCna();
+                    Log.e(TAG, "cna=" + token);
 
-                    if (mToken == null) {
+                    if (token == null) {
                         fault("鉴权异常请重试");
                         return;
                     }
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
-                    String info = YoukuUtils.fetchVideo(mVid, mToken);
+                    String info = YoukuUtils.fetchVideo(mVid, token);
 
                     if (TextUtils.isEmpty(info)) {
-                        mToken = null;
                         fault("解析异常请重试");
                         return;
                     }
@@ -100,7 +94,6 @@ public class YoukuVActivity extends BasePlayActivity {
                     JSONObject data = new JSONObject(info).getJSONObject("data");
 
                     if (data.has("error")) {
-                        mToken = null;
                         fault(data.getJSONObject("error").getString("note"));
                         return;
                     }
