@@ -152,12 +152,8 @@ public class QQVActivity extends BasePlayActivity {
                             mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, title));
                         }
 
-                        if (mVideoList.isEmpty()) {
-                            //listHtmlAlbums(html);
-                            listJsonAlbums(html);
-                            Log.e(TAG, "VideoList=" + mVideoList.size());
-                            mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
-                        }
+                        //listHtmlAlbums(html);
+                        listJsonAlbums(html);
                     }
 
                     playMp4Video(mDefn);
@@ -295,6 +291,8 @@ public class QQVActivity extends BasePlayActivity {
                 if (!obj.has("nomal_ids")) {
                     return;
                 }
+
+                mVideoList.clear();
                 JSONArray arr = (JSONArray) obj.get("nomal_ids");
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject video = arr.getJSONObject(i);
@@ -315,6 +313,9 @@ public class QQVActivity extends BasePlayActivity {
 
                     mVideoList.add(new ListVideo(text, text, QQUtils.getVideoPlayUrlFromVid(mIntentUrl, vid)));
                 }
+
+                Log.e(TAG, "VideoList=" + mVideoList.size());
+                mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
             } catch (Exception e) {
                 e.printStackTrace();
             }

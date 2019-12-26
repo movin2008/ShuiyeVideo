@@ -25,7 +25,7 @@ public class YoukuSoActivity extends BaseSearchActivity {
         super.onCreate(savedInstanceState);
 
         mSearch.setHint("优酷搜索");
-        mSearch.setText("wangwangduilidagong");
+        mSearch.setText("汪汪队立大功");
     }
 
     @Override

@@ -85,56 +85,72 @@ public class QQSoActivity extends BaseSearchActivity {
                 while (html.contains(key)) {
                     try {
 
-                        html = html.substring(html.indexOf(key)+key.length());
+                        html = html.substring(html.indexOf(key) + key.length());
                         String result = html;
-                        if(html.contains(key)){
+                        if (html.contains(key)) {
                             result = html.substring(0, html.indexOf(key));
+                        }else if (html.contains("result_relative")) {
+                            result = html.substring(0, html.indexOf("result_relative"));
                         }
 
                         String tmp = "<a href=\"";
-                        String albumUrl = result.substring(result.indexOf(tmp)+tmp.length());
+                        String albumUrl = result.substring(result.indexOf(tmp) + tmp.length());
                         albumUrl = albumUrl.substring(0, albumUrl.indexOf("\""));
 
-                         tmp = "<img src=\"";
-                        String albumImg = result.substring(result.indexOf(tmp)+tmp.length());
-                        albumImg = "https:"+albumImg.substring(0, albumImg.indexOf("\""));
+                        tmp = "<img ";
+                        String albumImg = result.substring(result.indexOf(tmp) + tmp.length());
+                        tmp = "src=\"";
+                        albumImg = albumImg.substring(albumImg.indexOf(tmp) + tmp.length());
+                        if(!albumImg.startsWith("http")){
+                            albumImg = "https:" + albumImg.substring(0, albumImg.indexOf("\""));
+                        }
 
                         tmp = "alt=\"";
-                        String albumTitle = result.substring(result.indexOf(tmp)+tmp.length());
+                        String albumTitle = result.substring(result.indexOf(tmp) + tmp.length());
                         albumTitle = albumTitle.substring(0, albumTitle.indexOf("\""));
 
-                        if(result.contains("mark_2.png")){
+                        if (result.contains("mark_2.png")) {
                             albumTitle += "(预告)";
-                        }else if(result.contains("mark_5.png")){
+                        } else if (result.contains("mark_5.png")) {
                             albumTitle += "(VIP)";
                         }
 
+                        String albumSummary = "";
                         tmp = "<span class=\"label\">简　介：</span>";
-                        String albumSummary = result.substring(result.indexOf(tmp)+tmp.length());
-                        tmp = ">";
-                        albumSummary = albumSummary.substring(albumSummary.indexOf(tmp)+tmp.length());
-                        albumSummary = albumSummary.substring(0, albumSummary.indexOf("<"));
-
+                        if(result.indexOf(tmp) != -1){
+                            albumSummary = result.substring(result.indexOf(tmp) + tmp.length());
+                            tmp = ">";
+                            albumSummary = albumSummary.substring(albumSummary.indexOf(tmp) + tmp.length());
+                            albumSummary = albumSummary.substring(0, albumSummary.indexOf("<"));
+                        }else {
+                            tmp = "<span class=\"label\">主　题：</span>";
+                            if(result.indexOf(tmp) != -1){
+                                albumSummary = result.substring(result.indexOf(tmp) + tmp.length());
+                                tmp = ">";
+                                albumSummary = albumSummary.substring(albumSummary.indexOf(tmp) + tmp.length());
+                                albumSummary = albumSummary.substring(0, albumSummary.indexOf("<"));
+                            }
+                        }
 
                         List<ListVideo> listVideos = new ArrayList<ListVideo>();
 
                         String listkey = "<div class=\"item\">";
                         String listHtml = result;
-                        while(listHtml.contains(listkey)){
-                            listHtml = listHtml.substring(listHtml.indexOf(listkey)+listkey.length());
+                        while (listHtml.contains(listkey)) {
+                            listHtml = listHtml.substring(listHtml.indexOf(listkey) + listkey.length());
                             result = listHtml.substring(0, listHtml.indexOf("</div>"));
 
                             tmp = "<a href=\"";
-                            String url = result.substring(result.indexOf(tmp)+tmp.length());
+                            String url = result.substring(result.indexOf(tmp) + tmp.length());
                             url = url.substring(0, url.indexOf("\""));
 
                             tmp = "\">";
-                            String title = result.substring(result.indexOf(tmp)+tmp.length());
+                            String title = result.substring(result.indexOf(tmp) + tmp.length());
                             title = title.substring(0, title.indexOf("<"));
 
-                            if(result.contains("mark_12.png")){
+                            if (result.contains("mark_12.png")) {
                                 title += "(预告)";
-                            }else if(result.contains("mark_14.png")){
+                            } else if (result.contains("mark_14.png")) {
                                 title += "(VIP)";
                             }
 

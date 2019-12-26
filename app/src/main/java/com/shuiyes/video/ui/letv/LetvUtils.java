@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.SHA1;
+import com.shuiyes.video.util.Utils;
 
 import java.net.URLEncoder;
 
@@ -36,7 +37,7 @@ public class LetvUtils {
      */
     public static long calcTimeKey() {
         long magic = 185025305;
-        long tm = System.currentTimeMillis() / 1000;
+        long tm = Utils.timestamp();
         return ror(tm, magic % 17) ^ magic;
     }
 

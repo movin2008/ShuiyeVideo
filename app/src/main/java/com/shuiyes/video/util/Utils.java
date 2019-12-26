@@ -37,6 +37,10 @@ public class Utils {
         return System.currentTimeMillis() / 1000;
     }
 
+    public static String timestamps() {
+        return System.currentTimeMillis() / 1000 + "";
+    }
+
     public static void installTVBus(Context context) {
         try {
             InputStream in = context.getResources().getAssets().open("TVBus.apk");

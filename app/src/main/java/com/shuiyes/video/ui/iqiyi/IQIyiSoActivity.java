@@ -25,7 +25,7 @@ public class IQIyiSoActivity extends BaseSearchActivity {
         super.onCreate(savedInstanceState);
 
         mSearch.setHint("爱奇艺搜索");
-        mSearch.setText("极限挑战");
+        mSearch.setText("汽车城");
     }
 
     @Override
@@ -49,8 +49,6 @@ public class IQIyiSoActivity extends BaseSearchActivity {
         PlayUtils.play(mContext, mAlbums.get(position));
     }
 
-    private JSONObject albumDocInfo;
-
     private class SearchAsyncTask extends AsyncTask<String, Integer, Boolean> {
 
         private boolean mCancelled = false;
@@ -71,6 +69,7 @@ public class IQIyiSoActivity extends BaseSearchActivity {
         @Override
         protected Boolean doInBackground(String... args) {
             String keyword = args[0];
+            JSONObject albumDocInfo = null;
             try {
                 if (mCancelled) {
                     notice("doInBackground has Cancelled.");
@@ -167,17 +166,22 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                     if (albumDocInfo.has("videoinfos")) {
                         JSONArray videoinfos = albumDocInfo.getJSONArray("videoinfos");
                         if (videoinfos.length() > 0) {
+                            JSONObject videoinfo0 = (JSONObject)videoinfos.get(0);
                             if (TextUtils.isEmpty(albumTitle)) {
-                                albumTitle = ((JSONObject) videoinfos.get(0)).getString("itemTitle");
+                                albumTitle = videoinfo0.getString("itemTitle");
                             }
                             if (TextUtils.isEmpty(albumImg)) {
-                                albumImg = ((JSONObject) videoinfos.get(0)).getString("itemVImage");
+                                albumImg = videoinfo0.getString("itemVImage");
                             }
                             if (TextUtils.isEmpty(albumUrl)) {
-                                albumUrl = ((JSONObject) videoinfos.get(0)).getString("itemLink");
+                                albumUrl = videoinfo0.getString("itemLink");
                             }
+
+                            if(videoinfo0.has("is_vip") && videoinfo0.getBoolean("is_vip")){
+                                albumTitle += "(VIP)";
+                            }
+                            listVideos(listVideos, videoinfos, albumTitle);
                         }
-                        listVideos(listVideos, videoinfos, albumTitle);
                     }
 
                     // 预告
@@ -193,8 +197,8 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                             if (TextUtils.isEmpty(albumUrl)) {
                                 albumUrl = ((JSONObject) prevues.get(0)).getString("itemLink");
                             }
+                            listVideos(listVideos, prevues, albumTitle);
                         }
-                        listVideos(listVideos, prevues, albumTitle);
                     }
 
                     if (TextUtils.isEmpty(albumUrl)) {

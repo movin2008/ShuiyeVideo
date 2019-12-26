@@ -34,14 +34,6 @@ public class Album {
         return summary;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
     public void setOrder(int order) {
         this.order = order;
     }
@@ -50,28 +42,16 @@ public class Album {
         return imgurl;
     }
 
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
-    }
-
     public String getPlayurl() {
         return playurl;
-    }
-
-    public void setPlayurl(String playurl) {
-        this.playurl = playurl;
     }
 
     public String getAlbumUrl() {
         return albumUrl;
     }
 
-    public void setAlbumUrl(String listurl) {
-        this.albumUrl = listurl;
-    }
-
     public int getSize() {
-        return listVideos!=null?listVideos.size():0;
+        return listVideos != null ? listVideos.size() : 0;
     }
 
     public List<ListVideo> getListVideos() {
@@ -84,21 +64,21 @@ public class Album {
     }
 
     private String getListPlayurl() {
-        if(listVideos != null && listVideos.size() > 0){
+        if (listVideos != null && listVideos.size() > 0) {
             ListVideo video = listVideos.get(0);
             // 一个视频不需要展示列表
-            if(listVideos.size() == 1){
-                this.title = video.getTitle();
+            if (listVideos.size() == 1) {
+                this.title = video.getText();
                 listVideos.clear();
             }
             return video.getUrl();
-        }else{
+        } else {
             return albumUrl;
         }
     }
 
     @Override
     public String toString() {
-        return "Album [id=" + order + ", title='" + title + "', size="+((listVideos!=null)?listVideos.size():0)+", url='" + playurl + "']";
+        return "Album [id=" + order + ", title='" + title + "', size=" + ((listVideos != null) ? listVideos.size() : 0) + ", url='" + playurl + "']";
     }
 }

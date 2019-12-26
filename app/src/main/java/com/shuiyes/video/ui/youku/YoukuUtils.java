@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.shuiyes.video.util.HttpUtils;
+import com.shuiyes.video.util.Utils;
 
 public class YoukuUtils {
 
@@ -38,7 +39,7 @@ public class YoukuUtils {
         url += "&version=" + VERSION;
         url += "&client_ip=192.168.1.1";
         url += "&utid=" + URLEncoder.encode(cna);
-        url += "&client_ts=" + System.currentTimeMillis() / 1000;
+        url += "&client_ts=" + Utils.timestamp();
         url += "&ckey=" + URLEncoder.encode(CKEY);
         return url;
     }

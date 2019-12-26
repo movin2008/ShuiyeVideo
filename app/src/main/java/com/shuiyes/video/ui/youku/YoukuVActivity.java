@@ -112,7 +112,7 @@ public class YoukuVActivity extends BasePlayActivity {
                             String nid = next.getString("encodevid");
                             mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo(ntitle, nid)));
                         } else {
-                            mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo(title, mVid)));
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo("", mVid)));
                         }
 //                        Log.e(TAG, "videos=" + videos);
 
@@ -171,7 +171,6 @@ public class YoukuVActivity extends BasePlayActivity {
 
 //                    listJsonAlbums();
                     listHtmlAlbums(mVid);
-                    Log.e(TAG, "VideoList=" + mVideoList.size());
                     mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
                 } catch (Exception e) {
                     fault(e);
@@ -256,17 +255,35 @@ public class YoukuVActivity extends BasePlayActivity {
                 Utils.setFile("album.youku", tmp);
 
                 JSONObject obj = new JSONObject(tmp);
-                JSONArray arr = (JSONArray) obj.get("list");
-                if (arr.length() > 0) {
+                if (obj.has("next")) {
+                    JSONObject next = obj.getJSONObject("next");
+                    String ntitle = next.getString("title");
+                    String nid = next.getString("encodevid");
+                    mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo(ntitle, nid)));
+                } else {
+                    mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo("", mVid)));
+                }
+
+                if(obj.has("list")){
+                    JSONArray arr = (JSONArray) obj.get("list");
                     mVideoList.clear();
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject video = arr.getJSONObject(i);
-                        String index = video.getString("seq");
+
                         String evid = video.getString("encodevid");
                         String title = video.getString("title");
 
+                        String index;
+                        if(video.has("seq")){
+                            index = video.getString("seq");
+                        }else{
+                            index = title;
+                        }
+
                         mVideoList.add(new ListVideo(index, title, evid));
                     }
+
+                    Log.e(TAG, "VideoList=" + mVideoList.size());
                 }
             } else {
                 Log.e(TAG, "listHtmlAlbums not album.");

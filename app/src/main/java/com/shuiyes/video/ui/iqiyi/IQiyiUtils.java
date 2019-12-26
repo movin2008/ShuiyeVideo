@@ -18,22 +18,40 @@ public class IQiyiUtils {
     private final static String TAG = "IQiyiUtils";
 
     public static String fetchVideo(String tvid, String vid) {
-        String url = String.format("https://cache.video.iqiyi.com/jp/vi/%s/%s/",tvid,vid);
+        String url = String.format("https://cache.video.iqiyi.com/jp/vi/%s/%s/", tvid, vid);
         return HttpUtils.open(url);
     }
 
+    /**
+     * 获取（非综艺）节目列表
+     * @param aid
+     * @param page
+     * @return
+     */
     public static String fetchAvlist(String aid, int page) {
-        String url = String.format("http://cache.video.iqiyi.com/jp/avlist/%s/%s/50/",aid,page);
+        String url = String.format("http://cache.video.iqiyi.com/jp/avlist/%s/%s/50/", aid, page);
+        return HttpUtils.open(url);
+    }
+
+    /**
+     * 获取（综艺）节目列表
+     * @param cid  {@link Channel} 6
+     * @param sid  sourceid
+     * @param time 2019
+     * @return
+     */
+    public static String fetchSvlist(int cid, int sid, String time) {
+        String url = String.format("https://pcw-api.iqiyi.com/album/source/svlistinfo?cid=%s&sourceid=%s&timelist=%s", cid, sid, time);
         return HttpUtils.open(url);
     }
 
     private static final String src = "76f90cbd92f94a2e925d83e8ccd22cb7";
     private static final String key = "d5fb4bd9d50c4be6948c97edd7254b0e";
 
-    public static String getVMS(String tvid, String vid){
-        String t = System.currentTimeMillis() / 1000 + "";
-        String sc = MD5.encode(t + key  + vid);
-        String url = String.format("http://cache.m.iqiyi.com/tmts/%s/%s/?t=%s&sc=%s&src=%s",tvid,vid,t,sc,src);
+    public static String getVMS(String tvid, String vid) {
+        String t = Utils.timestamps();
+        String sc = MD5.encode(t + key + vid);
+        String url = String.format("http://cache.m.iqiyi.com/tmts/%s/%s/?t=%s&sc=%s&src=%s", tvid, vid, t, sc, src);
         return HttpUtils.open(url);
     }
 
@@ -54,22 +72,23 @@ public class IQiyiUtils {
     public static String search(String keyword) throws UnsupportedEncodingException {
         String url = "https://search.video.iqiyi.com/o?if=html5&pageNum=1&pageSize=30&video_allow_3rd=1";
         url += "&channel_name=";
-        url += "&key="+ URLEncoder.encode(keyword,"utf-8");
+        url += "&key=" + URLEncoder.encode(keyword, "utf-8");
         return HttpUtils.open(url);
     }
 
     /**
      * 获取不全，最多50集
+     *
      * @param albumUrl
      */
     @Deprecated
-    private void listAlbumUrl(String albumUrl){
-        if(TextUtils.isEmpty(albumUrl)){
+    private void listAlbumUrl(String albumUrl) {
+        if (TextUtils.isEmpty(albumUrl)) {
             Log.e(TAG, "list album is empty.");
             return;
         }
-        if(!albumUrl.contains("iqiyi.com/a_")){
-            Log.e(TAG, albumUrl+" is illegally.");
+        if (!albumUrl.contains("iqiyi.com/a_")) {
+            Log.e(TAG, albumUrl + " is illegally.");
             return;
         }
 
@@ -81,7 +100,7 @@ public class IQiyiUtils {
         }
 
         String key = "<ul class=\"site-piclist";
-        if(html.contains(key)){
+        if (html.contains(key)) {
             int len = html.indexOf(key);
             html = html.substring(len + key.length());
             html = html.substring(0, html.indexOf("</ul>"));
@@ -122,11 +141,15 @@ public class IQiyiUtils {
 }
 
 /**
- 视频详情：
-
- http://mixer.video.iqiyi.com/jp/mixin/videos/1178224700
-
- https://cache.video.iqiyi.com/jp/vi/1178224700/6c32b745086b7c8e76c89429debc7a37/
- http://cache.video.iqiyi.com/jp/avlist/207834001/1/50/
- http://cache.video.iqiyi.com/jp/othlist/205014501/4/desc/
+ * 视频详情：
+ * <p>
+ * http://mixer.video.iqiyi.com/jp/mixin/videos/1178224700
+ * <p>
+ * https://cache.video.iqiyi.com/jp/vi/1178224700/6c32b745086b7c8e76c89429debc7a37/
+ * http://cache.video.iqiyi.com/jp/avlist/207834001/1/50/
+ * http://cache.video.iqiyi.com/jp/othlist/205014501/4/desc/
+ * https://pcw-api.iqiyi.com/album/source/svlistinfo?cid=6&sourceid=240687701&timelist=2019
+ * <p>
+ * // 其他预告片等
+ * https://pcw-api.iqiyi.com/album/album/othtrailer/240687701?contenttype=7&size=10
  */
