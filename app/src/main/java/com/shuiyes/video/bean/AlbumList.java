@@ -1,8 +1,9 @@
 package com.shuiyes.video.bean;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class AlbumList extends ArrayList<Album>{
+public class AlbumList extends CopyOnWriteArrayList<Album> {
 
     @Override
     public boolean add(Album album) {

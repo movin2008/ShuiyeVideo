@@ -264,7 +264,7 @@ public class YoukuVActivity extends BasePlayActivity {
                     mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo("", mVid)));
                 }
 
-                if(obj.has("list")){
+                if (obj.has("list")) {
                     JSONArray arr = (JSONArray) obj.get("list");
                     mVideoList.clear();
                     for (int i = 0; i < arr.length(); i++) {
@@ -274,9 +274,9 @@ public class YoukuVActivity extends BasePlayActivity {
                         String title = video.getString("title");
 
                         String index;
-                        if(video.has("seq")){
+                        if (video.has("seq")) {
                             index = video.getString("seq");
-                        }else{
+                        } else {
                             index = title;
                         }
 
@@ -312,6 +312,7 @@ public class YoukuVActivity extends BasePlayActivity {
         mLoadingProgress.setVisibility(View.VISIBLE);
 
         mVid = url;
+        mIntentUrl = YoukuUtils.getPlayUrlByVid(mVid);
         mPrepared = false;
         mCurrentPosition = 0;
 

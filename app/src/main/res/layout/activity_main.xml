@@ -39,12 +39,6 @@
                     android:text="爱奇艺" />
 
                 <RadioButton
-                    android:id="@+id/rb_letv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="乐视" />
-
-                <RadioButton
                     android:id="@+id/rb_youku"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -55,6 +49,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="腾讯" />
+
+                <RadioButton
+                    android:id="@+id/rb_letv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="乐视" />
 
                 <RadioButton
                     android:id="@+id/rb_mgtv"
@@ -92,14 +92,14 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="soletv"
-                android:text="乐视搜索(支持VIP)" />
+                android:onClick="soiqiyi"
+                android:text="爱奇艺搜索" />
 
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="soiqiyi"
-                android:text="爱奇艺搜索" />
+                android:onClick="soyouku"
+                android:text="优酷搜索" />
 
             <Button
                 style="@style/Button"
@@ -110,8 +110,8 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="soyouku"
-                android:text="优酷搜索" />
+                android:onClick="soletv"
+                android:text="乐视搜索" />
 
             <Button
                 style="@style/Button"

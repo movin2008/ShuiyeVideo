@@ -77,11 +77,12 @@ public class LetvUtils {
         // 1536840193220
         double tn = System.currentTimeMillis();
         tn = tn / 10000000;
-        tn = tn / 1000000;
+        // TODO if failure, timestamp maybe changed
+        tn = tn / 10000000;
         String uuid = SHA1.encode(url) + "_0";
 
         url = url.replace("tss=0", "tss=ios");
-        url += "&m3v=1&termid=1&format=1&hwtype=un&ostype=MacOS10.12.4&p1=1&p2=10&p3=-&expect=3";
+        url += "&termid=1&m3v=1&format=1&expect=3&hwtype=un&ostype=Windows10&p1=1&p2=10&p3=-";
         url += "&tn=" + tn;
         url += "&vid=" + vid;
         url += "&uuid=" + uuid;
@@ -104,15 +105,17 @@ public class LetvUtils {
     }
 
     public static String getPlayVid(String url) {
-        String vid = "unkown";
+        String vid = url;
         String key = "/vplay/";
         int index = url.indexOf(key);
-        if (url.indexOf(".html") != -1) {
-            vid = url.substring(index + key.length(), url.indexOf(".html"));
-            String[] vids = vid.split("_");
-            vid = vids[vids.length - 1];
-        } else {
-            vid = url.substring(index + key.length());
+        if(index != -1){
+            if (url.indexOf(".html") != -1) {
+                vid = url.substring(index + key.length(), url.indexOf(".html"));
+                String[] vids = vid.split("_");
+                vid = vids[vids.length - 1];
+            } else {
+                vid = url.substring(index + key.length());
+            }
         }
         Log.e(TAG, "getPlayVid(" + url + ")=" + vid);
         return vid;

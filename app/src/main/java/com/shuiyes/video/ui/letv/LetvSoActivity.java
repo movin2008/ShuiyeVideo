@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.shuiyes.video.base.BaseSearchActivity;
 import com.shuiyes.video.bean.Album;
@@ -28,7 +29,7 @@ public class LetvSoActivity extends BaseSearchActivity {
         super.onCreate(savedInstanceState);
 
         mSearch.setHint("乐看搜索");
-        mSearch.setText("笑傲江湖");
+        mSearch.setText("小猪佩奇");
     }
 
     @Override
@@ -68,10 +69,10 @@ public class LetvSoActivity extends BaseSearchActivity {
                     return false;
                 }
 
-                String result = LetvUtils.searchVideos(keyword);
+                String html = LetvUtils.searchVideos(keyword);
 //					notice(result);
 
-                if (TextUtils.isEmpty(result)) {
+                if (TextUtils.isEmpty(html)) {
                     notice("Search " + keyword + ", videos is empty.");
                     return false;
                 }
@@ -82,68 +83,44 @@ public class LetvSoActivity extends BaseSearchActivity {
                 }
 
 
-                if (result.contains("play-terminal active j-tui-terminal")) {
-                    result = result.substring(result.indexOf("play-terminal active j-tui-terminal"));
+                if (html.contains("play-terminal active j-tui-terminal")) {
+                    html = html.substring(html.indexOf("play-terminal active j-tui-terminal"));
                 } else {
                     notice("解析异常.");
 
-                    Utils.setFile("letv.html", result);
+                    Utils.setFile("letv.html", html);
                     return false;
                 }
 
-
                 int flag = 1;
                 mAlbums.clear();
-
-                String starKey = "<div class=\"So-detail Star-so";
-                // 现获取明星的个人作品
-                if (result.contains(starKey)) {
-                    try {
-                        String star = result.substring(result.indexOf(starKey) + starKey.length());
-                        //notice(star);
-
-                        starKey = "data-info=\"";
-                        star = star.substring(star.indexOf(starKey) + starKey.length());
-                        //notice(star);
-
-                        String dataInfo = star.substring(0, star.indexOf("\""));
-                        //notice(dataInfo);
-
-                        JSONObject obj = new JSONObject(dataInfo);
-                        String leId = obj.getString("leId");
-
-                        if (!TextUtils.isEmpty(leId)) {
-                            flag = listStarVideos(leId, flag);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                Log.e(TAG, "Albums1 ===== " + mAlbums.size());
-                if (keyword.equals(mSearchText)) {
-                    mHandler.sendEmptyMessage(Constants.MSG_LIST_ALBUM);
-                }
-
+                String result = html;
 
                 String start = "<div class=\"So-detail ";
-                while (result.contains(start)) {
+                while (html.contains(start)) {
 
                     if (mCancelled) {
                         notice("Listing albums has Cancelled.");
                         return false;
                     }
 
-                    int startIndex = result.indexOf(start);
-                    int endIndex = result.indexOf(start, startIndex + start.length());
+                    int startIndex = html.indexOf(start);
+                    int endIndex = html.indexOf(start, startIndex + start.length());
                     String data = null;
                     if (endIndex != -1) {
-                        data = result.substring(startIndex, endIndex);
+                        data = html.substring(startIndex, endIndex);
                     } else {
-                        data = result.substring(startIndex);
+                        data = html.substring(startIndex);
+                    }
+//                    notice("data"+flag+" ===== "+data);
+
+                    if(data.startsWith("<div class=\"So-detail Star-so\"")){
+                        html = html.substring(startIndex + start.length());
+
+                        // 跳过明星
+                        continue;
                     }
 
-//                    notice("data"+flag+" ===== "+data);
 
                     // 专辑播放地址
                     String key = "<a href=\"";
@@ -168,6 +145,7 @@ public class LetvSoActivity extends BaseSearchActivity {
                     tmp = tmp.substring(len + key.length());
                     len = tmp.indexOf("</a>");
                     String albumTitle = tmp.substring(0, len).replaceAll("<u>", "").replaceAll("</u>", "");
+                    boolean ico_vip = data.contains("<em class=ico_vip>会员</em>");
 
                     // 专辑简介
                     key = "<div class=\"info-cnt\" data-statectn=\"typeResult\" data-itemhldr=\"a\">";
@@ -197,6 +175,19 @@ public class LetvSoActivity extends BaseSearchActivity {
                         try {
                             JSONObject obj = new JSONObject(dataInfo);
 
+                            String payEpisode = obj.getString("payEpisode");
+//                            notice("data"+flag+" ===== "+payEpisode);
+
+                            List<String> payEpisodes = new ArrayList<String>();
+                            if (!TextUtils.isEmpty(payEpisode)) {
+
+                                String[] vidEpisodes = payEpisode.split(",");
+                                for (int i = 0; i < vidEpisodes.length; i++) {
+                                    String[] vids = vidEpisodes[i].split("-");
+                                    payEpisodes.add(vids[1]);
+                                }
+                            }
+
                             String vidEpisode = obj.getString("vidEpisode");
 //                            notice("data"+flag+" ===== "+vidEpisode);
 
@@ -205,7 +196,8 @@ public class LetvSoActivity extends BaseSearchActivity {
                                 String[] vidEpisodes = vidEpisode.split(",");
                                 for (int i = 0; i < vidEpisodes.length; i++) {
                                     String[] vids = vidEpisodes[i].split("-");
-                                    ListVideo listVideo = new ListVideo(vids[0], vids[1], LetvUtils.getVideoPlayUrlFromVid(vids[1]));
+                                    String text = payEpisodes.contains(vids[1]) ? vids[0] + "(VIP)" : vids[0];
+                                    ListVideo listVideo = new ListVideo(text, vids[1], LetvUtils.getVideoPlayUrlFromVid(vids[1]));
                                     listVideos.add(listVideo);
                                 }
                             }
@@ -218,7 +210,6 @@ public class LetvSoActivity extends BaseSearchActivity {
                         // 如果没有取到专辑列表信息，则可能是 音乐/综艺 等
                         listMusicOrZongyi(listVideos, data);
                     }
-
 
                     if (listVideos.size() == 0) {
                         // 如果没有取到专辑列表信息，则可能是 **
@@ -250,6 +241,10 @@ public class LetvSoActivity extends BaseSearchActivity {
                         }
                     }
 
+                    if((listVideos == null || listVideos.size() < 1) && ico_vip){
+                        // 没有专辑列表，要考虑是否是 VIP
+                        albumTitle += " (VIP)";
+                    }
 
                     if (PlayUtils.isSurpportUrl(albumUrl)) {
                         Album album = new Album(flag, albumTitle, albumSummary, albumImg, albumUrl, listVideos);
@@ -265,10 +260,40 @@ public class LetvSoActivity extends BaseSearchActivity {
                         Log.e(TAG, "暂不支持播放 《" + albumTitle + "》" + albumUrl);
                     }
 
-                    result = result.substring(startIndex + start.length());
+                    html = html.substring(startIndex + start.length());
                 }
 
-                Log.e(TAG, "Albums2 ===== " + mAlbums.size());
+                Log.e(TAG, "Albums So ===== " + mAlbums.size());
+                if (keyword.equals(mSearchText)) {
+                    mHandler.sendEmptyMessage(Constants.MSG_LIST_ALBUM);
+                }
+
+                String starKey = "<div class=\"So-detail Star-so";
+                // 现获取明星的个人作品
+                if (result.contains(starKey)) {
+                    try {
+                        String star = result.substring(result.indexOf(starKey) + starKey.length());
+                        //notice(star);
+
+                        starKey = "data-info=\"";
+                        star = star.substring(star.indexOf(starKey) + starKey.length());
+                        //notice(star);
+
+                        String dataInfo = star.substring(0, star.indexOf("\""));
+                        //notice(dataInfo);
+
+                        JSONObject obj = new JSONObject(dataInfo);
+                        String leId = obj.getString("leId");
+
+                        if (!TextUtils.isEmpty(leId)) {
+                            flag = listStarVideos(leId, flag);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                Log.e(TAG, "Albums Star ===== " + mAlbums.size());
                 if (keyword.equals(mSearchText)) {
                     mHandler.sendEmptyMessage(Constants.MSG_LIST_ALBUM);
                 }
@@ -276,7 +301,7 @@ public class LetvSoActivity extends BaseSearchActivity {
                 // 查询用户上传的视频
                 flag = listUploadVideos(keyword, flag);
 
-                Log.e(TAG, "mAlbums3 ===== " + mAlbums.size());
+                Log.e(TAG, "Albums Upload ===== " + mAlbums.size());
                 if (keyword.equals(mSearchText)) {
                     mHandler.sendEmptyMessage(Constants.MSG_LIST_ALBUM);
                 }
@@ -296,7 +321,7 @@ public class LetvSoActivity extends BaseSearchActivity {
     private int listVideos(String json, int flag) throws Exception {
         JSONObject obj = new JSONObject(json);
 
-        if(!obj.has("data_list")){
+        if (!obj.has("data_list")) {
             Utils.setFile("letv", json);
             notice("No data list.");
             return flag;
@@ -395,7 +420,13 @@ public class LetvSoActivity extends BaseSearchActivity {
 
                         String url = video.getString("url");//.replaceAll("letv.com", "le.com")
 
-                        ListVideo listVideo = new ListVideo(video.getString("name"), video.getString("name"), url);
+                        String name = video.getString("name");
+                        if(video.has("areaAllow") && !video.getBoolean("areaAllow")){
+                            name += " (VIP)";
+                        }
+
+
+                        ListVideo listVideo = new ListVideo(name, name, url);
                         listVideos.add(listVideo);
                     }
 
@@ -438,8 +469,8 @@ public class LetvSoActivity extends BaseSearchActivity {
 
                 if (TextUtils.isEmpty(json)) {
                     notice(count + ", Search " + keyword + ", star videos is empty.");
-                    if(count++ < LIST_MAX){
-                        Thread.sleep(500*count);
+                    if (count++ < LIST_MAX) {
+                        Thread.sleep(500 * count);
                     }
                 } else {
                     break;
@@ -467,8 +498,8 @@ public class LetvSoActivity extends BaseSearchActivity {
 
                 if (TextUtils.isEmpty(json)) {
                     notice(count + ", Search " + keyword + ", upload videos is empty.");
-                    if(count++ < LIST_MAX){
-                        Thread.sleep(500*count);
+                    if (count++ < LIST_MAX) {
+                        Thread.sleep(500 * count);
                     }
                 } else {
                     break;

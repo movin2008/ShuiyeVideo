@@ -137,7 +137,7 @@ public abstract class BaseSearchActivity extends BaseActivity {
             public void run() {
                 clearFocus(findViewById(R.id.btn_clear_focus));
             }
-        }, 500);
+        }, 1999);
     }
 
     @Override

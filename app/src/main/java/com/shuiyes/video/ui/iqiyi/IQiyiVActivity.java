@@ -440,10 +440,4 @@ public class IQiyiVActivity extends BasePlayActivity {
         mClarityView.setText(((IQiyiVideo) video).getType().getProfile());
     }
 
-    @Override
-    protected void playNextVideo(String title, String url) {
-        super.playNextVideo(title, url);
-        playVideo();
-    }
-
 }

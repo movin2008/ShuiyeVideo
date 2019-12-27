@@ -116,7 +116,7 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                         return;
                     }
 
-                    if(!data.has("playurl")){
+                    if (!data.has("playurl")) {
                         fault("解析异常(no playurl)，等待完善");
                         return;
                     }
@@ -131,7 +131,7 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                     if (playurl.has("nextvid")) {
                         String nid = playurl.getInt("nextvid") + "";
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo("下一集读取中", nid)));
-                    }else{
+                    } else {
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NEXT, new PlayVideo(title, mVid)));
                     }
 
@@ -161,9 +161,9 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
 
                         LetvStream playVideo = null;
                         for (LetvStream v : mUrlList) {
-                            Log.i(TAG, v.toStr()+" mStream="+mStream);
+                            Log.i(TAG, v.toStr() + " mStream=" + mStream);
 
-                            if(playVideo == null || v.getText().equals(mStream)){
+                            if (playVideo == null || v.getText().equals(mStream)) {
                                 playVideo = v;
                             }
                         }
@@ -171,7 +171,7 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                         playUrl(playVideo.getUrl(), playVideo.getText());
                     }
 
-                    if(playurl.has("total")){
+                    if (playurl.has("total")) {
                         listAlbum(playurl.getInt("total"));
                     }
                 } catch (Exception e) {
@@ -219,8 +219,8 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
         }
     }
 
-    private void listAlbum(int albumCount){
-        if(mVideoList.isEmpty() && albumCount > 1){
+    private void listAlbum(int albumCount) {
+        if (mVideoList.isEmpty() && albumCount > 1) {
             boolean find = false;
             List<ListVideo> videoList = new ArrayList<ListVideo>();
             try {
@@ -235,7 +235,7 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                     return;
                 }
 
-                if(obj.get("data") instanceof String){
+                if (obj.get("data") instanceof String) {
                     Log.e(TAG, obj.getString("data"));
                     return;
                 }
@@ -247,36 +247,42 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                     JSONObject stream = (JSONObject) videolist.get(i);
 
                     // 此接口会获取相关视频，所以要判断下是否有当前视频
-                    if(mVid.equals(""+stream.getInt("vid"))){
+                    if (mVid.equals("" + stream.getInt("vid"))) {
                         find = true;
                     }
 
-                    String episode = stream.getString ("episode");
-                    String title = stream.getString ("title");
+                    String episode = stream.getString("episode");
+                    String title = stream.getString("title");
                     String url = stream.getString("url");
-                    if(TextUtils.isEmpty(episode) || Integer.parseInt(episode) > 100){
-                        if(stream.has("subTitle")){
-                            String subTitle = stream.getString ("subTitle");
-                            if(title.contains(subTitle)){
-                                episode = title;
-                            }else{
-                                episode = stream.getString ("subTitle");
-                            }
-                        }else{
-                            episode = title;
-                        }
+                    if (TextUtils.isEmpty(episode) || Integer.parseInt(episode) > 100) {
+                        episode = title;
+//                        if (stream.has("subTitle")) {
+//                            String subTitle = stream.getString("subTitle");
+//                            if (title.contains(subTitle)) {
+//                                episode = title;
+//                            } else {
+//                                episode = title + " " + subTitle;
+//                            }
+//                        } else {
+//                            episode = title;
+//                        }
                     }
+
+                    if(stream.has("ispay") && stream.getInt("ispay") == 1){
+                        episode += " (VIP)";
+                    }
+
                     videoList.add(new ListVideo(episode, title, url));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-            }finally {
-                if(find){
+            } finally {
+                if (find) {
                     mVideoList.addAll(videoList);
-                    Log.e(TAG, "videoList "+mVideoList.size()+"/"+albumCount);
+                    Log.e(TAG, "videoList " + mVideoList.size() + "/" + albumCount);
                     mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
-                }else{
-                    Log.e(TAG, "Letv("+mVid+") is no album.");
+                } else {
+                    Log.e(TAG, "Letv(" + mVid + ") is no album.");
                 }
             }
 
@@ -295,8 +301,16 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
 
     @Override
     protected void playNextVideo(String title, String url) {
-        super.playNextVideo(title, url);
-        mVid = LetvUtils.getPlayVid(url);
+        mVideoView.stopPlayback();
+        mTitleView.setText(title);
+        mStateView.setText("初始化...");
+        mLoadingProgress.setVisibility(View.VISIBLE);
+
+        mVid = url;
+        mIntentUrl = LetvUtils.getVideoPlayUrlFromVid(mVid);
+        mPrepared = false;
+        mCurrentPosition = 0;
+
         playVideo();
     }
 
