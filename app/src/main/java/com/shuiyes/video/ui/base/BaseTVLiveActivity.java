@@ -1,4 +1,4 @@
-package com.shuiyes.video.base;
+package com.shuiyes.video.ui.base;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -15,7 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.base.BaseActivity;
+import com.shuiyes.video.ui.base.BaseActivity;
 import com.shuiyes.video.util.Constants;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.PlayUtils;

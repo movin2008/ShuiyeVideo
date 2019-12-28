@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.widget.RadioGroup;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.base.BaseActivity;
+import com.shuiyes.video.ui.base.BaseActivity;
 import com.shuiyes.video.ui.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;

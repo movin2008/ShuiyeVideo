@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.base.BasePlayActivity;
+import com.shuiyes.video.ui.base.BasePlayActivity;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.MiscDialog;
@@ -49,7 +49,13 @@ public class QQVActivity extends BasePlayActivity {
                         }
 
                         mStateView.setText("初始化...");
-                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, ((MiscView) view).getPlayVideo()));
+                        PlayVideo playVideo = ((MiscView) view).getPlayVideo();
+                        if(playVideo.getUrl().endsWith("/")){
+                            cacheSection(playVideo);
+                        }else{
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
+
+                        }
                     }
                 });
                 mSourceDialog.show();
@@ -125,8 +131,8 @@ public class QQVActivity extends BasePlayActivity {
                         mHandler.sendEmptyMessage(MSG_FETCH_VIDEOID);
                         String html = HttpUtils.open(mIntentUrl);
 
-                        if (TextUtils.isEmpty(html)) {
-                            fault("请重试");
+                        if(html.startsWith("Exception: ")){
+                            fault(html);
                             return;
                         }
 
@@ -374,6 +380,11 @@ public class QQVActivity extends BasePlayActivity {
             for (int i = 0; i < len; i++) {
                 String html = QQUtils.fetchMp4Video(QQUtils.PLATFORMS[i], defn, mVid);
 
+                if(html.startsWith("Exception: ")){
+                    fault(html);
+                    return;
+                }
+
                 Utils.setFile("qq", html);
 
                 JSONObject obj = new JSONObject(html);
@@ -382,6 +393,8 @@ public class QQVActivity extends BasePlayActivity {
                     if (!"cannot play outside".equals(msg) || i == len - 1) {
                         if ("not pay".equals(msg)) {
                             fault("VIP 章节暂不支持试看");
+                        } else if ("ip-copy limit".equals(msg)) {
+                            fault("VIP付费 章节暂不支持试看");
                         } else {
                             fault(msg);
                         }
@@ -486,6 +499,11 @@ public class QQVActivity extends BasePlayActivity {
                 return;
             }
 
+            for (PlayVideo playVideo:mSectionList){
+                QQSection section = (QQSection) playVideo;
+                Log.e(TAG, section.toStr());
+            }
+
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -515,7 +533,6 @@ public class QQVActivity extends BasePlayActivity {
     private int BR;
 
     private void playSection(String formatId, String vid, String filename) throws Exception {
-
         for (QQStream v : mUrlList) {
             if (BR == v.getBr()) {
                 mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIDEO, v.getCname()));
@@ -539,24 +556,31 @@ public class QQVActivity extends BasePlayActivity {
         }
 
         if (obj.has("key")) {
-            String vkey = obj.getString("key");
-            for (PlayVideo video : mSourceList) {
-                String url = String.format("%s%s?vkey=%s", video.getUrl(), filename, vkey);
-                video.setUrl(url);
-            }
-
-            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, mSourceList.get(0)));
+            mSectionName = filename;
+            mVKey = obj.getString("key");
+            cacheSection(mSourceList.get(0));
         } else {
             fault("解析失败...");
         }
 
     }
 
+    private String mVKey = "nokey";
+    private String mSectionName = "noname";
+    private void cacheSection(PlayVideo video){
+        PlayVideo playVideo = video.clone();
+        playVideo.setUrl(String.format("%s%s?vkey=%s", playVideo.getUrl(), mSectionName, mVKey));
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
+    }
+
+
     private int mSectionIndex = 0;
 
     private List<QQSection> mSectionList = new ArrayList<QQSection>();
 
     private void playNextSection(final int index) {
+        mCurrentPosition = 0;
+        mSectionIndex = index;
         String sectionStr = (index + 1) + "/" + mSectionList.size();
         if (mSectionList.size() > 1) {
             mSectionView.setVisibility(View.VISIBLE);
@@ -583,7 +607,7 @@ public class QQVActivity extends BasePlayActivity {
     protected void completionToPlayNextVideo() {
         if (mSectionList.size() > 0) {
             mSectionIndex++;
-            Log.d(TAG, "playNextSection " + mSectionIndex + "/" + mSectionList.size());
+            Log.d(TAG, "playNextSection " + (mSectionIndex+1) + "/" + mSectionList.size());
             if (mSectionIndex < mSectionList.size()) {
                 playNextSection(mSectionIndex);
             } else {

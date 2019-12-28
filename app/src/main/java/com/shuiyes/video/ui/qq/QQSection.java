@@ -29,7 +29,8 @@ public class QQSection extends PlayVideo{
 
     @Override
     public String toStr() {
-        return "QQSection{" + formatid
+        return "QQSection" + index
+                + "{" + formatid
                 + ", vid=" + vid
                 + ", url=" + url
                 + '}';

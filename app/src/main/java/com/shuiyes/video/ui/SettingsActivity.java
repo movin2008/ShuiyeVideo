@@ -17,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.base.BaseActivity;
+import com.shuiyes.video.ui.base.BaseActivity;
 import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.ui.youku.YoukuUtils;
 

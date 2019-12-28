@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.base.BasePlayActivity;
+import com.shuiyes.video.ui.base.BasePlayActivity;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.MiscDialog;
 import com.shuiyes.video.ui.qq.QQStream;

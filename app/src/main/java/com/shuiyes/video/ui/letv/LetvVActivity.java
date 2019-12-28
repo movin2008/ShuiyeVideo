@@ -6,8 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.base.BasePlayActivity;
-import com.shuiyes.video.base.BasePlayerExoActivity;
+import com.shuiyes.video.ui.base.BasePlayActivity;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.MiscDialog;
@@ -105,11 +104,14 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
             public void run() {
                 try {
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
-                    String info = HttpUtils.open(LetvUtils.getVideoInfoUrl(mVid));
+                    String html = HttpUtils.open(LetvUtils.getVideoInfoUrl(mVid));
+                    if(html.startsWith("Exception: ")){
+                        fault(html);
+                        return;
+                    }
+                    Utils.setFile("letv", html);
 
-                    Utils.setFile("letv", info);
-
-                    JSONObject data = new JSONObject(info).getJSONObject("msgs");
+                    JSONObject data = new JSONObject(html).getJSONObject("msgs");
                     if (data.getInt("statuscode") != 1001) {
 //                        Log.e(TAG, info);
                         fault(data.getString("content"));
@@ -184,16 +186,22 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
 
     private void playUrl(String url, String streamStr) throws Exception {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIDEO, streamStr));
-        String video = HttpUtils.open(LetvUtils.getVideoPlayUrl(url, mVid));
+        String html = HttpUtils.open(LetvUtils.getVideoPlayUrl(url, mVid));
 
-        if (TextUtils.isEmpty(video)) {
-            fault("解析异常请重试");
+        if(html.startsWith("Exception: ")){
+            fault(html);
             return;
         }
 
-        Utils.setFile("letv", video);
+        Utils.setFile("letv", html);
 
-        JSONObject data = new JSONObject(video);
+        if (html.startsWith("jsonp(")) {
+            html = html.substring(6, html.length());
+            html = html.substring(0, html.length() - 1);
+        }
+
+
+        JSONObject data = new JSONObject(html);
         JSONArray nodelist = data.getJSONArray("nodelist");
         int nodelistLen = nodelist.length();
 
@@ -253,7 +261,7 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
 
                     String episode = stream.getString("episode");
                     String title = stream.getString("title");
-                    String url = stream.getString("url");
+                    String url = stream.getString("vid");//url
                     if (TextUtils.isEmpty(episode) || Integer.parseInt(episode) > 100) {
                         episode = title;
 //                        if (stream.has("subTitle")) {
@@ -268,7 +276,7 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
 //                        }
                     }
 
-                    if(stream.has("ispay") && stream.getInt("ispay") == 1){
+                    if (stream.has("ispay") && stream.getInt("ispay") == 1) {
                         episode += " (VIP)";
                     }
 
@@ -312,6 +320,18 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
         mCurrentPosition = 0;
 
         playVideo();
+    }
+
+    @Override
+    protected int getPlayIndex() {
+        int index = 0;
+        for (int i = 0; i < mVideoList.size() - 1; i++) {
+            if (mVid.equals(mVideoList.get(i).getUrl())) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.shuiyes.video.bean;
 
-public class PlayVideo {
+public class PlayVideo implements Cloneable{
 
     protected String text;
     protected String url;
@@ -30,5 +30,15 @@ public class PlayVideo {
         return "PlayVideo{" + text
 //                + ", url='" + url + '\''
                 + '}';
+    }
+
+    @Override
+    public PlayVideo clone() {
+        try {
+            return (PlayVideo) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

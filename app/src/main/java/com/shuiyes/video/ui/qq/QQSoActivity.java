@@ -2,10 +2,9 @@ package com.shuiyes.video.ui.qq;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 
-import com.shuiyes.video.base.BaseSearchActivity;
+import com.shuiyes.video.ui.base.BaseSearchActivity;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.Constants;
@@ -67,8 +66,8 @@ public class QQSoActivity extends BaseSearchActivity {
                 String html = QQUtils.searchVideos(keyword);
                 Utils.setFile("qqso.html", html);
 
-                if (TextUtils.isEmpty(html)) {
-                    notice("Search " + keyword + ", videos is empty.");
+                if(html.startsWith("Exception: ")){
+                    notice(html);
                     return false;
                 }
 
@@ -148,10 +147,12 @@ public class QQSoActivity extends BaseSearchActivity {
                             String title = result.substring(result.indexOf(tmp) + tmp.length());
                             title = title.substring(0, title.indexOf("<"));
 
-                            if (result.contains("mark_12.png")) {
+                            if (result.contains("alt=\"预告\" ")) {
                                 title += "(预告)";
-                            } else if (result.contains("mark_14.png")) {
+                            } else if (result.contains("alt=\"视频包月only-VIP\"")) {
                                 title += "(VIP)";
+                            }else if (result.contains("alt=\"VIP付费\"")) {
+                                title += "(VIP付费)";
                             }
 
                             ListVideo listVideo = new ListVideo(title, title, url);

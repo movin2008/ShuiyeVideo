@@ -1,4 +1,4 @@
-package com.shuiyes.video.base;
+package com.shuiyes.video.ui.base;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -137,8 +137,21 @@ public abstract class BaseSearchActivity extends BaseActivity {
             public void run() {
                 clearFocus(findViewById(R.id.btn_clear_focus));
             }
-        }, 1999);
+        }, 4321);
+
+//        mHandler.postDelayed(mTextRunnable, 5555);
     }
+
+    private Runnable mTextRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mHandler.postDelayed(mTextRunnable, 5555);
+
+            View focusView = getWindow().getDecorView().findFocus();
+
+            Log.e(TAG, ""+focusView);
+        }
+    };
 
     @Override
     public void handleOtherMessage(Message msg) {
@@ -172,9 +185,9 @@ public abstract class BaseSearchActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        if(mInputMethodManager.isActive(mSearch)){
-            mInputMethodManager.hideSoftInputFromWindow(mSearch.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
+//        if(mInputMethodManager.isActive(mSearch)){
+//            mInputMethodManager.hideSoftInputFromWindow(mSearch.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//        }
     }
 
     @Override
@@ -219,9 +232,9 @@ public abstract class BaseSearchActivity extends BaseActivity {
 //            mInputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 //        }
 
-        if(mInputMethodManager.isActive(mSearch)){
-            mInputMethodManager.hideSoftInputFromWindow(mSearch.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
+//        if(mInputMethodManager.isActive(mSearch)){
+//            mInputMethodManager.hideSoftInputFromWindow(mSearch.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//        }
 
         mSearch.clearFocus();
         view.requestFocus();

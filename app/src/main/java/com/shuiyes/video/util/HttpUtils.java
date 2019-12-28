@@ -28,15 +28,17 @@ public class HttpUtils {
         return url;
     }
 
+    public static final String UA_MAC = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36";
     public static final String UA_WIN = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36";
     public static final String UA_WX = "Mozilla/5.0 (Linux; Android 8.0; MI 6 Build/OPR1.170623.027; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/6.2 TBS/044208 Mobile Safari/537.36 MicroMessenger/6.7.2.1340(0x2607023A) NetType/4G Language/zh_CN";
+    public static final String UA = UA_WIN;
 
     public static void setURLConnection(URLConnection conn) {
         conn.setConnectTimeout(10000);
         conn.setReadTimeout(10000);
 //        conn.setRequestProperty("Charset", "UTF-8");
         conn.setRequestProperty("Host", conn.getURL().getHost());
-        conn.setRequestProperty("User-Agent", UA_WIN);
+        conn.setRequestProperty("User-Agent", UA);
     }
 
     public static void setURLConnection(URLConnection conn, String Referer) {
@@ -73,6 +75,7 @@ public class HttpUtils {
     public static String open(String url, String cookie, boolean forCookie){
 //        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
 
+        String error = "Exception: ";
         if(url.startsWith("https://")){
             HttpsURLConnection conn = null;
             try {
@@ -128,6 +131,7 @@ public class HttpUtils {
                 return HttpUtils.open(url);
             } catch (Exception e) {
                 e.printStackTrace();
+                error += e.getLocalizedMessage();
             }finally {
                 if(conn != null){
                     conn.disconnect();
@@ -175,13 +179,14 @@ public class HttpUtils {
                 return HttpUtils.open(url);
             } catch (Exception e) {
                 e.printStackTrace();
+                error += e.getLocalizedMessage();
             } finally {
                 if(conn != null){
                     conn.disconnect();
                 }
             }
         }
-        return null;
+        return error;
     }
 
     public static String testPost(String url){

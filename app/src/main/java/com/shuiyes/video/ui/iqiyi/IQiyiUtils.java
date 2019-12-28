@@ -94,8 +94,8 @@ public class IQiyiUtils {
 
         String html = HttpUtils.open(albumUrl);
 
-        if (TextUtils.isEmpty(html)) {
-            Log.e(TAG, "Seach album is empty.");
+        if(html.startsWith("Exception: ")){
+            Log.e(TAG, html);
             return;
         }
 

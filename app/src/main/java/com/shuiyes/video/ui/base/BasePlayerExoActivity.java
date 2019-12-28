@@ -1,25 +1,38 @@
-package com.shuiyes.video.base;
+package com.shuiyes.video.ui.base;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.VideoView;
 
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.metadata.Metadata;
+import com.google.android.exoplayer2.metadata.MetadataOutput;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.MediaSourceEventListener;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultAllocator;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
@@ -28,17 +41,17 @@ import com.shuiyes.video.dialog.MiscDialog;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public abstract class BasePlayActivity extends BaseActivity implements View.OnClickListener {
+public abstract class BasePlayerExoActivity extends BaseActivity implements View.OnClickListener, MediaSourceEventListener {
 
     protected Context mContext;
-    protected VideoView mVideoView;
     protected ProgressBar mLoadingProgress;
     protected TextView mTitleView, mStateView, mTimeView;
-    protected Button mDownloadView, mSourceView, mClarityView, mSelectView, mNextView, mSectionView;
+    protected Button mSourceView, mClarityView, mSelectView, mNextView;
 
     protected boolean mPrepared = false;
     protected String mBatName = null;
@@ -46,131 +59,27 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play);
+        setContentView(R.layout.activity_player_exo);
 
         mContext = this;
 
-        mSectionView = (Button) findViewById(R.id.btn_section);
-        mDownloadView = (Button) findViewById(R.id.btn_download);
         mSourceView = (Button) findViewById(R.id.btn_source);
         mClarityView = (Button) findViewById(R.id.btn_clarity);
         mSelectView = (Button) findViewById(R.id.btn_select);
         mNextView = (Button) findViewById(R.id.btn_next);
 
-        mSectionView.setOnClickListener(this);
-        mDownloadView.setOnClickListener(this);
         mSourceView.setOnClickListener(this);
         mClarityView.setOnClickListener(this);
         mSelectView.setOnClickListener(this);
         mNextView.setOnClickListener(this);
-
-        mDownloadView.setOnLongClickListener(new View.OnLongClickListener() {
-
-            @Override
-            public boolean onLongClick(View v) {
-                final Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(mPlayUrl));
-                startActivity(intent);
-                return true;
-            }
-        });
 
         mTitleView = (TextView) findViewById(R.id.tv_title);
         mStateView = (TextView) findViewById(R.id.tv_state);
         mTimeView = (TextView) findViewById(R.id.tv_time);
 
         mLoadingProgress = (ProgressBar) findViewById(R.id.loading);
-        mVideoView = (VideoView) findViewById(R.id.videoview);
-        MediaController controller = new MediaController(this);
-        controller.setOnHoverListener(new View.OnHoverListener() {
-            @Override
-            public boolean onHover(View view, MotionEvent motionEvent) {
-                Log.e(TAG, " =========================== onPrepared");
-                return false;
-            }
-        });
 
-//        ProgressBar pb;
-//        try {
-//            Field f_mProgress =MediaController.class.getDeclaredField("mProgress");
-//            f_mProgress.setAccessible(true);
-//
-//            Method m_initControllerView = MediaController.class.getDeclaredMethod("initControllerView", View.class);
-//            m_initControllerView.setAccessible(true);
-//            m_initControllerView.invoke(this, v);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        mVideoView.setMediaController(controller);
-        mVideoView.requestFocus();
-
-        mVideoView.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-
-            @Override
-            public boolean onInfo(MediaPlayer mediaPlayer, int what, int extra) {
-                switch (what) {
-                    case MediaPlayer.MEDIA_INFO_BUFFERING_START:
-                        Log.e(TAG, " =========================== MEDIA_INFO_BUFFERING_START");
-                        mLoadingProgress.setVisibility(View.VISIBLE);
-                        break;
-                    case MediaPlayer.MEDIA_INFO_BUFFERING_END:
-                        Log.e(TAG, " =========================== MEDIA_INFO_BUFFERING_END");
-                        mLoadingProgress.setVisibility(View.GONE);
-                        break;
-                    case MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
-                        Log.e(TAG, " =========================== MEDIA_INFO_VIDEO_RENDERING_START");
-                        mLoadingProgress.setVisibility(View.GONE);
-                        break;
-                    default:
-                        Log.e(TAG, " =========================== onInfo(" + what + ", " + extra + ")");
-                        break;
-                }
-
-                return false;
-            }
-        });
-
-        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                Log.e(TAG, " =========================== onPrepared");
-                mediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
-
-                mPrepared = true;
-                mIsError = false;
-
-                mHandler.sendEmptyMessage(MSG_PALY_VIDEO);
-                mediaPlayer.start();
-            }
-        });
-
-        mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-                String err = "onError(" + i + "," + i1 + ")";
-                Log.e(TAG, " =========================== " + err);
-                Tips.show(mContext, err, 0);
-                fault(err);
-                return false;
-            }
-        });
-
-        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                Log.e(TAG, " =========================== onCompletion");
-                if (!mIsError) {
-                    mCurrentPosition = 0;
-                    mLoadingProgress.setVisibility(View.VISIBLE);
-
-                    completionToPlayNextVideo();
-                }
-            }
-        });
+        initExoPlayer();
 
         mIntentUrl = getIntent().getStringExtra("url");
         Log.e(TAG, "play url=" + mIntentUrl);
@@ -185,15 +94,17 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected void onResume() {
         super.onResume();
 
-        if (mPrepared && !mIsError && !mVideoView.isPlaying()) {
+        if (mPrepared && !mIsError) {
             mLoadingProgress.setVisibility(View.VISIBLE);
             if (mStateView.getText().length() == 0) {
                 mStateView.setText("视频恢复中...");
             }
-            if (mCurrentPosition > 0) {
-                mVideoView.seekTo(mCurrentPosition);
-            }
-            mVideoView.start();
+        }
+        if (mPlayerView != null) {
+            mPlayerView.onResume();
+        }
+        if(mExoPlayer != null){
+            mExoPlayer.setPlayWhenReady(true);
         }
         mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 100);
     }
@@ -202,13 +113,16 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected void onPause() {
         super.onPause();
 
-        if (mVideoView.isPlaying()) {
-            mVideoView.pause();
+        if (mPlayerView != null) {
+            mPlayerView.onPause();
+        }
+        if(mExoPlayer != null){
+            mExoPlayer.setPlayWhenReady(false);
         }
         mHandler.removeMessages(MSG_UPDATE_TIME);
     }
 
-    protected MiscDialog mSourceDialog, mClarityDialog, mSectionDialog;
+    protected MiscDialog mSourceDialog, mClarityDialog;
     protected AlbumDialog mAlbumDialog;
 
     @Override
@@ -222,7 +136,8 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         if (mAlbumDialog != null && mAlbumDialog.isShowing()) {
             mAlbumDialog.dismiss();
         }
-        mVideoView.stopPlayback();
+        mExoPlayer.release();
+        mExoPlayer = null;
         super.onDestroy();
     }
 
@@ -234,7 +149,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 mClarityView.requestFocus();
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                mVideoView.requestFocus();
+                mPlayerView.requestFocus();
                 break;
             case KeyEvent.KEYCODE_DPAD_LEFT:
             case KeyEvent.KEYCODE_DPAD_RIGHT:
@@ -270,32 +185,94 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
             case R.id.btn_next:
                 playNextVideo();
                 break;
-            case R.id.btn_download:
-                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData mClipData = ClipData.newPlainText("Label", mPlayUrl);
-                cm.setPrimaryClip(mClipData);
-
-                Toast.makeText(this, "视频网址已复制到剪切板，到下载软件粘贴。 也可长按打开浏览器播放", 1).show();
             default:
                 break;
         }
     }
 
-    private PlayVideo mNextPlayVideo;// for youku letv
+    private SimpleExoPlayer mExoPlayer;
+    private PlayerView mPlayerView;
+    private void initExoPlayer() {
+        mPlayerView = (PlayerView) this.findViewById(R.id.exoplayer_view);
+        mPlayerView.requestFocus();
+        mPlayerView.setControllerAutoShow(false);
+        mPlayerView.setUseController(false);
+        mPlayerView.setKeepScreenOn(true);
+
+
+        DefaultRenderersFactory rendererFactory = new DefaultRenderersFactory(this,
+                DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER);
+        TrackSelector trackSelector = new DefaultTrackSelector();
+        DefaultLoadControl.Builder builder = new DefaultLoadControl.Builder();
+        builder.setAllocator(new DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE));
+        builder.setBufferDurationsMs(2000, 15000, 1500, 0
+        );
+        LoadControl loadControl = builder.createDefaultLoadControl();
+
+        mExoPlayer = ExoPlayerFactory.newSimpleInstance(this, rendererFactory, trackSelector, loadControl);
+        mExoPlayer.addVideoListener(new com.google.android.exoplayer2.video.VideoListener() {
+            @Override
+            public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees, float pixelWidthHeightRatio) {
+            }
+
+            @Override
+            public void onRenderedFirstFrame() {
+            }
+        });
+        mExoPlayer.addMetadataOutput(new MetadataOutput() {
+            @Override
+            public void onMetadata(Metadata metadata) {
+
+            }
+        });
+        mExoPlayer.addListener(new Player.EventListener() {
+            @Override
+            public void onLoadingChanged(boolean isLoading) {
+                Log.e(TAG, "onLoadingChanged "+isLoading);
+            }
+
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                Log.e(TAG, "onPlayerStateChanged playWhenReady="+playWhenReady+", playbackState="+playbackState);
+                if(playbackState == 3){
+                    mHandler.sendEmptyMessage(MSG_PALY_VIDEO);
+                }
+            }
+
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+                Log.e(TAG, "onPlayerError ");
+            }
+
+            @Override
+            public void onPositionDiscontinuity(int reason) {
+                Log.e(TAG, "onPositionDiscontinuity "+reason);
+            }
+
+            @Override
+            public void onSeekProcessed() {
+                Log.e(TAG, "onSeekProcessed ");
+            }
+        });
+
+        mPlayerView.setPlayer(mExoPlayer);
+    }
+
+    private void startPlayback(String url) {
+        Log.e(TAG, "startPlayback " + url);
+
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(mContext, mIntentUrl, null);
+        MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url));
+        videoSource = new HlsMediaSource(Uri.parse(url), dataSourceFactory, null, this);
+
+        mExoPlayer.setPlayWhenReady(true);
+        mExoPlayer.prepare(videoSource);
+    };
+
     protected String mVid, mIntentUrl, mPlayUrl, mStream;
     protected List<ListVideo> mVideoList = new ArrayList<ListVideo>();
 
     protected int mCurrentPosition;
-    protected MediaPlayer.OnBufferingUpdateListener mBufferingUpdateListener = new MediaPlayer.OnBufferingUpdateListener() {
-
-        @Override
-        public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
-//            Log.e(TAG, " =========================== onBufferingUpdate=" + mediaPlayer.getCurrentPosition() + "/" + i);
-            if (mediaPlayer.isPlaying()) {
-                mCurrentPosition = mediaPlayer.getCurrentPosition();
-            }
-        }
-    };
 
     protected boolean mIsError;
 
@@ -314,25 +291,19 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         mPrepared = false;
 
         mLoadingProgress.setVisibility(View.VISIBLE);
-        mDownloadView.setVisibility(View.VISIBLE);
 
-        mVideoView.stopPlayback();
-        try {
-            mVideoView.setVideoURI(Uri.parse(url));
-        } catch (Exception e) {
-            Log.e(TAG, "setVideoURI(" + url + ") " + e.getLocalizedMessage());
-        }
+        mExoPlayer.stop(true);
+        startPlayback(url);
 
         if (mCurrentPosition != 0) {
             Log.e(TAG, "seekTo=" + mCurrentPosition);
-            mVideoView.seekTo(mCurrentPosition);
+            mExoPlayer.seekTo(mCurrentPosition);
         }
     }
 
-    protected int getPlayIndex() {
+    protected int getPlayIndex(){
         int index = 0;
         for (int i = 0; i < mVideoList.size() - 1; i++) {
-            //Log.e(TAG, i + ", getPlayIndex(" + mIntentUrl + ") " + mVideoList.get(i).getUrl());
             if (mIntentUrl.equals(mVideoList.get(i).getUrl())) {
                 index = i;
                 break;
@@ -341,20 +312,27 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         return index;
     }
 
-    private int getNextIndex() {
-        int index = getPlayIndex() + 1;
-        if (index == mVideoList.size()) {
+    private int getNextIndex(){
+        int index = getPlayIndex();
+        if(index == mVideoList.size()){
             index = 0;
         }
         return index;
     }
 
-    protected void playNextVideo() {
-        playNextVideo(mNextPlayVideo.getText(), mNextPlayVideo.getUrl());
+    private void playNextVideo() {
+        mExoPlayer.stop(true);
+        mStateView.setText("初始化...");
+        mLoadingProgress.setVisibility(View.VISIBLE);
+
+        mPrepared = false;
+        mCurrentPosition = 0;
+
+        playVideo();
     }
 
     protected void playNextVideo(String title, String url) {
-        mVideoView.stopPlayback();
+        mExoPlayer.stop(true);
         mTitleView.setText(title);
         mStateView.setText("初始化...");
         mLoadingProgress.setVisibility(View.VISIBLE);
@@ -367,7 +345,6 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     }
 
     protected void completionToPlayNextVideo() {
-        Log.e(TAG, "completionToPlayNextVideo " + mVideoList.size());
         if (mVideoList.size() > 0) {
             ListVideo video = mVideoList.get(getNextIndex());
             playNextVideo(video.getTitle(), video.getUrl());
@@ -443,7 +420,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 break;
             case MSG_PALY_VIDEO:
                 mLoadingProgress.setVisibility(View.GONE);
-                if (mStateView.getText().length() != 0) {
+                if(mStateView.getText().length() != 0){
                     mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");
                     mHandler.postDelayed(new Runnable() {
                         @Override
@@ -465,13 +442,13 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 }
                 break;
             case MSG_UPDATE_NEXT:
-                PlayVideo nVideo = (PlayVideo) msg.obj;
-                Log.e(TAG, "mVid=" + mVid + ", next vid=" + nVideo.getUrl());
+                String nid = (String) msg.obj;
+                Log.e(TAG, "mVid=" + mVid + ", next vid=" + nid);
 
-                if (mVid.equals(nVideo.getUrl())) {
+                if (mVid.equals(nid)) {
                     mNextView.setVisibility(View.GONE);
                 } else {
-                    mNextPlayVideo = nVideo;
+                    mVid = nid;
                     mNextView.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -482,4 +459,54 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
     protected abstract void cacheVideo(PlayVideo video);
 
+    @Override
+    public void onMediaPeriodCreated(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId) {
+        Log.e(TAG, " =========================== onMediaPeriodCreated");
+    }
+
+    @Override
+    public void onMediaPeriodReleased(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId) {
+        Log.e(TAG, " =========================== onMediaPeriodReleased");
+    }
+
+    @Override
+    public void onLoadStarted(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData) {
+        Log.e(TAG, " =========================== onLoadStarted");
+        mLoadingProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onLoadCompleted(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData) {
+        Log.e(TAG, " =========================== onLoadCompleted");
+        mLoadingProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onLoadCanceled(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData) {
+        Log.e(TAG, " =========================== onLoadCanceled");
+        mLoadingProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onLoadError(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData, IOException error, boolean wasCanceled) {
+        String err = "onError(" + error.getLocalizedMessage()+ ")";
+        Log.e(TAG, " =========================== "+err);
+        Tips.show(mContext, err, 0);
+        fault(err);
+    }
+
+    @Override
+    public void onReadingStarted(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId) {
+        Log.e(TAG, " =========================== onReadingStarted");
+    }
+
+    @Override
+    public void onUpstreamDiscarded(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId, MediaLoadData mediaLoadData) {
+        Log.e(TAG, " =========================== onUpstreamDiscarded");
+    }
+
+    @Override
+    public void onDownstreamFormatChanged(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, MediaLoadData mediaLoadData) {
+        Log.e(TAG, " =========================== onDownstreamFormatChanged");
+    }
 }

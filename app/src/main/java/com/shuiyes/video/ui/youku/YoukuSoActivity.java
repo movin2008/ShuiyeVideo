@@ -6,7 +6,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.shuiyes.video.base.BaseSearchActivity;
+import com.shuiyes.video.ui.base.BaseSearchActivity;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.Constants;
@@ -92,8 +92,8 @@ public class YoukuSoActivity extends BaseSearchActivity {
                     Log.e(TAG, html);
                 }
 
-                if (TextUtils.isEmpty(html)) {
-                    notice("Seach " + keyword + " is empty.");
+                if(html.startsWith("Exception: ")){
+                    notice(html);
                     return false;
                 }
 

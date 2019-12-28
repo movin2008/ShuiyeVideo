@@ -28,6 +28,7 @@
             android:gravity="center"
             android:onClick="clearFocus"
             android:padding="0dp"
+            android:visibility="gone"
             android:text="输入法"
             android:textSize="25dp" />
     </LinearLayout>

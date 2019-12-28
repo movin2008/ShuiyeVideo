@@ -4,9 +4,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.SparseArray;
 
-import com.shuiyes.video.base.BaseSearchActivity;
+import com.shuiyes.video.ui.base.BaseSearchActivity;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.Constants;
@@ -72,8 +71,8 @@ public class LetvSoActivity extends BaseSearchActivity {
                 String html = LetvUtils.searchVideos(keyword);
 //					notice(result);
 
-                if (TextUtils.isEmpty(html)) {
-                    notice("Search " + keyword + ", videos is empty.");
+                if(html.startsWith("Exception: ")){
+                    notice(html);
                     return false;
                 }
 

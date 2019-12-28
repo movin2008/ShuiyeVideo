@@ -1,8 +1,6 @@
-package com.shuiyes.video.base;
+package com.shuiyes.video.ui.base;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -11,9 +9,6 @@ import android.widget.TextView;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
-import com.shuiyes.video.ui.PlayerActivity;
-import com.shuiyes.video.ui.tvlive.TVBusActivity;
-import com.shuiyes.video.ui.tvlive.TVPlayActivity;
 import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.widget.NumberView;
 import com.zhy.view.flowlayout.FlowLayout;

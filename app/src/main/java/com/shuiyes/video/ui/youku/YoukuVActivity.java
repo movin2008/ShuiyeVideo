@@ -13,7 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.shuiyes.video.base.BasePlayActivity;
+import com.shuiyes.video.ui.base.BasePlayActivity;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
@@ -184,8 +184,8 @@ public class YoukuVActivity extends BasePlayActivity {
     private void listJsonAlbums() {
         try {
             String html = YoukuUtils.listAlbums(mVid);
-            if (TextUtils.isEmpty(html)) {
-                Log.e(TAG, "listJsonAlbums is empty.");
+            if(html.startsWith("Exception: ")){
+                fault(html);
                 return;
             }
 
@@ -237,8 +237,8 @@ public class YoukuVActivity extends BasePlayActivity {
     private void listHtmlAlbums(String vid) {
         try {
             String html = HttpUtils.open(YoukuUtils.getPlayUrlByVid(vid));
-            if (TextUtils.isEmpty(html)) {
-                Log.e(TAG, "listHtmlAlbums is empty.");
+            if(html.startsWith("Exception: ")){
+                Log.e(TAG, html);
                 return;
             }
 

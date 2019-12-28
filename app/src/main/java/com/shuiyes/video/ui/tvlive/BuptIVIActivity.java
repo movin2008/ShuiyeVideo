@@ -1,7 +1,7 @@
 package com.shuiyes.video.ui.tvlive;
 
 import android.os.Bundle;
-import com.shuiyes.video.base.BaseTVLiveActivity;
+import com.shuiyes.video.ui.base.BaseTVLiveActivity;
 import com.shuiyes.video.bean.ListVideo;
 
 public class BuptIVIActivity extends BaseTVLiveActivity {

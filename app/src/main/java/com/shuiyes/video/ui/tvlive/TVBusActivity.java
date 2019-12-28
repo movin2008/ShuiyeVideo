@@ -25,7 +25,7 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultAllocator;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.shuiyes.video.R;
-import com.shuiyes.video.base.BaseActivity;
+import com.shuiyes.video.ui.base.BaseActivity;
 import com.tvbus.engine.TVCore;
 import com.tvbus.engine.TVListener;
 import com.tvbus.engine.TVService;

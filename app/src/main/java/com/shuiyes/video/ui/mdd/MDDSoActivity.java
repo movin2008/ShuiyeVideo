@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.shuiyes.video.base.BaseSearchActivity;
+import com.shuiyes.video.ui.base.BaseSearchActivity;
 import com.shuiyes.video.bean.Album;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.Constants;

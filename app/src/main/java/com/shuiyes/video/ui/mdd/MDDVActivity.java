@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.shuiyes.video.base.BasePlayActivity;
+import com.shuiyes.video.ui.base.BasePlayActivity;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.ui.qq.QQStream;

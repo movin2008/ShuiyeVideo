@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.base.BasePlayActivity;
+import com.shuiyes.video.ui.base.BasePlayActivity;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.MiscDialog;
@@ -92,8 +92,8 @@ public class IQiyiVActivity extends BasePlayActivity {
                     Utils.setFile("iqiyi.html", html);
 
                     //&& tvid == null && vid == null
-                    if (TextUtils.isEmpty(html)) {
-                        fault("请稍后重试");
+                    if(html.startsWith("Exception: ")){
+                        fault(html);
                         return;
                     }
 
@@ -330,12 +330,12 @@ public class IQiyiVActivity extends BasePlayActivity {
             if (!albumUrl.startsWith("http")) {
                 albumUrl = "https:" + albumUrl;
             }
-            String album = HttpUtils.open(albumUrl);
-            Utils.setFile("iqiyi.html", album);
-            if (TextUtils.isEmpty(album)) {
-                Log.e(TAG, "fetchAlbumsOfZongyi 空数据");
+            String html = HttpUtils.open(albumUrl);
+            if(html.startsWith("Exception: ")){
+                fault(html);
                 return;
             }
+            Utils.setFile("iqiyi.html", html);
         }
     }
 

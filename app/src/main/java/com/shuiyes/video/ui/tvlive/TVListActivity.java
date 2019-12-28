@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.base.BaseTVListActivity;
+import com.shuiyes.video.ui.base.BaseTVListActivity;
 import com.shuiyes.video.bean.ListVideo;
 
 import java.io.BufferedReader;

@@ -74,19 +74,23 @@ public class LetvUtils {
     }
 
     public static String getVideoPlayUrl(String url, String vid) {
-        // 1536840193220
-        double tn = System.currentTimeMillis();
-        tn = tn / 10000000;
-        // TODO if failure, timestamp maybe changed
-        tn = tn / 10000000;
-        String uuid = SHA1.encode(url) + "_0";
 
+        String uuid = SHA1.encode(url) + "_0";
         url = url.replace("tss=0", "tss=ios");
-        url += "&termid=1&m3v=1&format=1&expect=3&hwtype=un&ostype=Windows10&p1=1&p2=10&p3=-";
-        url += "&tn=" + tn;
+
+//        double tn = System.currentTimeMillis();
+//        tn = tn / 10000000;
+//        // TODO if failure, timestamp maybe changed
+//        tn = tn / 10000000;
+//        url += "&termid=1&m3v=1&format=1&expect=3&hwtype=un&ostype=Windows10&p1=1&p2=10&p3=-";
+//        url += "&tn=" + tn;
+//        url += "&vid=" + vid;
+//        url += "&uuid=" + uuid;
+//        url += "&sign=letv";
+
+        url += "&format=1&jsonp=jsonp&expect=3&p1=0&p2=06&termid=2&ostype=macos&hwtype=un&appid=800&ajax=1&m3v=1";
         url += "&vid=" + vid;
         url += "&uuid=" + uuid;
-        url += "&sign=letv";
         return url;
     }
 
@@ -108,7 +112,7 @@ public class LetvUtils {
         String vid = url;
         String key = "/vplay/";
         int index = url.indexOf(key);
-        if(index != -1){
+        if (index != -1) {
             if (url.indexOf(".html") != -1) {
                 vid = url.substring(index + key.length(), url.indexOf(".html"));
                 String[] vids = vid.split("_");
