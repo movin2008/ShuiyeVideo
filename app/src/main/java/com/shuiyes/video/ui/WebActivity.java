@@ -1,9 +1,16 @@
 package com.shuiyes.video.ui;
 
+import android.app.Instrumentation;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
@@ -19,12 +26,17 @@ import com.shuiyes.video.util.Constants;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.util.Utils;
+import com.shuiyes.video.util.VipUtil;
 
 import java.io.InputStream;
 
 public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     private final String TAG = this.getClass().getSimpleName();
+
+    public static void launch(Context context, String url){
+        context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
+    }
 
     private TextView mTitle, mUrl, mProgress;
     private WebView mWebView;
@@ -44,27 +56,38 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         mPlay = (Button) findViewById(R.id.btn_play);
         mPlay.setOnClickListener(this);
 
-        String url = getIntent().getStringExtra("url");
+        Intent intent = getIntent();
+        String url = intent.getStringExtra("url");
 
         mProgress = (TextView) this.findViewById(R.id.tv_progress);
         mTitle = (TextView) this.findViewById(R.id.tv_title);
         mUrl = (TextView) this.findViewById(R.id.tv_url);
         mUrl.setText(url);
 
+        if (VipUtil.isVipPojie(url)) {
+            mTitle.setText("VIP 视频破解");
+            mBack.setVisibility(View.GONE);
+            mForward.setVisibility(View.GONE);
+            mPlay.setVisibility(View.GONE);
+            mUrl.setVisibility(View.GONE);
+        }
+
         mWebView = (WebView) findViewById(R.id.webview);
 
         WebSettings settings = mWebView.getSettings();
 
         //url.contains("m.iqiyi.com")
-        if(url.contains("m.youku.com")){
+        if (url.contains("m.youku.com")) {
             settings.setUserAgentString(HttpUtils.UA_WX);
-        }else{
+        } else {
             settings.setUserAgentString(HttpUtils.UA_WIN);
         }
         Log.e(TAG, settings.getUserAgentString());
         settings.setJavaScriptEnabled(true);
+        // chromium: [INFO:CONSOLE(1)] "Uncaught TypeError: Cannot read property 'getItem' of null"
+        settings.setDomStorageEnabled(true);
 
-        if(Build.VERSION.SDK_INT >= 19) {
+        if (Build.VERSION.SDK_INT >= 19) {
             settings.setLoadsImagesAutomatically(true);
         } else {
             settings.setLoadsImagesAutomatically(false);
@@ -90,7 +113,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
                 // 爱奇艺没有高亮状态
 
-                try{
+                try {
 //                    if(url.equals("https://www.iqiyipic.com/common/fix/site-v4/sprite-headLogo-index.png")){
 //                        return new WebResourceResponse("text/css", "utf-8", mContext.getAssets().open("css/test.css"));
 //                    }
@@ -102,8 +125,10 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                             Log.e(TAG, "inject webkit_tap_highlight.css");
                             return new WebResourceResponse("text/css", "utf-8", in);
                         }
+                    } else if (url.endsWith("index.m3u8")) {
+                        mockWebViewClick();
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return super.shouldInterceptRequest(view, url);
@@ -112,7 +137,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onPageFinished(WebView view, String url) {
 
-                if(!view.getSettings().getLoadsImagesAutomatically()) {
+                if (!view.getSettings().getLoadsImagesAutomatically()) {
                     view.getSettings().setLoadsImagesAutomatically(true);
                 }
 
@@ -131,11 +156,11 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             }
         });
 
-        mWebView.setWebChromeClient(new WebChromeClient(){
+        mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
 //                Log.e(TAG, "onProgressChanged " + newProgress);
-                mProgress.setText(newProgress+"%");
+                mProgress.setText(newProgress + "%");
                 super.onProgressChanged(view, newProgress);
             }
         });
@@ -157,14 +182,14 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if(event.getAction() == KeyEvent.ACTION_UP){
+        if (event.getAction() == KeyEvent.ACTION_UP) {
             return super.dispatchKeyEvent(event);
         }
         switch (event.getKeyCode()) {
             case KeyEvent.KEYCODE_BACK:
-                if(mWebView.canGoBack()){
+                if (mWebView.canGoBack()) {
                     mWebView.goBack();
-                }else{
+                } else {
                     return super.dispatchKeyEvent(event);
                 }
                 return false;
@@ -174,7 +199,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 mRefresh.requestFocus();
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
-                if(!mWebView.hasFocus()){
+                if (!mWebView.hasFocus()) {
                     Log.e(TAG, "WebView requestFocus");
                     mWebView.requestFocus();
                 }
@@ -200,11 +225,35 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 mWebView.goForward();
                 break;
             case R.id.btn_refresh:
+                mockWebViewClicked = false;
                 mWebView.reload();
                 break;
             case R.id.btn_play:
                 PlayUtils.play(this, mWebView.getUrl(), mWebView.getTitle());
                 break;
         }
+    }
+
+    private boolean mockWebViewClicked;
+
+    private void mockWebViewClick() {
+        if (mockWebViewClicked) return;
+        mockWebViewClicked = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SystemClock.sleep(3333);
+                Display display = getWindowManager().getDefaultDisplay();
+                DisplayMetrics dm = new DisplayMetrics();
+                display.getMetrics(dm);
+
+                Log.e(TAG, "mockWebViewClick. " + dm.widthPixels + "x" + dm.heightPixels);
+
+                long time = SystemClock.uptimeMillis();
+                Instrumentation inst = new Instrumentation();
+                inst.sendPointerSync(MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, dm.widthPixels / 2, dm.heightPixels / 2, 0));
+                inst.sendPointerSync(MotionEvent.obtain(time, time, MotionEvent.ACTION_UP, dm.widthPixels / 2, dm.heightPixels / 2, 0));
+            }
+        }).start();
     }
 }

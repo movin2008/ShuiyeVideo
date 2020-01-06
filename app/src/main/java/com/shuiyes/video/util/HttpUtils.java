@@ -95,7 +95,7 @@ public class HttpUtils {
                     if(forCookie){
                         Map<String, List<String>> headers = conn.getHeaderFields();
                         List<String> setCookies =  headers.get("set-cookie");
-                        if(setCookies.size() > 0){
+                        if(setCookies != null && setCookies.size() > 0){
                             String setCookie = setCookies.get(0);
                             ret.append(setCookie.substring(0, setCookie.indexOf(";") + 1));
                         }else{

@@ -21,7 +21,7 @@ public class YoukuUtils {
      # Found in http://g.alicdn.com/player/beta-ykplayer/0.6.2/youku-player.min.js
      # grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
      */
-    public static String CCODE = "0519";//0590
+    public static String CCODE = "0519";//0590 0503 0505
     public static String VERSION = "0.5.85";
 
     /**

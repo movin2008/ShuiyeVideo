@@ -25,6 +25,8 @@ import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.dialog.MiscDialog;
+import com.shuiyes.video.ui.WebActivity;
+import com.shuiyes.video.util.VipUtil;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
 
@@ -68,10 +70,11 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
             @Override
             public boolean onLongClick(View v) {
-                final Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(mPlayUrl));
-                startActivity(intent);
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData mClipData = ClipData.newPlainText("Label", mPlayUrl);
+                cm.setPrimaryClip(mClipData);
+
+                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(VipUtil.get(mIntentUrl))));
                 return true;
             }
         });
@@ -271,11 +274,8 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 playNextVideo();
                 break;
             case R.id.btn_download:
-                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData mClipData = ClipData.newPlainText("Label", mPlayUrl);
-                cm.setPrimaryClip(mClipData);
-
-                Toast.makeText(this, "视频网址已复制到剪切板，到下载软件粘贴。 也可长按打开浏览器播放", 1).show();
+                WebActivity.launch(this, VipUtil.get(mIntentUrl));
+                break;
             default:
                 break;
         }
@@ -314,7 +314,6 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         mPrepared = false;
 
         mLoadingProgress.setVisibility(View.VISIBLE);
-        mDownloadView.setVisibility(View.VISIBLE);
 
         mVideoView.stopPlayback();
         try {

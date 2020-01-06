@@ -16,7 +16,8 @@ public class MgtvUtils {
 
     private final static String TAG = "MgtvUtils";
 
-    private static final String DID = "698bc987-e1a0-461a-b9c4-34a5fb4d118e";
+    private static final String DID = "151d9882-d680-4a30-86d8-bf174e74ec28";
+//    private static final String DID = "698bc987-e1a0-461a-b9c4-34a5fb4d118e";
 //    private static final String DID = "802c0ec0-1df9-4dd3-8ec4-5a0806cdda88";
     private static final String VER = "0.3.0301";
     private static final String PNO = "1030";
@@ -79,9 +80,9 @@ public class MgtvUtils {
         return HttpUtils.open(String.format(API_PM2, id, v, p, au));
     }
 
-    private static final String API_SOURCE = "https://pstream.api.mgtv.com/player/getSource?video_id=%s&pm2=%s&tk2=%s";
+    private static final String API_SOURCE = "https://pstream.api.mgtv.com/player/getSource?video_id=%s&tk2=%s&pm2=%s";
     public static String getSource(String vid, String pm2) {
-        return HttpUtils.open(String.format(API_SOURCE, vid, pm2, MgtvUtils.tk2()));
+        return HttpUtils.open(String.format(API_SOURCE, vid, tk2(), pm2));
     }
 
     public static String getPlayerParmV(String vid) throws JSONException {

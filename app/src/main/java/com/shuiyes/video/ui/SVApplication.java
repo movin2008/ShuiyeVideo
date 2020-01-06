@@ -29,7 +29,7 @@ public class SVApplication extends Application {
         mContext = this.getApplicationContext();
 
         // 1287609291
-        android.util.Log.e("SY", "onCreate() "+BuildConfig.VERSION_CODE);
+        android.util.Log.e("SY", "onCreate() "+BuildConfig.VERSION_NAME);
 
 //        com.tencent.bugly.crashreport.CrashReport.initCrashReport(getApplicationContext(), "a96983310d", true);
     }

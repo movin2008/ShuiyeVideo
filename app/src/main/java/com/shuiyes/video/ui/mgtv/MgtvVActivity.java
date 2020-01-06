@@ -88,6 +88,7 @@ public class MgtvVActivity extends BasePlayActivity {
             @Override
             public void run() {
                 try {
+
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
                     String video = MgtvUtils.getVideo(mVid);
                     Utils.setFile("mgtv", video);
@@ -104,10 +105,11 @@ public class MgtvVActivity extends BasePlayActivity {
                     }
 
                     JSONObject data = json.getJSONObject("data");
-                    JSONObject atc = data.getJSONObject("atc");
-                    JSONObject user = data.getJSONObject("user");
-                    String pm2 = atc.getString("pm2");
-                    String cxid = user.getString("cxid");
+                    mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TITLE, data.getJSONObject("info").getString("title")));
+
+
+                    String pm2 = data.getJSONObject("atc").getString("pm2");
+                    String cxid = data.getJSONObject("user").getString("cxid");
 
                     mHandler.sendEmptyMessage(MSG_FETCH_TOKEN);
                     String vast = MgtvUtils.getPm2(mVid, cxid, pm2);

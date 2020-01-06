@@ -14,10 +14,12 @@ import com.shuiyes.video.ui.base.BaseActivity;
 import com.shuiyes.video.ui.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;
+import com.shuiyes.video.ui.mgtv.MgtvVActivity;
 import com.shuiyes.video.ui.qq.QQSoActivity;
 import com.shuiyes.video.ui.tvlive.BuptIVIActivity;
 import com.shuiyes.video.ui.tvlive.SuzhouCMCCActivity;
 import com.shuiyes.video.ui.tvlive.TVListActivity;
+import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuSoActivity;
 
@@ -201,7 +203,10 @@ public class MainActivity extends BaseActivity {
         Tips.show(this, "搜狐视频待完善");
     }
 
-    public void testUrl(View view) throws UnsupportedEncodingException {
+    public void testUrl(View view) {
+//        startActivity(new Intent(this, MgtvVActivity.class).putExtra("title","test").putExtra("url", "https://www.mgtv.com/l/100028247/7370524.html?fpa=9349&fpos=3"));
+//        WebActivity.launch(this,"http://vipvideo.github.io/lines?url=https%3A%2F%2Fv.qq.com%2Fx%2Fcover%2F4zhgrc6vcikqw0p%2Fe0017ah5b20.html");
+        WebActivity.launch(this,"https://www.administratorw.com/video.php?url=https%3A%2F%2Fv.qq.com%2Fx%2Fcover%2F4zhgrc6vcikqw0p%2Fe0017ah5b20.html");
     }
 
     public void testWeb(View view) {
