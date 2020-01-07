@@ -39,44 +39,32 @@ public abstract class BaseTVLiveActivity extends BaseTVListActivity implements C
 
     public abstract String getApi();
 
-    public abstract String getPlayUrl(String tv);
+    public abstract String getPlayUrl(int tv);
 
     public abstract void refreshVideos(String result) throws Exception;
 
     public void cctv1(View view) {
         startActivity(new Intent(this, TVPlayActivity.class)
                 .putExtra("name", "CCTV1")
-                .putExtra("url", getPlayUrl("1")));
+                .putExtra("url", getPlayUrl(1)));
     }
 
     public void cctv2(View view) {
         startActivity(new Intent(this, TVPlayActivity.class)
                 .putExtra("name", "CCTV12")
-                .putExtra("url", getPlayUrl("2")));
+                .putExtra("url", getPlayUrl(2)));
     }
 
     public void cctv3(View view) {
         startActivity(new Intent(this, TVPlayActivity.class)
                 .putExtra("name", "CCTV3")
-                .putExtra("url", getPlayUrl("3")));
+                .putExtra("url", getPlayUrl(3)));
     }
 
     public void cctv4(View view) {
         startActivity(new Intent(this, TVPlayActivity.class)
                 .putExtra("name", "CCTV4")
-                .putExtra("url", getPlayUrl("4")));
-    }
-
-    public void cctv5(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                .putExtra("name", "CCTV5")
-                .putExtra("url", getPlayUrl("5")));
-    }
-
-    public void cctv6(View view) {
-        startActivity(new Intent(this, TVPlayActivity.class)
-                .putExtra("name", "CCTV6")
-                .putExtra("url", getPlayUrl("6")));
+                .putExtra("url", getPlayUrl(4)));
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.shuiyes.video.ui.mdd.MDDSoActivity;
 import com.shuiyes.video.ui.mgtv.MgtvVActivity;
 import com.shuiyes.video.ui.qq.QQSoActivity;
 import com.shuiyes.video.ui.tvlive.BuptIVIActivity;
+import com.shuiyes.video.ui.tvlive.SopPlusActivity;
 import com.shuiyes.video.ui.tvlive.SuzhouCMCCActivity;
 import com.shuiyes.video.ui.tvlive.TVListActivity;
 import com.shuiyes.video.util.PlayUtils;
@@ -159,6 +160,10 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "南京移动源_183.207.X.X.list"));
     }
 
+    public void cuiuc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "CUIUC.m3u"));
+    }
+
     public void jscmcc2(View view) {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "南京移动源_223.110.X.X.list"));
     }
@@ -179,8 +184,12 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fm.list"));
     }
 
-    public void avbus(View view) {
+    public void tvbus(View view) {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvbus.list"));
+    }
+
+    public void soplus(View view) {
+        startActivity(new Intent(this, SopPlusActivity.class));
     }
 
     public void otherTV(View view) {

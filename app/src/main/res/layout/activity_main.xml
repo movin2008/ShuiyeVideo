@@ -116,12 +116,6 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="mdd"
-                android:text="埋堆堆港剧" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
                 android:onClick="wxcmcc"
                 android:text="无锡移动源" />
 
@@ -134,14 +128,26 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="szcmcc"
-                android:text="苏州移动源" />
+                android:onClick="jscmcc2"
+                android:text="南京移动源 223.110.X.X" />
 
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="jscmcc2"
-                android:text="南京移动源 223.110.X.X" />
+                android:onClick="cuiuc"
+                android:text="CUIUC 整理" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:onClick="fulibus"
+                android:text="FULIBUS整理" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:onClick="szcmcc"
+                android:text="苏州移动源" />
 
             <Button
                 style="@style/Button"
@@ -164,20 +170,20 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="fulibus"
-                android:text="FULIBUS整理资源" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
                 android:onClick="iviBupt"
                 android:text="@string/ivi_bupt" />
 
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="avbus"
+                android:onClick="tvbus"
                 android:text="Tvbus 直播源" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:onClick="soplus"
+                android:text="SopPlus 直播源" />
 
             <Button
                 style="@style/Button"
@@ -191,6 +197,12 @@
                 android:onClick="bilibili"
                 android:text="哔哩哔哩 直播源"
                 android:visibility="gone" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:onClick="mdd"
+                android:text="埋堆堆港剧" />
 
             <Button
                 style="@style/Button"

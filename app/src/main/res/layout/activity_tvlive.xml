@@ -33,18 +33,6 @@
             android:onClick="cctv4"
             android:text="CCTV4" />
 
-        <Button
-            android:layout_width="match_parent"
-            style="@style/Button"
-            android:onClick="cctv5"
-            android:text="CCTV5" />
-
-        <Button
-            android:layout_width="match_parent"
-            style="@style/Button"
-            android:onClick="cctv6"
-            android:text="CCTV6" />
-
     </LinearLayout>
 
     <TextView

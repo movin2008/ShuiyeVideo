@@ -10,6 +10,8 @@ public class VipUtil {
 
     public static String get(String url){
 //        return "https://www.administratorw.com/video.php?url=" + URLEncoder.encode(url);
+//        return "http://mt2t.com/lines?url=" + URLEncoder.encode(url);
+//        return "http://vipjiexi.com/yun.php?url=" + URLEncoder.encode(url);
         return "http://vipvideo.github.io/lines?url=" + URLEncoder.encode(url);
     }
 

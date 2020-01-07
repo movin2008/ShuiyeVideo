@@ -2,6 +2,7 @@ package com.shuiyes.video.ui.tvlive;
 
 import android.os.Bundle;
 
+import com.shuiyes.video.R;
 import com.shuiyes.video.ui.base.BaseTVLiveActivity;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.Utils;
@@ -12,11 +13,10 @@ import java.util.Iterator;
 
 public class SuzhouCMCCActivity extends BaseTVLiveActivity {
 
-    private final String HOST = "http://183.207.248.71:80/cntv/live1/";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.sz_cmcc);
     }
 
     @Override
@@ -25,10 +25,12 @@ public class SuzhouCMCCActivity extends BaseTVLiveActivity {
     }
 
     @Override
-    public String getPlayUrl(String tv) {
+    public String getPlayUrl(int tv) {
         //http://183.207.248.71/cntv/live1/HD-2500k-1080P-cctv1/HD-2500k-1080P-cctv1
-        return "http://183.207.248.71:80/cntv/live1/cctv-" + tv + "/cctv-" + tv;
+        return HOST + "cctv-" + tv + "/cctv-" + tv;
     }
+
+    private final String HOST = "http://183.207.248.71:80/cntv/live1/";
 
     @Override
     public void refreshVideos(String result) throws Exception {

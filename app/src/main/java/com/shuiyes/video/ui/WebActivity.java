@@ -19,6 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.ui.base.BaseActivity;
@@ -34,7 +35,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    public static void launch(Context context, String url){
+    public static void launch(Context context, String url) {
         context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
     }
 
@@ -247,6 +248,12 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 DisplayMetrics dm = new DisplayMetrics();
                 display.getMetrics(dm);
 
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "mockWebViewClick(" + dm.widthPixels + "x" + dm.heightPixels + ")", 0).show();
+                    }
+                });
                 Log.e(TAG, "mockWebViewClick. " + dm.widthPixels + "x" + dm.heightPixels);
 
                 long time = SystemClock.uptimeMillis();

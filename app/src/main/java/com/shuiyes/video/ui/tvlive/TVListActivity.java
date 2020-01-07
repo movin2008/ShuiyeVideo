@@ -48,7 +48,9 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                                 // 注释
                                 continue;
                             }
-                            if (text.contains(",")) {
+                            if(text.startsWith("tvbus://")){
+                                mVideos.add(new ListVideo(text, text, text));
+                            }else if (text.contains(",")) {
                                 String[] tmp = text.split(",");
                                 mVideos.add(new ListVideo(tmp[0], tmp[0], tmp[1]));
                             } else {
@@ -71,6 +73,30 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                                 } else if ("title".equals(tmp[1])) {
                                     mVideos.add(new ListVideo(tmp[2], tmp[2], url));
                                 }
+                            }
+                        }
+                    }else if (FileName.endsWith(".m3u")) {
+                        String text = null;
+                        String title = null;
+                        String groupTitle = "";
+                        while ((text = br.readLine()) != null) {
+                            if(text.startsWith("#EXTM3U")){
+                                // head
+                                continue;
+                            }
+
+                            if(text.startsWith("#EXTINF")){
+                                String[] tmp = text.split(",");
+                                title = tmp[tmp.length-1];
+                                String gTitle = text.substring(text.indexOf("\"")+1, text.lastIndexOf("\""));
+                                if(!groupTitle.equals(gTitle)){
+                                    groupTitle = gTitle;
+
+                                    mVideos.add(new ListVideo("", null, null));
+                                    mVideos.add(new ListVideo(groupTitle, null, null));
+                                }
+                            }else if(title != null){
+                                mVideos.add(new ListVideo(title, title, text));
                             }
                         }
                     }

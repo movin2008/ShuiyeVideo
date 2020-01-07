@@ -1,6 +1,8 @@
 package com.shuiyes.video.ui.tvlive;
 
 import android.os.Bundle;
+
+import com.shuiyes.video.R;
 import com.shuiyes.video.ui.base.BaseTVLiveActivity;
 import com.shuiyes.video.bean.ListVideo;
 
@@ -9,6 +11,7 @@ public class BuptIVIActivity extends BaseTVLiveActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.ivi_bupt);
     }
 
     @Override
@@ -17,12 +20,12 @@ public class BuptIVIActivity extends BaseTVLiveActivity {
     }
 
     @Override
-    public String getPlayUrl(String tv) {
+    public String getPlayUrl(int tv) {
         return "http://ivi.bupt.edu.cn/hls/cctv" + tv + "hd.m3u8";
     }
 
     @Override
-    public void refreshVideos(String result) throws Exception {
+    public void refreshVideos(String result) {
         String start = "<div class=\"2u";
         while (result.contains(start)) {
 
