@@ -59,6 +59,11 @@
             android:screenOrientation="landscape" />
 
         <activity
+            android:name=".ui.VipActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
+
+        <activity
             android:name=".ui.youku.YoukuSoActivity"
             android:configChanges="keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"

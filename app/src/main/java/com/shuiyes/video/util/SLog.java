@@ -2,12 +2,14 @@ package com.shuiyes.video.util;
 
 import android.util.Log;
 
+import java.io.File;
+
 /**
  * SHUIYES LOG
  */
 public class SLog {
 
-    private static final boolean DEBUGE = true;
+    private static final boolean DEBUGE = new File("/sdcard/.shuiyes/debug").exists();
     private static final boolean DEBUGD = false;
     private static final String TAG = "SHUIYES";
 

@@ -215,7 +215,7 @@ public class MainActivity extends BaseActivity {
     public void testUrl(View view) {
 //        startActivity(new Intent(this, MgtvVActivity.class).putExtra("title","test").putExtra("url", "https://www.mgtv.com/l/100028247/7370524.html?fpa=9349&fpos=3"));
 //        WebActivity.launch(this,"http://vipvideo.github.io/lines?url=https%3A%2F%2Fv.qq.com%2Fx%2Fcover%2F4zhgrc6vcikqw0p%2Fe0017ah5b20.html");
-        WebActivity.launch(this,"https://www.administratorw.com/video.php?url=https%3A%2F%2Fv.qq.com%2Fx%2Fcover%2F4zhgrc6vcikqw0p%2Fe0017ah5b20.html");
+        VipActivity.launch(this,"https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html");
     }
 
     public void testWeb(View view) {

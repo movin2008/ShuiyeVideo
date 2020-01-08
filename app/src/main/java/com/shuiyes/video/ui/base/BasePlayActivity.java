@@ -25,8 +25,7 @@ import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.dialog.MiscDialog;
-import com.shuiyes.video.ui.WebActivity;
-import com.shuiyes.video.util.VipUtil;
+import com.shuiyes.video.ui.VipActivity;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
 
@@ -70,11 +69,13 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
             @Override
             public boolean onLongClick(View v) {
-                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData mClipData = ClipData.newPlainText("Label", mPlayUrl);
-                cm.setPrimaryClip(mClipData);
-
-                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(VipUtil.get(mIntentUrl))));
+                if(mPlayUrl != null){
+                    ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setPrimaryClip(ClipData.newPlainText("Label", mPlayUrl));
+                    Toast.makeText(mContext, "播放地址已复制", 0).show();
+                }else{
+                    Toast.makeText(mContext, "暂无播放地址", 0).show();
+                }
                 return true;
             }
         });
@@ -274,7 +275,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 playNextVideo();
                 break;
             case R.id.btn_download:
-                WebActivity.launch(this, VipUtil.get(mIntentUrl));
+                VipActivity.launch(this, mIntentUrl);
                 break;
             default:
                 break;

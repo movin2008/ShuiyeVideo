@@ -1,16 +1,11 @@
 package com.shuiyes.video.ui;
 
-import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
@@ -19,7 +14,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.ui.base.BaseActivity;
@@ -27,7 +21,6 @@ import com.shuiyes.video.util.Constants;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.util.Utils;
-import com.shuiyes.video.util.VipUtil;
 
 import java.io.InputStream;
 
@@ -65,14 +58,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         mUrl = (TextView) this.findViewById(R.id.tv_url);
         mUrl.setText(url);
 
-        if (VipUtil.isVipPojie(url)) {
-            mTitle.setText("VIP 视频破解");
-            mBack.setVisibility(View.GONE);
-            mForward.setVisibility(View.GONE);
-            mPlay.setVisibility(View.GONE);
-            mUrl.setVisibility(View.GONE);
-        }
-
         mWebView = (WebView) findViewById(R.id.webview);
 
         WebSettings settings = mWebView.getSettings();
@@ -85,7 +70,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         }
         Log.e(TAG, settings.getUserAgentString());
         settings.setJavaScriptEnabled(true);
-        // chromium: [INFO:CONSOLE(1)] "Uncaught TypeError: Cannot read property 'getItem' of null"
         settings.setDomStorageEnabled(true);
 
         if (Build.VERSION.SDK_INT >= 19) {
@@ -126,8 +110,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                             Log.e(TAG, "inject webkit_tap_highlight.css");
                             return new WebResourceResponse("text/css", "utf-8", in);
                         }
-                    } else if (url.endsWith("index.m3u8")) {
-                        mockWebViewClick();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -226,7 +208,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 mWebView.goForward();
                 break;
             case R.id.btn_refresh:
-                mockWebViewClicked = false;
                 mWebView.reload();
                 break;
             case R.id.btn_play:
@@ -235,32 +216,4 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    private boolean mockWebViewClicked;
-
-    private void mockWebViewClick() {
-        if (mockWebViewClicked) return;
-        mockWebViewClicked = true;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SystemClock.sleep(3333);
-                Display display = getWindowManager().getDefaultDisplay();
-                DisplayMetrics dm = new DisplayMetrics();
-                display.getMetrics(dm);
-
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "mockWebViewClick(" + dm.widthPixels + "x" + dm.heightPixels + ")", 0).show();
-                    }
-                });
-                Log.e(TAG, "mockWebViewClick. " + dm.widthPixels + "x" + dm.heightPixels);
-
-                long time = SystemClock.uptimeMillis();
-                Instrumentation inst = new Instrumentation();
-                inst.sendPointerSync(MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, dm.widthPixels / 2, dm.heightPixels / 2, 0));
-                inst.sendPointerSync(MotionEvent.obtain(time, time, MotionEvent.ACTION_UP, dm.widthPixels / 2, dm.heightPixels / 2, 0));
-            }
-        }).start();
-    }
 }
