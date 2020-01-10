@@ -122,6 +122,15 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".ui.cbchot.CBChotVActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.cbchot.CBChotSoActivity"
+            android:configChanges="keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".ui.SettingsActivity"
             android:screenOrientation="landscape" />
         <activity

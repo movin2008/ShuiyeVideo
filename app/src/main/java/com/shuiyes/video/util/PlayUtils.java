@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.shuiyes.video.ui.cbchot.CBChotVActivity;
 import com.shuiyes.video.ui.mdd.MDDVActivity;
 import com.shuiyes.video.ui.WebActivity;
 import com.shuiyes.video.bean.Album;
@@ -27,6 +28,7 @@ public class PlayUtils {
                 || url.contains("qq.com")
                 || url.contains("le.com")
                 || url.contains("letv.com")
+                || url.contains("cbchot.com")
                 || url.contains("iqiyi.com");
     }
 
@@ -103,6 +105,8 @@ public class PlayUtils {
             }
         } else if (url.contains("mdd.com")) {
             context.startActivity(new Intent(context, MDDVActivity.class).putExtra("url", url).putExtra("title", title));
+        } else if (url.contains("and.cbchot.com")) {
+            context.startActivity(new Intent(context, CBChotVActivity.class).putExtra("url", url).putExtra("title", title));
         } else {
             playFail(context, url);
         }

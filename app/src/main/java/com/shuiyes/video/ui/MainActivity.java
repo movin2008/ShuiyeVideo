@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.ui.base.BaseActivity;
+import com.shuiyes.video.ui.cbchot.CBChotSoActivity;
 import com.shuiyes.video.ui.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;
@@ -214,8 +215,8 @@ public class MainActivity extends BaseActivity {
 
     public void testUrl(View view) {
 //        startActivity(new Intent(this, MgtvVActivity.class).putExtra("title","test").putExtra("url", "https://www.mgtv.com/l/100028247/7370524.html?fpa=9349&fpos=3"));
-//        WebActivity.launch(this,"http://vipvideo.github.io/lines?url=https%3A%2F%2Fv.qq.com%2Fx%2Fcover%2F4zhgrc6vcikqw0p%2Fe0017ah5b20.html");
-        VipActivity.launch(this,"https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html");
+//        VipActivity.launch(this,"https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html");
+        startActivity(new Intent(this, CBChotSoActivity.class));
     }
 
     public void testWeb(View view) {

@@ -46,11 +46,12 @@ public class HttpUtils {
         conn.setRequestProperty("Referer",Referer);
     }
 
-    public static void printHeaders(URLConnection conn){
+    public static String printHeaders(URLConnection conn){
         Map<String, List<String>> headers = conn.getHeaderFields();
         Set<String> keys = headers.keySet();
         Iterator<String> iterator = keys.iterator();
 
+        String code = "HTTP/1.1";
         StringBuffer buf = new StringBuffer();
         while (iterator.hasNext()) {
             String key = iterator.next();
@@ -60,8 +61,10 @@ public class HttpUtils {
             for (String value : values) {
                 buf.append(value+",");
             }
+            if(key == null || "null".equals(key)) code = buf.toString();
             Log.e(TAG, key+": " + buf.toString());
         }
+        return code;
     }
 
     public static String open(String url){
@@ -72,7 +75,7 @@ public class HttpUtils {
         return HttpUtils.open(url , null, forCookie);
     }
 
-    public static String open(String url, String cookie, boolean forCookie){
+    public static String open(String url, String property, boolean forCookie){
 //        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
 
         String error = "Exception: ";
@@ -82,8 +85,10 @@ public class HttpUtils {
                 conn = (HttpsURLConnection) new URL(url).openConnection();
                 HttpUtils.setURLConnection(conn);
                 conn.setRequestMethod("GET");
-                if(!TextUtils.isEmpty(cookie)){
-                    conn.setRequestProperty("Cookie", cookie);
+                if(!TextUtils.isEmpty(property)){
+                    // Cookie: a=123;
+                    String[] propertyArr = property.split(": ");
+                    conn.setRequestProperty(propertyArr[0], propertyArr[1]);
                 }
                 conn.connect();
 
@@ -120,7 +125,7 @@ public class HttpUtils {
                     Thread.sleep(500);
                     return HttpUtils.open(url);
                 } else {
-                    printHeaders(conn);
+                    error += printHeaders(conn);
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 e.printStackTrace();
@@ -143,8 +148,11 @@ public class HttpUtils {
                 conn = (HttpURLConnection) new URL(url).openConnection();
                 HttpUtils.setURLConnection(conn);
                 conn.setRequestMethod("GET");
-                if(!TextUtils.isEmpty(cookie)){
-                    conn.setRequestProperty("Cookie", cookie);
+
+                if(!TextUtils.isEmpty(property)){
+                    // Cookie: key=value;
+                    String[] propertyArr = property.split(": ");
+                    conn.setRequestProperty(propertyArr[0], propertyArr[1]);
                 }
                 conn.connect();
 
@@ -168,7 +176,7 @@ public class HttpUtils {
                     Thread.sleep(500);
                     return HttpUtils.open(url);
                 } else {
-                    printHeaders(conn);
+                    error += printHeaders(conn);
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 e.printStackTrace();

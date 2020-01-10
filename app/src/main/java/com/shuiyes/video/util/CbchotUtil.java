@@ -11,11 +11,11 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.sql.Date;
 
-// com\cbchot\android\b\as.class
-// com\cbchot\android\common\c\r.class
 public class CbchotUtil {
 
-    // auth_key 埋点
+    // com\cbchot\android\b\as.class
+    // com\cbchot\android\common\c\r.class
+    // auth_key 入口
     public static String getAuthUrl(String url){
         int i = a(new Date(System.currentTimeMillis() + 3600L));
         String str = null;

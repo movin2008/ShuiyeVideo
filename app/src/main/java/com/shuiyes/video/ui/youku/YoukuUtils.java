@@ -97,7 +97,7 @@ public class YoukuUtils {
     }
 
     public static String search(String keyword, String cookie) throws Exception {
-        return HttpUtils.open("https://so.youku.com/search_video/q_" + URLEncoder.encode(keyword,"utf-8"), cookie, false);
+        return HttpUtils.open("https://so.youku.com/search_video/q_" + URLEncoder.encode(keyword,"utf-8"), "Cookie: "+cookie, false);
     }
 
     public static String listAlbums(String vid) throws Exception {
