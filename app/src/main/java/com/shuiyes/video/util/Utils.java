@@ -107,7 +107,7 @@ public class Utils {
                 file.delete();
             }
 
-            String css = HttpUtils.open(url);
+            String css = HttpUtils.get(url);
             if (css != null && css.contains("-webkit-tap-highlight-color:transparent")) {
                 css = css.replace("-webkit-tap-highlight-color:transparent", "-webkit-tap-highlight-color:rgb(0,0,255,0.1)");
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));

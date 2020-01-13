@@ -64,7 +64,7 @@ public class MgtvUtils {
 
     private static final String API_VIDEO = "https://pcweb.api.mgtv.com/player/video?video_id=%s&tk2=%s";
     public static String getVideo(String vid) {
-        return HttpUtils.open(String.format(API_VIDEO, vid, MgtvUtils.tk2()));
+        return HttpUtils.get(String.format(API_VIDEO, vid, MgtvUtils.tk2()));
     }
 
     private static final String API_PM2 = "https://web.da.mgtv.com/pc/player?id=%s&v=%s&p=%s&au=%s&auver=v1&callback=cb";
@@ -77,12 +77,12 @@ public class MgtvUtils {
         String p = URLEncoder.encode(MgtvUtils.getPlayerParmP(vid, cxid, pm2), "utf-8");
         String au = URLEncoder.encode("78lVBaZjuOp6FjaaoQBdGEk7QAP5HMK/VieWDnKywFQCPfyQJPVEdbW1Xn+MqQ5hmF7cSw==", "utf-8");
 
-        return HttpUtils.open(String.format(API_PM2, id, v, p, au));
+        return HttpUtils.get(String.format(API_PM2, id, v, p, au));
     }
 
     private static final String API_SOURCE = "https://pstream.api.mgtv.com/player/getSource?video_id=%s&tk2=%s&pm2=%s";
     public static String getSource(String vid, String pm2) {
-        return HttpUtils.open(String.format(API_SOURCE, vid, tk2(), pm2));
+        return HttpUtils.get(String.format(API_SOURCE, vid, tk2(), pm2));
     }
 
     public static String getPlayerParmV(String vid) throws JSONException {

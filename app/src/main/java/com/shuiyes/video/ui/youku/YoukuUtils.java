@@ -45,14 +45,14 @@ public class YoukuUtils {
     }
 
     public static String fetchVideo(String vid, String cna) {
-        return HttpUtils.open(YoukuUtils.getVideoUrl(vid, cna));
+        return HttpUtils.get(YoukuUtils.getVideoUrl(vid, cna));
     }
 
     public static String fetchCna() {
         HttpURLConnection conn = null;
         try {
             conn = (HttpURLConnection) new URL("http://log.mmstat.com/eg.js").openConnection();
-            HttpUtils.setURLConnection(conn);
+            HttpUtils.setURLConnection(conn, null);
             conn.connect();
 
             String ret = conn.getHeaderField("ETag");
@@ -93,15 +93,15 @@ public class YoukuUtils {
     }
 
     public static String fetchCToken(){
-        return HttpUtils.open("https://youku.com/", true);
+        return HttpUtils.get("https://youku.com/", true);
     }
 
     public static String search(String keyword, String cookie) throws Exception {
-        return HttpUtils.open("https://so.youku.com/search_video/q_" + URLEncoder.encode(keyword,"utf-8"), "Cookie: "+cookie, false);
+        return HttpUtils.get("https://so.youku.com/search_video/q_" + URLEncoder.encode(keyword,"utf-8"), "Cookie: "+cookie, false);
     }
 
     public static String listAlbums(String vid) throws Exception {
-        return HttpUtils.open("https://v.youku.com/page/playlist?videoEncodeId="+URLEncoder.encode(vid,"utf-8")+"&page=1&videoCategoryId=96&componentid=38011&isSimple=false");
+        return HttpUtils.get("https://v.youku.com/page/playlist?videoEncodeId="+URLEncoder.encode(vid,"utf-8")+"&page=1&videoCategoryId=96&componentid=38011&isSimple=false");
     }
 
     public static String getPlayUrlByVid(String vid){

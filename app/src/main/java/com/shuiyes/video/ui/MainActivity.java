@@ -143,6 +143,10 @@ public class MainActivity extends BaseActivity {
         this.startActivity(new Intent(this, QQSoActivity.class));
     }
 
+    public void socbchot(View view) {
+        this.startActivity(new Intent(this, CBChotSoActivity.class));
+    }
+
     public void mdd(View view) {
         this.startActivity(new Intent(this, MDDSoActivity.class));
     }
@@ -214,9 +218,8 @@ public class MainActivity extends BaseActivity {
     }
 
     public void testUrl(View view) {
-//        startActivity(new Intent(this, MgtvVActivity.class).putExtra("title","test").putExtra("url", "https://www.mgtv.com/l/100028247/7370524.html?fpa=9349&fpos=3"));
+        startActivity(new Intent(this, MgtvVActivity.class).putExtra("title","test").putExtra("url", "https://www.mgtv.com/l/100028247/7370524.html?fpa=9349&fpos=3"));
 //        VipActivity.launch(this,"https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html");
-        startActivity(new Intent(this, CBChotSoActivity.class));
     }
 
     public void testWeb(View view) {

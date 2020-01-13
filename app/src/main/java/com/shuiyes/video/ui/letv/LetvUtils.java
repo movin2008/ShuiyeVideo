@@ -49,16 +49,16 @@ public class LetvUtils {
     }
 
     public static String searchVideos(String keyword) throws Exception {
-        return HttpUtils.open("http://so.le.com/s?wd=" + URLEncoder.encode(keyword, "utf-8"));
-//        return HttpUtils.open("http://so.le.com/s?wd="+keyword+"&from=pc&index=0&ref=click&click_area=search_button&query="+keyword+"&is_default_query=0&module=suggest_list&eid=undefined&experiment_id=undefined&is_trigger=undefined");
+        return HttpUtils.get("http://so.le.com/s?wd=" + URLEncoder.encode(keyword, "utf-8"));
+//        return HttpUtils.get("http://so.le.com/s?wd="+keyword+"&from=pc&index=0&ref=click&click_area=search_button&query="+keyword+"&is_default_query=0&module=suggest_list&eid=undefined&experiment_id=undefined&is_trigger=undefined");
     }
 
     public static String searchUploadVideos(String keyword) throws Exception {
-        return HttpUtils.open("http://search.lekan.letv.com/lekan/apisearch_json.so?wd=" + URLEncoder.encode(keyword, "utf-8") + "&from=pc&jf=1&hl=1&dt=1,2&ph=420001,420002&show=4&pn=1&ps=30");
+        return HttpUtils.get("http://search.lekan.letv.com/lekan/apisearch_json.so?wd=" + URLEncoder.encode(keyword, "utf-8") + "&from=pc&jf=1&hl=1&dt=1,2&ph=420001,420002&show=4&pn=1&ps=30");
     }
 
     public static String searchStarVideos(String leId) throws Exception {
-        return HttpUtils.open("http://search.lekan.letv.com/lekan/apisearch_json.so?leIds=" + leId + "&from=pc&jf=3&dt=album,video&pn=1&ps=21&ph=420001,420002&stype=1");
+        return HttpUtils.get("http://search.lekan.letv.com/lekan/apisearch_json.so?leIds=" + leId + "&from=pc&jf=3&dt=album,video&pn=1&ps=21&ph=420001,420002&stype=1");
     }
 
     public static String splatid = "105";
@@ -105,7 +105,7 @@ public class LetvUtils {
     public static String fetchAlbum(String vid) {
         String url = "http://d-api-m.le.com/card/dynamic?platform=pc&isvip=1&type=episode&cid=2&page=1&pagesize=100";
         url += "&vid=" + vid;
-        return HttpUtils.open(url);
+        return HttpUtils.get(url);
     }
 
     public static String getPlayVid(String url) {

@@ -160,7 +160,7 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String html = HttpUtils.open(mIntentUrl);
+                String html = HttpUtils.get(mIntentUrl);
 
                 if(TextUtils.isEmpty(html)) return;
                 int i1 = html.indexOf("<title>");

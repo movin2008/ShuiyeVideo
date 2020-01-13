@@ -236,7 +236,7 @@ public class YoukuVActivity extends BasePlayActivity {
      */
     private void listHtmlAlbums(String vid) {
         try {
-            String html = HttpUtils.open(YoukuUtils.getPlayUrlByVid(vid));
+            String html = HttpUtils.get(YoukuUtils.getPlayUrlByVid(vid));
             if(html.startsWith("Exception: ")){
                 Log.e(TAG, html);
                 return;

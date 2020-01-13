@@ -116,6 +116,12 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
+                android:onClick="socbchot"
+                android:text="中广热点云搜索" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
                 android:onClick="wxcmcc"
                 android:text="无锡移动源" />
 

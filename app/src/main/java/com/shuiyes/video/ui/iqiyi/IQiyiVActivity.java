@@ -88,7 +88,7 @@ public class IQiyiVActivity extends BasePlayActivity {
                     }
 
                     mHandler.sendEmptyMessage(MSG_FETCH_TOKEN);
-                    String html = HttpUtils.open(mIntentUrl);
+                    String html = HttpUtils.get(mIntentUrl);
                     Utils.setFile("iqiyi.html", html);
 
                     //&& tvid == null && vid == null
@@ -330,7 +330,7 @@ public class IQiyiVActivity extends BasePlayActivity {
             if (!albumUrl.startsWith("http")) {
                 albumUrl = "https:" + albumUrl;
             }
-            String html = HttpUtils.open(albumUrl);
+            String html = HttpUtils.get(albumUrl);
             if(html.startsWith("Exception: ")){
                 fault(html);
                 return;

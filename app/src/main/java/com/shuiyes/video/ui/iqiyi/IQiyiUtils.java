@@ -19,7 +19,7 @@ public class IQiyiUtils {
 
     public static String fetchVideo(String tvid, String vid) {
         String url = String.format("https://cache.video.iqiyi.com/jp/vi/%s/%s/", tvid, vid);
-        return HttpUtils.open(url);
+        return HttpUtils.get(url);
     }
 
     /**
@@ -30,7 +30,7 @@ public class IQiyiUtils {
      */
     public static String fetchAvlist(String aid, int page) {
         String url = String.format("http://cache.video.iqiyi.com/jp/avlist/%s/%s/50/", aid, page);
-        return HttpUtils.open(url);
+        return HttpUtils.get(url);
     }
 
     /**
@@ -42,7 +42,7 @@ public class IQiyiUtils {
      */
     public static String fetchSvlist(int cid, int sid, String time) {
         String url = String.format("https://pcw-api.iqiyi.com/album/source/svlistinfo?cid=%s&sourceid=%s&timelist=%s", cid, sid, time);
-        return HttpUtils.open(url);
+        return HttpUtils.get(url);
     }
 
     private static final String src = "76f90cbd92f94a2e925d83e8ccd22cb7";
@@ -52,7 +52,7 @@ public class IQiyiUtils {
         String t = Utils.timestamps();
         String sc = MD5.encode(t + key + vid);
         String url = String.format("http://cache.m.iqiyi.com/tmts/%s/%s/?t=%s&sc=%s&src=%s", tvid, vid, t, sc, src);
-        return HttpUtils.open(url);
+        return HttpUtils.get(url);
     }
 
     public interface Channel {
@@ -73,7 +73,7 @@ public class IQiyiUtils {
         String url = "https://search.video.iqiyi.com/o?if=html5&pageNum=1&pageSize=30&video_allow_3rd=1";
         url += "&channel_name=";
         url += "&key=" + URLEncoder.encode(keyword, "utf-8");
-        return HttpUtils.open(url);
+        return HttpUtils.get(url);
     }
 
     /**
@@ -92,7 +92,7 @@ public class IQiyiUtils {
             return;
         }
 
-        String html = HttpUtils.open(albumUrl);
+        String html = HttpUtils.get(albumUrl);
 
         if(html.startsWith("Exception: ")){
             Log.e(TAG, html);

@@ -51,7 +51,7 @@ public class QQUtils {
         url += "&timestamp="+ Utils.timestamp();
         url += "&charge=0&defaultfmt=auto&sdtfrom=v1010&defnpayver=1&sphttps=1&fhdswitch=0&show1080p=1&isHLS=1&sphls=1&drm=32&spau=1&spaudio=15&defsrc=1&encryptVer=7.1&fp2p=1";
 
-        return HttpUtils.open(url);
+        return HttpUtils.get(url);
     }
 
     /**
@@ -63,7 +63,7 @@ public class QQUtils {
      */
     public static String fetchMp4Video(String platform, String defn, String vid) {
         String url = String.format("https://vv.video.qq.com/getinfo?otype=ojson&appver=3.2.19.333&platform=%s&defnpayver=1&defn=%s&vid=%s", platform, defn, vid);
-        return HttpUtils.open(url);
+        return HttpUtils.get(url);
     }
 
     /**
@@ -75,7 +75,7 @@ public class QQUtils {
      */
     public static String fetchMp4Token(String formatId, String vid, String filename) {
         String url = String.format("https://vv.video.qq.com/getkey?otype=ojson&appver=3.2.19.333&platform=11&format=%s&vid=%s&filename=%s", formatId, vid, filename);
-        return HttpUtils.open(url);
+        return HttpUtils.get(url);
     }
 
     public static boolean hasPlayVid(String url) {
@@ -122,7 +122,7 @@ public class QQUtils {
     }
 
     public static String searchVideos(String keyword) throws Exception {
-        return HttpUtils.open("https://v.qq.com/x/search/?q=" + URLEncoder.encode(keyword, "utf-8"));
+        return HttpUtils.get("https://v.qq.com/x/search/?q=" + URLEncoder.encode(keyword, "utf-8"));
     }
 
 }

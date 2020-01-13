@@ -129,7 +129,7 @@ public class QQVActivity extends BasePlayActivity {
 
                     if (!QQUtils.hasPlayVid(mIntentUrl) || mVideoList.isEmpty()) {
                         mHandler.sendEmptyMessage(MSG_FETCH_VIDEOID);
-                        String html = HttpUtils.open(mIntentUrl);
+                        String html = HttpUtils.get(mIntentUrl);
 
                         if(html.startsWith("Exception: ")){
                             fault(html);

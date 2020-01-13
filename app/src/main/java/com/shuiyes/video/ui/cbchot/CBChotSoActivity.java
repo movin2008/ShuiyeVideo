@@ -12,6 +12,7 @@ import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.util.Utils;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 
@@ -64,7 +65,7 @@ public class CBChotSoActivity extends BaseSearchActivity {
                     return false;
                 }
 
-                String html = HttpUtils.open(CBChotUtils.SEARCH_URL + mSearch.getText(), CBChotUtils.XCLIENT, false);
+                String html = HttpUtils.get(CBChotUtils.SEARCH_URL + URLEncoder.encode(mSearch.getText().toString()), CBChotUtils.XCLIENT, false);
                 if (DEBUG) {
                     Log.e(TAG, html);
                 }
@@ -124,17 +125,18 @@ public class CBChotSoActivity extends BaseSearchActivity {
                         String transcoded = "/android/detail/transcoded/";
                         boolean resCP = albumUrl.indexOf("|") != albumUrl.lastIndexOf("|");
                         if (albumUrl.indexOf(series) > 0) {
-                            if(resCP){
-                                albumUrl = "http://and.cbchot.com/api/video_detail/pay/" + albumUrl.substring(albumUrl.indexOf(series) + series.length(), albumUrl.lastIndexOf("|"));
-                            }else{
-                                albumUrl = "http://and.cbchot.com/api/video_detail/pay/" + albumUrl.substring(albumUrl.indexOf(series) + series.length());
+                            if (resCP) {
+                                albumUrl = String.format(CBChotUtils.VIDEO_URL, "series", albumUrl.substring(albumUrl.indexOf(series) + series.length(), albumUrl.lastIndexOf("|")));
+                            } else {
+                                albumUrl = String.format(CBChotUtils.VIDEO_URL, "series", albumUrl.substring(albumUrl.indexOf(series) + series.length()));
                             }
                         } else if (albumUrl.indexOf(transcoded) > 0) {
-                            if(resCP){
-                                albumUrl = "http://and.cbchot.com/api/video_detail/pay/" + albumUrl.substring(albumUrl.indexOf(transcoded) + transcoded.length(), albumUrl.lastIndexOf("|"));
-                            }else{
-                                albumUrl = "http://and.cbchot.com/api/video_detail/pay/" + albumUrl.substring(albumUrl.indexOf(transcoded) + transcoded.length());
-                            }                        }
+                            if (resCP) {
+                                albumUrl = String.format(CBChotUtils.VIDEO_URL, "transcoded", albumUrl.substring(albumUrl.indexOf(transcoded) + transcoded.length(), albumUrl.lastIndexOf("|")));
+                            } else {
+                                albumUrl = String.format(CBChotUtils.VIDEO_URL, "transcoded", albumUrl.substring(albumUrl.indexOf(transcoded) + transcoded.length()));
+                            }
+                        }
                     }
 
                     if (DEBUG) {
