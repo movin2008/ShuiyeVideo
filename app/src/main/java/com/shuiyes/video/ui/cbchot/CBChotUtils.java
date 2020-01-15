@@ -38,7 +38,12 @@ public class CBChotUtils {
         }
     }
 
-    // com.wasu.utils.AuthCode.class authCode()
+    public static String getUrl(String wasuCodeStr, String key) {
+
+        return "";
+    }
+
+        // com.wasu.utils.AuthCode.class authCode()
     public static String authCode(String wasuCodeStr, String key) {
         wasuCodeStr = b(wasuCodeStr);
         String keyMD5 = MD5.encode(key);
@@ -116,6 +121,7 @@ public class CBChotUtils {
             int j = paramString.charAt(i);
             StringBuilder localStringBuilder;
             if ((j >= 19968) && (j <= 171941)) {
+                // 汉字
                 localStringBuilder = new StringBuilder();
                 localStringBuilder.append(str);
                 localStringBuilder.append("\\u");

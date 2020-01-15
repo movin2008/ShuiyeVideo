@@ -218,8 +218,8 @@ public class MainActivity extends BaseActivity {
     }
 
     public void testUrl(View view) {
-        startActivity(new Intent(this, MgtvVActivity.class).putExtra("title","test").putExtra("url", "https://www.mgtv.com/l/100028247/7370524.html?fpa=9349&fpos=3"));
-//        VipActivity.launch(this,"https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html");
+//        startActivity(new Intent(this, MgtvVActivity.class).putExtra("title","test").putExtra("url", "https://www.mgtv.com/l/100028247/7370524.html?fpa=9349&fpos=3"));
+        VipActivity.launch(this,"https://m.iqiyi.com/v_19ruzj8gv0.html");// https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html
     }
 
     public void testWeb(View view) {

@@ -128,6 +128,8 @@ public class QQUtils {
 }
 
 /**
+ https://vv.video.qq.com/getinfo?callback=jQuery1579077075036&defn=shd&vid=e0017ah5b20&charge=0&defaultfmt=auto&otype=json&guid=972ab6a0a7fe41f0bb3ce56cf3da479f&flowid=2f71d5cfde5f6a70e3f6d03c2fe8df52_10901&platform=10901&sdtfrom=v1010&defnpayver=1&appVer=3.4.31&host=v.qq.com&ehost=https%3A%2F%2Fv.qq.com%2Fx%2Fpage%2Fe0017ah5b20.html&sphttps=1&tm=1579077074&spwm=4
+
  电视剧列表
  https://s.video.qq.com/get_playsource?id=lcpwn26degwm7t3&plat=2&type=4&range=1-100&data_type=2&video_type=2&plname=qq&otype=json&_t=1542551072453
  */
