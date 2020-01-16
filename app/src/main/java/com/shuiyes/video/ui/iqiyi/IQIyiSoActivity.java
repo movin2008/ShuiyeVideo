@@ -25,7 +25,7 @@ public class IQIyiSoActivity extends BaseSearchActivity {
         super.onCreate(savedInstanceState);
 
         mSearch.setHint("爱奇艺搜索");
-        mSearch.setText("汽车城");
+        mSearch.setText("爱情公寓");
     }
 
     @Override
@@ -76,11 +76,8 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                     return false;
                 }
 
-                String result = IQiyiUtils.search(keyword);
-                //notice(result);
-
-                if (TextUtils.isEmpty(result)) {
-                    notice("Search " + keyword + " is empty.");
+                String html = IQiyiUtils.search(keyword);
+                if(!checkHtmlValid(html)){
                     return false;
                 }
 
@@ -88,11 +85,9 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                     notice("Will list albums has Cancelled.");
                     return false;
                 }
+                Utils.setFile("iqiyi.so.json", html);
 
-
-                Utils.setFile("iqiyi", result);
-
-                JSONObject obj = new JSONObject(result);
+                JSONObject obj = new JSONObject(html);
                 if (!"A00000".equals(obj.getString("code"))) {
                     //notice(result);
 
@@ -130,18 +125,18 @@ public class IQIyiSoActivity extends BaseSearchActivity {
 
                     albumDocInfo = docinfo.getJSONObject("albumDocInfo");
 
-                    if (albumDocInfo.getInt("videoDocType") == 9) {
-                        // 小说
+                    int videoDocType = albumDocInfo.getInt("videoDocType");
+                    if (videoDocType == 9 || videoDocType == 7) {
+                        // 9、小说 7、用户昵称
                         continue;
                     }
 
                     String albumTitle = null;
                     String albumImg = null;
-                    String albumUrl = null;
+                    String albumUrl = "";
                     if (albumDocInfo.has("albumTitle")) {
                         albumTitle = albumDocInfo.getString("albumTitle");
                         albumImg = albumDocInfo.getString("albumImg");
-                        albumUrl = "";
                         if (albumDocInfo.has("albumLink")) {
                             albumUrl = albumDocInfo.getString("albumLink");
                         }
@@ -153,7 +148,8 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                             albumUrl = video_lib_meta.getString("link");
                         }
                     } else {
-                        throw new Exception("albumDocInfo error.");
+                        notice(flag + " albumDocInfo error.");
+                        continue;
                     }
                     String albumSummary = "暂无简介";
                     if (albumDocInfo.has("bookSummary")) {
@@ -202,7 +198,8 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                     }
 
                     if (TextUtils.isEmpty(albumUrl)) {
-                        throw new Exception("albumUrl error.");
+                        Log.e(TAG, flag + " albumUrl error."+albumDocInfo);
+                        continue;
                     }
 
 //                    notice(videoinfosLen+", 《"+albumTitle+"》 "+albumUrl);
@@ -224,6 +221,7 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                 if (albumDocInfo != null) {
                     Utils.setFile("iqiyi", albumDocInfo.toString());
                 }
+                notice(e.getLocalizedMessage());
                 e.printStackTrace();
                 return false;
             }

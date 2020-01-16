@@ -15,17 +15,14 @@ import com.shuiyes.video.ui.cbchot.CBChotSoActivity;
 import com.shuiyes.video.ui.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;
-import com.shuiyes.video.ui.mgtv.MgtvVActivity;
 import com.shuiyes.video.ui.qq.QQSoActivity;
 import com.shuiyes.video.ui.tvlive.BuptIVIActivity;
 import com.shuiyes.video.ui.tvlive.SopPlusActivity;
 import com.shuiyes.video.ui.tvlive.SuzhouCMCCActivity;
 import com.shuiyes.video.ui.tvlive.TVListActivity;
-import com.shuiyes.video.util.PlayUtils;
+import com.shuiyes.video.ui.vip.VipActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuSoActivity;
-
-import java.io.UnsupportedEncodingException;
 
 public class MainActivity extends BaseActivity {
 

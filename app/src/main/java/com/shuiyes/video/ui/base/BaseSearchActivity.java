@@ -246,4 +246,17 @@ public abstract class BaseSearchActivity extends BaseActivity {
         Log.e(TAG, text);
     }
 
+    protected boolean checkHtmlValid(String html){
+        if(TextUtils.isEmpty(html)){
+            notice("Http response is null.");
+            return false;
+        }
+
+        if(html.startsWith("Exception: ")){
+            notice(html);
+            return false;
+        }
+
+        return true;
+    }
 }

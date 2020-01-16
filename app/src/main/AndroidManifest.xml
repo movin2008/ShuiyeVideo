@@ -59,7 +59,7 @@
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".ui.VipActivity"
+            android:name=".ui.vip.VipActivity"
             android:launchMode="singleTop"
             android:screenOrientation="landscape" />
 

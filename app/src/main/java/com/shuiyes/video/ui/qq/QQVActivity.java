@@ -516,7 +516,7 @@ public class QQVActivity extends BasePlayActivity {
         }
     }
 
-    private void playSection(QQSection section) {
+    private void playSection(final QQSection section) {
         new Thread(new Runnable() {
             @Override
             public void run() {

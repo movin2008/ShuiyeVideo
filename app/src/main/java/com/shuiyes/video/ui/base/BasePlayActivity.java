@@ -3,12 +3,12 @@ package com.shuiyes.video.ui.base;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -25,9 +25,12 @@ import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.dialog.MiscDialog;
-import com.shuiyes.video.ui.VipActivity;
+import com.shuiyes.video.ui.vip.VipActivity;
+import com.shuiyes.video.ui.vip.VipUtils;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -235,7 +238,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         switch (keyCode) {
             case KeyEvent.KEYCODE_MENU:
             case KeyEvent.KEYCODE_DPAD_UP:
-                mClarityView.requestFocus();
+                mDownloadView.requestFocus();
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
                 mVideoView.requestFocus();
@@ -299,6 +302,35 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     };
 
     protected boolean mIsError;
+
+    protected void fault(String text, final String msg) throws Exception {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(mContext, msg, 0).show();
+            }
+        });
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, 1, 0, text));
+
+        String json = VipUtils.getVipUrl8090(mIntentUrl);
+        if (!checkHtmlValid(json)) {
+            return;
+        }
+
+        JSONObject obj2 = new JSONObject(json);
+        if (obj2.has("url")) {
+            String vipUrl = obj2.getString("url");
+            if (!vipUrl.startsWith("http")) {
+                Log.e(TAG, vipUrl);
+                vipUrl = new String(Base64.decode(vipUrl, Base64.DEFAULT), "UTF-8");
+                vipUrl = "https:" + vipUrl.substring(vipUrl.indexOf("//"));
+            }
+            Log.e(TAG, vipUrl);
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_URL, vipUrl));
+        } else {
+            fault(obj2.getString("msg"));
+        }
+    }
 
     protected void fault(String text) {
         mIsError = true;
@@ -376,6 +408,20 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         }
     }
 
+    protected boolean checkHtmlValid(String html){
+        if(TextUtils.isEmpty(html)){
+            fault("Http response is null.");
+            return false;
+        }
+
+        if(html.startsWith("Exception: ")){
+            fault(html);
+            return false;
+        }
+
+        return true;
+    }
+
     protected final int MSG_FAULT = 0;
     protected final int MSG_FETCH_TOKEN = 1;
     protected final int MSG_FETCH_VIDEO = 2;
@@ -399,7 +445,9 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 break;
             case MSG_FAULT:
                 Object error = msg.obj;
-                mLoadingProgress.setVisibility(View.GONE);
+                if(msg.arg1 == 0){
+                    mLoadingProgress.setVisibility(View.GONE);
+                }
                 mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : "") /*+ " 5s后返回..."*/);
 
 //                mHandler.postDelayed(new Runnable() {
@@ -427,6 +475,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                     mStateView.setText(mStateView.getText() + "[成功]\n解析视频地址...");
                 } else {
                     mClarityView.setText(streamStr);
+                    mClarityView.setVisibility(View.VISIBLE);
                     mStateView.setText(mStateView.getText() + "[成功]\n解析" + streamStr + "视频地址...");
                 }
                 break;
@@ -438,6 +487,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 break;
             case MSG_CACHE_URL:
                 String url = (String) msg.obj;
+                mClarityView.setVisibility(View.GONE);
                 mStateView.setText(mStateView.getText() + "[成功]\n开始缓存视频...");
                 playUrl(url);
                 break;

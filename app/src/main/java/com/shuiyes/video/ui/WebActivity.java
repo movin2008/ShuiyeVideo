@@ -27,6 +27,7 @@ import java.io.InputStream;
 public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     private final String TAG = this.getClass().getSimpleName();
+    public static boolean sFOEGROUND = false;
 
     public static void launch(Context context, String url) {
         context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
@@ -153,14 +154,14 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
 
-        Constants.WEB_FOEGROUND = true;
+        sFOEGROUND = true;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        Constants.WEB_FOEGROUND = false;
+        sFOEGROUND = false;
     }
 
     @Override

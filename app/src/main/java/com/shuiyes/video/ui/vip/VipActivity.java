@@ -1,11 +1,11 @@
-package com.shuiyes.video.ui;
+package com.shuiyes.video.ui.vip;
 
 import android.app.Instrumentation;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -16,6 +16,7 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -55,8 +56,13 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vip);
 
-        mSourceList.add(new PlayVideo("administratorw.com【无名小站】", "https://www.administratorw.com/video.php?url="));
-        mSourceList.add(new PlayVideo("vip.97kys.com【8090g解析】", "https://vip.97kys.com/vip/?url="));
+        mSourceList.add(new PlayVideo("administratorw.com(data.ylybz.cn)【无名小站】", "https://www.administratorw.com/video.php?url="));
+        // https://8090.ylybz.cn/jiexi2019/api.php
+        // https://ykm3u8.ylybz.cn/video/qyplay.php?url=https://ykm3u8.ylybz.cn/data/iqiyi/6d9b571f4828b0d6941c22c046749a49.m3u8
+        mSourceList.add(new PlayVideo("8090.ylybz.cn(ykm3u8.ylybz.cn)【8090g解析】", "https://www.8090g.cn/?url="));
+        mSourceList.add(new PlayVideo("wocao.ylybz.cn【WoCao视频】", "https://www.wocao.xyz/?url="));
+
+        mSourceList.add(new PlayVideo("vip.97kys.com【97解析平台】", "https://vip.97kys.com/vip/?url="));
         mSourceList.add(new PlayVideo("607p.com【618G免费解析】", "https://607p.com/?url="));
         mSourceList.add(new PlayVideo("mt2t.com【云播放】", "http://mt2t.com/lines?url="));
         mSourceList.add(new PlayVideo("vipvideo.github.io【水也】(CNAME mt2t.com)", "http://vipvideo.github.io/lines?url="));
@@ -139,10 +145,10 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
                     } else if (url.startsWith("https://vd.l.qq.com/proxyhttp")) {
                         // 网站做 JS 破解
                         mockWebViewClick(3333);
-                    } else if (url.contains("zyzjpx.cn") || url.contains("/xxd.php") || url.contains("coss.qc393.cn")) {
+                    } else if (url.contains("zyzjpx.cn") || url.contains("/xxd.php") || url.contains("coss.qc393.cn") || url.contains("magictreehouse.cn")) {
                         // 广告
                         return new WebResourceResponse("text/css", "utf-8", null);
-                    } else if (url.contains("google-analytics.com/") || url.contains("cnzz.com/")) {
+                    } else if (url.contains("google-analytics.com/") || url.contains("cnzz.com/") || url.contains("hm.baidu.com")) {
                         // google-analytics
                         return new WebResourceResponse("text/css", "utf-8", null);
                     } else {
@@ -166,6 +172,12 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
                 mTitle.setText(mTitleSourceStr + " - " + mTitleStr);
 
                 super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                Log.e(TAG, "SslError: " + error.toString());
+                handler.proceed();
             }
         });
 
@@ -265,7 +277,7 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void run() {
                 Display display = getWindowManager().getDefaultDisplay();
-                DisplayMetrics dm = new DisplayMetrics();
+                final DisplayMetrics dm = new DisplayMetrics();
                 display.getMetrics(dm);
                 Toast.makeText(getApplicationContext(), "Mock Click " + dm.widthPixels + "x" + dm.heightPixels + "", 0).show();
 

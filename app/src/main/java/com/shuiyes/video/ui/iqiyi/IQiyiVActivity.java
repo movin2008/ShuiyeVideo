@@ -71,10 +71,8 @@ public class IQiyiVActivity extends BasePlayActivity {
                 try {
                     String tvid = null;
                     String vid = null;
-                    String albumUrl = null;
-
-                    String key = "?tvid=";
-                    if (mIntentUrl.contains(key)) {
+                    if (mIntentUrl.contains("?tvid=") && mIntentUrl.contains("&vid=")) {
+                        String key = "?tvid=";
                         int len = mIntentUrl.indexOf(key);
                         String tmp = mIntentUrl.substring(len + key.length());
                         len = tmp.indexOf("&");
@@ -85,84 +83,80 @@ public class IQiyiVActivity extends BasePlayActivity {
                         vid = tmp.substring(len + key.length());
 
                         Log.e(TAG, ":url 'tvid=" + tvid + ", vid=" + vid + "'");
-                    }
+                    } else {
+                        mHandler.sendEmptyMessage(MSG_FETCH_TOKEN);
+                        String html = HttpUtils.get(mIntentUrl);
+                        Utils.setFile("iqiyi.html", html);
 
-                    mHandler.sendEmptyMessage(MSG_FETCH_TOKEN);
-                    String html = HttpUtils.get(mIntentUrl);
-                    Utils.setFile("iqiyi.html", html);
+                        if (!checkHtmlValid(html)) {
+                            return;
+                        }
 
-                    //&& tvid == null && vid == null
-                    if(html.startsWith("Exception: ")){
-                        fault(html);
-                        return;
-                    }
+                        String albumUrl = null;
+                        String key = "\"albumUrl\":\"";
+                        if (html.contains(key)) {
+                            String tmp = html.substring(html.indexOf(key) + key.length());
+                            albumUrl = tmp.substring(0, tmp.indexOf("\""));
+                            Log.e(TAG, ":html albumUrl=" + albumUrl);
+                        }
 
-                    key = "\"albumUrl\":\"";
-                    if (html.contains(key)) {
-                        String tmp = html.substring(html.indexOf(key) + key.length());
-                        albumUrl = tmp.substring(0, tmp.indexOf("\""));
-                        Log.e(TAG, ":html albumUrl=" + albumUrl);
-                    }
+                        key = ":page-info='";
+                        if (html.contains(key) && (albumUrl == null || tvid == null || vid == null)) {
+                            int len = html.indexOf(key);
+                            String tmp = html.substring(len + key.length());
+                            len = tmp.indexOf("'");
+                            String pageInfo = tmp.substring(0, len);
 
-                    key = ":page-info='";
-                    if (html.contains(key) && (albumUrl == null || tvid == null || vid == null)) {
-                        int len = html.indexOf(key);
-                        String tmp = html.substring(len + key.length());
-                        len = tmp.indexOf("'");
-                        String pageInfo = tmp.substring(0, len);
+                            try {
+                                JSONObject obj = new JSONObject(pageInfo);
 
-                        try {
-                            JSONObject obj = new JSONObject(pageInfo);
-
-                            if (tvid == null || vid == null) {
-                                tvid = obj.getString("tvId");
-                                vid = obj.getString("vid");
-                                Log.e(TAG, ":page-info 'tvid=" + tvid + ", vid=" + vid + "'");
+                                if (tvid == null || vid == null) {
+                                    tvid = obj.getString("tvId");
+                                    vid = obj.getString("vid");
+                                    Log.e(TAG, ":page-info 'tvid=" + tvid + ", vid=" + vid + "'");
+                                }
+                                if (albumUrl == null) {
+                                    albumUrl = obj.getString("albumUrl");
+                                    Log.e(TAG, ":page-info albumUrl=" + albumUrl);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            if (albumUrl == null) {
-                                albumUrl = obj.getString("albumUrl");
-                                Log.e(TAG, ":page-info albumUrl=" + albumUrl);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        }
+
+                        key = "param['tvid'] = \"";
+                        if (tvid == null && html.contains(key)) {
+                            int len = html.indexOf(key);
+                            String tmp = html.substring(len + key.length());
+                            len = tmp.indexOf("\"");
+                            tvid = tmp.substring(0, len);
+                            Log.e(TAG, ":param['tvid'] = " + tvid);
+                        }
+
+                        key = "param['vid'] = \"";
+                        if (vid == null && html.contains(key)) {
+                            int len = html.indexOf(key);
+                            String tmp = html.substring(len + key.length());
+                            len = tmp.indexOf("\"");
+                            vid = tmp.substring(0, len);
+                            Log.e(TAG, ":param['vid'] = " + vid);
                         }
                     }
 
-                    key = "param['tvid'] = \"";
-                    if (tvid == null && html.contains(key)) {
-                        int len = html.indexOf(key);
-                        String tmp = html.substring(len + key.length());
-                        len = tmp.indexOf("\"");
-                        tvid = tmp.substring(0, len);
-                        Log.e(TAG, ":param['tvid'] = " + tvid);
-                    }
-
-                    key = "param['vid'] = \"";
-                    if (vid == null && html.contains(key)) {
-                        int len = html.indexOf(key);
-                        String tmp = html.substring(len + key.length());
-                        len = tmp.indexOf("\"");
-                        vid = tmp.substring(0, len);
-                        Log.e(TAG, ":param['vid'] = " + vid);
-                    }
-
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
-                    String video = IQiyiUtils.fetchVideo(tvid, vid);
-                    Utils.setFile("iqiyi", video);
-
-                    if (TextUtils.isEmpty(video)) {
-                        fault("空数据,请重试");
+                    String html = IQiyiUtils.fetchVideo(tvid, vid);
+                    if (!checkHtmlValid(html)) {
                         return;
                     }
+                    Utils.setFile("tvInfoJs", html);
 
-                    key = "var tvInfoJs=";
-                    String albumId;
+                    String albumId, key = "var tvInfoJs=";
                     int albumCount, showChannelId, sourceid, ty;
-                    if (video.contains(key)) {
-                        int len = video.indexOf(key);
-                        video = video.substring(len + key.length());
+                    if (html.contains(key)) {
+                        int len = html.indexOf(key);
+                        html = html.substring(len + key.length());
 
-                        JSONObject obj = new JSONObject(video);
+                        JSONObject obj = new JSONObject(html);
 
                         albumId = obj.getString("aid");
                         sourceid = obj.getInt("sid");
@@ -172,7 +166,11 @@ public class IQiyiVActivity extends BasePlayActivity {
 
                         String title;
                         if (showChannelId == IQiyiUtils.Channel.dianshiju) {
-                            title = obj.getString("vn") + " - " + obj.getString("subt");
+                            title = obj.getString("vn");
+                            String subt = obj.getString("subt");
+                            if(!TextUtils.isEmpty(subt)){
+                                title += " - " + subt;
+                            }
                         } else if (showChannelId == IQiyiUtils.Channel.zongyi) {
                             title = obj.getJSONObject("ppsInfo").getString("name");
                         } else {
@@ -184,12 +182,16 @@ public class IQiyiVActivity extends BasePlayActivity {
                         return;
                     }
 
-                    mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
-                    video = IQiyiUtils.getVMS(tvid, vid);
-                    Utils.setFile("iqiyi", video);
-//                    Log.e(TAG, "video ="+video);
+                    fetchAlbums(albumId, albumCount, sourceid, ty, showChannelId);
 
-                    JSONObject obj = new JSONObject(video);
+                    mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
+                    html = IQiyiUtils.getVMS(tvid, vid);
+                    if (!checkHtmlValid(html)) {
+                        return;
+                    }
+                    Utils.setFile("iqiyi.vi", html);
+
+                    JSONObject obj = new JSONObject(html);
                     if (!"A00000".equals(obj.getString("code"))) {
 //                        Log.e(TAG, info);
 
@@ -208,9 +210,9 @@ public class IQiyiVActivity extends BasePlayActivity {
                         }
 
                         if ("server return err-data.".equals(msg)) {
-                            fault("VIP 视频暂不支持播放");
-                        } else {
-                            fault(msg);
+                            fault("VIP视频破解...", msg);
+                        }else{
+                            fault("WEB接口解析...", msg);
                         }
                         return;
                     }
@@ -228,6 +230,8 @@ public class IQiyiVActivity extends BasePlayActivity {
                         IQiyiVideo.VideoType type = IQiyiVideo.formateVideoType(vd);
                         if (type != null) {
                             mUrlList.add(new IQiyiVideo(type, m3u8Url));
+                        }else{
+                            Log.e(TAG, "Unkown vd: " + vd);
                         }
                     }
                     Log.e(TAG, "UrlList=" + mUrlList.size() + "/" + vidlLen);
@@ -253,24 +257,6 @@ public class IQiyiVActivity extends BasePlayActivity {
                         }
 
                         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
-
-                        Log.e(TAG, "Album showChannelId=" + showChannelId + ", count=" + albumCount + "/" + mVideoList.size() + ", albumId=" + albumId + ", sourceid=" + sourceid + ", time=" + ty);
-
-                        if (!mVideoList.isEmpty()) {
-                            return;
-                        }
-
-                        //  最后获取专辑列表信息
-
-                        // showChannelId = QiyiUtils.Channel.dianshiju
-                        fetchAlbumsOfAvlist(albumCount == 0 ? 1 : albumCount, albumId);
-
-                        if (mVideoList.isEmpty() && sourceid != 0 && ty != 0) {
-                            // showChannelId == IQiyiUtils.Channel.zongyi
-                            //fetchAlbumsOfHtmlData(albumUrl, html);
-                            fetchAlbumsOfSvlist(showChannelId, sourceid, String.valueOf(ty));
-                        }
-                        mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
                     }
                 } catch (Exception e) {
                     fault(e);
@@ -280,70 +266,38 @@ public class IQiyiVActivity extends BasePlayActivity {
         }).start();
     }
 
-    /**
-     * 获取不到 播放 url
-     *
-     * @param albumUrl
-     * @param albumHtml
-     */
-    @Deprecated
-    private void fetchAlbumsOfHtmlData(String albumUrl, String albumHtml) {
-        String key = ":initialized-data='";
-        if (albumHtml.contains(key)) {
-            int len = albumHtml.indexOf(key);
-            String tmp = albumHtml.substring(len + key.length());
-            len = tmp.indexOf("'");
-            String data = tmp.substring(0, len);
+    private int albumCount;
+    private void fetchAlbums(final String albumId, final int albumCount, final int sourceid, final int ty, final int cid) {
+        if (!mVideoList.isEmpty() && this.albumCount == albumCount) return;
+        this.albumCount = albumCount;
 
-            try {
-                JSONArray arr = new JSONArray(data);
-                int vlistLen = arr.length();
+        Log.e(TAG, "Album albumId=" + albumId + ", count=" + albumCount + ", showChannelId=" + cid + ", sourceid=" + sourceid + ", time=" + ty);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mVideoList.clear();
 
-                for (int i = 0; i < vlistLen; i++) {
-                    JSONObject obj = (JSONObject) arr.get(i);
+                    int showChannelId = IQiyiUtils.Channel.dianshiju;
+                    fetchAlbumsOfAvlist(albumCount == 0 ? 1 : albumCount, albumId);
 
-                    String text = obj.getString("subtitle");
-                    String title = obj.getString("name");
-                    String url;
-                    if (obj.has("url")) {
-                        url = obj.getString("url");
-                    } else if (obj.has("vid")) {
-                        // TODO vid -> url
-                        url = obj.getString("vid");
-                    } else {
-                        continue;
+                    if (mVideoList.isEmpty() && sourceid != 0 && ty != 0) {
+                        showChannelId = IQiyiUtils.Channel.zongyi;
+                        fetchAlbumsOfSvlist(cid, sourceid, String.valueOf(ty));
                     }
-
-                    mVideoList.add(new ListVideo(text, title, url));
+                    mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                Log.e(TAG, "ZY VideoList " + mVideoList.size() + "/" + vlistLen);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-        }
+        }).start();
 
-        if (!mVideoList.isEmpty()) {
-            return;
-        }
-
-        if (!TextUtils.isEmpty(albumUrl)) {
-            if (!albumUrl.startsWith("http")) {
-                albumUrl = "https:" + albumUrl;
-            }
-            String html = HttpUtils.get(albumUrl);
-            if(html.startsWith("Exception: ")){
-                fault(html);
-                return;
-            }
-            Utils.setFile("iqiyi.html", html);
-        }
     }
 
     private void fetchAlbumsOfSvlist(int cid, int sid, String time) throws Exception {
         String album = IQiyiUtils.fetchSvlist(cid, sid, time);
 
         JSONObject obj = new JSONObject(album);
-
         String code = obj.getString("code");
         if (!"A00000".equals(code)) {
 
@@ -351,8 +305,8 @@ public class IQiyiVActivity extends BasePlayActivity {
                 Log.e(TAG, obj.getString("msg"));
             } else if (obj.has("ctl")) {
                 Log.e(TAG, obj.getJSONObject("ctl").getString("msg"));
-            }else{
-                Log.e(TAG, "fetchAlbumsOfSvlist error" + code);
+            } else {
+                Log.e(TAG, "fetchAlbumsOfSvlist error: " + code);
             }
             return;
         }
@@ -391,7 +345,6 @@ public class IQiyiVActivity extends BasePlayActivity {
                 album = album.substring(len + key.length());
                 JSONObject obj = new JSONObject(album);
 
-
                 String code = obj.getString("code");
                 if (!"A00000".equals(code)) {
 
@@ -399,8 +352,8 @@ public class IQiyiVActivity extends BasePlayActivity {
                         Log.e(TAG, obj.getString("msg"));
                     } else if (obj.has("ctl")) {
                         Log.e(TAG, obj.getJSONObject("ctl").getString("msg"));
-                    }else{
-                        Log.e(TAG, "fetchAlbumsOfAvlist error" + code);
+                    } else {
+                        Log.e(TAG, "fetchAlbumsOfAvlist error: " + code);
                     }
                     continue;
                 }
@@ -414,9 +367,7 @@ public class IQiyiVActivity extends BasePlayActivity {
                     String pds = stream.getString("pds");
                     int payMark = stream.getInt("payMark");
                     String title = stream.getString("vn");
-                    String url = stream.getString("vurl")
-                            + "?tvid=" + stream.getString("id")
-                            + "&vid=" + stream.getString("vid");
+                    String url = stream.getString("vurl") + "?tvid=" + stream.getString("id") + "&vid=" + stream.getString("vid");
                     String text = pds + (payMark == 1 ? "(VIP)" : "");
 
                     mVideoList.add(new ListVideo(text, title, url));
@@ -431,13 +382,13 @@ public class IQiyiVActivity extends BasePlayActivity {
 
     @Override
     protected void cacheVideo(PlayVideo video) {
+        mClarityView.setText(((IQiyiVideo) video).getType().getProfile());
+        mClarityView.setVisibility(View.VISIBLE);
         if (mUrlList.size() < 2) {
             mClarityView.setEnabled(false);
         } else {
             mClarityView.setEnabled(true);
         }
-
-        mClarityView.setText(((IQiyiVideo) video).getType().getProfile());
     }
 
 }

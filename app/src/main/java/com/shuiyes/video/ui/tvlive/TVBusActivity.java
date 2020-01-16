@@ -229,7 +229,7 @@ public class TVBusActivity extends BaseActivity {
     // 10 second
     private final static long MP_START_CHECK_INTERVAL = 10 * 1000 * 1000 * 1000L;
 
-    private void startPlayback(String url) {
+    private void startPlayback(final String url) {
         if(url == null){
             return;
         }

@@ -40,7 +40,7 @@ public class PlayUtils {
         PlayUtils.play(context, url, title, false);
     }
 
-    public static void play(Context context, String url, String title, boolean isHLS) {
+    public static void play(final Context context, String url, String title, boolean isHLS) {
         if (isHLS) {
             if (url.startsWith("tvbus://")) {
                 try {
@@ -118,7 +118,7 @@ public class PlayUtils {
         String text = "暂不支持 " + url + "\n 请浏览至播放网页重试";
         Tips.show(context, text, 1);
         Log.e(TAG, text);
-        if (!Constants.WEB_FOEGROUND) {
+        if (!WebActivity.sFOEGROUND) {
             context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
         }
     }

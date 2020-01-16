@@ -8,6 +8,9 @@ import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.MD5;
 import com.shuiyes.video.util.Utils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -18,8 +21,7 @@ public class IQiyiUtils {
     private final static String TAG = "IQiyiUtils";
 
     public static String fetchVideo(String tvid, String vid) {
-        String url = String.format("https://cache.video.iqiyi.com/jp/vi/%s/%s/", tvid, vid);
-        return HttpUtils.get(url);
+        return HttpUtils.get(String.format("https://cache.video.iqiyi.com/jp/vi/%s/%s/", tvid, vid));
     }
 
     /**
@@ -29,8 +31,7 @@ public class IQiyiUtils {
      * @return
      */
     public static String fetchAvlist(String aid, int page) {
-        String url = String.format("http://cache.video.iqiyi.com/jp/avlist/%s/%s/50/", aid, page);
-        return HttpUtils.get(url);
+        return HttpUtils.get(String.format("http://cache.video.iqiyi.com/jp/avlist/%s/%s/50/", aid, page));
     }
 
     /**
@@ -41,8 +42,7 @@ public class IQiyiUtils {
      * @return
      */
     public static String fetchSvlist(int cid, int sid, String time) {
-        String url = String.format("https://pcw-api.iqiyi.com/album/source/svlistinfo?cid=%s&sourceid=%s&timelist=%s", cid, sid, time);
-        return HttpUtils.get(url);
+        return HttpUtils.get(String.format("https://pcw-api.iqiyi.com/album/source/svlistinfo?cid=%s&sourceid=%s&timelist=%s", cid, sid, time));
     }
 
     private static final String src = "76f90cbd92f94a2e925d83e8ccd22cb7";
@@ -51,8 +51,7 @@ public class IQiyiUtils {
     public static String getVMS(String tvid, String vid) {
         String t = Utils.timestamps();
         String sc = MD5.encode(t + key + vid);
-        String url = String.format("http://cache.m.iqiyi.com/tmts/%s/%s/?t=%s&sc=%s&src=%s", tvid, vid, t, sc, src);
-        return HttpUtils.get(url);
+        return HttpUtils.get(String.format("http://cache.m.iqiyi.com/tmts/%s/%s/?t=%s&sc=%s&src=%s", tvid, vid, t, sc, src));
     }
 
     public interface Channel {
@@ -134,6 +133,50 @@ public class IQiyiUtils {
                 videoList.add(new ListVideo(flag++, title, url));
 
                 html = html.substring(html.indexOf(start) + start.length());
+            }
+        }
+    }
+
+    /**
+     * 获取不到 播放 url
+     *
+     * @param albumUrl
+     * @param albumHtml
+     */
+    @Deprecated
+    private void fetchAlbumsOfHtmlData(String albumUrl, String albumHtml) {
+        List<ListVideo> list = new ArrayList<>();
+        String key = ":initialized-data='";
+        if (albumHtml.contains(key)) {
+            int len = albumHtml.indexOf(key);
+            String tmp = albumHtml.substring(len + key.length());
+            len = tmp.indexOf("'");
+            String data = tmp.substring(0, len);
+
+            try {
+                JSONArray arr = new JSONArray(data);
+                int vlistLen = arr.length();
+
+                for (int i = 0; i < vlistLen; i++) {
+                    JSONObject obj = (JSONObject) arr.get(i);
+
+                    String text = obj.getString("subtitle");
+                    String title = obj.getString("name");
+                    String url;
+                    if (obj.has("url")) {
+                        url = obj.getString("url");
+                    } else if (obj.has("vid")) {
+                        // TODO vid -> url
+                        url = obj.getString("vid");
+                    } else {
+                        continue;
+                    }
+
+                    list.add(new ListVideo(text, title, url));
+                }
+                Log.e(TAG, "ZY VideoList " + list.size() + "/" + vlistLen);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

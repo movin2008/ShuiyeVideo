@@ -5,17 +5,25 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 public class HttpUtils {
 
@@ -35,11 +43,11 @@ public class HttpUtils {
     public static final String UA = UA_WIN;
 
     public static void setURLConnection(HttpURLConnection conn, String headers) {
-        conn.setConnectTimeout(10000);
-        conn.setReadTimeout(10000);
-//        conn.setRequestProperty("Charset", "UTF-8");
+        conn.setConnectTimeout(15000);
+        conn.setReadTimeout(15000);
         conn.setRequestProperty("Host", conn.getURL().getHost());
         conn.setRequestProperty("User-Agent", UA);
+//        conn.setRequestProperty("Charset", "UTF-8");
 
         if (!TextUtils.isEmpty(headers)) {
             // Cookie: a=123;
@@ -79,13 +87,13 @@ public class HttpUtils {
     }
 
     public static String get(String url, String headers, boolean forCookie) {
-//        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
+//        return debugHeader(headers);
 
         String ret = "Exception: ";
         HttpURLConnection conn = null;
         try {
             if (url.startsWith("https://")) {
-                conn = (HttpsURLConnection) new URL(url).openConnection();
+                conn = initHttpsURLConnection(url);
             } else {
                 conn = (HttpURLConnection) new URL(url).openConnection();
             }
@@ -123,7 +131,7 @@ public class HttpUtils {
                 return HttpUtils.get(conn.getHeaderField("Location"), headers, forCookie);
             } else if (code == 400) {
                 Thread.sleep(500);
-                return HttpUtils.get(url);
+                return HttpUtils.get(url, headers, forCookie);
             } else {
                 ret += printHeaders(conn);
             }
@@ -133,8 +141,9 @@ public class HttpUtils {
                 Thread.sleep(500);
             } catch (InterruptedException e1) {
             }
-            return HttpUtils.get(url);
+            return HttpUtils.get(url, headers, forCookie);
         } catch (Exception e) {
+            Log.e(TAG, "GET " + url);
             e.printStackTrace();
             ret += e.getLocalizedMessage();
         } finally {
@@ -147,11 +156,13 @@ public class HttpUtils {
     }
 
     public static String post(String url, String params, String headers) {
+//        return debugHeader(headers);
+
         String ret = "Exception: ";
         HttpURLConnection conn = null;
         try {
             if (url.startsWith("https://")) {
-                conn = (HttpsURLConnection) new URL(url).openConnection();
+                conn = initHttpsURLConnection(url);
             } else {
                 conn = (HttpURLConnection) new URL(url).openConnection();
             }
@@ -166,7 +177,7 @@ public class HttpUtils {
             dos.close();
 
             int code = conn.getResponseCode();
-            Log.e(TAG, "POST " + params + " " + url + " " + code);
+            Log.e(TAG, "POST " + url + " " + code + "\n" + params);
 
             if (code == 200) {
                 StringBuffer buffer = new StringBuffer();
@@ -182,6 +193,7 @@ public class HttpUtils {
                 ret += printHeaders(conn);
             }
         } catch (Exception e) {
+            Log.e(TAG, "POST " + url + "\n" + params);
             e.printStackTrace();
             ret += e.getLocalizedMessage();
         } finally {
@@ -191,6 +203,59 @@ public class HttpUtils {
         }
 
         return ret;
+    }
+
+    private static HttpsURLConnection initHttpsURLConnection(String url) throws Exception {
+        HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
+        SSLContext sslContext = SSLContext.getInstance("SSL");
+        sslContext.init(null, new TrustManager[]{new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(X509Certificate[] chain, String authType) {
+                //do nothing，接受任意客户端证书
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain, String authType) {
+                //do nothing，接受任意客户端证书
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+        }}, new SecureRandom());
+        conn.setSSLSocketFactory(sslContext.getSocketFactory());
+        conn.setHostnameVerifier(new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        });
+        return conn;
+    }
+
+    public static String debugHeader(String headers) {
+        try {
+            HttpURLConnection conn2 = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
+            HttpUtils.setURLConnection(conn2, headers);
+            conn2.connect();
+
+            StringBuffer buffer = new StringBuffer();
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn2.getInputStream(), "UTF-8"));
+            String read;
+            while ((read = in.readLine()) != null) {
+                buffer.append(read);
+            }
+
+            Log.e(TAG, buffer.toString());
+
+            in.close();
+            conn2.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static String testPost(String url) {
