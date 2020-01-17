@@ -301,18 +301,9 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         }
     };
 
-    protected boolean mIsError;
-
-    protected void fault(String text, final String msg) throws Exception {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(mContext, msg, 0).show();
-            }
-        });
-        mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, 1, 0, text));
-
-        String json = VipUtils.getVipUrl8090(mIntentUrl);
+    private String mVipJxType = "97kys.com";
+    protected void vipJiexi() throws Exception {
+        String json = VipUtils.getVipUrl(mIntentUrl, mVipJxType);
         if (!checkHtmlValid(json)) {
             return;
         }
@@ -332,6 +323,18 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         }
     }
 
+    protected void fault(String text, final String msg) throws Exception {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(mContext, msg, 0).show();
+            }
+        });
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, 1, 0, text));
+        vipJiexi();
+    }
+
+    protected boolean mIsError;
     protected void fault(String text) {
         mIsError = true;
 

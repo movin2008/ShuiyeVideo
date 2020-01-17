@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.TrafficStats;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,31 +53,21 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
     protected Button mRefresh, mSource;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mHandler.post(mRefreshTask);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mHandler.removeCallbacks(mRefreshTask);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vip);
-
-        mSourceList.add(new PlayVideo("administratorw.com(data.ylybz.cn)【无名小站】", "https://www.administratorw.com/video.php?url="));
-        // https://8090.ylybz.cn/jiexi2019/api.php
-        // https://ykm3u8.ylybz.cn/video/qyplay.php?url=https://ykm3u8.ylybz.cn/data/iqiyi/6d9b571f4828b0d6941c22c046749a49.m3u8
-        mSourceList.add(new PlayVideo("8090.ylybz.cn(ykm3u8.ylybz.cn)【8090g解析】", "https://www.8090g.cn/?url="));
-        mSourceList.add(new PlayVideo("wocao.ylybz.cn【WoCao视频】", "https://www.wocao.xyz/?url="));
-
-        mSourceList.add(new PlayVideo("vip.97kys.com【97解析平台】", "https://vip.97kys.com/vip/?url="));
-        mSourceList.add(new PlayVideo("607p.com【618G免费解析】", "https://607p.com/?url="));
-        mSourceList.add(new PlayVideo("mt2t.com【云播放】", "http://mt2t.com/lines?url="));
-        mSourceList.add(new PlayVideo("vipvideo.github.io【水也】(CNAME mt2t.com)", "http://vipvideo.github.io/lines?url="));
-        mSourceList.add(new PlayVideo("api.jaoyun.com【简傲云】", "https://api.jaoyun.com/?url="));
-        mSourceList.add(new PlayVideo("gagq.cn【内嵌 api.jaoyun.com】", "https://www.gagq.cn/?url="));
-        mSourceList.add(new PlayVideo("sp.6080jx.com【云解析】", "http://sp.6080jx.com/?url="));
-        mSourceList.add(new PlayVideo("jx.yaohuaxuan.com【免费解析客户端】", "https://jx.yaohuaxuan.com/1717/?url="));
-        mSourceList.add(new PlayVideo("jiexila.com【内嵌 jx.yaohuaxuan.com】", "https://jiexila.com/?url="));
-        mSourceList.add(new PlayVideo("jx.99yyw.com【内嵌 vvv.yaohuaxuan.com】", "https://jx.99yyw.com/99/?url="));
-        mSourceList.add(new PlayVideo("playm3u8.cn【Playm3u8无广告视频解析】", "https://www.playm3u8.cn/jiexi.php?url="));
-        mSourceList.add(new PlayVideo("playm3u8.ylybz.cn【内嵌 playm3u8.cn】", "https://playm3u8.ylybz.cn/playm3u8.php?url="));
-        mSourceList.add(new PlayVideo("jx.wsy666.site【内嵌 playm3u8.ylybz.cn】", "http://jx.wsy666.site/wsy/a.php?url="));
-        mSourceList.add(new PlayVideo("ys.8oc.cn【云梦解析】(SSL -201)", "https://ys.8oc.cn/jx/?url="));
-        mSourceList.add(new PlayVideo("qwerdf.5ifree.top【云智能视频解析】(免费暂停开启收费)", "https://qwerdf.5ifree.top/?vvv="));
 
         mRefresh = (Button) findViewById(R.id.btn_refresh);
         mRefresh.setOnClickListener(this);
@@ -124,6 +115,7 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
             settings.setLoadsImagesAutomatically(false);
         }
 
+        VipUtils.refreshSourceList(mSourceList);
         mWebView.loadUrl(mSourceList.get(0).getUrl() + mIntentUrl);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -185,7 +177,8 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
 //                Log.e(TAG, "onProgressChanged " + newProgress);
-                mProgress.setText(newProgress + "%");
+
+                updateLoadingProgress(newProgress);
                 super.onProgressChanged(view, newProgress);
             }
         });
@@ -297,4 +290,57 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
         }, time);
 
     }
+
+    private long mTotalTx, mTotalRx;
+    private double mLastTime;
+    private String mRxStr = "";
+    private int mLoadingProgress;
+
+    private void updateLoadingProgress(int newProgress) {
+        mLoadingProgress = newProgress;
+
+        if (mLoadingProgress == 100) {
+            mProgress.setText(mRxStr);
+        } else {
+            mProgress.setText(mLoadingProgress + "%|" + mRxStr);
+        }
+    }
+
+    Runnable mRefreshTask = new Runnable() {
+        @Override
+        public void run() {
+            long rx = TrafficStats.getTotalRxBytes();
+
+//            Log.e("HAHA", "tx=" + tx + ", rx=" + rx);
+
+            double time = System.currentTimeMillis();
+            double timeDiff = (time - mLastTime) / 1000;
+            mLastTime = time;
+
+            String rxStr;
+            if (mTotalRx == 0) {
+                rxStr = "0.00 K";
+            } else {
+                float tmp = rx - mTotalRx;
+                tmp /= timeDiff;
+                rxStr = VipUtils.formateBytes(tmp);
+            }
+            mTotalRx = rx;
+            mRxStr = rxStr + "/s";
+            updateLoadingProgress(mLoadingProgress);
+
+            mHandler.postDelayed(mRefreshTask, 1000);
+//            long tx = TrafficStats.getTotalTxBytes();
+//            String txStr;
+//            if (mTotalTx == 0) {
+//                txStr = "0.00 K";
+//            } else {
+//                float tmp = tx - mTotalTx;
+//                tmp /= timeDiff;
+//                txStr = VipUtils.formateBytes(tmp);
+//            }
+//            mTotalTx = tx;
+//            final String text = txStr + "/s↗  " + rxStr + "/s↘";
+        }
+    };
 }

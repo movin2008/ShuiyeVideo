@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.ui.base.BaseActivity;
-import com.shuiyes.video.util.Constants;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.util.Utils;
@@ -30,7 +29,9 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     public static boolean sFOEGROUND = false;
 
     public static void launch(Context context, String url) {
-        context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
+        if (!WebActivity.sFOEGROUND) {
+            context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
+        }
     }
 
     private TextView mTitle, mUrl, mProgress;

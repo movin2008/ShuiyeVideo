@@ -118,9 +118,8 @@ public class PlayUtils {
         String text = "暂不支持 " + url + "\n 请浏览至播放网页重试";
         Tips.show(context, text, 1);
         Log.e(TAG, text);
-        if (!WebActivity.sFOEGROUND) {
-            context.startActivity(new Intent(context, WebActivity.class).putExtra("url", url));
-        }
+
+        WebActivity.launch(context, url);
     }
 
 }
