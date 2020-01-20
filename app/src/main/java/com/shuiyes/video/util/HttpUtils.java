@@ -8,6 +8,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -50,8 +51,7 @@ public class HttpUtils {
 //        conn.setRequestProperty("Charset", "UTF-8");
 
         if (!TextUtils.isEmpty(headers)) {
-            // Cookie: a=123;
-            // Referer: url
+            // Cookie: a=123; b=234; Referer: url
             String[] header = headers.split(": ");
             conn.setRequestProperty(header[0], header[1]);
         }
@@ -156,7 +156,7 @@ public class HttpUtils {
     }
 
     public static String post(String url, String params, String headers) {
-//        return debugHeader(headers);
+//        debugHeader(headers);
 
         String ret = "Exception: ";
         HttpURLConnection conn = null;
@@ -167,6 +167,8 @@ public class HttpUtils {
                 conn = (HttpURLConnection) new URL(url).openConnection();
             }
             HttpUtils.setURLConnection(conn, headers);
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            conn.setRequestProperty("Content-Length", "" + params.getBytes().length);
             conn.setRequestMethod("POST");
             conn.connect();
 
@@ -192,6 +194,20 @@ public class HttpUtils {
             } else {
                 ret += printHeaders(conn);
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e1) {
+            }
+            return HttpUtils.post(url, params, headers);
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e1) {
+            }
+            return HttpUtils.post(url, params, headers);
         } catch (Exception e) {
             Log.e(TAG, "POST " + url + "\n" + params);
             e.printStackTrace();
@@ -236,12 +252,13 @@ public class HttpUtils {
 
     public static String debugHeader(String headers) {
         try {
-            HttpURLConnection conn2 = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
-            HttpUtils.setURLConnection(conn2, headers);
-            conn2.connect();
+            HttpURLConnection conn = (HttpURLConnection) new URL("http://www.shuiyes.com/test/header.php").openConnection();
+            HttpUtils.setURLConnection(conn, headers);
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            conn.connect();
 
             StringBuffer buffer = new StringBuffer();
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn2.getInputStream(), "UTF-8"));
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
             String read;
             while ((read = in.readLine()) != null) {
                 buffer.append(read);
@@ -250,7 +267,7 @@ public class HttpUtils {
             Log.e(TAG, buffer.toString());
 
             in.close();
-            conn2.disconnect();
+            conn.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
         }

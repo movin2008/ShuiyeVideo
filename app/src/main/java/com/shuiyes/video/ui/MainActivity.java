@@ -21,8 +21,12 @@ import com.shuiyes.video.ui.tvlive.SopPlusActivity;
 import com.shuiyes.video.ui.tvlive.SuzhouCMCCActivity;
 import com.shuiyes.video.ui.tvlive.TVListActivity;
 import com.shuiyes.video.ui.vip.VipActivity;
+import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuSoActivity;
+
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class MainActivity extends BaseActivity {
 
@@ -87,11 +91,12 @@ public class MainActivity extends BaseActivity {
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
-//                HttpUtils.testPost("https://vi.l.qq.com/proxyhttp");
+////                HttpUtils.testPost("https://vi.l.qq.com/proxyhttp");
 //            }
 //        }).start();
 
         //		Tips.show(this, Build.VERSION.SDK_INT+"/"+Build.MANUFACTURER, 1);
+
     }
 
     @Override
@@ -216,7 +221,9 @@ public class MainActivity extends BaseActivity {
 
     public void testUrl(View view) {
 //        startActivity(new Intent(this, MgtvVActivity.class).putExtra("title","test").putExtra("url", "https://www.mgtv.com/l/100028247/7370524.html?fpa=9349&fpos=3"));
-        VipActivity.launch(this,"https://m.iqiyi.com/v_19ruzj8gv0.html");// https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html
+        // https://m.iqiyi.com/v_19ruzj8gv0.html
+        // https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html
+        VipActivity.launch(this, "http://www.le.com/ptv/vplay/31625706.html");
     }
 
     public void testWeb(View view) {

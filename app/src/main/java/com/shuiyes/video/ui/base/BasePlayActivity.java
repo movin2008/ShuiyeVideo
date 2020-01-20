@@ -27,6 +27,7 @@ import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.dialog.MiscDialog;
 import com.shuiyes.video.ui.vip.VipActivity;
 import com.shuiyes.video.ui.vip.VipUtils;
+import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
 
@@ -42,7 +43,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected VideoView mVideoView;
     protected ProgressBar mLoadingProgress;
     protected TextView mTitleView, mStateView, mTimeView;
-    protected Button mDownloadView, mSourceView, mClarityView, mSelectView, mNextView, mSectionView;
+    protected Button mVipWebView, mVipSourceView, mSourceView, mClarityView, mSelectView, mNextView, mSectionView;
 
     protected boolean mPrepared = false;
     protected String mBatName = null;
@@ -54,29 +55,31 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
         mContext = this;
 
+        mVipWebView = (Button) findViewById(R.id.btn_vip_web);
+        mVipSourceView = (Button) findViewById(R.id.btn_vip_source);
         mSectionView = (Button) findViewById(R.id.btn_section);
-        mDownloadView = (Button) findViewById(R.id.btn_download);
         mSourceView = (Button) findViewById(R.id.btn_source);
         mClarityView = (Button) findViewById(R.id.btn_clarity);
         mSelectView = (Button) findViewById(R.id.btn_select);
         mNextView = (Button) findViewById(R.id.btn_next);
 
+        mVipWebView.setOnClickListener(this);
+        mVipSourceView.setOnClickListener(this);
         mSectionView.setOnClickListener(this);
-        mDownloadView.setOnClickListener(this);
         mSourceView.setOnClickListener(this);
         mClarityView.setOnClickListener(this);
         mSelectView.setOnClickListener(this);
         mNextView.setOnClickListener(this);
 
-        mDownloadView.setOnLongClickListener(new View.OnLongClickListener() {
+        mVipWebView.setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View v) {
-                if(mPlayUrl != null){
+                if (mPlayUrl != null) {
                     ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     cm.setPrimaryClip(ClipData.newPlainText("Label", mPlayUrl));
                     Toast.makeText(mContext, "播放地址已复制", 0).show();
-                }else{
+                } else {
                     Toast.makeText(mContext, "暂无播放地址", 0).show();
                 }
                 return true;
@@ -151,6 +154,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
                 mHandler.sendEmptyMessage(MSG_PALY_VIDEO);
                 mediaPlayer.start();
+                mDuration = mediaPlayer.getDuration();
             }
         });
 
@@ -171,9 +175,6 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
             public void onCompletion(MediaPlayer mp) {
                 Log.e(TAG, " =========================== onCompletion");
                 if (!mIsError) {
-                    mCurrentPosition = 0;
-                    mLoadingProgress.setVisibility(View.VISIBLE);
-
                     completionToPlayNextVideo();
                 }
             }
@@ -215,7 +216,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         mHandler.removeMessages(MSG_UPDATE_TIME);
     }
 
-    protected MiscDialog mSourceDialog, mClarityDialog, mSectionDialog;
+    protected MiscDialog mVipSourceDialog, mSourceDialog, mClarityDialog, mSectionDialog;
     protected AlbumDialog mAlbumDialog;
 
     @Override
@@ -233,18 +234,36 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         super.onDestroy();
     }
 
+    static final int SEEK_STEPS = 9999;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_MENU:
             case KeyEvent.KEYCODE_DPAD_UP:
-                mDownloadView.requestFocus();
+                mVipWebView.requestFocus();
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
                 mVideoView.requestFocus();
                 break;
             case KeyEvent.KEYCODE_DPAD_LEFT:
+                if (mPrepared && !mIsError) {
+                    if (mCurrentPosition > SEEK_STEPS) {
+                        mCurrentPosition -= SEEK_STEPS;
+                    } else {
+                        mCurrentPosition = 0;
+                    }
+                    mVideoView.seekTo(mCurrentPosition);
+                }
+                break;
             case KeyEvent.KEYCODE_DPAD_RIGHT:
+                if (mPrepared && !mIsError) {
+                    if (mCurrentPosition + SEEK_STEPS < mDuration) {
+                        mVideoView.seekTo(mCurrentPosition += SEEK_STEPS);
+                    } else {
+                        completionToPlayNextVideo();
+                    }
+                }
                 break;
             default:
                 break;
@@ -277,8 +296,28 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
             case R.id.btn_next:
                 playNextVideo();
                 break;
-            case R.id.btn_download:
+            case R.id.btn_vip_web:
                 VipActivity.launch(this, mIntentUrl);
+                break;
+            case R.id.btn_vip_source:
+                if (mVipSourceDialog != null && mVipSourceDialog.isShowing()) {
+                    mVipSourceDialog.dismiss();
+                }
+                mVipSourceDialog = new MiscDialog(this, mVipSourceList);
+                mVipSourceDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mVipSourceDialog != null && mVipSourceDialog.isShowing()) {
+                            mVipSourceDialog.dismiss();
+                        }
+
+                        PlayVideo playVideo = ((MiscView) view).getPlayVideo();
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, 1, 1, playVideo.getText()));
+                        vipJiexi(playVideo.getUrl());
+                    }
+                });
+                mVipSourceDialog.show();
+
                 break;
             default:
                 break;
@@ -288,39 +327,52 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     private PlayVideo mNextPlayVideo;// for youku letv
     protected String mVid, mIntentUrl, mPlayUrl, mStream;
     protected List<ListVideo> mVideoList = new ArrayList<ListVideo>();
+    private List<PlayVideo> mVipSourceList = VipUtils.getPlaySourceList();
 
-    protected int mCurrentPosition;
+    protected int mCurrentPosition, mDuration;
     protected MediaPlayer.OnBufferingUpdateListener mBufferingUpdateListener = new MediaPlayer.OnBufferingUpdateListener() {
 
         @Override
         public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
 //            Log.e(TAG, " =========================== onBufferingUpdate=" + mediaPlayer.getCurrentPosition() + "/" + i);
-            if (mediaPlayer.isPlaying()) {
-                mCurrentPosition = mediaPlayer.getCurrentPosition();
-            }
+            mCurrentPosition = mediaPlayer.getCurrentPosition();
         }
     };
 
-    private String mVipJxType = "97kys.com";
-    protected void vipJiexi() throws Exception {
-        String json = VipUtils.getVipUrl(mIntentUrl, mVipJxType);
-        if (!checkHtmlValid(json)) {
-            return;
-        }
+    protected void vipJiexi(String vipType) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String json = VipUtils.getVipUrl(mIntentUrl, vipType);
+                    if (!checkHtmlValid(json)) {
+                        return;
+                    }
 
-        JSONObject obj2 = new JSONObject(json);
-        if (obj2.has("url")) {
-            String vipUrl = obj2.getString("url");
-            if (!vipUrl.startsWith("http")) {
-                Log.e(TAG, vipUrl);
-                vipUrl = new String(Base64.decode(vipUrl, Base64.DEFAULT), "UTF-8");
-                vipUrl = "https:" + vipUrl.substring(vipUrl.indexOf("//"));
+                    JSONObject obj2 = new JSONObject(json);
+                    if (obj2.has("url")) {
+                        String vipUrl = obj2.getString("url");
+                        if (!vipUrl.startsWith("http")) {
+                            Log.e(TAG, vipUrl);
+                            vipUrl = new String(Base64.decode(vipUrl, Base64.DEFAULT), "UTF-8");
+                            vipUrl = "https:" + vipUrl.substring(vipUrl.indexOf("//"));
+                        }
+                        Log.e(TAG, "VipUrl " + vipUrl);
+                        if (vipUrl.contains(".m3u8") || vipUrl.contains(".mp4")) {
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_URL, vipUrl));
+                        } else {
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, "Cannot paly " + vipUrl));
+                        }
+                    } else {
+                        fault(obj2.getString("msg"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    fault(e);
+                }
             }
-            Log.e(TAG, vipUrl);
-            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_URL, vipUrl));
-        } else {
-            fault(obj2.getString("msg"));
-        }
+        }).start();
+
     }
 
     protected void fault(String text, final String msg) throws Exception {
@@ -331,10 +383,11 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
             }
         });
         mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, 1, 0, text));
-        vipJiexi();
+        vipJiexi(mVipSourceList.get(0).getUrl());
     }
 
     protected boolean mIsError;
+
     protected void fault(String text) {
         mIsError = true;
 
@@ -342,7 +395,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     }
 
     protected void fault(Exception e) {
-        fault(e.getClass().toString() + " " + e.getLocalizedMessage());
+        fault(e.getCause().getClass().getName() + " " + e.getLocalizedMessage());
     }
 
     private void playUrl(String url) {
@@ -403,6 +456,10 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
     protected void completionToPlayNextVideo() {
         Log.e(TAG, "completionToPlayNextVideo " + mVideoList.size());
+
+        mCurrentPosition = 0;
+        mLoadingProgress.setVisibility(View.VISIBLE);
+
         if (mVideoList.size() > 0) {
             ListVideo video = mVideoList.get(getNextIndex());
             playNextVideo(video.getTitle(), video.getUrl());
@@ -411,13 +468,13 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         }
     }
 
-    protected boolean checkHtmlValid(String html){
-        if(TextUtils.isEmpty(html)){
+    protected boolean checkHtmlValid(String html) {
+        if (TextUtils.isEmpty(html)) {
             fault("Http response is null.");
             return false;
         }
 
-        if(html.startsWith("Exception: ")){
+        if (html.startsWith("Exception: ")) {
             fault(html);
             return false;
         }
@@ -447,11 +504,15 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 1000);
                 break;
             case MSG_FAULT:
-                Object error = msg.obj;
-                if(msg.arg1 == 0){
+                String error = (String) msg.obj;
+                if (msg.arg1 == 0) {
                     mLoadingProgress.setVisibility(View.GONE);
                 }
-                mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : "") /*+ " 5s后返回..."*/);
+                if (msg.arg2 == 1) {
+                    mStateView.setText(error);
+                } else {
+                    mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : "") /*+ " 5s后返回..."*/);
+                }
 
 //                mHandler.postDelayed(new Runnable() {
 //                    @Override

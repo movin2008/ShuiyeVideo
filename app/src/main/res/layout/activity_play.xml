@@ -32,7 +32,7 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btn_download"
+                android:id="@+id/btn_vip_web"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginRight="20dp"
@@ -42,6 +42,19 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:text="(VIP)网页播放"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_vip_source"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/btn_rect"
+                android:focusable="true"
+                android:minWidth="30dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="(VIP)网页线路"
                 android:textColor="@android:color/white" />
 
             <Button

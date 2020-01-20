@@ -115,7 +115,6 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
             settings.setLoadsImagesAutomatically(false);
         }
 
-        VipUtils.refreshSourceList(mSourceList);
         mWebView.loadUrl(mSourceList.get(0).getUrl() + mIntentUrl);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -137,7 +136,7 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
                     } else if (url.startsWith("https://vd.l.qq.com/proxyhttp")) {
                         // 网站做 JS 破解
                         mockWebViewClick(3333);
-                    } else if (url.contains("zyzjpx.cn") || url.contains("/xxd.php") || url.contains("coss.qc393.cn") || url.contains("magictreehouse.cn")) {
+                    } else if (url.contains("7f4he.cn") || url.contains("t415n.cn") || url.contains("zyzjpx.cn") || url.contains("/xxd.php") || url.contains("coss.qc393.cn") || url.contains("magictreehouse.cn")) {
                         // 广告
                         return new WebResourceResponse("text/css", "utf-8", null);
                     } else if (url.contains("google-analytics.com/") || url.contains("cnzz.com/") || url.contains("hm.baidu.com")) {
@@ -205,15 +204,21 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
             return super.dispatchKeyEvent(event);
         }
         switch (event.getKeyCode()) {
-            case KeyEvent.KEYCODE_DEL:
             case KeyEvent.KEYCODE_MENU:
+            case KeyEvent.KEYCODE_DPAD_UP:
                 Log.e(TAG, "Refresh requestFocus");
                 mRefresh.requestFocus();
                 break;
-            case KeyEvent.KEYCODE_DPAD_UP:
+            case KeyEvent.KEYCODE_DPAD_DOWN:
                 if (!mWebView.hasFocus()) {
                     Log.e(TAG, "WebView requestFocus");
                     mWebView.requestFocus();
+                }
+                break;
+            case KeyEvent.KEYCODE_BACK:
+                if(mWebView.canGoBack()){
+                    mWebView.goBack();
+                    return false;
                 }
                 break;
             default:
@@ -224,7 +229,7 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private MiscDialog mSourceDialog;
-    private List<PlayVideo> mSourceList = new ArrayList<PlayVideo>();
+    private List<PlayVideo> mSourceList = VipUtils.getSourceList();
     // test for 暗战
     private String mIntentUrl = "https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html";
     private String mPlayUrl = "";

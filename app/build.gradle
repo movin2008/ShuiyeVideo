@@ -9,7 +9,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         applicationId "com.shuiyes.video"
         versionCode 1 //new Date().time.intValue()
-        versionName "v" + new Date().format('yyMMddHHmm')
+        versionName "v" + new Date().format('yyyyMMddHHmm')
     }
 
     buildTypes {
