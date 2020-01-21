@@ -10,49 +10,35 @@ import com.shuiyes.video.util.Utils;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 
 // http://chujian.xiaoyule-app.cn/api.php?url=https%3A%2F%2Fm.iqiyi.com%2Fv_19ruzj8gv0.html&cb=jQuery
 public class VipUtils {
 
     private final static String TAG = "VipUtils";
 
-//    private static final String API_YLYBZ_DATA = "https://www.administratorm.com/";
-    // 相比上面的api 这个会根据名字查找其他网站资源
-    private static final String API_YLYBZ_DATA = "https://www.administratorm.com/WMXZ.WANG/";
-    private static final String REFER_YLYBZ_DATA = "https://www.administratorm.com/index.php?url=";
-    private static final String URL_YLYBZ_DATA = "https://www.administratorv.com/iqiyi/index.php?url=";
-
-    private static final String API_YLYBZ_8090 = "https://8090.ylybz.cn/jiexi2019/api.php";
-    private static final String REFER_YLYBZ_8090 = "https://8090.ylybz.cn/jiexi2019/?url=";
-    private static final String URL_YLYBZ_8090 = "https://www.8090g.cn/?url=";
-
-    private static final String API_YLYBZ_WOCAO = "https://wocao.ylybz.cn/api.php";
-    private static final String REFER_YLYBZ_WOCAO = "https://wocao.ylybz.cn/vip.php?url=";
-    private static final String URL_YLYBZ_WOCAO = "https://www.wocao.xyz/?url=";
-
-    private static final String API_YLYBZ_97KYS = "https://vip.97kys.com/vip/api.php";
-    private static final String REFER_YLYBZ_97KYS = "https://vip.97kys.com/vip/?url=";
-    private static final String URL_YLYBZ_97KYS = "https://vip.97kys.com/vip/?url=";
-
     public static List<PlayVideo> getPlaySourceList() {
         List<PlayVideo> sourceList = new ArrayList<PlayVideo>();
-        sourceList.add(new PlayVideo("无名小站 VIP视频解析", "administratorw.com"));
-        sourceList.add(new PlayVideo("8090g VIP视频解析", "8090g.cn"));
-        sourceList.add(new PlayVideo("WoCao VIP视频解析", "wocao.xyz"));
-        sourceList.add(new PlayVideo("97kys VIP视频解析", "97kys.com"));
-        sourceList.add(new PlayVideo("618G VIP视频解析", "607p.com"));
+        sourceList.add(new PlayVideo(VipSource.VipRouter.V618G.text, VipSource.VipRouter.V618G.type));
+        sourceList.add(new PlayVideo(VipSource.VipRouter.V8090g.text, VipSource.VipRouter.V8090g.type));
+        sourceList.add(new PlayVideo(VipSource.VipRouter.Vwocao.text, VipSource.VipRouter.Vwocao.type));
+        sourceList.add(new PlayVideo(VipSource.VipRouter.V97kys.text, VipSource.VipRouter.V97kys.type));
+        sourceList.add(new PlayVideo(VipSource.VipRouter.Vwmxz.text, VipSource.VipRouter.Vwmxz.type));
+        sourceList.add(new PlayVideo(VipSource.VipRouter.Vadmin.text, VipSource.VipRouter.Vadmin.type));
         return sourceList;
     }
 
     public static String getVipUrl(String url, String type) throws Exception {
-        Log.e(TAG, "JX "+ url);
+        return VipUtils.getVipUrl(url, VipSource.parse(type));
+    }
+
+    public static String getVipUrl(String url, VipSource.VipRouter type) {
+        Log.e(TAG, "VIPJX " + url);
+
         // 免嗅探
-        if ("607p.com".equals(type)) {
+        if (VipSource.VipRouter.V618G.equals(type)) {
             //https://607p.com/?url=https%3A%2F%2Fm.iqiyi.com%2Fv_19ruzj8gv0.html
-            String html = HttpUtils.get("https://607p.com/?url=" + URLEncoder.encode(url));
+            String html = HttpUtils.get(VipSource.VipRouter.V618G.url + URLEncoder.encode(url));
 
             if (TextUtils.isEmpty(html)) {
                 return "{\"msg\":\"Http response is null.\"}";
@@ -72,66 +58,31 @@ public class VipUtils {
                     return "{\"url\":\"" + html + "\"}";
                 }
             } else {
+                Utils.setFile("618g.html", html);
                 return "{\"msg\":\"No url.\"}";
             }
         } else {
-            String api, referer, router;
-            switch (type) {
-                case "administratorw.com":
-//                    String html = HttpUtils.get("https://www.administratorm.com/index.php?url=https://m.iqiyi.com/v_19ruzj8gv0.html", "referer: https://www.administratorv.com/iqiyi/index.php?url=https://m.iqiyi.com/v_19ruzj8gv0.html", false);
-//                    String key = "$.post(\"";
-//                    if (!TextUtils.isEmpty(html) && html.contains(key)) {
-//                        html = html.substring(html.indexOf(key) + key.length());
-//                        // .php
-//                        API = html.substring(0, html.indexOf("\""));
-//                        API = API_YLYBZ_DATA + API;
-//                    } else {
-//                        throw new Exception("Api acquisition failed.");
-//                    }
-
-                    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"));
-                    long day = calendar.get(Calendar.DAY_OF_YEAR) - 1;
-                    long hour = calendar.get(Calendar.HOUR_OF_DAY);
-                    long year = calendar.get(Calendar.YEAR);
-                    // 6896515874 16896515882 16896515890
-                    long tmp = year * 8364610 + day * 192 + hour * 8 - 86;
-                    Log.e("HAHA", year + "/" + hour + "/" + day + " -> " + tmp);
-
-                    api = API_YLYBZ_DATA + tmp + ".php";
-                    referer = REFER_YLYBZ_DATA;
-                    router = URL_YLYBZ_DATA;
-                    break;
-                case "8090g.cn":
-                    api = API_YLYBZ_8090;
-                    referer = REFER_YLYBZ_8090;
-                    router = URL_YLYBZ_8090;
-                    break;
-                case "wocao.xyz":
-                    api = API_YLYBZ_WOCAO;
-                    referer = REFER_YLYBZ_WOCAO;
-                    router = URL_YLYBZ_WOCAO;
-                    break;
-                case "97kys.com":
-                    api = API_YLYBZ_97KYS;
-                    referer = REFER_YLYBZ_97KYS;
-                    router = URL_YLYBZ_97KYS;
-                    break;
-                default:
-                    throw new Exception("Unkown vip router " + type);
-            }
-
             String data = "url=" + URLEncoder.encode(url)
-                    + "&referer=" + URLEncoder.encode(Base64.encodeToString((router + URLEncoder.encode(url)).getBytes(), Base64.DEFAULT))
+                    + "&referer=" + URLEncoder.encode(Base64.encodeToString((type.url + URLEncoder.encode(url)).getBytes(), Base64.DEFAULT))
                     + "&time=" + Utils.timestamp()
                     + "other=" + URLEncoder.encode(Base64.encodeToString((url).getBytes(), Base64.DEFAULT))
                     + "&ref=0&type=&&ios=0";
-            String refer = "Referer: " + referer + URLEncoder.encode(url);
-            return HttpUtils.post(api, data, refer);
+            String refer = "Referer: " + type.refer + URLEncoder.encode(url);
+
+            if(type.api.contains("administrator")){
+                return HttpUtils.post(type.api + VipSource.adminApi(), data, refer);
+            }else{
+                return HttpUtils.post(type.api, data, refer);
+            }
         }
     }
 
     static List<PlayVideo> getSourceList() {
         List<PlayVideo> sourceList = new ArrayList<PlayVideo>();
+
+        sourceList.add(new PlayVideo("69ne.com【69智能解析】", "https://api.69ne.com/?url="));
+        // 免嗅探
+        sourceList.add(new PlayVideo("607p.com【618G免费解析】", "https://607p.com/?url="));
 
         // https://www.administratorm.com/16896513490.php
         // https://data.ylybz.cn/video/qyplay.php?url=https%3A%2F%2Fdata.ylybz.cn%2Fdata%2Fiqiyi%2F6d9b571f4828b0d6941c22c046749a49.m3u8
@@ -145,8 +96,7 @@ public class VipUtils {
         // https://vip.97kys.com/vip/api.php
         // https://ykm3u8.ylybz.cn/video/qyplay.php?url=https%3A%2F%2Fykm3u8.ylybz.cn%2Fdata%2Fiqiyi%2F6d9b571f4828b0d6941c22c046749a49.m3u8
         sourceList.add(new PlayVideo("97kys.com(ykm3u8.ylybz.cn)【97解析平台】", "https://vip.97kys.com/vip/?url="));
-        //
-        sourceList.add(new PlayVideo("607p.com【618G免费解析】", "https://607p.com/?url="));
+
         sourceList.add(new PlayVideo("mt2t.com【云播放】", "http://mt2t.com/lines?url="));
         sourceList.add(new PlayVideo("vipvideo.github.io【水也】(CNAME mt2t.com)", "http://vipvideo.github.io/lines?url="));
         sourceList.add(new PlayVideo("api.jaoyun.com【简傲云】", "https://api.jaoyun.com/?url="));

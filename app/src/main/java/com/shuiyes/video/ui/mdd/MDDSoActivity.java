@@ -82,7 +82,13 @@ public class MDDSoActivity extends BaseSearchActivity implements Callback {
                     Log.e(TAG, "onResponse unkown url.");
                 }
             } else {
-                Tips.show(mContext, call.request().url().url().getPath() + " " + obj.getString("msg"));
+                String msg = obj.getString("msg");
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Tips.show(mContext, call.request().url().url().getPath() + " " + msg);
+                    }
+                });
                 Log.e(TAG, result);
             }
         } catch (Exception e) {
