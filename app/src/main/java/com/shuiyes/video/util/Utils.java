@@ -7,21 +7,17 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
-import android.os.ParcelFileDescriptor;
 import android.os.SystemClock;
-import android.support.v4.provider.DocumentFile;
 import android.text.format.Formatter;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.view.Display;
-import android.widget.Toast;
 
 import com.shuiyes.video.widget.Tips;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -77,17 +73,7 @@ public class Utils {
             File apkFile = new File("/sdcard/.shuiyes/tvbus.apk");
             apkFile.delete();
 
-            OutputStream outStream = null;
-            if (Build.VERSION.SDK_INT >= 28) {
-                DocumentFile sdcard = DocumentFile.fromFile(new File("/sdcard/"));
-                DocumentFile shuiyes = sdcard.createDirectory(".shuiyes");
-                DocumentFile apkPath = shuiyes.createFile("application/vnd.android.package-archive", "tvbus");//
-                ParcelFileDescriptor pfd = context.getContentResolver().openFileDescriptor(apkPath.getUri(), "rw");
-                FileDescriptor fd = pfd.getFileDescriptor();
-                outStream = new FileOutputStream(fd);
-            } else {
-                outStream = new FileOutputStream(apkFile);
-            }
+            OutputStream outStream = new FileOutputStream(apkFile);
             outStream.write(buffer);
             outStream.close();
 
