@@ -12,9 +12,16 @@ public class DLVideoView extends VideoView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // TODO Auto-generated method stub
-        int width = getDefaultSize(0, widthMeasureSpec);
-        int height = getDefaultSize(0, heightMeasureSpec);
-        setMeasuredDimension(width, height);
+
+        int dlWidth = getDefaultSize(0, widthMeasureSpec);
+        int dlHeight = getDefaultSize(0, heightMeasureSpec);
+        setMeasuredDimension(dlWidth, dlHeight);
+
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//
+//        int width = getMeasuredWidth();
+//        int height = getMeasuredHeight();
+
+//        android.util.Log.e("SHUIYES", "DLVideoView " + width + "x" + height + " -> " + dlWidth + "x" + dlHeight);
     }
 }

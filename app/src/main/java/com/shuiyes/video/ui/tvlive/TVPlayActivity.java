@@ -1,94 +1,186 @@
 package com.shuiyes.video.ui.tvlive;
 
-import android.content.Intent;
+import android.content.Context;
+import android.media.MediaPlayer;
+import android.net.TrafficStats;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.os.Message;
+import android.util.Log;
+import android.widget.TextView;
+import android.widget.VideoView;
 
-import com.bumptech.glide.Glide;
-import com.devlin_n.floatWindowPermission.FloatWindowManager;
-import com.devlin_n.yinyangplayer.controller.StandardVideoController;
-import com.devlin_n.yinyangplayer.player.YinYangPlayer;
 import com.shuiyes.video.R;
+import com.shuiyes.video.ui.base.BaseActivity;
+import com.shuiyes.video.ui.vip.VipUtils;
+import com.shuiyes.video.widget.Tips;
 
-/**
- * Created by wang on 2017/6/22.
- */
-public class TVPlayActivity extends AppCompatActivity {
+import java.util.Calendar;
 
-    private YinYangPlayer mYinYangPlayer;
 
+public class TVPlayActivity extends BaseActivity {
+
+    protected Context mContext;
+    protected VideoView mVideoView;
+    protected TextView mTimeView, mStatusView;
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_player_tvlive);
 
-        setContentView(R.layout.activity_tvplay);
-        mYinYangPlayer = (YinYangPlayer) findViewById(R.id.player);
+        mContext = this;
 
-        String url = getIntent().getStringExtra("url");
+        mStatusView = (TextView) findViewById(R.id.tv_status);
+        mTimeView = (TextView) findViewById(R.id.tv_time);
+
+        mVideoView = (VideoView) findViewById(R.id.videoview);
+        mVideoView.setOnInfoListener(new MediaPlayer.OnInfoListener() {
+
+            @Override
+            public boolean onInfo(MediaPlayer mediaPlayer, int what, int extra) {
+                return onMediaInfo(what, extra);
+            }
+        });
+
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                Log.e(TAG, "======== onPrepared");
+
+                mPrepared = true;
+                mediaPlayer.start();
+            }
+        });
+
+        mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mediaPlayer, int what, int extra) {
+                String err = "onError(" + what + "," + extra + ")";
+                Log.e(TAG, "======== " + err);
+
+                if(what == 100){
+                    // 重新播放
+                    mVideoView.stopPlayback();
+                    startPlayback();
+                    return true;
+                }else{
+                    mBuffering = false;
+                    Tips.show(mContext, err, 0);
+                    return false;
+                }
+            }
+        });
+
+        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Log.e(TAG, "======== onCompletion");
+            }
+        });
+
         String title = getIntent().getStringExtra("title");
+        setTitle(title);
 
-        StandardVideoController controller = new StandardVideoController(this);
-        controller.setLive(true);
-
-        Glide.with(this).load("http://7xqblc.com1.z0.glb.clouddn.com/tvlive.jpg")
-                .asBitmap()
-                .animate(R.anim.anim_alpha_in)
-                .placeholder(android.R.color.black)
-                .into(controller.getThumb());
-
-        mYinYangPlayer.alwaysFullScreen()
-//                .useAndroidMediaPlayer()
-                .setUrl(url)
-                .setTitle(title)
-                .setVideoController(controller)
-                .start();
+        mUrl = getIntent().getStringExtra("url");
+        Log.e(TAG, "play url=" + mUrl);
     }
 
+    protected String mUrl;
+    protected boolean mPrepared = false;
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
+    protected void onResume() {
+        super.onResume();
+
+        startPlayback();
+        mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 100);
+    }
+
+    protected void startPlayback(){
+        if(!mUrl.startsWith("tvbus")){
+            try {
+                mVideoView.setVideoURI(Uri.parse(mUrl));
+                mHandler.removeCallbacks(mRefreshRxTask);
+                mHandler.postDelayed(mRefreshRxTask, 100);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mYinYangPlayer.pause();
+        mHandler.removeMessages(MSG_UPDATE_TIME);
+        mVideoView.stopPlayback();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mYinYangPlayer.resume();
-        mYinYangPlayer.stopFloatWindow();
-    }
+    protected final int MSG_UPDATE_TIME = 10;
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mYinYangPlayer.release();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (!mYinYangPlayer.onBackPressed()) {
-            super.onBackPressed();
+    public void handleOtherMessage(Message msg) {
+        switch (msg.what) {
+            case MSG_UPDATE_TIME:
+                Calendar now = Calendar.getInstance();
+                mTimeView.setText(String.format(getTitle() + " %02d:%02d:%02d", now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), now.get(Calendar.SECOND)));
+                mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 1000);
+                break;
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == FloatWindowManager.PERMISSION_REQUEST_CODE) {
-            if (FloatWindowManager.getInstance().checkPermission(this)) {
-                mYinYangPlayer.startFloatWindow();
-            } else {
-                Toast.makeText(TVPlayActivity.this, "权限授予失败，无法开启悬浮窗", Toast.LENGTH_SHORT).show();
+    protected boolean mBuffering = true;
+
+    protected boolean onMediaInfo(int what, int extra){
+        switch (what) {
+            case MediaPlayer.MEDIA_INFO_BUFFERING_START:
+                Log.e(TAG, "======== MEDIA_INFO_BUFFERING_START");
+                mBuffering = true;
+                break;
+            case MediaPlayer.MEDIA_INFO_BUFFERING_END:
+                Log.e(TAG, "======== MEDIA_INFO_BUFFERING_END");
+                mBuffering = false;
+                break;
+            case MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
+                Log.e(TAG, "======== MEDIA_INFO_VIDEO_RENDERING_START");
+                mBuffering = false;
+                break;
+            default:
+                Log.e(TAG, "======== onInfo(" + what + ", " + extra + ")");
+                break;
+        }
+        return false;
+    }
+
+    private long mTotalRx;
+    private double mLastTime;
+
+    Runnable mRefreshRxTask = new Runnable() {
+        @Override
+        public void run() {
+            if(mBuffering){
+                long rx = TrafficStats.getTotalRxBytes();
+                double time = System.currentTimeMillis();
+                double timeDiff = (time - mLastTime) / 1000;
+
+                String rxStr;
+                if (mTotalRx == 0) {
+                    rxStr = "0.00 K";
+                } else {
+                    float tmp = rx - mTotalRx;
+                    tmp /= timeDiff;
+                    rxStr = VipUtils.formateBytes(tmp);
+                }
+                mTotalRx = rx;
+                mLastTime = time;
+                mStatusView.setText(rxStr + "/s");
+            }else{
+                mTotalRx = 0;
+                mStatusView.setText("");
             }
+
+            mHandler.postDelayed(mRefreshRxTask, 999);
         }
-    }
+    };
+
 }

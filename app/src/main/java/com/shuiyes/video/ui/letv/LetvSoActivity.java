@@ -28,7 +28,6 @@ public class LetvSoActivity extends BaseSearchActivity {
         super.onCreate(savedInstanceState);
 
         mSearch.setHint("乐看搜索");
-        mSearch.setText("小猪佩奇");
     }
 
     @Override

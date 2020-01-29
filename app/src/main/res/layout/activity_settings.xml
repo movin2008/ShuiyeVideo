@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout">
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -18,31 +21,53 @@
             android:text="优酷 CCODE："
             android:textSize="30sp" />
 
-        <Spinner
-            android:id="@+id/spin_ccode"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:entries="@array/CCODE"
-            android:visibility="gone"
-            android:spinnerMode="dialog" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/et_ccode"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            <Spinner
+                android:id="@+id/spin_ccode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:entries="@array/CCODE"
+                android:spinnerMode="dialog"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/et_ccode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:hint="CCODE"
+                android:numeric="integer" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="testCCode"
+                android:text="测试 CCODE" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:hint="CCODE" />
+            android:onClick="testAllCCode"
+            android:text="一键测试 CCODE(0501 - 0540)" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout"
+            android:layout_marginTop="50dp"
+            android:onClick="systeminfo"
+            android:text="系统信息" />
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="系统信息"
-        android:onClick="systeminfo"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/linearLayout" />
-
-</RelativeLayout>
+</ScrollView>

@@ -38,7 +38,7 @@ class VipSource {
 
     private static final String VIP_618G = "618G";
     private static final String URL_618G = "https://607p.com/?url=";
-    private static final String EXT = " VIP视频解析...";
+    private static final String EXT = " VIP视频解析";
 
     enum VipRouter{
 
@@ -95,7 +95,7 @@ class VipSource {
     }
 
     /**
-     *  计算错误 2020/20/10 -> 16896516642
+     *
      * @return
      */
     @Deprecated
@@ -106,6 +106,7 @@ class VipSource {
         long year = calendar.get(Calendar.YEAR);
         // 6896515874 16896515882 16896515890
         // 2020/19/17 -> 16896515890
+        // TODO 计算错误 2020/20/10 -> 16896516642
         long tmp = year * 8364610 + day * 192 + hour * 8 - 86;
         Log.e("HAHA", year + "/" + day + "/" + hour + " -> " + tmp);
         return tmp + ".php";

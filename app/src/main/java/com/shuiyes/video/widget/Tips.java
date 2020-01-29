@@ -25,7 +25,7 @@ public class Tips {
     }
 
     public static void show(Context context, CharSequence text) {
-        show(context, text, 0);
+        show(context, text, 1);
     }
 
     private static Toast mToast;

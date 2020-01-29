@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.shuiyes.video"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="com.shuiyes.video">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -24,6 +22,8 @@
         <!-- android:windowSoftInputMode="adjustUnspecified|stateHidden" -->
         <activity
             android:name=".ui.MainActivity"
+            android:icon="@drawable/logo_vd"
+            android:label="@string/app_vd"
             android:screenOrientation="landscape"
             android:theme="@style/ActTheme">
             <intent-filter>
@@ -33,25 +33,24 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.PlayerActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
-            android:launchMode="singleTop"
+        <activity
+            android:name=".ui.TVActivity"
+            android:icon="@drawable/logo_tv"
+            android:label="@string/app_tv"
             android:screenOrientation="landscape"
-            android:theme="@style/PlayerTheme">
+            android:theme="@style/ActTheme">
             <intent-filter>
-                <action android:name="com.google.android.exoplayer.demo.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="http"/>
-                <data android:scheme="https"/>
-                <data android:scheme="content"/>
-                <data android:scheme="asset"/>
-                <data android:scheme="file"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.google.android.exoplayer.demo.action.VIEW_LIST"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.PlayerActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".ui.WebActivity"
@@ -66,9 +65,8 @@
         <activity
             android:name=".ui.youku.YoukuSoActivity"
             android:configChanges="keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:screenOrientation="landscape"
-            />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.youku.YoukuVActivity"
             android:screenOrientation="landscape" />
@@ -76,9 +74,8 @@
         <activity
             android:name=".ui.letv.LetvSoActivity"
             android:configChanges="keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:screenOrientation="landscape"
-            />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.letv.LetvVActivity"
             android:screenOrientation="landscape" />
@@ -86,9 +83,8 @@
         <activity
             android:name=".ui.iqiyi.IQIyiSoActivity"
             android:configChanges="keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:screenOrientation="landscape"
-            />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.iqiyi.IQiyiVActivity"
             android:screenOrientation="landscape" />
@@ -99,9 +95,8 @@
         <activity
             android:name=".ui.qq.QQSoActivity"
             android:configChanges="keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:screenOrientation="landscape"
-            />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity
             android:name=".ui.mgtv.MgtvVActivity"
@@ -132,7 +127,8 @@
 
         <activity
             android:name=".ui.SettingsActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.tvlive.TVListActivity"
             android:screenOrientation="landscape" />
@@ -150,11 +146,9 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".ui.tvlive.TVPlayActivity"
-            android:configChanges="keyboardHidden|screenSize"
-            android:screenOrientation="landscape"
-            android:theme="@style/FullscreenAppCompat" />
+            android:screenOrientation="landscape" />
 
-        <service android:name="com.tvbus.engine.TVService"/>
+        <service android:name="com.tvbus.engine.TVService" />
 
     </application>
 

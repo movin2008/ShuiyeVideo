@@ -3,6 +3,7 @@ package com.shuiyes.video.ui.base;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,13 +12,14 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.shuiyes.video.R;
@@ -25,6 +27,7 @@ import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.bean.PlayVideo;
 import com.shuiyes.video.dialog.AlbumDialog;
 import com.shuiyes.video.dialog.MiscDialog;
+import com.shuiyes.video.ui.SettingsActivity;
 import com.shuiyes.video.ui.vip.VipActivity;
 import com.shuiyes.video.ui.vip.VipUtils;
 import com.shuiyes.video.widget.MiscView;
@@ -78,9 +81,9 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 if (mPlayUrl != null) {
                     ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     cm.setPrimaryClip(ClipData.newPlainText("Label", mPlayUrl));
-                    Toast.makeText(mContext, "播放地址已复制", 0).show();
+                    tips("播放地址已复制");
                 } else {
-                    Toast.makeText(mContext, "暂无播放地址", 0).show();
+                    tips("播放地址已复制");
                 }
                 return true;
             }
@@ -96,7 +99,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         controller.setOnHoverListener(new View.OnHoverListener() {
             @Override
             public boolean onHover(View view, MotionEvent motionEvent) {
-                Log.e(TAG, " =========================== onPrepared");
+                Log.e(TAG, " =========================== onHover");
                 return false;
             }
         });
@@ -234,6 +237,25 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         super.onDestroy();
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                this.startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     static final int SEEK_STEPS = 9999;
 
     @Override
@@ -359,7 +381,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                         }
                         Log.e(TAG, "VipUrl " + vipUrl);
                         if (vipUrl.contains(".m3u8") || vipUrl.contains(".mp4")) {
-                            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_URL, vipUrl));
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIP_URL, vipUrl));
                         } else {
                             mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, "Cannot paly " + vipUrl));
                         }
@@ -375,15 +397,23 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
     }
 
-    protected void fault(String text, final String msg) throws Exception {
+    protected void fault(String msg, boolean isVip) {
+        tips(msg);
+        vipJiexi(mVipSourceList.get(0).getUrl());
+        if(isVip){
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, 1, 0, "会员视频破解..."));
+        }else{
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, 1, 0, "网页接口解析..."));
+        }
+    }
+
+    protected void tips(final String msg){
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(mContext, msg, 0).show();
+                Tips.show(mContext, msg);
             }
         });
-        mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, 1, 0, text));
-        vipJiexi(mVipSourceList.get(0).getUrl());
     }
 
     protected boolean mIsError;
@@ -482,6 +512,13 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
         return true;
     }
 
+    private Runnable mClearStateRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mStateView.setText("");
+        }
+    };
+
     protected final int MSG_FAULT = 0;
     protected final int MSG_FETCH_TOKEN = 1;
     protected final int MSG_FETCH_VIDEO = 2;
@@ -494,9 +531,13 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected final int MSG_CACHE_URL = 9;
     protected final int MSG_UPDATE_TIME = 10;
     protected final int MSG_FETCH_VIDEOID = 11;
+    protected final int MSG_CACHE_VIP_URL = 12;
 
     @Override
     public void handleOtherMessage(Message msg) {
+        if(msg.what != MSG_UPDATE_TIME){
+            mHandler.removeCallbacks(mClearStateRunnable);
+        }
         switch (msg.what) {
             case MSG_UPDATE_TIME:
                 Calendar now = Calendar.getInstance();
@@ -509,17 +550,10 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                     mLoadingProgress.setVisibility(View.GONE);
                 }
                 if (msg.arg2 == 1) {
-                    mStateView.setText(error);
+                    mStateView.setText(error+"...");
                 } else {
-                    mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : "") /*+ " 5s后返回..."*/);
+                    mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : ""));
                 }
-
-//                mHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        finish();
-//                    }
-//                }, 5555);
                 break;
             case MSG_FETCH_TOKEN:
                 mStateView.setText(mStateView.getText() + "[成功]\n获取授权信息...");
@@ -551,20 +585,23 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 break;
             case MSG_CACHE_URL:
                 String url = (String) msg.obj;
-                mClarityView.setVisibility(View.GONE);
                 mStateView.setText(mStateView.getText() + "[成功]\n开始缓存视频...");
                 playUrl(url);
+                break;
+            case MSG_CACHE_VIP_URL:
+                String vipurl = (String) msg.obj;
+                mClarityView.setVisibility(View.GONE);
+                mNextView.setVisibility(View.GONE);
+                mSectionView.setVisibility(View.GONE);
+                mSourceView.setVisibility(View.GONE);
+                mStateView.setText(mStateView.getText() + "[成功]\n开始缓存解析视频...");
+                playUrl(vipurl);
                 break;
             case MSG_PALY_VIDEO:
                 mLoadingProgress.setVisibility(View.GONE);
                 if (mStateView.getText().length() != 0) {
                     mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mStateView.setText("");
-                        }
-                    }, 3333);
+                    mHandler.postDelayed(mClearStateRunnable, 5555);
                 }
                 break;
             case MSG_SET_TITLE:

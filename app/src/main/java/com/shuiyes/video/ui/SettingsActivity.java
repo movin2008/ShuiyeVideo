@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,6 +21,10 @@ import com.shuiyes.video.R;
 import com.shuiyes.video.ui.base.BaseActivity;
 import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.ui.youku.YoukuUtils;
+import com.shuiyes.video.widget.Tips;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
 
@@ -27,32 +32,28 @@ public class SettingsActivity extends BaseActivity {
 
     private Spinner mSpinner;
     private EditText mEditText;
+    private TextView mTextView;
 
     private SharedPreferences mPreferences;
 
-    private String[] ccodes = SVApplication.getAppContext().getResources().getStringArray(R.array.CCODE);
-
+    private final String[] ccodes = SVApplication.getAppContext().getResources().getStringArray(R.array.CCODE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
+        mTextView = (TextView) this.findViewById(R.id.tv_text);
         mEditText = (EditText) this.findViewById(R.id.et_ccode);
         mEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.e("HAHA", "actionId="+actionId);
+                Log.e("HAHA", "actionId=" + actionId);
                 if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
-                    InputMethodManager imm = (InputMethodManager)v.getContext()
+                    InputMethodManager imm = (InputMethodManager) v.getContext()
                             .getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-                    updateCCODE(mEditText.getText().toString());
-
                     return true;
                 }
                 return false;
@@ -73,35 +74,60 @@ public class SettingsActivity extends BaseActivity {
             }
         });
 
-
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         updateCCODE(mPreferences.getString("CCODE", YoukuUtils.CCODE));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
-    private void updateCCODE(String ccode){
-        if(!ccode.equals(YoukuUtils.CCODE)){
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if(event.getAction() == KeyEvent.ACTION_UP){
+            return super.dispatchKeyEvent(event);
+        }
+        switch (event.getKeyCode()) {
+            case KeyEvent.KEYCODE_BACK:
+                if(threadRunning){
+                    Tips.show(this, "请等待测试结束...");
+                    return true;
+                }else {
+                    return super.dispatchKeyEvent(event);
+                }
+        }
+
+        return super.dispatchKeyEvent(event);
+    }
+
+    private void updateCCODE(String ccode) {
+        if (!ccode.equals(YoukuUtils.CCODE)) {
             YoukuUtils.CCODE = ccode;
             mPreferences.edit().putString("CCODE", ccode).commit();
         }
         mEditText.setText(ccode);
 
-        int index = -1;
-        for(int i=0; i<ccodes.length; i++){
-            if(ccodes[i].equals(ccode)){
-                index = i;
+        int tmp = -1;
+        for (int i = 0; i < ccodes.length; i++) {
+            if (ccodes[i].equals(ccode)) {
+                tmp = i;
                 break;
             }
         }
 
-        if(index != -1){
-//            mEditText.setEnabled(false);
-//            mSpinner.setEnabled(true);
-            mSpinner.setSelection(index);
-            mSpinner.setVisibility(View.VISIBLE);
-        }else{
-//            mSpinner.setEnabled(false);
-            mSpinner.setVisibility(View.GONE);
-        }
+        final int index = tmp;
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (index != -1) {
+                    mSpinner.setSelection(index);
+                    mSpinner.setVisibility(View.VISIBLE);
+                } else {
+                    mSpinner.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     public void systeminfo(View view) {
@@ -126,5 +152,100 @@ public class SettingsActivity extends BaseActivity {
         dialog.setTitle("系统信息");
         dialog.setMessage(text);
         dialog.show();
+    }
+
+    void text(final String text) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mTextView.setText(mTextView.getText() + text);
+            }
+        });
+    }
+
+    boolean threadRunning;
+
+    public void testAllCCode(View view) {
+        if(threadRunning) return;
+        threadRunning = true;
+        mTextView.setText("获取优酷鉴权CNA...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                String cna = YoukuUtils.fetchCna();
+                if (TextUtils.isEmpty(cna)) {
+                    text("[失败]\n请稍后重试...");
+                    return;
+                }
+
+                text("[成功]\n");
+
+                for (int i = 1; i < 41; ) {
+                    String ccode = "0" + (500 + i);
+                    text("测试" + ccode + "...");
+                    String ret;
+                    text(ret = testCCode(ccode, cna));
+                    if(!ret.startsWith("[Exception:")){
+                        i++;
+                    }
+                }
+
+                threadRunning = false;
+            }
+        }).start();
+    }
+
+    public void testCCode(View view) {
+        if(threadRunning) return;
+        threadRunning = true;
+
+        mTextView.setText("获取优酷鉴权CNA...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                String cna = YoukuUtils.fetchCna();
+                if (TextUtils.isEmpty(cna)) {
+                    text("[失败]\n请稍后重试...");
+                    return;
+                }
+
+                String ccode = mEditText.getText().toString();
+                text("[成功]\n测试" + ccode + "...");
+                String ret;
+                text(ret = testCCode(ccode, cna));
+                if(!ret.startsWith("[Exception:")){
+                    updateCCODE(ccode);
+                }
+
+                threadRunning = false;
+            }
+        }).start();
+    }
+
+    private String testCCode(String ccode, String cna){
+        try {
+            Thread.sleep(567);
+
+            String html = YoukuUtils.testCCode(ccode, cna);
+
+            if (TextUtils.isEmpty(html)) {
+                return "[Exception: HttpResponse is null]\n";
+            }
+            if (html.startsWith("Exception:")) {
+                return "[" + html + "]\n";
+            }
+
+            JSONObject data = new JSONObject(html).getJSONObject("data");
+            if (data.has("error")) {
+                return "[" + data.getJSONObject("error").getString("note") + "]\n";
+            }
+
+            return "[有效]\n";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "[Exception: " + e.getLocalizedMessage() + "]\n";
+        }
     }
 }

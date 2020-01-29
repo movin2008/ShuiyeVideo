@@ -25,7 +25,6 @@ public class IQIyiSoActivity extends BaseSearchActivity {
         super.onCreate(savedInstanceState);
 
         mSearch.setHint("爱奇艺搜索");
-        mSearch.setText("爱情公寓");
     }
 
     @Override

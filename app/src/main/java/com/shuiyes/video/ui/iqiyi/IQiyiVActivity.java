@@ -209,11 +209,7 @@ public class IQiyiVActivity extends BasePlayActivity {
                             }
                         }
 
-                        if ("server return err-data.".equals(msg)) {
-                            fault("会员视频破解...", msg);
-                        }else{
-                            fault("网页接口解析...", msg);
-                        }
+                        fault(msg, "server return err-data.".equals(msg));
                         return;
                     }
 

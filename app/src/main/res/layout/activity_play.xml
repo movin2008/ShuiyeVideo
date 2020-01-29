@@ -54,7 +54,7 @@
                 android:minWidth="30dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:text="(VIP)网页线路"
+                android:text="(VIP)解析破解"
                 android:textColor="@android:color/white" />
 
             <Button

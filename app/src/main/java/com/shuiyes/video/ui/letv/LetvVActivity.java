@@ -122,6 +122,7 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                         fault("解析异常(no playurl)，等待完善");
                         return;
                     }
+
                     JSONObject playurl = data.getJSONObject("playurl");
                     String title = playurl.getString("title");
 

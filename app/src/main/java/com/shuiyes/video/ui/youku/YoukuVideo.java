@@ -95,9 +95,9 @@ public class YoukuVideo extends PlayVideo{
     }
 
     private VideoType type;
-    private int size;
+    private long size;
 
-    public YoukuVideo(VideoType type, int size, String url) {
+    public YoukuVideo(VideoType type, long size, String url) {
         super(type.getProfile()+"(" + Formatter.formatFileSize(SVApplication.getAppContext(), size) + ")", url);
         this.type = type;
         this.size = size;
@@ -107,7 +107,7 @@ public class YoukuVideo extends PlayVideo{
         return type;
     }
 
-    public int getSize() {
+    public long getSize() {
         return size;
     }
 

@@ -25,7 +25,6 @@ public class YoukuSoActivity extends BaseSearchActivity {
         super.onCreate(savedInstanceState);
 
         mSearch.setHint("优酷搜索");
-        mSearch.setText("汪汪队立大功");
     }
 
     @Override
@@ -75,22 +74,42 @@ public class YoukuSoActivity extends BaseSearchActivity {
                     return false;
                 }
 
-                String ctoken = YoukuUtils.fetchCToken();
-                if (TextUtils.isEmpty(ctoken)) {
-                    notice("Fetch ctoken error, please try again.");
-                }
-                Log.e(TAG, ctoken);
-
                 String cna = YoukuUtils.fetchCna();
-                if (TextUtils.isEmpty(ctoken)) {
+                if (TextUtils.isEmpty(cna)) {
                     notice("Fetch cna error, please try again.");
                 }
                 Log.e(TAG, "cna=" + cna);
 
-                String html = YoukuUtils.search(keyword, ctoken + " cna=" + cna + ";");
+                if (mCancelled) {
+                    notice("Fetched cna has Cancelled.");
+                    return false;
+                }
+
+                if(TextUtils.isEmpty(YoukuUtils.CToken)){
+                    String ctoken = YoukuUtils.fetchCToken();
+                    if (TextUtils.isEmpty(ctoken)) {
+                        notice("Fetch ctoken error, please try again.");
+                    }
+                    Log.e(TAG, ctoken);
+
+                    if(ctoken.startsWith("Exception: ")){
+                        notice(ctoken);
+                        return false;
+                    }
+
+                    YoukuUtils.CToken = ctoken;
+                }
+
+                if (mCancelled) {
+                    notice("Fetched ctoken has Cancelled.");
+                    return false;
+                }
+
+                String html = YoukuUtils.search(keyword, YoukuUtils.CToken + " cna=" + cna + ";");
                 if (DEBUG) {
                     Log.e(TAG, html);
                 }
+
 
                 if(html.startsWith("Exception: ")){
                     notice(html);
@@ -101,6 +120,7 @@ public class YoukuSoActivity extends BaseSearchActivity {
                     notice("Will list albums has Cancelled.");
                     return false;
                 }
+
 
                 mAlbums.clear();
 

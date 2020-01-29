@@ -19,12 +19,12 @@ public class VipUtils {
 
     public static List<PlayVideo> getPlaySourceList() {
         List<PlayVideo> sourceList = new ArrayList<PlayVideo>();
-        sourceList.add(new PlayVideo(VipSource.VipRouter.V618G.text, VipSource.VipRouter.V618G.type));
         sourceList.add(new PlayVideo(VipSource.VipRouter.V8090g.text, VipSource.VipRouter.V8090g.type));
         sourceList.add(new PlayVideo(VipSource.VipRouter.Vwocao.text, VipSource.VipRouter.Vwocao.type));
         sourceList.add(new PlayVideo(VipSource.VipRouter.V97kys.text, VipSource.VipRouter.V97kys.type));
         sourceList.add(new PlayVideo(VipSource.VipRouter.Vwmxz.text, VipSource.VipRouter.Vwmxz.type));
         sourceList.add(new PlayVideo(VipSource.VipRouter.Vadmin.text, VipSource.VipRouter.Vadmin.type));
+        sourceList.add(new PlayVideo(VipSource.VipRouter.V618G.text, VipSource.VipRouter.V618G.type));
         return sourceList;
     }
 
@@ -81,8 +81,6 @@ public class VipUtils {
         List<PlayVideo> sourceList = new ArrayList<PlayVideo>();
 
         sourceList.add(new PlayVideo("69ne.com【69智能解析】", "https://api.69ne.com/?url="));
-        // 免嗅探
-        sourceList.add(new PlayVideo("607p.com【618G免费解析】", "https://607p.com/?url="));
 
         // https://www.administratorm.com/16896513490.php
         // https://data.ylybz.cn/video/qyplay.php?url=https%3A%2F%2Fdata.ylybz.cn%2Fdata%2Fiqiyi%2F6d9b571f4828b0d6941c22c046749a49.m3u8
@@ -96,6 +94,8 @@ public class VipUtils {
         // https://vip.97kys.com/vip/api.php
         // https://ykm3u8.ylybz.cn/video/qyplay.php?url=https%3A%2F%2Fykm3u8.ylybz.cn%2Fdata%2Fiqiyi%2F6d9b571f4828b0d6941c22c046749a49.m3u8
         sourceList.add(new PlayVideo("97kys.com(ykm3u8.ylybz.cn)【97解析平台】", "https://vip.97kys.com/vip/?url="));
+        // 免嗅探
+        sourceList.add(new PlayVideo("607p.com【618G免费解析】", "https://607p.com/?url="));
 
         sourceList.add(new PlayVideo("mt2t.com【云播放】", "http://mt2t.com/lines?url="));
         sourceList.add(new PlayVideo("vipvideo.github.io【水也】(CNAME mt2t.com)", "http://vipvideo.github.io/lines?url="));

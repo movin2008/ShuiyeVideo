@@ -9,8 +9,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "1.1"
     }
 
     sourceSets {
@@ -24,7 +22,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "tv.danmaku.ijk.media:ijkplayer-java:0.8.8"
-//    compile "tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8"
 
     // https://github.com/danikula/AndroidVideoCache
     implementation 'com.danikula:videocache:2.7.0'
@@ -35,4 +32,7 @@ dependencies {
     // https://github.com/Bilibili/DanmakuFlameMaster
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.8.3'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.8.3'
+
+    // glide image load
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 }

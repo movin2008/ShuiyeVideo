@@ -34,6 +34,7 @@ import com.shuiyes.video.ui.base.BaseActivity;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.SLog;
 import com.shuiyes.video.widget.MiscView;
+import com.shuiyes.video.widget.Tips;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -78,11 +79,11 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public boolean onLongClick(View view) {
                 if (TextUtils.isEmpty(mPlayUrl)) {
-                    Toast.makeText(mContext, "暂无播放地址", 0).show();
+                    Tips.show(mContext, "暂无播放地址");
                 } else {
                     ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     cm.setPrimaryClip(ClipData.newPlainText("Label", mPlayUrl));
-                    Toast.makeText(mContext, "播放地址已复制", 0).show();
+                    Tips.show(mContext, "播放地址已复制");
                 }
                 return true;
             }
@@ -277,7 +278,7 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
                 Display display = getWindowManager().getDefaultDisplay();
                 final DisplayMetrics dm = new DisplayMetrics();
                 display.getMetrics(dm);
-                Toast.makeText(getApplicationContext(), "Mock Click " + dm.widthPixels + "x" + dm.heightPixels + "", 0).show();
+                Tips.show(getApplicationContext(), "Mock Click " + dm.widthPixels + "x" + dm.heightPixels);
 
                 Log.e(TAG, "mockWebViewClick. " + dm.widthPixels + "x" + dm.heightPixels);
 

@@ -23,7 +23,6 @@ public class QQSoActivity extends BaseSearchActivity {
         super.onCreate(savedInstanceState);
 
         mSearch.setHint("腾讯搜索");
-        mSearch.setText("超级飞侠");
     }
 
     @Override

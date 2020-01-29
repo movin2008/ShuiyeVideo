@@ -21,6 +21,7 @@ import com.shuiyes.video.dialog.MiscDialog;
 import com.shuiyes.video.util.HttpUtils;
 import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.widget.MiscView;
+import com.shuiyes.video.widget.Tips;
 
 public class YoukuVActivity extends BasePlayActivity {
 
@@ -32,6 +33,8 @@ public class YoukuVActivity extends BasePlayActivity {
 
         mBatName = "优酷视频";
         mVid = YoukuUtils.getPlayVid(mIntentUrl);
+
+        YoukuUtils.updateCCodeIfNeed(this);
         playVideo();
     }
 
@@ -92,12 +95,6 @@ public class YoukuVActivity extends BasePlayActivity {
                     Utils.setFile("youku", info);
 
                     JSONObject data = new JSONObject(info).getJSONObject("data");
-
-                    if (data.has("error")) {
-                        fault(data.getJSONObject("error").getString("note"));
-                        return;
-                    }
-
                     JSONObject video = data.getJSONObject("video");
                     String title = video.getString("title");
 
@@ -132,46 +129,60 @@ public class YoukuVActivity extends BasePlayActivity {
                         }
                     }
 
-                    JSONArray streams = data.getJSONArray("stream");
-                    int streamsLen = streams.length();
-
-                    mUrlList.clear();
-                    for (int i = 0; i < streamsLen; i++) {
-                        JSONObject stream = (JSONObject) streams.get(i);
-
-                        int size = stream.getInt("size");
-                        String stream_type = stream.getString("stream_type");
-                        String m3u8Url = stream.getString("m3u8_url");
-
-                        mUrlList.add(new YoukuVideo(YoukuVideo.formateVideoType(stream_type), size, m3u8Url));
-                    }
-
-                    Log.e(TAG, "UrlList=" + mUrlList.size() + "/" + streamsLen);
-                    if (mUrlList.isEmpty()) {
-                        fault("无视频地址");
+                    if (data.has("error")) {
+                        String msg = data.getJSONObject("error").getString("note");
+                        // 观看此节目，请先登录！ Maybe VIP video
+                        fault(msg, data.getJSONObject("error").getInt("code") == -3007);
                     } else {
-                        Collections.sort(mUrlList, new Comparator<YoukuVideo>() {
-                            @Override
-                            public int compare(YoukuVideo v1, YoukuVideo v2) {
-                                return v2.getSize() - v1.getSize();
-                            }
-                        });
-
-                        YoukuVideo playVideo = null;
-                        for (YoukuVideo v : mUrlList) {
-                            Log.i(TAG, v.toStr() + " mStream=" + mStream);
-
-                            if (playVideo == null || v.getType().getType().equals(mStream)) {
-                                playVideo = v;
-                            }
+                        boolean isVip = data.has("trial");
+                        if (isVip) {
+                            Tips.show(getBaseContext(), "VIP 视频支持6分钟试看，可尝试VIP解析");
                         }
 
-                        mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
+                        JSONArray streams = data.getJSONArray("stream");
+                        int streamsLen = streams.length();
+
+                        mUrlList.clear();
+                        for (int i = 0; i < streamsLen; i++) {
+                            JSONObject stream = (JSONObject) streams.get(i);
+
+                            long size = stream.getLong("size");
+                            float duration = stream.getInt("milliseconds_video");
+                            // VIP 视频换算为 6分钟试看的大小比例
+                            duration = size * (360 / duration);
+                            size = isVip ? (long) duration : size;
+                            String stream_type = stream.getString("stream_type");
+                            String m3u8Url = stream.getString("m3u8_url");
+
+                            mUrlList.add(new YoukuVideo(YoukuVideo.formateVideoType(stream_type), size, m3u8Url));
+                        }
+
+                        Log.e(TAG, "UrlList=" + mUrlList.size() + "/" + streamsLen);
+                        if (mUrlList.isEmpty()) {
+                            fault("无视频地址");
+                        } else {
+                            Collections.sort(mUrlList, new Comparator<YoukuVideo>() {
+                                @Override
+                                public int compare(YoukuVideo v1, YoukuVideo v2) {
+                                    return (int) (v2.getSize() - v1.getSize());
+                                }
+                            });
+
+                            YoukuVideo playVideo = null;
+                            for (YoukuVideo v : mUrlList) {
+                                Log.i(TAG, v.toStr() + " mStream=" + mStream);
+
+                                if (playVideo == null || v.getType().getType().equals(mStream)) {
+                                    playVideo = v;
+                                }
+                            }
+
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
+                        }
                     }
 
 //                    listJsonAlbums();
                     listHtmlAlbums(mVid);
-                    mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
                 } catch (Exception e) {
                     fault(e);
                     e.printStackTrace();
@@ -184,7 +195,7 @@ public class YoukuVActivity extends BasePlayActivity {
     private void listJsonAlbums() {
         try {
             String html = YoukuUtils.listAlbums(mVid);
-            if(html.startsWith("Exception: ")){
+            if (html.startsWith("Exception: ")) {
                 fault(html);
                 return;
             }
@@ -237,7 +248,7 @@ public class YoukuVActivity extends BasePlayActivity {
     private void listHtmlAlbums(String vid) {
         try {
             String html = HttpUtils.get(YoukuUtils.getPlayUrlByVid(vid));
-            if(html.startsWith("Exception: ")){
+            if (html.startsWith("Exception: ")) {
                 Log.e(TAG, html);
                 return;
             }
@@ -247,9 +258,9 @@ public class YoukuVActivity extends BasePlayActivity {
             String key = "window.playerAnthology=";
             if (html.contains(key)) {
                 String tmp = html.substring(html.indexOf(key) + key.length());
-                key = ";";
+                key = "};";
                 if (tmp.contains(key)) {
-                    tmp = tmp.substring(0, tmp.indexOf(key));
+                    tmp = tmp.substring(0, tmp.indexOf(key) + 1);
                 }
 
                 Utils.setFile("album.youku", tmp);
@@ -291,6 +302,7 @@ public class YoukuVActivity extends BasePlayActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
     }
 
     @Override
@@ -300,7 +312,7 @@ public class YoukuVActivity extends BasePlayActivity {
         } else {
             mClarityView.setEnabled(true);
         }
-
+        mClarityView.setVisibility(View.VISIBLE);
         mClarityView.setText(((YoukuVideo) video).getType().getProfile());
     }
 

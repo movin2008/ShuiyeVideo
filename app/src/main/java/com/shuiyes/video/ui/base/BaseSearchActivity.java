@@ -1,6 +1,7 @@
 package com.shuiyes.video.ui.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -22,6 +25,7 @@ import com.shuiye.video.util.ResourceDef;
 import com.shuiyes.video.R;
 import com.shuiyes.video.adapter.AlbumAdapter;
 import com.shuiyes.video.bean.AlbumList;
+import com.shuiyes.video.ui.SettingsActivity;
 import com.shuiyes.video.util.Constants;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
@@ -117,7 +121,7 @@ public abstract class BaseSearchActivity extends BaseActivity {
                 final String keyword = s.toString();
                 mSearchText = keyword;
 
-                if(mSearchAsyncTask != null){
+                if (mSearchAsyncTask != null) {
                     mSearchAsyncTask.cancel(false);
                 }
 
@@ -139,7 +143,27 @@ public abstract class BaseSearchActivity extends BaseActivity {
             }
         }, 4321);
 
-//        mHandler.postDelayed(mTextRunnable, 5555);
+//        mHandler.post(mTextRunnable);
+
+        mSearch.setText("庐剧");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                this.startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private Runnable mTextRunnable = new Runnable() {
@@ -149,7 +173,7 @@ public abstract class BaseSearchActivity extends BaseActivity {
 
             View focusView = getWindow().getDecorView().findFocus();
 
-            Log.e(TAG, ""+focusView);
+            Log.e(TAG, "" + focusView);
         }
     };
 
@@ -159,14 +183,16 @@ public abstract class BaseSearchActivity extends BaseActivity {
             case Constants.MSG_LIST_ALBUM:
 
                 mNotice.setText("");
-                if(mAlbums.isEmpty()){
+                if (mAlbums.isEmpty()) {
                     mNotice.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mNotice.setVisibility(View.GONE);
                 }
 
                 mPosition = -1;
                 mAlbumAdapter.listAlbums(mAlbums);
+
+                clearFocus(findViewById(R.id.btn_clear_focus));
                 break;
             case Constants.MSG_SET_IMAGE:
                 // 通过tag找到ImageView
@@ -176,7 +202,7 @@ public abstract class BaseSearchActivity extends BaseActivity {
                 }
                 break;
             case MSG_SHOW_NOTICE:
-               mNotice.setText(mNotice.getText()+"\n"+(String)msg.obj);
+                mNotice.setText(mNotice.getText() + "\n" + (String) msg.obj);
                 break;
         }
     }
@@ -200,6 +226,7 @@ public abstract class BaseSearchActivity extends BaseActivity {
     protected Object LOCK = new Object();
 
     protected abstract void searchVideos(String keyword);
+
     protected abstract void playVideo(int position);
 
     @Override
@@ -223,7 +250,7 @@ public abstract class BaseSearchActivity extends BaseActivity {
         return super.dispatchKeyEvent(event);
     }
 
-    public void clearFocus(View view){
+    public void clearFocus(View view) {
 //        if(mInputMethodManager.isActive(mSearch)){
 //            mInputMethodManager.hideSoftInputFromWindow(mSearch.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 //        }else{
@@ -241,18 +268,18 @@ public abstract class BaseSearchActivity extends BaseActivity {
 //        mInputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    protected void notice(String text){
+    protected void notice(String text) {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SHOW_NOTICE, text));
         Log.e(TAG, text);
     }
 
-    protected boolean checkHtmlValid(String html){
-        if(TextUtils.isEmpty(html)){
+    protected boolean checkHtmlValid(String html) {
+        if (TextUtils.isEmpty(html)) {
             notice("Http response is null.");
             return false;
         }
 
-        if(html.startsWith("Exception: ")){
+        if (html.startsWith("Exception: ")) {
             notice(html);
             return false;
         }

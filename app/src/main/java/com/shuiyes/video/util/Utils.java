@@ -16,6 +16,8 @@ import android.util.SparseArray;
 import android.view.Display;
 import android.widget.Toast;
 
+import com.shuiyes.video.widget.Tips;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -61,7 +63,7 @@ public class Utils {
             context.startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "TVBus 播放插件安装失败 " + e.getLocalizedMessage(), 0).show();
+            Tips.show(context, "TVBus 播放插件安装失败 " + e.getLocalizedMessage());
         }
     }
 
@@ -95,7 +97,7 @@ public class Utils {
             context.startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "TVBus 播放插件安装失败 " + e.getLocalizedMessage(), 0).show();
+            Tips.show(context, "TVBus 播放插件安装失败 " + e.getLocalizedMessage());
         }
     }
 

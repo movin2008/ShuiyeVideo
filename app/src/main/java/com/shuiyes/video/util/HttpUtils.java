@@ -113,8 +113,8 @@ public class HttpUtils {
                         String setCookie = setCookies.get(0);
                         buffer.append(setCookie.substring(0, setCookie.indexOf(";") + 1));
                     } else {
-                        ret += printHeaders(conn);
-                        buffer.append(ret);
+                        printHeaders(conn);
+                        buffer.append(ret + " no ctoken");
                     }
                 } else {
                     BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));

@@ -50,9 +50,9 @@ public class QQVActivity extends BasePlayActivity {
 
                         mStateView.setText("初始化...");
                         PlayVideo playVideo = ((MiscView) view).getPlayVideo();
-                        if(playVideo.getUrl().endsWith("/")){
+                        if (playVideo.getUrl().endsWith("/")) {
                             cacheSection(playVideo);
-                        }else{
+                        } else {
                             mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
 
                         }
@@ -131,7 +131,7 @@ public class QQVActivity extends BasePlayActivity {
                         mHandler.sendEmptyMessage(MSG_FETCH_VIDEOID);
                         String html = HttpUtils.get(mIntentUrl);
 
-                        if(html.startsWith("Exception: ")){
+                        if (html.startsWith("Exception: ")) {
                             fault(html);
                             return;
                         }
@@ -380,7 +380,7 @@ public class QQVActivity extends BasePlayActivity {
             for (int i = 0; i < len; i++) {
                 String html = QQUtils.fetchMp4Video(QQUtils.PLATFORMS[i], defn, mVid);
 
-                if(html.startsWith("Exception: ")){
+                if (html.startsWith("Exception: ")) {
                     fault(html);
                     return;
                 }
@@ -499,7 +499,7 @@ public class QQVActivity extends BasePlayActivity {
                 return;
             }
 
-            for (PlayVideo playVideo:mSectionList){
+            for (PlayVideo playVideo : mSectionList) {
                 QQSection section = (QQSection) playVideo;
                 Log.e(TAG, section.toStr());
             }
@@ -547,10 +547,12 @@ public class QQVActivity extends BasePlayActivity {
         JSONObject obj = new JSONObject(urlInfo);
 
         if (obj.has("msg")) {
+            // 章节时间计算，一个章节 5分钟
+            mCurrentPosition = 5 * 60 * 1000 * mSectionIndex;
             if ("not pay".equals(obj.getString("msg"))) {
-                fault("VIP 章节暂不支持试看");
+                fault("VIP 章节暂不支持试看", true);
             } else {
-                fault(obj.getString("msg"));
+                fault(obj.getString("msg"), false);
             }
             return;
         }
@@ -560,14 +562,15 @@ public class QQVActivity extends BasePlayActivity {
             mVKey = obj.getString("key");
             cacheSection(mSourceList.get(0));
         } else {
-            fault("解析失败...");
+            fault("解析失败...", true);
         }
 
     }
 
     private String mVKey = "nokey";
     private String mSectionName = "noname";
-    private void cacheSection(PlayVideo video){
+
+    private void cacheSection(PlayVideo video) {
         PlayVideo playVideo = video.clone();
         playVideo.setUrl(String.format("%s%s?vkey=%s", playVideo.getUrl(), mSectionName, mVKey));
         mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIDEO, playVideo));
@@ -589,6 +592,7 @@ public class QQVActivity extends BasePlayActivity {
         } else {
             mSectionView.setVisibility(View.GONE);
         }
+        mVideoView.stopPlayback();
 
         playSection(mSectionList.get(index));
     }
@@ -607,7 +611,7 @@ public class QQVActivity extends BasePlayActivity {
     protected void completionToPlayNextVideo() {
         if (mSectionList.size() > 0) {
             mSectionIndex++;
-            Log.d(TAG, "playNextSection " + (mSectionIndex+1) + "/" + mSectionList.size());
+            Log.d(TAG, "playNextSection " + (mSectionIndex + 1) + "/" + mSectionList.size());
             if (mSectionIndex < mSectionList.size()) {
                 playNextSection(mSectionIndex);
             } else {
