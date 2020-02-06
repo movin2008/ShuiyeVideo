@@ -150,6 +150,7 @@ public class IQiyiVActivity extends BasePlayActivity {
                     }
                     Utils.setFile("tvInfoJs", html);
 
+                    boolean isVip = false;
                     String albumId, key = "var tvInfoJs=";
                     int albumCount, showChannelId, sourceid, ty;
                     if (html.contains(key)) {
@@ -158,6 +159,7 @@ public class IQiyiVActivity extends BasePlayActivity {
 
                         JSONObject obj = new JSONObject(html);
 
+                        isVip = obj.getInt("payMark") == 1;
                         albumId = obj.getString("aid");
                         sourceid = obj.getInt("sid");
                         albumCount = obj.getInt("es");
@@ -183,6 +185,12 @@ public class IQiyiVActivity extends BasePlayActivity {
                     }
 
                     fetchAlbums(albumId, albumCount, sourceid, ty, showChannelId);
+
+                    if(isVip){
+                        fault("VIP视频只支持6分钟试看", true);
+                        return;
+                    }
+
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
                     html = IQiyiUtils.getVMS(tvid, vid);

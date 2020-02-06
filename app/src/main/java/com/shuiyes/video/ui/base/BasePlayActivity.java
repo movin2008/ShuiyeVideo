@@ -30,6 +30,7 @@ import com.shuiyes.video.dialog.MiscDialog;
 import com.shuiyes.video.ui.SettingsActivity;
 import com.shuiyes.video.ui.vip.VipActivity;
 import com.shuiyes.video.ui.vip.VipUtils;
+import com.shuiyes.video.util.PreferenceUtil;
 import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
@@ -224,6 +225,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected void onDestroy() {
+        PreferenceUtil.setPlayUrl(mContext, "");
         if (mSourceDialog != null && mSourceDialog.isShowing()) {
             mSourceDialog.dismiss();
         }
@@ -334,7 +336,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                         }
 
                         PlayVideo playVideo = ((MiscView) view).getPlayVideo();
-                        mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, 1, 1, playVideo.getText()));
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIP_VIDEO, playVideo.getText()));
                         vipJiexi(playVideo.getUrl());
                     }
                 });
@@ -400,14 +402,14 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected void fault(String msg, boolean isVip) {
         tips(msg);
         vipJiexi(mVipSourceList.get(0).getUrl());
-        if(isVip){
-            mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, 1, 0, "会员视频破解..."));
-        }else{
-            mHandler.sendMessage(mHandler.obtainMessage(MSG_FAULT, 1, 0, "网页接口解析..."));
+        if (isVip) {
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIP_VIDEO, "会员视频破解..."));
+        } else {
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIP_VIDEO, "网页接口解析..."));
         }
     }
 
-    protected void tips(final String msg){
+    protected void tips(final String msg) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -532,10 +534,11 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     protected final int MSG_UPDATE_TIME = 10;
     protected final int MSG_FETCH_VIDEOID = 11;
     protected final int MSG_CACHE_VIP_URL = 12;
+    protected final int MSG_FETCH_VIP_VIDEO = 13;
 
     @Override
     public void handleOtherMessage(Message msg) {
-        if(msg.what != MSG_UPDATE_TIME){
+        if (msg.what != MSG_UPDATE_TIME) {
             mHandler.removeCallbacks(mClearStateRunnable);
         }
         switch (msg.what) {
@@ -546,13 +549,16 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 break;
             case MSG_FAULT:
                 String error = (String) msg.obj;
-                if (msg.arg1 == 0) {
-                    mLoadingProgress.setVisibility(View.GONE);
-                }
-                if (msg.arg2 == 1) {
-                    mStateView.setText(error+"...");
+                mLoadingProgress.setVisibility(View.GONE);
+                mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : ""));
+                break;
+            case MSG_FETCH_VIP_VIDEO:
+                String text = (String) msg.obj;
+                String ptext = mStateView.getText().toString();
+                if (TextUtils.isEmpty(ptext)) {
+                    mStateView.setText(text + "...");
                 } else {
-                    mStateView.setText(mStateView.getText() + "[失败]\n" + (error != null ? error : ""));
+                    mStateView.setText(ptext + "[成功]\n" + (text != null ? text : ""));
                 }
                 break;
             case MSG_FETCH_TOKEN:
@@ -598,6 +604,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                 playUrl(vipurl);
                 break;
             case MSG_PALY_VIDEO:
+                PreferenceUtil.setPlayUrl(mContext, mIntentUrl);
                 mLoadingProgress.setVisibility(View.GONE);
                 if (mStateView.getText().length() != 0) {
                     mStateView.setText(mStateView.getText() + "[成功]\n开始播放...");

@@ -57,15 +57,15 @@ public class TVPlayActivity extends BaseActivity {
             public boolean onError(MediaPlayer mediaPlayer, int what, int extra) {
                 String err = "onError(" + what + "," + extra + ")";
                 Log.e(TAG, "======== " + err);
+                Tips.show(mContext, err, 0);
 
                 if(what == 100){
                     // 重新播放
                     mVideoView.stopPlayback();
-                    startPlayback();
+                    startPlayback(mUrl);
                     return true;
                 }else{
                     mBuffering = false;
-                    Tips.show(mContext, err, 0);
                     return false;
                 }
             }
@@ -93,14 +93,14 @@ public class TVPlayActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        startPlayback();
+        startPlayback(mUrl);
         mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 100);
     }
 
-    protected void startPlayback(){
-        if(!mUrl.startsWith("tvbus")){
+    protected void startPlayback(String url){
+        if(!url.startsWith("tvbus")){
             try {
-                mVideoView.setVideoURI(Uri.parse(mUrl));
+                mVideoView.setVideoURI(Uri.parse(url));
                 mHandler.removeCallbacks(mRefreshRxTask);
                 mHandler.postDelayed(mRefreshRxTask, 100);
             } catch (Exception e) {

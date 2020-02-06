@@ -15,7 +15,7 @@ import com.shuiyes.video.ui.iqiyi.IQiyiVActivity;
 import com.shuiyes.video.ui.letv.LetvVActivity;
 import com.shuiyes.video.ui.qq.QQVActivity;
 import com.shuiyes.video.ui.tvlive.TVBusActivity;
-import com.shuiyes.video.ui.tvlive.TVPlayActivity;
+import com.shuiyes.video.ui.tvlive.YinyangTVPlayActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuVActivity;
 
@@ -67,7 +67,8 @@ public class PlayUtils {
                     dialog.show();
                 }
             } else {
-                context.startActivity(new Intent(context, TVPlayActivity.class)
+//                context.startActivity(new Intent(context, TVPlayActivity.class)
+                context.startActivity(new Intent(context, YinyangTVPlayActivity.class)
                         .putExtra("title", title)
                         .putExtra("url", url));
 

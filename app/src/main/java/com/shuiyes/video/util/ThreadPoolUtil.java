@@ -30,8 +30,7 @@ public class ThreadPoolUtil {
      */
     private static int KEEP_ALIVE_TIME = 5000;
     // 阻塞队列。当核心线程都被占用，且阻塞队列已满的情况下，才会开启额外线程
-    private static BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>(
-            10);
+    private static BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>(10);
 
     // 线程工厂
     private static ThreadFactory threadFactory = new ThreadFactory() {
@@ -40,9 +39,7 @@ public class ThreadPoolUtil {
 
         @Override
         public Thread newThread(Runnable r) {
-
-            return new Thread(r, "myThreadPool thread:"
-                    + integer.getAndIncrement());
+            return new Thread(r, "myThreadPool thread:" + integer.getAndIncrement());
         }
 
     };
@@ -60,9 +57,7 @@ public class ThreadPoolUtil {
     private static ThreadPoolExecutor threadPool;
 
     static {
-        threadPool = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE,
-                KEEP_ALIVE_TIME, TimeUnit.SECONDS, workQueue, threadFactory,
-                handler);
+        threadPool = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME, TimeUnit.SECONDS, workQueue, threadFactory, handler);
     }
 
     /**

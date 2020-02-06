@@ -122,20 +122,8 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="wxcmcc"
-                android:text="无锡移动源" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="jscmcc1"
-                android:text="南京移动源 183.207.X.X" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="jscmcc2"
-                android:text="南京移动源 223.110.X.X" />
+                android:onClick="huya"
+                android:text="虎牙直播源" />
 
             <Button
                 style="@style/Button"
@@ -152,26 +140,14 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
+                android:onClick="jscmcc"
+                android:text="南京移动源" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
                 android:onClick="szcmcc"
                 android:text="苏州移动源" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="othercmcc"
-                android:text="其他移动源" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="fmlist"
-                android:text="收音机源" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="cbchot"
-                android:text="中广热点云的资源" />
 
             <Button
                 style="@style/Button"
@@ -182,27 +158,26 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="tvbus"
-                android:text="Tvbus 直播源" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
                 android:onClick="soplus"
                 android:text="SopPlus 直播源" />
 
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="otherTV"
-                android:text="其他直播源" />
+                android:onClick="othcmcc"
+                android:text="其他移动源" />
 
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="bilibili"
-                android:text="哔哩哔哩 直播源"
-                android:visibility="gone" />
+                android:onClick="other"
+                android:text="其他视频源" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:onClick="fmlist"
+                android:text="收音机源" />
 
             <Button
                 style="@style/Button"

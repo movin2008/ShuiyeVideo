@@ -10,6 +10,7 @@ import android.media.AudioManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.OrientationEventListener;
 import android.view.Surface;
@@ -25,6 +26,7 @@ import com.danikula.videocache.HttpProxyCacheServer;
 import com.devlin_n.floatWindowPermission.FloatWindowManager;
 import com.devlin_n.yinyangplayer.R;
 import com.devlin_n.yinyangplayer.controller.BaseVideoController;
+import com.devlin_n.yinyangplayer.controller.StandardVideoController;
 import com.devlin_n.yinyangplayer.util.Constants;
 import com.devlin_n.yinyangplayer.util.KeyUtil;
 import com.devlin_n.yinyangplayer.util.NetworkUtil;
@@ -51,9 +53,11 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 public class YinYangPlayer extends FrameLayout implements BaseVideoController.MediaPlayerControl {
 
-    private IMediaPlayer mMediaPlayer;//ijkPlayer
+    //ijkPlayer
+    private IMediaPlayer mMediaPlayer;
+    //控制器
     @Nullable
-    private BaseVideoController mVideoController;//控制器
+    private BaseVideoController mVideoController;
     private YinYangSurfaceView mSurfaceView;
     private YinYangTextureView mTextureView;
     private SurfaceTexture mSurfaceTexture;
@@ -135,6 +139,8 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
         this.addView(playerContainer, params);
     }
 
+    public static final String UA_WIN = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36";
+
     /**
      * 创建播放器实例，设置播放地址及播放器参数
      */
@@ -144,7 +150,10 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
                 mMediaPlayer = new AndroidMediaPlayer();
             } else {
                 mMediaPlayer = new IjkMediaPlayer();
-                ((IjkMediaPlayer) mMediaPlayer).setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 1);//开启硬解码
+                ((IjkMediaPlayer) mMediaPlayer).setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "user-agent", UA_WIN);
+                ((IjkMediaPlayer) mMediaPlayer).setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "user_agent", UA_WIN);
+                //开启硬解码
+                ((IjkMediaPlayer) mMediaPlayer).setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 1);
                 ((IjkMediaPlayer) mMediaPlayer).setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-auto-rotate", 1);
                 ((IjkMediaPlayer) mMediaPlayer).setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-handle-resolution-change", 1);
             }
@@ -191,7 +200,7 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
             mCurrentState = STATE_PREPARING;
             if (mVideoController != null) {
                 mVideoController.setPlayState(mCurrentState);
-                mVideoController.setPlayerState(isFullScreen ? PLAYER_FULL_SCREEN : PLAYER_NORMAL);
+                mVideoController.setScreenState(isFullScreen ? PLAYER_FULL_SCREEN : PLAYER_NORMAL);
             }
             if (mDanmakuView != null) {
                 mDanmakuView.prepare(mParser, mContext);
@@ -235,6 +244,8 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
         playerContainer.addView(mSurfaceView, 0, params);
     }
 
+    Surface mSurface;
+
     /**
      * 添加TextureView
      */
@@ -249,7 +260,7 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
                     mTextureView.setSurfaceTexture(mSurfaceTexture);
                 } else {
                     mSurfaceTexture = surfaceTexture;
-                    mMediaPlayer.setSurface(new Surface(surfaceTexture));
+                    mMediaPlayer.setSurface(mSurface = new Surface(surfaceTexture));
                 }
             }
 
@@ -268,6 +279,11 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
         });
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
         playerContainer.addView(mTextureView, 0, params);
+    }
+
+    @Override
+    public void start(String url) {
+        setUrl(url).restart();
     }
 
     @Override
@@ -357,6 +373,7 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
             mAudioFocusHelper.abandonFocus();
             setKeepScreenOn(false);
         }
+        mCurrentPosition = 0;
     }
 
     public void release() {
@@ -520,9 +537,13 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
         return 0;
     }
 
+    private boolean isLive() {
+        return mVideoController != null && mVideoController instanceof StandardVideoController && ((StandardVideoController) mVideoController).isLive();
+    }
+
     @Override
     public void seekTo(int pos) {
-        if (isInPlaybackState()) {
+        if (isInPlaybackState() && !isLive()) {
             mMediaPlayer.seekTo(pos);
             if (mDanmakuView != null) mDanmakuView.seekTo((long) pos);
         }
@@ -640,7 +661,7 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         contentView.addView(playerContainer, params);
         isFullScreen = true;
-        if (mVideoController != null) mVideoController.setPlayerState(PLAYER_FULL_SCREEN);
+        if (mVideoController != null) mVideoController.setScreenState(PLAYER_FULL_SCREEN);
     }
 
     @Override
@@ -653,7 +674,7 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         this.addView(playerContainer, params);
         isFullScreen = false;
-        if (mVideoController != null) mVideoController.setPlayerState(PLAYER_NORMAL);
+        if (mVideoController != null) mVideoController.setScreenState(PLAYER_NORMAL);
     }
 
     @Override
@@ -666,6 +687,9 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
         return mCurrentTitle;
     }
 
+    public BaseVideoController getVideoController() {
+        return mVideoController;
+    }
 
     /**
      * 设置控制器
@@ -681,26 +705,34 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
         return this;
     }
 
+    private int errorCount;
     private IMediaPlayer.OnErrorListener onErrorListener = new IMediaPlayer.OnErrorListener() {
         @Override
         public boolean onError(IMediaPlayer iMediaPlayer, int framework_err, int impl_err) {
-            mCurrentState = STATE_ERROR;
-            if (mVideoController != null) mVideoController.setPlayState(mCurrentState);
-            mCurrentPosition = getCurrentPosition();
-            playerContainer.removeView(statusView);
-            if (statusView == null) {
-                statusView = new StatusView(getContext());
-            }
-            statusView.setMessage(getResources().getString(R.string.error_message));
-            statusView.setButtonTextAndAction(getResources().getString(R.string.retry), new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    playerContainer.removeView(statusView);
-                    resetPlayer();
-                    startPrepare();
+            // 直播，尝试3次
+            if (isLive() && errorCount++ < 3) {
+                NetworkUtil.get(mCurrentUrl);
+                restart();
+            } else {
+                mCurrentState = STATE_ERROR;
+                if (mVideoController != null) mVideoController.setPlayState(mCurrentState);
+                mCurrentPosition = getCurrentPosition();
+
+                playerContainer.removeView(statusView);
+                if (statusView == null) {
+                    statusView = new StatusView(getContext());
                 }
-            });
-            playerContainer.addView(statusView);
+                statusView.setMessage(getResources().getString(R.string.error_message));
+                statusView.setButtonTextAndAction(getResources().getString(R.string.retry), new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        playerContainer.removeView(statusView);
+                        errorCount = 0;
+                        restart();
+                    }
+                });
+                playerContainer.addView(statusView);
+            }
             return true;
         }
     };
@@ -711,17 +743,33 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
             mCurrentState = STATE_PLAYBACK_COMPLETED;
             if (mVideoController != null) mVideoController.setPlayState(mCurrentState);
             setKeepScreenOn(false);
-            mCurrentVideoPosition++;
-            if (mVideoModels != null && mVideoModels.size() > 1) {
+            if (isLive()) {
+                if (mSurfaceTexture != null) {
+                    replay();
+                } else {
+                    restart();
+                }
+            } else if (mVideoModels != null && mVideoModels.size() > 1) {
+                mCurrentVideoPosition++;
                 if (mCurrentVideoPosition >= mVideoModels.size()) {
                     return;
                 }
                 playNext();
-                resetPlayer();
-                startPrepare();
+                restart();
             }
         }
     };
+
+    private void replay() {
+        mMediaPlayer.reset();
+        mMediaPlayer.setSurface(mSurface);
+        startPrepare();
+    }
+
+    private void restart() {
+        resetPlayer();
+        startPrepare();
+    }
 
     private void resetPlayer() {
         mMediaPlayer.reset();
@@ -771,6 +819,7 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
     private IMediaPlayer.OnPreparedListener onPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(IMediaPlayer iMediaPlayer) {
+            errorCount = 0;
             mCurrentState = STATE_PREPARED;
             if (mVideoController != null) mVideoController.setPlayState(mCurrentState);
             if (mCurrentPosition > 0) {
@@ -818,11 +867,13 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
         if (isFullScreen) {
             WindowUtil.scanForActivity(getContext()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             stopFullScreen();
-            if (mVideoController != null) mVideoController.setPlayerState(PLAYER_NORMAL);
+            if (mVideoController != null) mVideoController.setScreenState(PLAYER_NORMAL);
             return true;
         }
         return false;
     }
+
+    static final boolean PAUSE_BY_AUDIO_FOCUS = false;
 
     /**
      * 音频焦点改变监听
@@ -849,14 +900,14 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
                     }
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS:
-                    if (isPlaying()) {
+                    if (PAUSE_BY_AUDIO_FOCUS && isPlaying()) {
                         pausedForLoss = true;
                         pause();
                     }
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                    if (isPlaying()) {
+                    if (PAUSE_BY_AUDIO_FOCUS && isPlaying()) {
                         pausedForLoss = true;
                         pause();
                     }

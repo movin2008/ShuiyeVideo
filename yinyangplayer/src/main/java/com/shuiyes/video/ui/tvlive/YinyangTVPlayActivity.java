@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.devlin_n.floatWindowPermission.FloatWindowManager;
 import com.devlin_n.yinyangplayer.R;
 import com.devlin_n.yinyangplayer.controller.StandardVideoController;
@@ -18,7 +17,13 @@ import com.devlin_n.yinyangplayer.player.YinYangPlayer;
  */
 public class YinyangTVPlayActivity extends AppCompatActivity {
 
-    private YinYangPlayer mYinYangPlayer;
+    protected YinYangPlayer mYinYangPlayer;
+
+    protected String[] getIntentStringExtras(){
+        String url = getIntent().getStringExtra("url");
+        String title = getIntent().getStringExtra("title");
+        return new String[]{url, title};
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,24 +32,27 @@ public class YinyangTVPlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tvplay_yinyang);
         mYinYangPlayer = (YinYangPlayer) findViewById(R.id.player);
 
-        String url = getIntent().getStringExtra("url");
-        String title = getIntent().getStringExtra("title");
+        String[] values = getIntentStringExtras();
+        String url = values[0];
+        String title = values[1];
 
-        StandardVideoController controller = new StandardVideoController(this);
-        controller.setLive(true);
-
-        Glide.with(this).load("http://7xqblc.com1.z0.glb.clouddn.com/tvlive.jpg")
-                .asBitmap()
-                .animate(R.anim.anim_alpha_in)
-                .placeholder(android.R.color.black)
-                .into(controller.getThumb());
+//        com.bumptech.glide.Glide.with(this).load("https://i.loli.net/2020/02/02/ChFgVjiAbeD25cQ.jpg")
+//                .asBitmap()
+//                .animate(R.anim.anim_alpha_in)
+//                .placeholder(android.R.color.black)
+//                .into(((StandardVideoController)mYinYangPlayer.getVideoController()).getThumb());
 
         mYinYangPlayer.alwaysFullScreen()
-//                .useAndroidMediaPlayer()
                 .setUrl(url)
                 .setTitle(title)
-                .setVideoController(controller)
+                .setVideoController(initVideoController())
                 .start();
+    }
+
+    protected StandardVideoController initVideoController(){
+        StandardVideoController controller = new StandardVideoController(this);
+        controller.setLive(true);
+        return controller;
     }
 
     @Override

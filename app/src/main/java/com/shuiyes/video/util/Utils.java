@@ -63,30 +63,6 @@ public class Utils {
         }
     }
 
-    public static void installTVBus2(Context context) {
-        try {
-            InputStream in = context.getResources().getAssets().open("TVBus.apk");
-            byte[] buffer = new byte[in.available()];
-            in.read(buffer);
-            in.close();
-
-            File apkFile = new File("/sdcard/.shuiyes/tvbus.apk");
-            apkFile.delete();
-
-            OutputStream outStream = new FileOutputStream(apkFile);
-            outStream.write(buffer);
-            outStream.close();
-
-            Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-            intent.setData(Uri.fromFile(apkFile));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Tips.show(context, "TVBus 播放插件安装失败 " + e.getLocalizedMessage());
-        }
-    }
-
     public static InputStream isTransparentHighlightCss(Context context, String url) {
         try {
             String cssPath = context.getCacheDir().getAbsolutePath() + "/tmp.css";
@@ -162,15 +138,12 @@ public class Utils {
         ActivityManager activityManager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
         ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
         activityManager.getMemoryInfo(memInfo);
-        return "共 " + Formatter.formatFileSize(ctx, memInfo.totalMem) + "，"
-                + Formatter.formatFileSize(ctx, memInfo.availMem)
-                + (memInfo.lowMemory ? " 可用，低内存状态" : " 可用");
+        return "共 " + Formatter.formatFileSize(ctx, memInfo.totalMem) + "，" + Formatter.formatFileSize(ctx, memInfo.availMem) + (memInfo.lowMemory ? " 可用，低内存状态" : " 可用");
     }
 
     public static String getStorageInfo(Context ctx) {
         long[] mems = MemoryUtil.getInternalMemorySize();
-        return "共 " + Formatter.formatFileSize(ctx, mems[1]) + "，"
-                + Formatter.formatFileSize(ctx, mems[0]) + " 可用";
+        return "共 " + Formatter.formatFileSize(ctx, mems[1]) + "，" + Formatter.formatFileSize(ctx, mems[0]) + " 可用";
     }
 
     /**

@@ -27,6 +27,7 @@ import com.shuiyes.video.adapter.AlbumAdapter;
 import com.shuiyes.video.bean.AlbumList;
 import com.shuiyes.video.ui.SettingsActivity;
 import com.shuiyes.video.util.Constants;
+import com.shuiyes.video.util.PreferenceUtil;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 public abstract class BaseSearchActivity extends BaseActivity {
@@ -133,19 +134,14 @@ public abstract class BaseSearchActivity extends BaseActivity {
 
                 notice("searchVideos=" + keyword);
                 searchVideos(keyword);
+
+                PreferenceUtil.setSearchKeywords(mContext, keyword);
             }
         });
 
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                clearFocus(findViewById(R.id.btn_clear_focus));
-            }
-        }, 4321);
-
 //        mHandler.post(mTextRunnable);
 
-        mSearch.setText("庐剧");
+        mSearch.setText(PreferenceUtil.getSearchKeywords(this));
     }
 
     @Override
@@ -192,7 +188,12 @@ public abstract class BaseSearchActivity extends BaseActivity {
                 mPosition = -1;
                 mAlbumAdapter.listAlbums(mAlbums);
 
-                clearFocus(findViewById(R.id.btn_clear_focus));
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        clearFocus(findViewById(R.id.btn_clear_focus));
+                    }
+                }, 999);
                 break;
             case Constants.MSG_SET_IMAGE:
                 // 通过tag找到ImageView

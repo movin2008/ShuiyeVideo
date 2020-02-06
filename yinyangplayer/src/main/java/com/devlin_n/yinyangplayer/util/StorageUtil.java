@@ -2,9 +2,7 @@ package com.devlin_n.yinyangplayer.util;
 
 import android.content.Context;
 import android.os.Environment;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import android.util.Log;
 
 import java.io.File;
 
@@ -20,7 +18,8 @@ import static android.os.Environment.MEDIA_MOUNTED;
  */
 public class StorageUtil {
 
-    private static final Logger LOG = LoggerFactory.getLogger("StorageUtil");
+    static final String TAG = "StorageUtil";
+
     private static final String INDIVIDUAL_DIR_NAME = "video-cache";
 
     /**
@@ -63,7 +62,7 @@ public class StorageUtil {
         }
         if (appCacheDir == null) {
             String cacheDirPath = context.getFilesDir().getPath() + context.getPackageName() + "/cache/";
-            LOG.warn("Can't define system cache directory! '" + cacheDirPath + "%s' will be used.");
+            Log.e(TAG, "Can't define system cache directory! '" + cacheDirPath + "%s' will be used.");
             appCacheDir = new File(cacheDirPath);
         }
         return appCacheDir;
@@ -74,7 +73,7 @@ public class StorageUtil {
         File appCacheDir = new File(new File(dataDir, context.getPackageName()), "cache");
         if (!appCacheDir.exists()) {
             if (!appCacheDir.mkdirs()) {
-                LOG.warn("Unable to create external cache directory");
+                Log.e(TAG,"Unable to create external cache directory");
                 return null;
             }
         }

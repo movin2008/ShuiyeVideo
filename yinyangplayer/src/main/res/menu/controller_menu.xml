@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:id="@+id/video_source"
+        android:title="播放源"
+        android:icon="@drawable/ic_action_picture_in_picture"/>
     <item android:id="@+id/float_window"
         android:title="悬浮窗"
         android:icon="@drawable/ic_action_picture_in_picture"/>

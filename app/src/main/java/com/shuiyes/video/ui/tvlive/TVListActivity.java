@@ -11,6 +11,7 @@ import com.shuiyes.video.bean.ListVideo;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URLDecoder;
 
 public class TVListActivity extends BaseTVListActivity implements View.OnClickListener {
 
@@ -38,19 +39,19 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
             @Override
             public void run() {
                 try {
-                    InputStream in = mContext.getAssets().open("tvlist/" + FileName);
+                    InputStream in = mContext.getAssets().open("tvlive/" + FileName);
                     BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                    if (FileName.endsWith(".list")) {
+                    if (FileName.endsWith(".tv")) {
 
                         String text = null;
                         while ((text = br.readLine()) != null) {
-                            if(text.startsWith("##")){
+                            if (text.startsWith("##")) {
                                 // 注释
                                 continue;
                             }
-                            if(text.startsWith("tvbus://")){
+                            if (text.startsWith("tvbus://")) {
                                 mVideos.add(new ListVideo(text, text, text));
-                            }else if (text.contains(",")) {
+                            } else if (text.contains(",")) {
                                 String[] tmp = text.split(",");
                                 mVideos.add(new ListVideo(tmp[0], tmp[0], tmp[1]));
                             } else {
@@ -61,7 +62,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                         String text = null;
                         String url = null;
                         while ((text = br.readLine()) != null) {
-                            if(text.startsWith("##")){
+                            if (text.startsWith("##")) {
                                 // 注释
                                 continue;
                             }
@@ -75,30 +76,39 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                                 }
                             }
                         }
-                    }else if (FileName.endsWith(".m3u")) {
+                    } else if (FileName.endsWith(".m3u")) {
                         String text = null;
                         String title = null;
                         String groupTitle = "";
                         while ((text = br.readLine()) != null) {
-                            if(text.startsWith("#EXTM3U")){
+                            if (text.startsWith("#EXTM3U")) {
                                 // head
                                 continue;
                             }
 
-                            if(text.startsWith("#EXTINF")){
+                            if (text.startsWith("#EXTINF")) {
                                 String[] tmp = text.split(",");
-                                title = tmp[tmp.length-1];
-                                String gTitle = text.substring(text.indexOf("\"")+1, text.lastIndexOf("\""));
-                                if(!groupTitle.equals(gTitle)){
-                                    groupTitle = gTitle;
-
-                                    mVideos.add(new ListVideo("", null, null));
-                                    mVideos.add(new ListVideo(groupTitle, null, null));
+                                title = tmp[tmp.length - 1];
+                                if (title.contains("%2") || title.contains("%3")) {
+                                    title = URLDecoder.decode(title);
                                 }
-                            }else if(title != null){
+
+                                String key = "group-title=\"";
+                                if (text.contains(key)) {
+                                    String gTitle = text.substring(text.indexOf(key) + key.length(), text.lastIndexOf("\""));
+                                    if (!groupTitle.equals(gTitle)) {
+                                        groupTitle = gTitle;
+
+                                        mVideos.add(new ListVideo("", null, null));
+                                        mVideos.add(new ListVideo(groupTitle, null, null));
+                                    }
+                                }
+                            } else if (title != null) {
                                 mVideos.add(new ListVideo(title, title, text));
                             }
                         }
+                    }else{
+                        onFailure("更多源加载失败：未知后缀 " + FileName);
                     }
                     br.close();
                 } catch (Exception e) {

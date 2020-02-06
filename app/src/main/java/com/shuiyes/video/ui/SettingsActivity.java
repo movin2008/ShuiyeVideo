@@ -2,10 +2,8 @@ package com.shuiyes.video.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -19,11 +17,11 @@ import android.widget.TextView;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.ui.base.BaseActivity;
+import com.shuiyes.video.util.PreferenceUtil;
 import com.shuiyes.video.util.Utils;
 import com.shuiyes.video.ui.youku.YoukuUtils;
 import com.shuiyes.video.widget.Tips;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
@@ -33,8 +31,6 @@ public class SettingsActivity extends BaseActivity {
     private Spinner mSpinner;
     private EditText mEditText;
     private TextView mTextView;
-
-    private SharedPreferences mPreferences;
 
     private final String[] ccodes = SVApplication.getAppContext().getResources().getStringArray(R.array.CCODE);
 
@@ -74,8 +70,8 @@ public class SettingsActivity extends BaseActivity {
             }
         });
 
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        updateCCODE(mPreferences.getString("CCODE", YoukuUtils.CCODE));
+
+        updateCCODE(PreferenceUtil.getCCODE(this));
     }
 
     @Override
@@ -104,7 +100,7 @@ public class SettingsActivity extends BaseActivity {
     private void updateCCODE(String ccode) {
         if (!ccode.equals(YoukuUtils.CCODE)) {
             YoukuUtils.CCODE = ccode;
-            mPreferences.edit().putString("CCODE", ccode).commit();
+            PreferenceUtil.setCCODE(this, ccode);
         }
         mEditText.setText(ccode);
 

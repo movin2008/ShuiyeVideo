@@ -21,7 +21,7 @@
 
         <!-- android:windowSoftInputMode="adjustUnspecified|stateHidden" -->
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.WelcomeActivity"
             android:icon="@drawable/logo_vd"
             android:label="@string/app_vd"
             android:screenOrientation="landscape"
@@ -34,11 +34,13 @@
         </activity>
 
         <activity
-            android:name=".ui.TVActivity"
+            android:name=".ui.yinyang.TVActivity"
             android:icon="@drawable/logo_tv"
             android:label="@string/app_tv"
+            android:launchMode="singleInstance"
+            android:process=":tvlive"
             android:screenOrientation="landscape"
-            android:theme="@style/ActTheme">
+            android:theme="@style/FullscreenAppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,8 +49,7 @@
         </activity>
 
         <activity
-            android:name=".ui.PlayerActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:name=".ui.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="landscape" />
 

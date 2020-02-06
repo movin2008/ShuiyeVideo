@@ -99,7 +99,7 @@ public abstract class BaseVideoController extends FrameLayout {
     public void setPlayState(int playState) {
     }
 
-    public void setPlayerState(int playerState) {
+    public void setScreenState(int screenState) {
     }
 
     public void startFullScreenDirectly() {
@@ -349,6 +349,8 @@ public abstract class BaseVideoController extends FrameLayout {
     }
 
     public interface MediaPlayerControl {
+        void start(String url);
+
         void start();
 
         void pause();

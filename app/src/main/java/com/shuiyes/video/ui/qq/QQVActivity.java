@@ -588,7 +588,7 @@ public class QQVActivity extends BasePlayActivity {
         if (mSectionList.size() > 1) {
             mSectionView.setVisibility(View.VISIBLE);
             mSectionView.setText("章节" + "[" + sectionStr + "]");
-            mStateView.setText(mStateView.getText() + "\n获取第 " + sectionStr + " 章节...");
+            mStateView.setText(mStateView.getText() + "[成功]\n获取第 " + sectionStr + " 章节...");
         } else {
             mSectionView.setVisibility(View.GONE);
         }

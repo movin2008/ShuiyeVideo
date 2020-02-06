@@ -21,12 +21,10 @@ import com.shuiyes.video.ui.tvlive.SopPlusActivity;
 import com.shuiyes.video.ui.tvlive.SuzhouCMCCActivity;
 import com.shuiyes.video.ui.tvlive.TVListActivity;
 import com.shuiyes.video.ui.vip.VipActivity;
-import com.shuiyes.video.util.Utils;
+import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuSoActivity;
 
-import java.util.Calendar;
-import java.util.TimeZone;
 
 public class MainActivity extends BaseActivity {
 
@@ -153,58 +151,39 @@ public class MainActivity extends BaseActivity {
         this.startActivity(new Intent(this, MDDSoActivity.class));
     }
 
-    // PotPlayer 可以播放，Android 播放失败，原因未知
-    @Deprecated
-    public void bilibili(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "bilibili.list"));
-    }
-
-    public void wxcmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "无锡移动源.list"));
-    }
-
-    public void jscmcc1(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "南京移动源_183.207.X.X.list"));
+    public void huya(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "huya.tv"));
     }
 
     public void cuiuc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "CUIUC.m3u"));
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "CUIUC.tv"));
     }
 
-    public void jscmcc2(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "南京移动源_223.110.X.X.list"));
+    public void jscmcc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "cmcc.nanjing.tv"));
     }
-
-    public void othercmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "cmcc_other.list"));
-    }
-
-    public void cbchot(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "中广热点云的资源.list"));
-    }
-
-    public void fulibus(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fulibus.list"));
-    }
-
-    public void fmlist(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fm.list"));
-    }
-
-    public void tvbus(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvbus.list"));
-    }
-
-    public void soplus(View view) {
-        startActivity(new Intent(this, SopPlusActivity.class));
-    }
-
-    public void otherTV(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "other.list"));
+    public void othcmcc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "cmcc.other.tv"));
     }
 
     public void szcmcc(View view) {
         startActivity(new Intent(this, SuzhouCMCCActivity.class));
+    }
+
+    public void fulibus(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fulibus.tv"));
+    }
+
+    public void fmlist(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fm.tv"));
+    }
+
+    public void other(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "other.tv"));
+    }
+
+    public void soplus(View view) {
+        startActivity(new Intent(this, SopPlusActivity.class));
     }
 
     public void iviBupt(View view) {
@@ -223,7 +202,17 @@ public class MainActivity extends BaseActivity {
 //        startActivity(new Intent(this, MgtvVActivity.class).putExtra("title","test").putExtra("url", "https://www.mgtv.com/l/100028247/7370524.html?fpa=9349&fpos=3"));
         // https://m.iqiyi.com/v_19ruzj8gv0.html
         // https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html
-        VipActivity.launch(this, "http://www.le.com/ptv/vplay/31625706.html");
+//        VipActivity.launch(this, "http://www.le.com/ptv/vplay/31625706.html");
+
+        //        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "cctv.misc.dpl"));
+//        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "甘肃嘉峪关移动.list"));
+//        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "meinvzhubo.m3u"));
+//        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "虎牙电影频道.m3u"));
+//        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "国外福利台.m3u"));
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "test.tv"));
+
+        String url = "http://live.redtraffic.xyz/bigdick.m3u8";
+//        PlayUtils.play(this, url, "", true);
     }
 
     public void testWeb(View view) {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.shuiyes.video.ui.tvlive.TVPlayActivity;
 import com.tvbus.engine.TVCore;
 import com.tvbus.engine.TVListener;
 import com.tvbus.engine.TVService;
@@ -137,7 +138,8 @@ public class TVBusActivity extends TVPlayActivity {
     // 10 second
     private final static long MP_START_CHECK_INTERVAL = 10 * 1000 * 1000 * 1000L;
 
-    private void startPlayback(final String url) {
+    @Override
+    protected void startPlayback(final String url) {
         if(url == null){
             return;
         }
@@ -148,7 +150,9 @@ public class TVBusActivity extends TVPlayActivity {
 
                 try {
                     Log.e(TAG, "startPlayback " + url);
-                    mVideoView.setVideoURI(Uri.parse(url));
+                    if(url.endsWith("m3u8")){
+                        mVideoView.setVideoURI(Uri.parse(url));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

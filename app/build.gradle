@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -23,10 +22,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    productFlavors {
-    }
-
 }
 
 
@@ -34,14 +29,16 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // required, enough for most devices.
-//    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
-//    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
 
     // mdd
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.9.0'
 
+    implementation project(':yinyangplayer')
     implementation project(':flowlayout')
+    implementation project(':common')
     implementation project(':tvbus')
 
 }

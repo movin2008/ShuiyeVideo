@@ -108,24 +108,28 @@ public class StandardVideoController extends BaseVideoController implements View
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId == R.id.float_window) {
-                    mediaPlayer.startFloatWindow();
-                } else if (itemId == R.id.scale_default) {
-                    mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_DEFAULT);
-                } else if (itemId == R.id.scale_original) {
-                    mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_ORIGINAL);
-                } else if (itemId == R.id.scale_match) {
-                    mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_MATCH_PARENT);
-                } else if (itemId == R.id.scale_16_9) {
-                    mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_16_9);
-                } else if (itemId == R.id.scale_4_3) {
-                    mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_4_3);
-                }
                 popupMenu.dismiss();
+                menuItemClick(item);
                 return false;
             }
         });
+    }
+
+    protected void menuItemClick(MenuItem item){
+        int itemId = item.getItemId();
+        if (itemId == R.id.float_window) {
+            mediaPlayer.startFloatWindow();
+        } else if (itemId == R.id.scale_default) {
+            mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_DEFAULT);
+        } else if (itemId == R.id.scale_original) {
+            mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_ORIGINAL);
+        } else if (itemId == R.id.scale_match) {
+            mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_MATCH_PARENT);
+        } else if (itemId == R.id.scale_16_9) {
+            mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_16_9);
+        } else if (itemId == R.id.scale_4_3) {
+            mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_4_3);
+        }
     }
 
     @Override
@@ -148,8 +152,8 @@ public class StandardVideoController extends BaseVideoController implements View
     }
 
     @Override
-    public void setPlayerState(int playerState) {
-        switch (playerState) {
+    public void setScreenState(int screenState) {
+        switch (screenState) {
             case YinYangPlayer.PLAYER_NORMAL:
                 L.e("PLAYER_NORMAL");
                 if (isLocked) return;
@@ -236,8 +240,8 @@ public class StandardVideoController extends BaseVideoController implements View
                 loadingProgress.setVisibility(VISIBLE);
                 break;
             case YinYangPlayer.STATE_BUFFERED:
-                loadingProgress.setVisibility(GONE);
                 L.e("STATE_BUFFERED");
+                loadingProgress.setVisibility(GONE);
                 break;
             case YinYangPlayer.STATE_PLAYBACK_COMPLETED:
                 L.e("STATE_PLAYBACK_COMPLETED");
@@ -281,6 +285,10 @@ public class StandardVideoController extends BaseVideoController implements View
                 WindowUtil.scanForActivity(getContext()).finish();
             }
         });
+    }
+
+    public boolean isLive(){
+        return isLive;
     }
 
     /**

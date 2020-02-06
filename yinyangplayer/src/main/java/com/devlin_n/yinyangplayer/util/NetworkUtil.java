@@ -4,6 +4,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
+import android.util.Log;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * 网络工具
@@ -70,4 +75,28 @@ public class NetworkUtil {
         // 未知网络
         return NETWORK_UNKNOWN;
     }
+
+    public static void get(final String url){
+        if(url.startsWith("rtmp") || url.startsWith("rtsp") ){
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+                    conn.setConnectTimeout(5555);
+                    conn.setRequestMethod("GET");
+                    conn.connect();
+
+                    int code = conn.getResponseCode();
+                    Log.e("HTTP", "GET " + url + " " + code);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
 }
