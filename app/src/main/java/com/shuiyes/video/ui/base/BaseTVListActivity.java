@@ -56,14 +56,14 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
                 mResultView.setAdapter(new TagAdapter<ListVideo>(mVideos) {
                     @Override
                     public TagView getView(FlowLayout parent, int position, ListVideo o) {
-                        return getTagView(o);
+                        return getTagView(position, o);
                     }
                 });
             }
         });
     }
 
-    protected TagView getTagView(ListVideo o){
+    protected TagView getTagView(int position, ListVideo o){
         if(o.getUrl() == null){
             // 标题
             TagView view = new TagView(mContext);
@@ -74,9 +74,9 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
             return view;
         }else{
             NumberView view = new NumberView(getApplicationContext(), o);
+            view.setSize(view.measureWidth(), NumberView.WH);
             view.setTextColor(Color.BLACK);
             view.setOnClickListener(this);
-            view.setSize(view.measureWidth(), NumberView.WH);
             return view;
         }
     }

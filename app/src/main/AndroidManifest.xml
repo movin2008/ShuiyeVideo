@@ -134,6 +134,9 @@
             android:name=".ui.tvlive.TVListActivity"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".ui.tvlive.HuyaListActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".ui.tvlive.TVBusActivity"
             android:screenOrientation="landscape" />
         <activity

@@ -17,6 +17,7 @@ import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;
 import com.shuiyes.video.ui.qq.QQSoActivity;
 import com.shuiyes.video.ui.tvlive.BuptIVIActivity;
+import com.shuiyes.video.ui.tvlive.HuyaListActivity;
 import com.shuiyes.video.ui.tvlive.SopPlusActivity;
 import com.shuiyes.video.ui.tvlive.SuzhouCMCCActivity;
 import com.shuiyes.video.ui.tvlive.TVListActivity;
@@ -152,7 +153,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void huya(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "huya.tv"));
+        startActivity(new Intent(this, HuyaListActivity.class).putExtra(TVListActivity.EXTRA, "huya.tv"));
     }
 
     public void cuiuc(View view) {

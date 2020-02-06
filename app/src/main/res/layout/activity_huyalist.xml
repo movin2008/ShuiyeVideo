@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="更多源加载中..." />
+
+    <LinearLayout
+        android:id="@+id/ll_title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="虎牙直播源"
+            android:textSize="@dimen/album_title_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="每个频道共 8 个直播源地址，有些是无效的，建议先进行源有效性测试" />
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_below="@id/ll_title_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/lv_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:padding="20dp"
+            android:visibility="gone" />
+
+    </ScrollView>
+
+</RelativeLayout>

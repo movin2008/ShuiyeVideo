@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.ui.base.BaseTVListActivity;
 import com.shuiyes.video.bean.ListVideo;
+import com.shuiyes.video.ui.base.BaseTVListActivity;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -34,7 +34,18 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
         return R.layout.activity_tvlist;
     }
 
-    public void refreshTvlist() {
+    protected void addListVideo(String text){
+        if (text.startsWith("tvbus://")) {
+            mVideos.add(new ListVideo(text, text, text));
+        } else if (text.contains(",")) {
+            String[] tmp = text.split(",");
+            mVideos.add(new ListVideo(tmp[0], tmp[0], tmp[1]));
+        } else {
+            mVideos.add(new ListVideo(text, null, null));
+        }
+    }
+
+    private void refreshTvlist() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -43,24 +54,17 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                     BufferedReader br = new BufferedReader(new InputStreamReader(in));
                     if (FileName.endsWith(".tv")) {
 
-                        String text = null;
+                        String text;
                         while ((text = br.readLine()) != null) {
                             if (text.startsWith("##")) {
                                 // 注释
                                 continue;
                             }
-                            if (text.startsWith("tvbus://")) {
-                                mVideos.add(new ListVideo(text, text, text));
-                            } else if (text.contains(",")) {
-                                String[] tmp = text.split(",");
-                                mVideos.add(new ListVideo(tmp[0], tmp[0], tmp[1]));
-                            } else {
-                                mVideos.add(new ListVideo(text, null, null));
-                            }
+
+                            addListVideo(text);
                         }
                     } else if (FileName.endsWith(".dpl")) {
-                        String text = null;
-                        String url = null;
+                        String text, url = null;
                         while ((text = br.readLine()) != null) {
                             if (text.startsWith("##")) {
                                 // 注释
@@ -77,9 +81,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                             }
                         }
                     } else if (FileName.endsWith(".m3u")) {
-                        String text = null;
-                        String title = null;
-                        String groupTitle = "";
+                        String text, title = null, groupTitle = "";
                         while ((text = br.readLine()) != null) {
                             if (text.startsWith("#EXTM3U")) {
                                 // head
@@ -107,7 +109,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                                 mVideos.add(new ListVideo(title, title, text));
                             }
                         }
-                    }else{
+                    } else {
                         onFailure("更多源加载失败：未知后缀 " + FileName);
                     }
                     br.close();

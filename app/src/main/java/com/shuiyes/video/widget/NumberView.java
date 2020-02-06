@@ -12,6 +12,7 @@ public class NumberView extends TagView implements Checkable {
 
     public static final int WH = 120;
 
+    private String text;
     private String url;
     private String title;
     private boolean isChecked;
@@ -22,6 +23,7 @@ public class NumberView extends TagView implements Checkable {
         super(context);
 
         this.url = video.getUrl();
+        this.text = video.getText();
         this.title = video.getTitle();
 
         this.setBackgroundResource(R.drawable.btn_rect);
@@ -37,6 +39,10 @@ public class NumberView extends TagView implements Checkable {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getText() {
+        return text;
     }
 
     public int measureWidth() {
