@@ -819,6 +819,9 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
     private IMediaPlayer.OnPreparedListener onPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(IMediaPlayer iMediaPlayer) {
+            if(isLive() && errorCount == 3){
+                playerContainer.removeView(statusView);
+            }
             errorCount = 0;
             mCurrentState = STATE_PREPARED;
             if (mVideoController != null) mVideoController.setPlayState(mCurrentState);

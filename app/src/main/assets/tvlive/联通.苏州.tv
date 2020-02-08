@@ -1,0 +1,22 @@
+ 苏州 联通
+CCTV1,http://221.6.85.150:9000/live/cctv1_800/cctv1_800.m3u8
+CCTV2,http://221.6.85.150:9000/live/cctv2_800/cctv2_800.m3u8
+CCTV3,http://221.6.85.150:9000/live/cctv3_800/cctv3_800.m3u8
+CCTV4,http://221.6.85.150:9000/live/cctv4_800/cctv4_800.m3u8
+CCTV5,http://221.6.85.150:9000/live/cctv5_800/cctv5_800.m3u8
+CCTV6,http://221.6.85.150:9000/live/cctv6_800/cctv6_800.m3u8
+CCTV7,http://221.6.85.150:9000/live/cctv7_800/cctv7_800.m3u8
+CCTV8,http://221.6.85.150:9000/live/cctv8_800/cctv8_800.m3u8
+CCTV9,http://221.6.85.150:9000/live/cctv9_800/cctv9_800.m3u8
+CCTV10,http://221.6.85.150:9000/live/cctv10_800/cctv10_800.m3u8
+CCTV11,http://221.6.85.150:9000/live/cctv11_800/cctv11_800.m3u8
+CCTV12,http://221.6.85.150:9000/live/cctv12_800/cctv12_800.m3u8
+CCTV13,http://221.6.85.150:9000/live/cctv13_800/cctv13_800.m3u8
+CCTV14,http://221.6.85.150:9000/live/cctv14_800/cctv14_800.m3u8
+CCTV15,http://221.6.85.150:9000/live/cctv15_800/cctv15_800.m3u8
+湖南卫视,http://221.6.85.150:9000/live/hnws_800/hnws_800.m3u8
+浙江卫视,http://221.6.85.150:9000/live/zjws_800/zjws_800.m3u8
+东方卫视,http://221.6.85.150:9000/live/dfws_800/dfws_800.m3u8
+江苏卫视,http://221.6.85.150:9000/live/jsws_800/jsws_800.m3u8
+昆山新闻,http://221.6.85.150:9000/live/ksxwzh_800/ksxwzh_800.m3u8
+昆山生活,http://221.6.85.150:9000/live/ksshsh_800/ksshsh_800.m3u8

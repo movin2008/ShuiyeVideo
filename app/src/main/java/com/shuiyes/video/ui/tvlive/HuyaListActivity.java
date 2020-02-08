@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.HttpUtils;
+import com.shuiyes.video.util.PreferenceUtil;
 import com.shuiyes.video.widget.NumberView;
 import com.shuiyes.video.widget.Tips;
 import com.zhy.view.flowlayout.TagView;
@@ -18,6 +18,7 @@ import com.zhy.view.flowlayout.TagView;
 public class HuyaListActivity extends TVListActivity implements View.OnClickListener {
 
     private int mRealWidth, mRealHeight, mRedColor;
+    private String mInvaildUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,8 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
         mRealWidth = size.x;
         mRealHeight = size.y;
         mRedColor = getResources().getColor(android.R.color.holo_red_dark);
+        mInvaildUrl = PreferenceUtil.getHuyaInvaildUrl(getApplicationContext());
+
     }
 
     @Override
@@ -42,10 +45,10 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
         String title = tmp[0];
         String url = tmp[1];
 
-        // 虎牙电影
         if(!mVideos.isEmpty()){
             mVideos.add(new ListVideo("", null, null));
         }
+        // 虎牙电影
         mVideos.add(new ListVideo(title, null, null));
         mVideos.add(new ListVideo("测试", title, url.replace("http", "test")));
 
@@ -98,19 +101,24 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
 
                 @Override
                 public void onClick(View v) {
-                    test((NumberView) v);
+                    testHuyaUrl((NumberView) v);
                 }
             });
             view.setSize(view.measureWidth(), NumberView.WH);
             return view;
+        }else{
+            TagView view = super.getTagView(position, o);
+            if(mInvaildUrl.contains(o.getUrl())){
+                view.setEnabled(false);
+            }
+            return view;
         }
 
-        return super.getTagView(position, o);
     }
 
     private Thread mThread;
 
-    public void test(NumberView v) {
+    public void testHuyaUrl(NumberView v) {
         if (mThread != null && mThread.isAlive()) {
             mThread.interrupt();
             mThread = null;
@@ -133,6 +141,11 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
                     Log.e(TAG, view.getTitle() + view.getText() + ", " + (enable ? "有效" : "无效"));
                     if (enable) {
                         flag++;
+                    }else{
+                        String invaildUrl = PreferenceUtil.getHuyaInvaildUrl(getApplicationContext());
+                        if(!invaildUrl.contains(view.getUrl())){
+                            PreferenceUtil.setHuyaInvaildUrl(getApplicationContext(), invaildUrl +view.getUrl()+ ",");
+                        }
                     }
                     mHandler.post(new Runnable() {
                         @Override

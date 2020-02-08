@@ -16,16 +16,9 @@ import com.shuiyes.video.ui.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;
 import com.shuiyes.video.ui.qq.QQSoActivity;
-import com.shuiyes.video.ui.tvlive.BuptIVIActivity;
-import com.shuiyes.video.ui.tvlive.HuyaListActivity;
-import com.shuiyes.video.ui.tvlive.SopPlusActivity;
-import com.shuiyes.video.ui.tvlive.SuzhouCMCCActivity;
 import com.shuiyes.video.ui.tvlive.TVListActivity;
-import com.shuiyes.video.ui.vip.VipActivity;
-import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuSoActivity;
-
 
 public class MainActivity extends BaseActivity {
 
@@ -98,16 +91,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
     String mVideoUrl = null;
 
     @Override
@@ -128,67 +111,44 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // 优酷视频搜索
     public void soyouku(View view) {
         this.startActivity(new Intent(this, YoukuSoActivity.class));
     }
 
+    // 乐视视频搜索
     public void soletv(View view) {
         this.startActivity(new Intent(this, LetvSoActivity.class));
     }
 
+    // 爱奇艺 搜索
     public void soiqiyi(View view) {
         this.startActivity(new Intent(this, IQIyiSoActivity.class));
     }
 
+    // 腾讯视频搜索
     public void soqq(View view) {
         this.startActivity(new Intent(this, QQSoActivity.class));
     }
 
+    // 中广热点云搜索
     public void socbchot(View view) {
         this.startActivity(new Intent(this, CBChotSoActivity.class));
     }
 
+    // 埋堆堆
     public void mdd(View view) {
         this.startActivity(new Intent(this, MDDSoActivity.class));
     }
 
-    public void huya(View view) {
-        startActivity(new Intent(this, HuyaListActivity.class).putExtra(TVListActivity.EXTRA, "huya.tv"));
+    // 电视直播
+    public void tvlive(View view) {
+        startActivity(new Intent(this, TVSourceActivity.class));
     }
 
-    public void cuiuc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "CUIUC.tv"));
-    }
-
-    public void jscmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "cmcc.nanjing.tv"));
-    }
-    public void othcmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "cmcc.other.tv"));
-    }
-
-    public void szcmcc(View view) {
-        startActivity(new Intent(this, SuzhouCMCCActivity.class));
-    }
-
-    public void fulibus(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fulibus.tv"));
-    }
-
+    // 收音机源
     public void fmlist(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fm.tv"));
-    }
-
-    public void other(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "other.tv"));
-    }
-
-    public void soplus(View view) {
-        startActivity(new Intent(this, SopPlusActivity.class));
-    }
-
-    public void iviBupt(View view) {
-        startActivity(new Intent(this, BuptIVIActivity.class));
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "收音机.tv"));
     }
 
     public void somgtv(View view) {
@@ -205,11 +165,6 @@ public class MainActivity extends BaseActivity {
         // https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html
 //        VipActivity.launch(this, "http://www.le.com/ptv/vplay/31625706.html");
 
-        //        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "cctv.misc.dpl"));
-//        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "甘肃嘉峪关移动.list"));
-//        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "meinvzhubo.m3u"));
-//        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "虎牙电影频道.m3u"));
-//        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "国外福利台.m3u"));
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "test.tv"));
 
         String url = "http://live.redtraffic.xyz/bigdick.m3u8";

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
+import com.shuiyes.video.ui.WebActivity;
 import com.shuiyes.video.util.CbchotUtil;
 import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.widget.NumberView;
@@ -90,6 +91,10 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
         if(url.contains("cbn-live.cbchot.com")){
             // 中广热点云加了 auth 验证
             url = CbchotUtil.getAuthUrl(url);
+        }else if(url.contains("player.cntv.cn/standard/live")){
+
+            WebActivity.launch(this, url);
+            return;
         }
 
         PlayUtils.play(this, url, view.getTitle(), true);

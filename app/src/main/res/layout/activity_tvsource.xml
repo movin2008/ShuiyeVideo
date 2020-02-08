@@ -1,0 +1,118 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fadeScrollbars="false">
+
+    <com.zhy.view.flowlayout.FlowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="huya"
+            android:text="虎牙轮播源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="njCmcc"
+            android:text="南京移动源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="jygCmcc"
+            android:text="嘉峪关移动源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="herbCmcc"
+            android:text="哈尔滨移动源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="syCmcc"
+            android:text="沈阳移动源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="szCmcc"
+            android:text="苏州移动源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="nnCmcc"
+            android:text="南宁移动源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="hzCmcc"
+            android:text="杭州移动源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="othCmcc"
+            android:text="其他移动源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="nnCucc"
+            android:text="南宁联通源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="szCucc"
+            android:text="苏州联通源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="othCtc"
+            android:text="电信其他源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="iviBupt"
+            android:text="@string/ivi_bupt" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="foreign"
+            android:text="国际台整理" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="local"
+            android:text="地方台整理" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="fmlist"
+            android:text="收音机源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="soplus"
+            android:visibility="gone"
+            android:text="SopPlus 整理" />
+
+    </com.zhy.view.flowlayout.FlowLayout>
+
+</ScrollView>

@@ -122,62 +122,14 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:onClick="huya"
-                android:text="虎牙直播源" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="cuiuc"
-                android:text="CUIUC 整理" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="fulibus"
-                android:text="FULIBUS整理" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="jscmcc"
-                android:text="南京移动源" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="szcmcc"
-                android:text="苏州移动源" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="iviBupt"
-                android:text="@string/ivi_bupt" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="soplus"
-                android:text="SopPlus 直播源" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="othcmcc"
-                android:text="其他移动源" />
-
-            <Button
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:onClick="other"
-                android:text="其他视频源" />
+                android:onClick="tvlive"
+                android:text="电视直播" />
 
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="fmlist"
-                android:text="收音机源" />
+                android:text="收音机" />
 
             <Button
                 style="@style/Button"

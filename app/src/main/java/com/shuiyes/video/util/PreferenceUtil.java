@@ -55,4 +55,14 @@ public class PreferenceUtil {
         PreferenceUtil.putString(context, KEY_TV_URL,  url);
     }
 
+    static final String KEY_HUYA_INVAILD_URL = "huya_invaild_url";
+
+    public static String getHuyaInvaildUrl(Context context){
+        return PreferenceUtil.getString(context, KEY_HUYA_INVAILD_URL, "");
+    }
+
+    public static void setHuyaInvaildUrl(Context context, String url){
+        PreferenceUtil.putString(context, KEY_HUYA_INVAILD_URL,  url);
+    }
+
 }

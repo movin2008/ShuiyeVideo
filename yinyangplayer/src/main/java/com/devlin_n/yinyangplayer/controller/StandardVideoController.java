@@ -215,6 +215,8 @@ public class StandardVideoController extends BaseVideoController implements View
                 playButton.setSelected(true);
                 completeContainer.setVisibility(GONE);
                 thumb.setVisibility(GONE);
+                // 设置默认比例
+                mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_DEFAULT);
                 break;
             case YinYangPlayer.STATE_PAUSED:
                 L.e("STATE_PAUSED");

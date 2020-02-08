@@ -32,6 +32,7 @@ public class TVActivity extends YinyangTVPlayActivity {
             "上海电信 1080p;http://61.151.179.192/tlivecloud-cdn.ysp.cctv.cn/2000203803.m3u8",
 
             // 南京移动 1920x1080
+            "南京移动183 PLTV 1080p;http://183.207.249.14/PLTV/3/224/3221225588/index.m3u8",
             "南京移动183 cntv 1080p;http://183.207.248.71/cntv/live1/HD-2500k-1080P-ccdtv3/HD-2500k-1080P-cctv3",
             "南京移动183 3221225588 1080p;http://183.207.249.14/PLTV/3/224/3221225588/index.m3u8",
             "南京移动223 3221225588 1080p;http://223.110.245.165/ott.js.chinamobile.com/PLTV/3/224/3221225588/index.m3u8",
@@ -40,7 +41,7 @@ public class TVActivity extends YinyangTVPlayActivity {
             // 广西南宁 联通 1280x720
             "广西南宁 联通 720p;http://121.31.30.90:8085/ysten-business/live/cctv-3/yst.m3u8",
             // 广西南宁 联通 1280x720
-            "苏州联通 720p,http://221.6.85.150:9000/live/cctv3_800/cctv3_800.m3u8\n",
+            "苏州联通 720p;http://221.6.85.150:9000/live/cctv3_800/cctv3_800.m3u8",
             // 广东深圳 联通 960x540
             "广东深圳 联通 540p;https://116.77.72.195/streams/d/cctv3/playlist.m3u8",
             // 甘肃嘉峪关 移动 720x544

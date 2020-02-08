@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="虎牙直播源"
+            android:text="虎牙轮播源之一起看"
             android:textSize="@dimen/album_title_size" />
 
         <TextView
