@@ -4,9 +4,6 @@
     <style name="AppTheme" parent="android:Theme.Light.NoTitleBar.Fullscreen">
     </style>
 
-    <style name="ActTheme" parent="android:Theme.Light.NoTitleBar">
-    </style>
-
     <!--自定义seekbarstyle-->
     <style name="CustomSeekbarStyle" >
         <item name="android:indeterminateOnly">false</item>

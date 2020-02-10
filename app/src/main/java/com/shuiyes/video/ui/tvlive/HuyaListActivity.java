@@ -1,12 +1,13 @@
 package com.shuiyes.video.ui.tvlive;
 
-import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.shuiye.video.util.ResourceUtils;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.util.HttpUtils;
@@ -17,20 +18,19 @@ import com.zhy.view.flowlayout.TagView;
 
 public class HuyaListActivity extends TVListActivity implements View.OnClickListener {
 
-    private int mRealWidth, mRealHeight, mRedColor;
+    private int mTitleWidth, mRedColor;
     private String mInvaildUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Point size = new Point();
-        getWindowManager().getDefaultDisplay().getRealSize(size);
-        mRealWidth = size.x;
-        mRealHeight = size.y;
+        Rect rect = new Rect();
+        getWindowManager().getDefaultDisplay().getRectSize(rect);
+        mTitleWidth = rect.right - NumberView.WH - ResourceUtils.flowBtnPadding(this) - 2 * ResourceUtils.flowBtnMargin(this) - 2 * mResultView.getPaddingLeft();
+
         mRedColor = getResources().getColor(android.R.color.holo_red_dark);
         mInvaildUrl = PreferenceUtil.getHuyaInvaildUrl(getApplicationContext());
-
     }
 
     @Override
@@ -45,12 +45,12 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
         String title = tmp[0];
         String url = tmp[1];
 
-        if(!mVideos.isEmpty()){
+        if (!mVideos.isEmpty()) {
             mVideos.add(new ListVideo("", null, null));
         }
         // 虎牙电影
         mVideos.add(new ListVideo(title, null, null));
-        mVideos.add(new ListVideo("测试", title, url.replace("http", "test")));
+        mVideos.add(new ListVideo("测试", title, url.replace("https", "test").replace("http", "test")));
 
         // http://aldirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1.m3u8
         mVideos.add(new ListVideo("源.aldirect", title, url));
@@ -88,7 +88,7 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
         if (o.getUrl() == null) {
             // 标题
             TagView view = new TagView(mContext);
-            int width = TextUtils.isEmpty(o.getText()) ? WindowManager.LayoutParams.MATCH_PARENT : mRealWidth - 400;
+            int width = TextUtils.isEmpty(o.getText()) ? WindowManager.LayoutParams.MATCH_PARENT : mTitleWidth;
             view.setSize(width, WindowManager.LayoutParams.WRAP_CONTENT);
             view.setTextColor(getResources().getColor(android.R.color.holo_blue_light));
             view.setText(o.getText());
@@ -104,11 +104,11 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
                     testHuyaUrl((NumberView) v);
                 }
             });
-            view.setSize(view.measureWidth(), NumberView.WH);
+            view.setSize(view.measureWidth(), 0);
             return view;
-        }else{
+        } else {
             TagView view = super.getTagView(position, o);
-            if(mInvaildUrl.contains(o.getUrl())){
+            if (mInvaildUrl.contains(o.getUrl())) {
                 view.setEnabled(false);
             }
             return view;
@@ -133,7 +133,7 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
                     final NumberView view = mResultView.findViewById(id + i);
                     String html = HttpUtils.get(view.getUrl());
 
-                    if(html.startsWith("Exception: thread interrupted")){
+                    if (html.startsWith("Exception: thread interrupted")) {
                         return;
                     }
 
@@ -141,10 +141,10 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
                     Log.e(TAG, view.getTitle() + view.getText() + ", " + (enable ? "有效" : "无效"));
                     if (enable) {
                         flag++;
-                    }else{
+                    } else {
                         String invaildUrl = PreferenceUtil.getHuyaInvaildUrl(getApplicationContext());
-                        if(!invaildUrl.contains(view.getUrl())){
-                            PreferenceUtil.setHuyaInvaildUrl(getApplicationContext(), invaildUrl +view.getUrl()+ ",");
+                        if (!invaildUrl.contains(view.getUrl())) {
+                            PreferenceUtil.setHuyaInvaildUrl(getApplicationContext(), invaildUrl + view.getUrl() + ",");
                         }
                     }
                     mHandler.post(new Runnable() {

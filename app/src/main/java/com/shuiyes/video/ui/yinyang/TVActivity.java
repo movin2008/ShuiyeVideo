@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class TVActivity extends YinyangTVPlayActivity {
 
+    // 暂先为父母播放CCTV3 综艺频道，后面改成网络API
     String[] cctv3Urls = {
 
             // 广西南宁 移动 1920x1080
@@ -22,6 +23,9 @@ public class TVActivity extends YinyangTVPlayActivity {
             // 四川成都 联通 1920x1080
             "四川成都 联通 1080p;http://60.255.149.208/tslive/c213_scc_20190618_0apbps2b_original_r10/c213_scc_20190618_0apbps2b_original_r10.m3u8",
 
+            // 上海电信 1920x1080
+            "上海电信 1080p;http://httpdvb.slave.ttcatv.tv:13164/playurl?playtype=live&protocol=hls&accesstoken=R5CA2B7CAU3090C010K77540044IFB84556FPBM3220A5DV1044EZ33519WE22942B42A1&playtoken=&programid=4200000134.m3u8",
+
             // 广西防城港 移动 1920x1080
             "广西防城港 移动 1080p;http://39.135.38.165:6610/000000001000/1000000001000011218/1.m3u8?IASHttpSessionId=OTT16157620200202041417014267&fmt=ts2hls&u=45768392",
 
@@ -30,6 +34,9 @@ public class TVActivity extends YinyangTVPlayActivity {
 
             // 上海电信 1920x1080
             "上海电信 1080p;http://61.151.179.192/tlivecloud-cdn.ysp.cctv.cn/2000203803.m3u8",
+
+            // 哈尔滨 移动 1920x1080
+            "哈尔滨 移动 1080p;http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225606/index.m3u8",
 
             // 南京移动 1920x1080
             "南京移动183 PLTV 1080p;http://183.207.249.14/PLTV/3/224/3221225588/index.m3u8",

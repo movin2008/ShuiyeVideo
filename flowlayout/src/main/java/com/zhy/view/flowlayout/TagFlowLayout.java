@@ -44,8 +44,8 @@ public class TagFlowLayout extends FlowLayout
             if (height == 0) {
                 height = LayoutParams.WRAP_CONTENT;
             }
-            int margin = ResourceUtils.dip2px(getContext(), 15);
 
+            int margin = ResourceUtils.flowBtnMargin(getContext());
             MarginLayoutParams lp = new MarginLayoutParams(width, height);
             lp.setMargins(0, 0, margin, margin);
             tagView.setLayoutParams(lp);

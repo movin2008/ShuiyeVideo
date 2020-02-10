@@ -15,11 +15,10 @@ import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.devlin_n.yinyangplayer.R;
 import com.devlin_n.yinyangplayer.util.Constants;
-import com.devlin_n.yinyangplayer.util.WindowUtil;
+import com.shuiyes.video.util.WindowUtil;
 import com.devlin_n.yinyangplayer.widget.CenterView;
 
 import java.util.Formatter;

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.shuiyes.video.ui.tvlive.TVPlayActivity;
 import com.tvbus.engine.TVCore;
 import com.tvbus.engine.TVListener;
 import com.tvbus.engine.TVService;

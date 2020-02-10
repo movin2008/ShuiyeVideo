@@ -30,4 +30,7 @@ dependencies {
     // https://github.com/Bilibili/DanmakuFlameMaster
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.8.3'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.8.3'
+
+    // for Tips
+    implementation project(':common')
 }

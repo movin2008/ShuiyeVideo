@@ -28,6 +28,7 @@
 
     <style name="FullscreenAppCompat" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
 </resources>

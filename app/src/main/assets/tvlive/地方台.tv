@@ -215,6 +215,11 @@
 厦门一套,http://cstvpull.live.wscdns.com/live/xiamen1.flv
 厦门移动,http://cstvpull.live.wscdns.com/live/xiamenyidong.flv
 
+厦门卫视,http://cstv.live.wscdns.com/live/xiamen/playlist.m3u8
+厦门一套,http://cstv.live.wscdns.com/live/xiamen1/playlist.m3u8
+厦门二套,http://cstv.live.wscdns.com/live/xiamen2/playlist.m3u8
+厦门三套,http://cstv.live.wscdns.com/live/xiamen3/playlist.m3u8
+
 开州综合频道,http://kaixianlive.cbg.cn:10345/1.m3u8
 开州生活频道,http://kaixianlive.cbg.cn:10345/5.m3u8
 
@@ -363,7 +368,10 @@
 睢宁生活教育,http://jssn.chinashadt.com:2036/live/1003.stream/playlist.m3u8
 睢宁三农频道,http://jssn.chinashadt.com:2036/live/1004.stream/playlist.m3u8
 睢宁资讯频道,http://jssn.chinashadt.com:2036/live/1005.stream/playlist.m3u8
+
 靖江新闻综合,http://visit.jjbctv.com:1935/live/xwzhmb/playlist.m3u8
+靖江新聞HD,http://58.222.151.43:1935/live/xwzhpc/playlist.m3u8
+
 滨海新闻综合,http://jsbh.chinashadt.com:2036/live/bh11.stream/playlist.m3u8
 宝应新闻综合,http://jsby.chinashadt.com:2035/live/by1.stream/playlist.m3u8
 宝应生活资讯,http://jsby.chinashadt.com:2035/live/by2.stream/playlist.m3u8

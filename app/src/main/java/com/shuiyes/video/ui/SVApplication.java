@@ -7,13 +7,13 @@ import com.shuiyes.video.BuildConfig;
 
 public class SVApplication extends Application {
 
-    private static Context mContext;
+    private static Context sContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        mContext = this.getApplicationContext();
+        sContext = this.getApplicationContext();
 
         android.util.Log.e("SY", "onCreate() " + BuildConfig.VERSION_NAME);
 
@@ -21,7 +21,7 @@ public class SVApplication extends Application {
     }
 
     public static Context getAppContext() {
-        return mContext;
+        return sContext;
     }
 
 }

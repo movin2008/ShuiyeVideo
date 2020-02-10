@@ -1,7 +1,9 @@
 package com.shuiyes.video.widget;
 
+import com.shuiye.video.util.ResourceUtils;
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.ListVideo;
+import com.shuiyes.video.ui.SVApplication;
 import com.zhy.view.flowlayout.TagView;
 
 import android.content.Context;
@@ -10,7 +12,7 @@ import android.widget.Checkable;
 
 public class NumberView extends TagView implements Checkable {
 
-    public static final int WH = 120;
+    public static final int WH = ResourceUtils.flowBtnWH(SVApplication.getAppContext());
 
     private String text;
     private String url;
@@ -46,7 +48,7 @@ public class NumberView extends TagView implements Checkable {
     }
 
     public int measureWidth() {
-        int measureWidth = Math.round(getPaint().measureText(getText().toString())) + 20;
+        int measureWidth = Math.round(getPaint().measureText(getText())) + ResourceUtils.flowBtnPadding(getContext());
         return measureWidth > WH ? measureWidth : WH;
     }
 

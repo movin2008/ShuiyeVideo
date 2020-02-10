@@ -1,0 +1,24 @@
+ 上海 电信
+CCTV1,http://101.89.132.136:80/live/tm-cctv1-4000k.m3u8
+北京卫视,http://101.89.132.136:80/live/tm-btv1hd-4000k.m3u8
+北京文艺,http://101.89.132.136:80/live/tm-btv2hd-4000k.m3u8
+北京影视,http://101.89.132.136:80/live/tm-btv4-4000k.m3u8
+北京新闻,http://101.89.132.136:80/live/tm-btv9-4000k.m3u8
+北京纪实,http://101.89.132.136:80/live/tm-btvjishihd-4000k.m3u8
+安徽卫视,http://101.89.132.136:80/live/tm-ahwshd-4000k.m3u8
+东方卫视,http://101.89.132.136:80/live/tm-dfwshd-4000k.m3u8
+深圳卫视,http://101.89.132.136:80/live/tm-shenzhenhd-4000k.m3u8
+广东卫视,http://101.89.132.136:80/live/tm-guangdonghd-4000k.m3u8
+黑龙卫视,http://101.89.132.136:80/live/tm-heilongjianghd-4000k.m3u8
+辽宁卫视,http://101.89.132.136:80/live/tm-liaoninghd-4000k.m3u8
+
+喜剧影院,http://101.89.132.179/live/tm-yg1xjyy-1200k.m3u8
+高清电影,http://101.89.132.179/live/tm-yg1dypd-1200k.m3u8
+情感影院,http://101.89.132.179/live/tm-yg1qgyy-1200k.m3u8
+动作影院,http://101.89.132.179/live/tm-yg1dzyy-1200k.m3u8
+精品影院,http://101.89.132.179/live/tm-yg1jpyy-1200k.m3u8
+经典剧场,http://101.89.132.179/live/tm-yg1jdjc-1200k.m3u8
+骄阳剧场,http://101.89.132.179/live/tm-yg1jyjc-1200k.m3u8
+上海电视剧,http://101.89.132.179/live/tm-shdsj-4000k.m3u8
+
+CCTV3,http://61.151.179.192/tlivecloud-cdn.ysp.cctv.cn/2000203803.m3u8

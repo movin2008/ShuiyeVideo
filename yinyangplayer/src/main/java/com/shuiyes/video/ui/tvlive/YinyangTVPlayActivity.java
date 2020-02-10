@@ -36,17 +36,8 @@ public class YinyangTVPlayActivity extends AppCompatActivity {
         String url = values[0];
         String title = values[1];
 
-//        com.bumptech.glide.Glide.with(this).load("https://i.loli.net/2020/02/02/ChFgVjiAbeD25cQ.jpg")
-//                .asBitmap()
-//                .animate(R.anim.anim_alpha_in)
-//                .placeholder(android.R.color.black)
-//                .into(((StandardVideoController)mYinYangPlayer.getVideoController()).getThumb());
-
-        mYinYangPlayer.alwaysFullScreen()
-                .setUrl(url)
-                .setTitle(title)
-                .setVideoController(initVideoController())
-                .start();
+//        com.bumptech.glide.Glide.with(this).load("https://i.loli.net/2020/02/02/ChFgVjiAbeD25cQ.jpg").asBitmap().animate(R.anim.anim_alpha_in).placeholder(android.R.color.black).into(((StandardVideoController)mYinYangPlayer.getVideoController()).getThumb());
+        mYinYangPlayer.alwaysFullScreen().setUrl(url).setTitle(title).setVideoController(initVideoController()).start();
     }
 
     protected StandardVideoController initVideoController(){

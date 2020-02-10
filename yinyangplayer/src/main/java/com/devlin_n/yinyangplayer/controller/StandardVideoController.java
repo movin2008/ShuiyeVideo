@@ -1,11 +1,13 @@
 package com.devlin_n.yinyangplayer.controller;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +27,7 @@ import com.devlin_n.yinyangplayer.R;
 import com.devlin_n.yinyangplayer.player.YinYangPlayer;
 import com.devlin_n.yinyangplayer.util.Constants;
 import com.devlin_n.yinyangplayer.util.L;
-import com.devlin_n.yinyangplayer.util.WindowUtil;
+import com.shuiyes.video.util.WindowUtil;
 
 /**
  * 直播/点播控制器
@@ -80,6 +83,9 @@ public class StandardVideoController extends BaseVideoController implements View
         fullScreenButton = (ImageView) controllerView.findViewById(R.id.fullscreen);
         fullScreenButton.setOnClickListener(this);
         bottomContainer = (LinearLayout) controllerView.findViewById(R.id.bottom_container);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bottomContainer.getLayoutParams();
+        params.setMargins(0,0,0,WindowUtil.getNavigationBarHeight(getContext()));
+        bottomContainer.setLayoutParams(params);
         topContainer = (LinearLayout) controllerView.findViewById(R.id.top_container);
         videoProgress = (SeekBar) controllerView.findViewById(R.id.seekBar);
         videoProgress.setOnSeekBarChangeListener(this);
@@ -115,7 +121,7 @@ public class StandardVideoController extends BaseVideoController implements View
         });
     }
 
-    protected void menuItemClick(MenuItem item){
+    protected void menuItemClick(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.float_window) {
             mediaPlayer.startFloatWindow();
@@ -289,7 +295,7 @@ public class StandardVideoController extends BaseVideoController implements View
         });
     }
 
-    public boolean isLive(){
+    public boolean isLive() {
         return isLive;
     }
 

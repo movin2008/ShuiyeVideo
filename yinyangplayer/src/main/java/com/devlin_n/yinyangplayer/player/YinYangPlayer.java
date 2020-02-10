@@ -10,7 +10,6 @@ import android.media.AudioManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.OrientationEventListener;
 import android.view.Surface;
@@ -30,10 +29,11 @@ import com.devlin_n.yinyangplayer.controller.StandardVideoController;
 import com.devlin_n.yinyangplayer.util.Constants;
 import com.devlin_n.yinyangplayer.util.KeyUtil;
 import com.devlin_n.yinyangplayer.util.NetworkUtil;
-import com.devlin_n.yinyangplayer.util.WindowUtil;
+import com.shuiyes.video.util.WindowUtil;
 import com.devlin_n.yinyangplayer.widget.StatusView;
 import com.devlin_n.yinyangplayer.widget.YinYangSurfaceView;
 import com.devlin_n.yinyangplayer.widget.YinYangTextureView;
+import com.shuiyes.video.widget.Tips;
 
 import java.io.File;
 import java.io.IOException;
@@ -150,7 +150,6 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
                 mMediaPlayer = new AndroidMediaPlayer();
             } else {
                 mMediaPlayer = new IjkMediaPlayer();
-                ((IjkMediaPlayer) mMediaPlayer).setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "user-agent", UA_WIN);
                 ((IjkMediaPlayer) mMediaPlayer).setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "user_agent", UA_WIN);
                 //开启硬解码
                 ((IjkMediaPlayer) mMediaPlayer).setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 1);
@@ -800,6 +799,11 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
                     break;
                 case IjkMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START: // 视频开始渲染
                     if (getWindowVisibility() != VISIBLE) pause();
+
+                    int videoWidth = iMediaPlayer.getVideoWidth();
+                    int videoHeight = iMediaPlayer.getVideoHeight();
+                    Tips.show(getContext(), "视频分辨率：" + videoWidth + "x" + videoHeight);
+
                     break;
                 case IjkMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:
                     if (mTextureView != null) mTextureView.setRotation(extra);
@@ -819,7 +823,7 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
     private IMediaPlayer.OnPreparedListener onPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(IMediaPlayer iMediaPlayer) {
-            if(isLive() && errorCount == 3){
+            if(isLive()){
                 playerContainer.removeView(statusView);
             }
             errorCount = 0;

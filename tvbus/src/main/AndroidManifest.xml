@@ -7,6 +7,8 @@
         android:usesCleartextTraffic="true"
         android:supportsRtl="true">
 
+        <service android:name="com.tvbus.engine.TVService" />
+
     </application>
 
 </manifest>

@@ -1,22 +1,26 @@
 package com.shuiyes.video.ui.base;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 import com.shuiyes.video.util.Constants;
+import com.shuiyes.video.util.WindowUtil;
+import com.shuiyes.video.view.AutoGestureListener;
 import com.shuiyes.video.widget.Tips;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected final String TAG = this.getClass().getSimpleName();
 
@@ -82,7 +86,17 @@ public abstract class BaseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+
+        mGetector = new GestureDetector(this, new AutoGestureListener(this));
+
+        WindowUtil.hideStatusBar(this);
+        WindowUtil.hideNavKey(this);
+
+        WindowUtil.scanForActivity(this).getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        WindowUtil.scanForActivity(this).getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
+
+    private GestureDetector mGetector;
 
     @Override
     protected void onResume() {
@@ -136,6 +150,12 @@ public abstract class BaseActivity extends Activity {
         }
 
         return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        mGetector.onTouchEvent(event);
+        return super.dispatchTouchEvent(event);
     }
 
 }

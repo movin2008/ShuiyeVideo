@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import com.devlin_n.yinyangplayer.controller.FloatController;
 import com.devlin_n.yinyangplayer.util.Constants;
 import com.devlin_n.yinyangplayer.util.KeyUtil;
-import com.devlin_n.yinyangplayer.util.WindowUtil;
+import com.shuiyes.video.util.WindowUtil;
 import com.devlin_n.yinyangplayer.widget.FloatView;
 
 /**

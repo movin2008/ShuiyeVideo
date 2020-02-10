@@ -47,8 +47,6 @@ public abstract class BaseSearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        Log.e(TAG, "onCreate ========================= ");
-
         mInputMethodManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         mAlbumAdapter = new AlbumAdapter(this, mHandler);

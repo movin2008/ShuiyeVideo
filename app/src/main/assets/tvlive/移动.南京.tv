@@ -1,3 +1,66 @@
+## [资源分享] 秒开系列源——南京移动【183.207.X.X】央视卫视凤凰全部台
+## 南京移动的直播源最受移动宽带用户喜爱，延迟小 几乎都是秒开。但是网上流传了许多IP号段的，让人看得云里雾里。
+## 今天，我就来给大家开一贴讲明白，先讲IP号段为183.207.X.X。
+##
+## 183.207.X.X常见的有：
+## 1、183.207.248.71，cntv央视源，包括央视 各省卫视，大量的FHD(1080)源，速度快，质量优，我最喜欢！
+## 例子：
+## CCTV1 FHD,http://183.207.248.71/cntv/live1/HD-2500k-1080P-cctv1/HD-2500k-1080P-cctv1
+## CCTV14 FHD,http://183.207.248.71/cntv/live1/cctv-14/cctv-14
+## 山东卫视 FHD,http://183.207.248.71/cntv/live1/HD-2500k-1080P-shandongstv/HD-2500k-1080P-shandongstv
+##
+## 2、183.207.248.71，gitv银河源，包括央视 各省卫视，普通SD源居多，一部分是HD(720)源，速度快，资源占用低。
+## 例子：
+## CCTV1 HD,http://183.207.248.71/gitv/live1/CCTV-1-HD/CCTV-1-HD
+## CCTV14,http://183.207.248.71/gitv/live1/G_CCTV-14/G_CCTV-14
+## 江苏卫视HD,http://183.207.248.71/gitv/live1/JSWS-HD/JSWS-HD
+##
+## 3、183.207.248.34~37，这个IP段最大的特点，34~37有98%可以互相替换都能够播放，1.m3u8与index.m3u8也是能够互相替换；速度快，质量优，FHD(1080)源、HD(720)源、普通SD源都有，还包括三个香港凤凰台。
+## 例子：
+## 凤凰香港 HD,http://183.207.249.34/PLTV/3/224/3221226975/index.m3u8
+## CCTV1 FHD,http://183.207.248.36/PLTV/2510088/224/3221227374/index.m3u8
+## 广东卫视 FHD,http://183.207.248.36/PLTV/2510088/224/3221227248/index.m3u8
+##
+## 4、183.207.249.7~16，这个IP段也是7~16可以互相替换都能够播放，1.m3u8与index.m3u8也是能够互相替换；速度快，质量优，这个IP段最大的特点，FHD(1080)源、HD(720)源、普通SD源都有，还包括NewTV系列和徐州四个地方台。
+## 例子：
+## CCTV12 FHD,http://183.207.249.7/PLTV/3/224/3221225556/index.m3u8
+## NewTV动作电影 FHD,http://183.207.249.15/PLTV/3/224/3221225529/index.m3u8
+## 徐州-4 HD,http://183.207.249.15/PLTV/3/224/3221225951/index.m3u8
+##
+##
+## [资源分享] 秒开系列源——南京移动【223.110.X.X】央视卫视凤凰全部台
+## 南京移动的直播源是深受移动宽带用户追捧喜爱的，延迟小 几乎都是秒开。今天，给大家介绍IP号段为【223.110.X.X】的直播源。
+##
+## 223.110.X.X包含的内容非常杂，为了整理清楚，可是费了我许多时间。常见的有：
+## 1、223.110.241.204:6610，这个IP段的特点高质量的FHD1920×1080画质，源链接中含有HQ、CQ区分，速度快，质量优，重点推荐使用！
+## 例子：
+## 辽宁卫视 FHD,http://223.110.241.204:6610/gitv/live1/G_LIAONING-HQ/G_LIAONING-HQ/
+## CCTV4 FHD,http://223.110.241.204:6610/gitv/live1/G_CCTV-4-CQ/G_CCTV-4-CQ/
+## CCTV9 FHD,http://223.110.241.204:6610/gitv/live1/G_CCTV-9/G_CCTV-9/
+## CCTV5 FHD,http://223.110.241.204:6610/gitv/live1/CCTV-5/CCTV-5/
+##
+## 2、223.110.243.134~173，特点是直播源地址中的134~135通用、136~137通用、138~139通用、140~167通用、168~169通用、170~171通用、172~173通用，普通SD源居多，一部分是HD(720)源，速度快，资源占用低。
+## 例子：
+## CCTV1 HD,http://223.110.243.138/PLTV/2510088/224/3221227177/1.m3u8
+## CCTV1 HD,http://223.110.243.168/PLTV/2510088/224/3221227371/1.m3u8
+## CCTV1 HD,http://223.110.243.172/PLTV/2510088/224/3221227177/1.m3u8
+## 凤凰中文 HD,http://223.110.243.138/PLTV/2510088/224/3221227160/1.m3u8
+## 凤凰中文 HD,http://223.110.243.139/PLTV/2510088/224/3221227160/1.m3u8
+## 凤凰资讯 HD,http://223.110.243.134/PLTV/2510088/224/3221227163/1.m3u8
+## 凤凰资讯 HD,http://223.110.243.136/PLTV/2510088/224/3221227163/1.m3u8
+##
+## 3、223.110.245.138~173，直播源地址中“ott.js.chinamobile.com”就是江苏移动，138~139通用、140~141通用、142~143通用、144~145通用、146~147 通用、148~149 通用、150~151 通用、152~153 通用、154~155 通用、156~157 通用、158~159 通用、160~161 通用、162~163 通用、164~165 通用、166~167 通用、168~173通用，FHD(1080)源、HD(720)源、普通SD源都有，节目多、速度快，质量优。（还有一个小秘密，223.110.245.170段直播源去掉“ott.js.chinamobile.com”也可以播放）
+## 例子：
+## CCTV4 FHD,http://223.110.245.163/ott.js.chinamobile.com/PLTV/3/224/3221227378/index.m3u8
+## 五星体育 HD,http://223.110.245.147/ott.js.chinamobile.com/PLTV/3/224/3221226799/index.m3u8
+## 中华美食,http://223.110.245.147/ott.js.chinamobile.com/PLTV/3/224/3221227024/index.m3u8
+## 邳州综合 FHD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221227386/index.m3u8
+##
+## 4、223.110.245.134~173，这个IP段134~173都可以互相替换都能够播放，223.110.245.X与223.110.245.X:80通用替换；FHD(1080)源、HD(720)源、普通SD源都有，还包括NewTV系列和徐州四个地方台。
+## 例子：
+## NewTV明星大片 FHD,http://223.110.245.170/PLTV/3/224/3221225535/index.m3u8
+## 国学家道,http://223.110.245.170/PLTV/3/224/3221226392/index.m3u8
+## 邳州综艺 FHD,http://223.110.245.170/PLTV/3/224/3221227388/index.m3u8
 南京移动源 cntv央视源
 CCTV1 HD,http://183.207.248.71/cntv/live1/HD-2500k-1080P-cctv1/HD-2500k-1080P-cctv1
 CCTV3 HD,http://183.207.248.71/cntv/live1/HD-2500k-1080P-cctv3/HD-2500k-1080P-cctv3
@@ -7,13 +70,18 @@ CCTV8 HD,http://183.207.248.71/cntv/live1/HD-2500k-1080P-cctv8/HD-2500k-1080P-cc
 
 CCTV1 HD,http://183.207.248.71/cntv/live1/cctv-1/cctv-1
 CCTV2 HD,http://183.207.248.71/cntv/live1/cctv-2/cctv-2
-CCTV4,http://183.207.248.71/cntv/live1/cctv-4/cctv-4
+CCTV3 HD,http://183.207.248.71/cntv/live1/cctv-3/cctv-3
+CCTV4 HD,http://183.207.248.71/cntv/live1/cctv-4/cctv-4
+CCTV5 HD,http://183.207.248.71/cntv/live1/cctv-5/cctv-5
+CCTV5+ HD,http://183.207.248.71/cntv/live1/CCTV5+/hdcctv05plus
 CCTV5+ HD,http://183.207.248.71/cntv/live1/hdcctv05plus/hdcctv05plus
+CCTV6 HD,http://183.207.248.71/cntv/live1/cctv-6/cctv-6
 CCTV7 HD,http://183.207.248.71/cntv/live1/cctv-7/cctv-7
+CCTV8 HD,http://183.207.248.71/cntv/live1/cctv-8/cctv-8
 CCTV9 HD,http://183.207.248.71/cntv/live1/cctv-news/cctv-news
-CCTV10,http://183.207.248.71/cntv/live1/cctv-10/cctv-10
+CCTV10 HD,http://183.207.248.71/cntv/live1/cctv-10/cctv-10
 CCTV12 HD,http://183.207.248.71/cntv/live1/cctv-12/cctv-12
-CCTV13,http://183.207.248.71/cntv/live1/cctv-13/cctv-13
+CCTV13 HD,http://183.207.248.71/cntv/live1/cctv-13/cctv-13
 CCTV14 HD,http://183.207.248.71/cntv/live1/cctv-14/cctv-14
 
 江苏卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-jiangsustv/HD-2500k-1080P-jiangsustv
@@ -22,20 +90,33 @@ CCTV14 HD,http://183.207.248.71/cntv/live1/cctv-14/cctv-14
 湖南卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-hunanstv/HD-2500k-1080P-hunanstv
 广东卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-guangdongstv/HD-2500k-1080P-guangdongstv
 黑龙江卫,http://183.207.248.71/cntv/live1/HD-2500k-1080P-heilongjiangstv/HD-2500k-1080P-heilongjiangstv
+黑龙卫视,http://183.207.248.71/cntv/live1/黑龙江卫视/HD-2500k-1080P-heilongjiangstv
+
 深圳卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-shenzhenstv/HD-2500k-1080P-shenzhenstv
 山东卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-shandongstv/HD-2500k-1080P-shandongstv
 天津卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-tianjinstv/HD-2500k-1080P-tianjinstv
 湖北卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-hubeistv/HD-2500k-1080P-hubeistv
 上海卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-dongfangstv/HD-2500k-1080P-dongfangstv
+NEWTV炫舞未来,http://183.207.248.71/cntv/live1/炫舞未来/HD-4000k-1080P-xwwl
 
+北京卫视,http://183.207.248.71/cntv/live1/beijingstv/beijingstv
+北京卫视,http://183.207.248.71/cntv/live1/北京卫视/beijingstv
+江苏卫视,http://183.207.248.71/cntv/live1/jiangsustv/jiangsustv
+江苏卫视,http://183.207.248.71/cntv/live1/江苏卫视/jiangsustv
+湖南卫视,http://183.207.248.71/cntv/live1/hunanstv/hunanstv
+湖南卫视,http://183.207.248.71/cntv/live1/湖南卫视/hunanstv
+安徽卫视,http://183.207.248.71/cntv/live1/anhuistv/anhuistv
+安徽卫视,http://183.207.248.71/cntv/live1/安徽卫视/anhuistv
+辽宁卫视,http://183.207.248.71/cntv/live1/liaoningstv/liaoningstv
+辽宁卫视,http://183.207.248.71/cntv/live1/辽宁卫视超高清/liaoningstv
+动画王国,http://183.207.248.71/cntv/live1/动画王国/donghuawg
+风尚购物,http://183.207.248.71/cntv/live1/风尚购物/fengshanggw
+家有购物,http://183.207.248.71/cntv/live1/家有购物/SD-1500k-576P-jiayougw
+NEWTV精品电影,http://183.207.248.71/cntv/live1/精品电影/jdianying
+NEWTV电竞,http://183.207.248.71/cntv/live1/NewTV电竞/wmyx
 精品电影,http://183.207.248.71/cntv/live1/jdianying/jdianying
 动画王国,http://183.207.248.71/cntv/live1/donghuawg/donghuawg
-北京卫视,http://183.207.248.71/cntv/live1/beijingstv/beijingstv
-江苏卫视,http://183.207.248.71/cntv/live1/jiangsustv/jiangsustv
-湖南卫视,http://183.207.248.71/cntv/live1/hunanstv/hunanstv
-安徽卫视,http://183.207.248.71/cntv/live1/anhuistv/anhuistv
 云南卫视,http://183.207.248.71/cntv/live1/yunnanstv/yunnanstv
-辽宁卫视,http://183.207.248.71/cntv/live1/liaoningstv/liaoningstv
 河南卫视,http://183.207.248.71/cntv/live1/henanstv/henanstv
 新疆卫视,http://183.207.248.71/cntv/live1/xinjiangstv/xinjiangstv
 
@@ -76,10 +157,16 @@ CETV2,http://183.207.248.71/gitv/live1/G_CETV-2/G_CETV-2
 
 南京移动源 PLTV
 CCTV1 HD,http://183.207.249.15/PLTV/3/224/3221225530/index.m3u8
+CCTV3 HD,http://183.207.249.6/PLTV/3/224/3221225588/index.m3u8
 CCTV3 HD,http://183.207.249.14/PLTV/3/224/3221225588/index.m3u8
+CCTV4 HD,http://183.207.249.6/PLTV/3/224/3221225534/index.m3u8
 CCTV6 HD,http://183.207.249.15/PLTV/3/224/3221225548/index.m3u8
+CCTV6 HD,http://183.207.248.37/PLTV/3/224/3221227209/index.m3u8
+CCTV7 HD,http://183.207.249.6/PLTV/3/224/3221225546/index.m3u8
 CCTV7 HD,http://183.207.249.15/PLTV/3/224/3221225546/index.m3u8
 CCTV7 HD,http://183.207.248.10/PLTV/3/224/3221225546/index.m3u8
+CCTV8 HD,http://183.207.248.35/PLTV/3/224/3221227205/index.m3u8
+CCTV9 HD,http://183.207.249.6/PLTV/3/224/3221225532/index.m3u8
 CCTV10 HD,http://183.207.249.7/PLTV/3/224/3221225550/index.m3u8
 CCTV12 HD,http://183.207.249.7/PLTV/3/224/3221225556/index.m3u8
 CCTV13,http://183.207.249.14/PLTV/3/224/3221225560/index.m3u8
@@ -259,9 +346,9 @@ CCTV14 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221227201/in
 CCTV1 HD,http://223.110.245.170/PLTV/3/224/3221225530/index.m3u8
 CCTV1 HD,http://223.110.245.170/PLTV/3/224/3221226316/index.m3u8
 CCTV2 HD,http://223.110.245.170/PLTV/3/224/3221227207/index.m3u8
-CCTV4,http://223.110.245.170/PLTV/3/224/3221225534/index.m3u8
+CCTV4 HD,http://223.110.245.170/PLTV/3/224/3221225534/index.m3u8
 CCTV5 HD,http://223.110.245.170/PLTV/3/224/3221227166/index.m3u8
-CCTV5,http://223.110.243.172/PLTV/3/224/3221227166/index.m3u8
+CCTV5 HD,http://223.110.243.172/PLTV/3/224/3221227166/index.m3u8
 CCTV6 HD,http://223.110.245.173/PLTV/3/224/3221225548/index.m3u8
 CCTV8 HD,http://223.110.245.170/PLTV/3/224/3221227204/index.m3u8
 CCTV8 HD,http://223.110.243.171/PLTV/3/224/3221227204/index.m3u8
@@ -269,12 +356,12 @@ CCTV8 HD,http://223.110.245.170/PLTV/3/224/3221227205/index.m3u8
 CCTV10 HD,http://223.110.245.170/PLTV/3/224/3221225550/index.m3u8
 CCTV12 HD,http://223.110.245.170/PLTV/3/224/3221225556/index.m3u8
 CCTV12 HD,http://223.110.245.172/PLTV/3/224/3221225556/index.m3u8
-CCTV13,http://223.110.245.170/PLTV/3/224/3221225560/index.m3u8
+CCTV13 HD,http://223.110.245.170/PLTV/3/224/3221225560/index.m3u8
 CCTV14 HD,http://223.110.245.170/PLTV/3/224/3221227201/index.m3u8
 CCTV14 HD,http://223.110.245.169/PLTV/3/224/3221227201/index.m3u8
 精品电影 HD,http://223.110.245.170/PLTV/3/224/3221225567/index.m3u8
 广东卫视 HD,http://223.110.245.170/PLTV/3/224/3221227249/index.m3u8
-黑龙江 HD,http://223.110.245.170/PLTV/3/224/3221227252/index.m3u8
+黑龙卫视 HD,http://223.110.245.170/PLTV/3/224/3221227252/index.m3u8
 湖北卫视 HD,http://223.110.245.170/PLTV/3/224/3221227211/index.m3u8
 湖南卫视 HD,http://223.110.245.170/PLTV/3/224/3221227191/index.m3u8
 江苏卫视 HD,http://223.110.245.170/PLTV/3/224/3221227185/index.m3u8
@@ -284,9 +371,19 @@ CCTV14 HD,http://223.110.245.169/PLTV/3/224/3221227201/index.m3u8
 天津卫视 HD,http://223.110.245.170/PLTV/3/224/3221227212/index.m3u8
 浙江卫视 HD,http://223.110.243.173/PLTV/3/224/3221227215/index.m3u8
 湖南卫视 HD,http://223.110.243.173/PLTV/3/224/3221227220/index.m3u8
+北京卫视 HD,http://223.110.243.173/PLTV/3/224/3221227246/index.m3u8
+东方卫视 HD,http://223.110.243.138/PLTV/3/224/3221227208/index.m3u8
+广东卫视 HD,http://223.110.243.136/PLTV/3/224/3221227249/index.m3u8
+黑龙卫视 HD,http://223.110.243.169/PLTV/3/224/3221227252/index.m3u8
+湖北卫视 HD,http://223.110.243.171/PLTV/3/224/3221227211/index.m3u8
+山东卫视 HD,http://223.110.243.171/PLTV/3/224/3221227258/index.m3u8
+深圳卫视 HD,http://223.110.243.171/PLTV/3/224/3221227217/index.m3u8
+天津卫视 HD,http://223.110.243.170/PLTV/3/224/3221227212/index.m3u8
 
 223.110.245.139 PLTV
+CCTV1,http://223.110.243.138/PLTV/3/224/3221226316/index.m3u8
 CCTV1,http://223.110.245.139/PLTV/4/224/3221225852/index.m3u8
+CCTV5,http://223.110.243.137/PLTV/3/224/3221227478/index.m3u8
 CCTV5,http://223.110.245.139/PLTV/4/224/3221226362/index.m3u8
 CCTV5,http://223.110.245.139/PLTV/4/224/3221227298/index.m3u8
 CCTV5+,http://223.110.245.139/PLTV/4/224/3221227480/index.m3u8
@@ -310,3 +407,5 @@ CCTV8,http://223.110.245.139/PLTV/4/224/3221227304/index.m3u8
 黑龙卫视,http://223.110.245.139/PLTV/4/224/3221227492/index.m3u8
 新疆卫视,http://223.110.243.136:80/PLTV/3/224/3221225523/index.m3u8
 凤凰香港,http://223.110.245.136/PLTV/3/224/3221226975/index.m3u8
+凤凰中文,http://223.110.245.139/PLTV/3/224/3221226922/index.m3u8
+

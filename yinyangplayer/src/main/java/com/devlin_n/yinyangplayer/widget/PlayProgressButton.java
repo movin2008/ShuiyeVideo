@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.devlin_n.yinyangplayer.R;
-import com.devlin_n.yinyangplayer.util.WindowUtil;
+import com.shuiyes.video.util.WindowUtil;
 
 /**
  * 播放按钮和加载进度条封装

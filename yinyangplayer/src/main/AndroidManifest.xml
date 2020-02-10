@@ -15,9 +15,7 @@
 
         <activity
             android:name="com.shuiyes.video.ui.tvlive.YinyangTVPlayActivity"
-            android:configChanges="keyboardHidden|screenSize"
-            android:screenOrientation="landscape"
-            android:theme="@style/FullscreenAppCompat" />
+            android:screenOrientation="landscape" />
 
     </application>
 </manifest>

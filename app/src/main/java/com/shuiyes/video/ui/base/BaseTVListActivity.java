@@ -3,6 +3,7 @@ package com.shuiyes.video.ui.base;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -75,7 +76,7 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
             return view;
         }else{
             NumberView view = new NumberView(getApplicationContext(), o);
-            view.setSize(view.measureWidth(), NumberView.WH);
+            view.setSize(view.measureWidth(), 0);
             view.setTextColor(Color.BLACK);
             view.setOnClickListener(this);
             return view;

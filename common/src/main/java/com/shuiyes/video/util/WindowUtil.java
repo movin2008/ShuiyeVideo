@@ -1,4 +1,4 @@
-package com.devlin_n.yinyangplayer.util;
+package com.shuiyes.video.util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.KeyCharacterMap;
@@ -29,7 +30,13 @@ public class WindowUtil {
      * 获取状态栏高度
      */
     public static double getStatusBarHeight(Context context) {
-        return Math.ceil(25 * context.getResources().getDisplayMetrics().density);
+        Resources resources = context.getResources();
+        int resid = resources.getIdentifier("status_bar_height", "dimen", "android");
+        if (resid > 0) {
+            return resources.getDimensionPixelSize(resid);
+        } else {
+            return Math.ceil(25 * context.getResources().getDisplayMetrics().density);
+        }
     }
 
     /**
@@ -40,9 +47,8 @@ public class WindowUtil {
             return 0;
         }
         Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height",
-                "dimen", "android");
-        //获取NavigationBar的高度
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        Log.e("HAHA", "navigation_bar_height " + resources.getDimensionPixelSize(resourceId));
         return resources.getDimensionPixelSize(resourceId);
     }
 

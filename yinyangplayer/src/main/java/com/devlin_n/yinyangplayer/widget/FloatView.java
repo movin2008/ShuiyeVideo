@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 
 import com.devlin_n.yinyangplayer.R;
 import com.devlin_n.yinyangplayer.player.YinYangPlayer;
-import com.devlin_n.yinyangplayer.util.WindowUtil;
+import com.shuiyes.video.util.WindowUtil;
 
 /**
  * 悬浮窗控件（解决滑动冲突）

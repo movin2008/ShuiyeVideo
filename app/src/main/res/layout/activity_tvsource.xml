@@ -25,8 +25,8 @@
         <Button
             style="@style/Button"
             android:layout_width="wrap_content"
-            android:onClick="jygCmcc"
-            android:text="嘉峪关移动源" />
+            android:onClick="nnCmcc"
+            android:text="南宁移动源" />
 
         <Button
             style="@style/Button"
@@ -37,20 +37,8 @@
         <Button
             style="@style/Button"
             android:layout_width="wrap_content"
-            android:onClick="syCmcc"
-            android:text="沈阳移动源" />
-
-        <Button
-            style="@style/Button"
-            android:layout_width="wrap_content"
-            android:onClick="szCmcc"
-            android:text="苏州移动源" />
-
-        <Button
-            style="@style/Button"
-            android:layout_width="wrap_content"
-            android:onClick="nnCmcc"
-            android:text="南宁移动源" />
+            android:onClick="jygCmcc"
+            android:text="嘉峪关移动源" />
 
         <Button
             style="@style/Button"
@@ -61,8 +49,26 @@
         <Button
             style="@style/Button"
             android:layout_width="wrap_content"
-            android:onClick="othCmcc"
-            android:text="其他移动源" />
+            android:onClick="szCmcc"
+            android:text="苏州移动源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="whCmcc"
+            android:text="武汉移动源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="syCmcc"
+            android:text="沈阳移动源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="whCucc"
+            android:text="武汉联通源" />
 
         <Button
             style="@style/Button"
@@ -79,8 +85,20 @@
         <Button
             style="@style/Button"
             android:layout_width="wrap_content"
-            android:onClick="othCtc"
-            android:text="电信其他源" />
+            android:onClick="cdCtc"
+            android:text="成都电信源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="dlCtc"
+            android:text="大连电信源" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="shhCtc"
+            android:text="上海电信源" />
 
         <Button
             style="@style/Button"
@@ -103,8 +121,8 @@
         <Button
             style="@style/Button"
             android:layout_width="wrap_content"
-            android:onClick="fmlist"
-            android:text="收音机源" />
+            android:onClick="other"
+            android:text="其他" />
 
         <Button
             style="@style/Button"

@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.ui.SettingsActivity;
 import com.shuiyes.video.ui.base.BaseActivity;
 import com.shuiyes.video.ui.tvlive.BuptIVIActivity;
 import com.shuiyes.video.ui.tvlive.HuyaListActivity;
@@ -19,25 +17,11 @@ import com.shuiyes.video.ui.tvlive.TVListActivity;
 
 public class TVSourceActivity extends BaseActivity {
 
-    private final String TAG = this.getClass().getSimpleName();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_tvsource);
-
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
 
     @Override
@@ -98,9 +82,14 @@ public class TVSourceActivity extends BaseActivity {
         startActivity(new Intent(this, SuzhouCMCCActivity.class));
     }
 
-    // 其他移动源
-    public void othCmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "移动.其他.tv"));
+    // 武汉移动源
+    public void whCmcc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "移动.武汉.tv"));
+    }
+
+    // 武汉联通源
+    public void whCucc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "联通.武汉.tv"));
     }
 
     // 南宁联通源
@@ -113,9 +102,19 @@ public class TVSourceActivity extends BaseActivity {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "联通.苏州.tv"));
     }
 
-    // 电信其他源
-    public void othCtc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "电信.其他.tv"));
+    // 大连电信源
+    public void dlCtc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "电信.大连.tv"));
+    }
+
+    // 成都电信源
+    public void cdCtc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "电信.成都.tv"));
+    }
+
+    // 上海电信源
+    public void shhCtc(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "电信.上海.tv"));
     }
 
     // soplus
@@ -137,5 +136,10 @@ public class TVSourceActivity extends BaseActivity {
     // 地方台整理
     public void local(View view) {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "地方台.tv"));
+    }
+
+    // 其他
+    public void other(View view) {
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "其他.tv"));
     }
 }
