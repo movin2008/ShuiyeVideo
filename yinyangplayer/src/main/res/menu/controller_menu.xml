@@ -2,10 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/video_source"
-        android:title="播放源"
+        android:title="其他播放源"
+        android:icon="@drawable/ic_action_picture_in_picture"/>
+    <item android:id="@+id/other_player"
+        android:title="系统播放器"
         android:icon="@drawable/ic_action_picture_in_picture"/>
     <item android:id="@+id/float_window"
-        android:title="悬浮窗"
+        android:title="悬浮窗播放"
         android:icon="@drawable/ic_action_picture_in_picture"/>
     <item android:id="@+id/screen_scale"
         android:title="画面比例">

@@ -392,9 +392,9 @@ public class QQVActivity extends BasePlayActivity {
                     String msg = obj.getString("msg");
                     if (!"cannot play outside".equals(msg) || i == len - 1) {
                         if ("not pay".equals(msg)) {
-                            fault("VIP 章节暂不支持试看");
+                            fault("VIP 章节暂不支持试看", true);
                         } else if ("ip-copy limit".equals(msg)) {
-                            fault("VIP付费 章节暂不支持试看");
+                            fault("VIP 付费章节暂不支持试看", true);
                         } else {
                             fault(msg);
                         }

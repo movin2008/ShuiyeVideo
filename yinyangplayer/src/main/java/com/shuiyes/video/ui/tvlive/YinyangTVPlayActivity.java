@@ -17,6 +17,7 @@ import com.devlin_n.yinyangplayer.player.YinYangPlayer;
  */
 public class YinyangTVPlayActivity extends AppCompatActivity {
 
+    protected boolean isHLS;
     protected YinYangPlayer mYinYangPlayer;
 
     protected String[] getIntentStringExtras(){
@@ -35,6 +36,7 @@ public class YinyangTVPlayActivity extends AppCompatActivity {
         String[] values = getIntentStringExtras();
         String url = values[0];
         String title = values[1];
+        isHLS = getIntent().getBooleanExtra("hls", false);
 
 //        com.bumptech.glide.Glide.with(this).load("https://i.loli.net/2020/02/02/ChFgVjiAbeD25cQ.jpg").asBitmap().animate(R.anim.anim_alpha_in).placeholder(android.R.color.black).into(((StandardVideoController)mYinYangPlayer.getVideoController()).getThumb());
         mYinYangPlayer.alwaysFullScreen().setUrl(url).setTitle(title).setVideoController(initVideoController()).start();
@@ -42,7 +44,7 @@ public class YinyangTVPlayActivity extends AppCompatActivity {
 
     protected StandardVideoController initVideoController(){
         StandardVideoController controller = new StandardVideoController(this);
-        controller.setLive(true);
+        controller.setLive(isHLS);
         return controller;
     }
 

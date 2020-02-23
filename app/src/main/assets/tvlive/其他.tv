@@ -1,32 +1,6 @@
-CCTV-4K,http://112.17.40.140/PLTV/88888888/224/3221226809/index.m3u8
-CCTV-4K,http://117.148.187.83/PLTV/88888888/224/3221226758/index.m3u8
-BESTV-4K,http://117.148.187.83/PLTV/88888888/224/3221226718/index.m3u8
-
- 华数
-时装1,http://hls-ott-zhibo.wasu.tv/live/297/index.m3u8
-时装2,http://hls-ott-zhibo.wasu.tv/live/299/index.m3u8
-时尚1,http://hls-ott-zhibo.wasu.tv/live/300/index.m3u8
-时尚2,http://hls-ott-zhibo.wasu.tv/live/304/index.m3u8
-公主城堡,http://hls-ott-zhibo.wasu.tv/live/328/index.m3u8
-睡前故事,http://hls-ott-zhibo.wasu.tv/live/332/index.m3u8
-热血抗战,http://hls-ott-zhibo.wasu.tv/live/353/index.m3u8
-历史解密,http://hls-ott-zhibo.wasu.tv/live/369/index.m3u8
-大国时代,http://hls-ott-zhibo.wasu.tv/live/390/index.m3u8
-科教人文,http://hls-ott-zhibo.wasu.tv/live/391/index.m3u8
-军事纪实,http://hls-ott-zhibo.wasu.tv/live/392/index.m3u8
-BBC系列,http://hls-ott-zhibo.wasu.tv/live/394/index.m3u8
-
-惊悚悬疑,http://hls-ott-zhibo.wasu.tv/live/104_55913/index.m3u8
-熱門網大,http://hls-ott-zhibo.wasu.tv/live/107_50459/index.m3u8
-浪漫愛情,http://hls-ott-zhibo.wasu.tv/live/231/index.m3u8
-抗日剧场,http://hls-ott-zhibo.wasu.tv/live/258/index.m3u8
-好莱坞片,http://hls-ott-zhibo.wasu.tv/live/263/index.m3u8
-动作电影,http://hls-ott-zhibo.wasu.tv/live/268/index.m3u8
-爱情电影,http://hls-ott-zhibo.wasu.tv/live/269/index.m3u8
-
-動漫電影,http://hls-ott-zhibo.wasu.tv/live/356/index.m3u8
-院線大片,http://hls-ott-zhibo.wasu.tv/live/357/index.m3u8
-古装剧场,http://hls-ott-zhibo.wasu.tv/live/259/index.m3u8
+中国大熊猫保护研究中心 1080P,https://gcbsc.v.live.baishancdnx.cn/gc/xiongmao03_1/index.m3u8?contentid=2820180516001
+成都大熊猫繁育研究基地 1080P,https://gctxyc.liveplay.myqcloud.com/gc/xiongmao25_1/index.m3u8?contentid=2820180516001
+成都大熊猫繁育研究基地 720P,https://gcalic.v.myalicdn.com/gc/ipanda_1/index.m3u8?contentid=2820180516001&AUTH=EWbqPX5amMUxL2KapN4PojjCv6Y3kLImyv4JB9phjgIhwCszcDyLyNooS5TQjhxk9JhHTXU+qF3B2DqF9U/PJA==
 
  TVBUS http://chlist.sopplus.tv/v2/channels
 CCTV1,tvbus://1R8Rw3uqyfdkci7b9VWm7N17ynqv259h1Bo7i2uyi9bmq513uX
@@ -43,12 +17,27 @@ cctv13,http://cbn-live.cbchot.com/live/cl114_1.m3u8
 cctv14,http://cbn-live.cbchot.com/live/yt_cctv14_l_1.m3u8
 cctv15,http://cbn-live.cbchot.com/live/cl003_1.m3u8
 
+CCTV4K,http://117.148.187.83/PLTV/88888888/224/3221226758/index.m3u8
+BESTV4K,http://117.148.187.83/PLTV/88888888/224/3221226718/index.m3u8
+百视通4K,http://117.148.187.83/PLTV/88888888/224/3221226718/index.m3u8
+爱上4K,http://1.180.237.9/live.aishang.ctlcdn.com/00000110240282_1/encoder/0/playlist.m3u8
+
+CCTV5,http://hbsh.chinashadt.com:2036/live/8.stream/playlist.m3u8
+湖南卫视,http://hbpx.chinashadt.com:2036/live/px5.stream/playlist.m3u8
+龙口综合,http://yslk.chinashadt.com:1635/live/stream:di3.stream/playlist.m3u8
+
 CCTV5,http://124.47.33.211:80/wh7f454c46tw1637120599_1868358036/PLTV/88888888/224/3221225489/index.m3u8?icpid=88888888&RTS=1554598207&from=0&hms_devid=143
+CCTV15,http://111.63.117.13:6060/030000001000/G_CCTV-15/G_CCTV-15.m3u8
+
+郑氏频道 - baby,http://ms003.happytv.com.tw/live/F9YMztT5DcwWEr1f/index.m3u8?token=VAU4_fynwoclW3rInbKmJw&time=1558344002435
+
+NEWTV超级电影,http://183.251.61.207/PLTV/88888888/224/3221225804/index.m3u8
+NEWTV完美游戏,http://218.207.213.133/wh7f454c46tw546395453_-944749478/PLTV/88888888/224/3221225894/index.m3u8
+
 河北卫视,http://live01.hebtv.com/channels/hebtv/video_channel_04/flv:2000k/live
 云南卫视,http://edge1.yntv.cn/channels/yntv/ynws/flv:sd/live
 西藏卫视,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/xizangstv/1.m3u8
 兵团卫视,http://v.btzx.com.cn:1935/live/weishi.stream/playlist.m3u8
-湖南卫视,http://hbpx.chinashadt.com:2036/live/px5.stream/playlist.m3u8
 江西卫视,http://live02.jxtvcn.com.cn/live-jxtvcn/jxtv01.m3u8
 浙江卫视,http://ali.m.l.cztv.com/channels/lantian/channel01/360p.m3u8
 金鹰卡通,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/jinyingkaton/1.m3u8
@@ -88,9 +77,10 @@ CCTV3,http://39.135.38.165:6610/000000001000/1000000001000011218/1.m3u8?IASHttpS
  广东深圳 联通
 CCTV3,https://116.77.72.195/streams/d/cctv3/playlist.m3u8
 
- 北京联通
+ 北京联通 360P
 CCTV3,https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv3_2_hd.m3u8
 CCTV3,https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv3_2/index.m3u8
+辽宁卫视,http://cctvalih5ca.v.myalicdn.com/wstv/liaoning_2/index.m3u8
 
  济南联通
 CCTV3,http://cctvalih5ca.v.myalicdn.com/live/cctv3_2/index.m3u8

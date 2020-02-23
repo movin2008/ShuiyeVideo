@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.util.Log;
 
 import com.shuiyes.video.ui.cbchot.CBChotVActivity;
@@ -15,6 +16,7 @@ import com.shuiyes.video.ui.iqiyi.IQiyiVActivity;
 import com.shuiyes.video.ui.letv.LetvVActivity;
 import com.shuiyes.video.ui.qq.QQVActivity;
 import com.shuiyes.video.ui.tvlive.TVBusActivity;
+import com.shuiyes.video.ui.tvlive.TVPlayActivity;
 import com.shuiyes.video.ui.tvlive.YinyangTVPlayActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuVActivity;
@@ -37,49 +39,6 @@ public class PlayUtils {
     }
 
     public static void play(Context context, String url, String title) {
-        PlayUtils.play(context, url, title, false);
-    }
-
-    public static void play(final Context context, String url, String title, boolean isHLS) {
-        if (isHLS) {
-            if (url.startsWith("tvbus://")) {
-                try {
-                    context.createPackageContext("io.binstream.github.demo", 0);
-                    context.startActivity(new Intent(context, TVBusActivity.class)
-                            .putExtra("title", title)
-                            .putExtra("url", url));
-                } catch (PackageManager.NameNotFoundException e) {
-                    final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                    dialog.setMessage("TVBus 播放插件尚未安装");
-                    dialog.setPositiveButton("安装", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            Utils.installTVBus(context);
-                        }
-                    });
-                    dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    dialog.show();
-                }
-            } else {
-//                context.startActivity(new Intent(context, TVPlayActivity.class)
-                context.startActivity(new Intent(context, YinyangTVPlayActivity.class)
-                        .putExtra("title", title)
-                        .putExtra("url", url));
-
-//                context.startActivity(new Intent(context, PlayerActivity.class)
-//                        .setAction(PlayerActivity.ACTION_VIEW)
-//                        .setData(Uri.parse(url)));
-            }
-
-            return;
-        }
-
         if (url.contains("youku.com")) {
             if (url.contains("youku.com/v_show/")) {
                 context.startActivity(new Intent(context, YoukuVActivity.class).putExtra("url", url).putExtra("title", title));
@@ -121,6 +80,40 @@ public class PlayUtils {
         Log.e(TAG, text);
 
         WebActivity.launch(context, url);
+    }
+
+    public static void playLive(Context context, String url, String title, boolean isHLS){
+        if (url.startsWith("tvbus://")) {
+            try {
+                context.createPackageContext("io.binstream.github.demo", 0);
+                context.startActivity(new Intent(context, TVBusActivity.class)
+                        .putExtra("title", title)
+                        .putExtra("url", url));
+            } catch (PackageManager.NameNotFoundException e) {
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                dialog.setMessage("TVBus 播放插件尚未安装");
+                dialog.setPositiveButton("安装", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Utils.installTVBus(context);
+                    }
+                });
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        } else {
+//                context.startActivity(new Intent(context, TVPlayActivity.class)
+            context.startActivity(new Intent(context, YinyangTVPlayActivity.class)
+                    .putExtra("title", title)
+                    .putExtra("url", url)
+                    .putExtra("hls", isHLS));
+        }
     }
 
 }

@@ -150,7 +150,7 @@ public class QQSoActivity extends BaseSearchActivity {
                                 title += "(预告)";
                             } else if (result.contains("alt=\"视频包月only-VIP\"")) {
                                 title += "(VIP)";
-                            }else if (result.contains("alt=\"VIP付费\"")) {
+                            }else if (result.contains("alt=\"VIP付费\"") || result.contains("alt=\"超前点播\"")) {
                                 title += "(VIP付费)";
                             }
 

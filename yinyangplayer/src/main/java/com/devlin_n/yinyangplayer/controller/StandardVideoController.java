@@ -1,13 +1,13 @@
 package com.devlin_n.yinyangplayer.controller;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -123,7 +123,16 @@ public class StandardVideoController extends BaseVideoController implements View
 
     protected void menuItemClick(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.float_window) {
+        if (itemId == R.id.other_player) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+
+            String url = mediaPlayer.getUrl();
+//            String extension = android.webkit.MimeTypeMap.getFileExtensionFromUrl(url);
+//            String mimeType = android.webkit.MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+
+            intent.setDataAndType(Uri.parse(url), "video/*");
+            getContext().startActivity(intent);
+        }else if (itemId == R.id.float_window) {
             mediaPlayer.startFloatWindow();
         } else if (itemId == R.id.scale_default) {
             mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_DEFAULT);
@@ -304,10 +313,12 @@ public class StandardVideoController extends BaseVideoController implements View
      */
     public void setLive(boolean live) {
         isLive = live;
-        bottomProgress.setVisibility(GONE);
-        videoProgress.setVisibility(INVISIBLE);
-        totalTime.setVisibility(INVISIBLE);
-        moreMenu.setVisibility(VISIBLE);
+        if(live){
+            bottomProgress.setVisibility(GONE);
+            videoProgress.setVisibility(INVISIBLE);
+            totalTime.setVisibility(INVISIBLE);
+            moreMenu.setVisibility(VISIBLE);
+        }
     }
 
     @Override
@@ -407,6 +418,11 @@ public class StandardVideoController extends BaseVideoController implements View
         if (mediaPlayer == null || isDragging) {
             return 0;
         }
+
+        if(isLive){
+            currTime.setText("LIVE");
+            return 0;
+        }
         int position = mediaPlayer.getCurrentPosition();
         int duration = mediaPlayer.getDuration();
         if (videoProgress != null) {
@@ -444,7 +460,4 @@ public class StandardVideoController extends BaseVideoController implements View
         }
     }
 
-    public ImageView getThumb() {
-        return thumb;
-    }
 }

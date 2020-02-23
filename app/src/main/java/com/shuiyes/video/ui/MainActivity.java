@@ -15,7 +15,9 @@ import com.shuiyes.video.ui.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;
 import com.shuiyes.video.ui.qq.QQSoActivity;
+import com.shuiyes.video.ui.tvlive.FilmSourceActivity;
 import com.shuiyes.video.ui.tvlive.TVListActivity;
+import com.shuiyes.video.ui.tvlive.TVSourceActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuSoActivity;
 
@@ -132,6 +134,11 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, TVSourceActivity.class));
     }
 
+    // 电影搜集
+    public void film(View view) {
+        startActivity(new Intent(this, FilmSourceActivity.class));
+    }
+
     // 收音机源
     public void fmlist(View view) {
         startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "收音机.tv"));
@@ -151,9 +158,10 @@ public class MainActivity extends BaseActivity {
         // https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html
 //        VipActivity.launch(this, "http://www.le.com/ptv/vplay/31625706.html");
 
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "test.tv"));
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/test.tv"));
+//        startActivity(new Intent(this, HuyaListActivity.class).putExtra(TVListActivity.EXTRA, "test.tv"));
 
-        String url = "http://live.redtraffic.xyz/bigdick.m3u8";
+//        String url = "http://live.redtraffic.xyz/bigdick.m3u8";
 //        PlayUtils.play(this, url, "", true);
     }
 

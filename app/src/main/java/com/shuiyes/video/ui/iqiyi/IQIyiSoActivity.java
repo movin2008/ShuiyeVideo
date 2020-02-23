@@ -253,10 +253,15 @@ public class IQIyiSoActivity extends BaseSearchActivity {
             String text = name;
             if (name.contains(albumTitle)) {
                 if(name.equals(albumTitle)){
+
                 }else if(name.equals(albumTitle+"第" + (j + 1) + "集")){
                     text = String.valueOf(j + 1);
                 }else{
                     text = name.replaceAll(albumTitle, "");
+                }
+
+                if(text.startsWith("_")){
+                    text = text.substring(1);
                 }
             }
 

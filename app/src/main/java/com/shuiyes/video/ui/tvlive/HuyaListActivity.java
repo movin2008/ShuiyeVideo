@@ -58,6 +58,22 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
         // http://aldirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1_1200.m3u8
         mVideos.add(new ListVideo("源.aldirect_1200", title, url.replace(".m3u8", "_1200.m3u8")));
 
+        // http://txdirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1.m3u8
+        String jsdirect_url = url.replace("aldirect", "jsdirect");
+        mVideos.add(new ListVideo("源.jsdirect", title, jsdirect_url));
+
+        // http://txdirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1_1200.m3u8
+        jsdirect_url = jsdirect_url.replace(".m3u8", "_1200.m3u8");
+        mVideos.add(new ListVideo("源.jsdirect_1200", title, jsdirect_url));
+
+        // http://txdirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1.m3u8
+        String txdirect_url = url.replace("aldirect", "txdirect");
+        mVideos.add(new ListVideo("源.txdirect", title, txdirect_url));
+
+        // http://txdirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1_1200.m3u8
+        txdirect_url = txdirect_url.replace(".m3u8", "_1200.m3u8");
+        mVideos.add(new ListVideo("源.txdirect_1200", title, txdirect_url));
+
         // http://tx.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1.m3u8
         String tx_url = url.replace("aldirect", "tx");
         mVideos.add(new ListVideo("源.tx", title, tx_url));
@@ -118,6 +134,8 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
 
     private Thread mThread;
 
+    static final int COUNT = 12;
+
     public void testHuyaUrl(NumberView v) {
         if (mThread != null && mThread.isAlive()) {
             mThread.interrupt();
@@ -129,7 +147,7 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
 
                 int id = v.getId();
                 int flag = 0;
-                for (int i = 1; i <= 8; i++) {
+                for (int i = 1; i <= COUNT; i++) {
                     final NumberView view = mResultView.findViewById(id + i);
                     String html = HttpUtils.get(view.getUrl());
 
@@ -138,7 +156,7 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
                     }
 
                     final boolean enable = html.startsWith("#EXTM3U");
-                    Log.e(TAG, view.getTitle() + view.getText() + ", " + (enable ? "有效" : "无效"));
+                    Log.e(TAG, view.getTitle() + " " + view.getText() + ", " + (enable ? "有效" : "无效"));
                     if (enable) {
                         flag++;
                     } else {
@@ -155,10 +173,12 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
                     });
                 }
 
-                if (flag == 8) {
+                if (flag == 0) {
+                    tips(v.getTitle() + " 测试结束, 全部无效");
+                }if (flag == COUNT) {
                     tips(v.getTitle() + " 测试结束, 全部有效");
                 } else {
-                    tips(v.getTitle() + " 测试结束, 有效: " + flag + ", 无效: " + (8 - flag));
+                    tips(v.getTitle() + " 测试结束, 有效: " + flag + ", 无效: " + (COUNT - flag));
                 }
             }
         };

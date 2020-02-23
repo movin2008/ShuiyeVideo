@@ -39,9 +39,11 @@ CHC高清电影,rtmp://ivi.bupt.edu.cn:1935/livetv/chchd
 北邮测试源
 CCTV1,http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8
 CCTV3,http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8
+CCTV-5,http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8
 CCTV5+,http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8
 CCTV6,http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8
 CCTV8,http://ivi.bupt.edu.cn/hls/cctv8hd.m3u8
+
 浙江卫视,http://ivi.bupt.edu.cn/hls/zjhd.m3u8
 东方卫视,http://ivi.bupt.edu.cn/hls/dfhd.m3u8
 辽宁卫视,http://ivi.bupt.edu.cn/hls/lnhd.m3u8

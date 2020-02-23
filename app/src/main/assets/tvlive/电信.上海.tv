@@ -1,16 +1,55 @@
  上海 电信
-CCTV1,http://101.89.132.136:80/live/tm-cctv1-4000k.m3u8
-北京卫视,http://101.89.132.136:80/live/tm-btv1hd-4000k.m3u8
-北京文艺,http://101.89.132.136:80/live/tm-btv2hd-4000k.m3u8
-北京影视,http://101.89.132.136:80/live/tm-btv4-4000k.m3u8
-北京新闻,http://101.89.132.136:80/live/tm-btv9-4000k.m3u8
-北京纪实,http://101.89.132.136:80/live/tm-btvjishihd-4000k.m3u8
-安徽卫视,http://101.89.132.136:80/live/tm-ahwshd-4000k.m3u8
-东方卫视,http://101.89.132.136:80/live/tm-dfwshd-4000k.m3u8
-深圳卫视,http://101.89.132.136:80/live/tm-shenzhenhd-4000k.m3u8
-广东卫视,http://101.89.132.136:80/live/tm-guangdonghd-4000k.m3u8
-黑龙卫视,http://101.89.132.136:80/live/tm-heilongjianghd-4000k.m3u8
-辽宁卫视,http://101.89.132.136:80/live/tm-liaoninghd-4000k.m3u8
+## 可用IP: 111.0.27.27 111.0.27.30 61.151.179.192
+CCTV4K 1080P,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000210103.m3u8
+CCTV4K 1080P,http://111.0.27.30/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
+CCTV4K 1080P,http://61.151.179.192/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
+
+CCTV1HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000210103.m3u8
+CCTV2HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000203603.m3u8
+CCTV3HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000203803.m3u8
+CCTV4HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000204803.m3u8
+CCTV5HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000205103.m3u8
+CCTV5+HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000204503.m3u8
+CCTV6HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000203303.m3u8
+CCTV7HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000510003.m3u8
+CCTV8HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000203903.m3u8
+CCTV9HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000499403.m3u8
+CCTV10HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000203503.m3u8
+CCTV11HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000204103.m3u8
+CCTV12HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000202603.m3u8
+CCTV13HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000204603.m3u8
+CCTV14HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000204403.m3u8
+CCTV15HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000205003.m3u8
+CCTV17HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000204203.m3u8
+
+北京卫视HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000272103.m3u8
+湖南卫视HD,http://111.0.27.27/tlivecloud-cdn.ysp.cctv.cn/001/2000296203.m3u8
+
+
+CCTV1HD,http://101.89.132.136/live/tm-cctv1-4000k.m3u8
+CCTV2HD,http://101.89.132.136/live/tm-cctv2-4000k.m3u8
+CCTV3HD,http://101.89.132.136/live/tm-cctv3-4000k.m3u8
+CCTV4HD,http://101.89.132.136/live/tm-cctv4-4000k.m3u8
+CCTV5HD,http://101.89.132.136/live/tm-cctv5-4000k.m3u8
+CCTV6HD,http://101.89.132.136/live/tm-cctv6-4000k.m3u8
+CCTV7HD,http://101.89.132.136/live/tm-cctv7-4000k.m3u8
+CCTV8HD,http://101.89.132.136/live/tm-cctv8-4000k.m3u8
+CCTV9HD,http://101.89.132.136/live/tm-cctv9-4000k.m3u8
+CCTV10HD,http://101.89.132.136/live/tm-cctv10-4000k.m3u8
+CCTV12HD,http://101.89.132.136/live/tm-cctv12-4000k.m3u8
+CCTV14HD,http://101.89.132.136/live/tm-cctv14-4000k.m3u8
+
+北京卫视,http://101.89.132.136/live/tm-btv1hd-4000k.m3u8
+北京文艺,http://101.89.132.136/live/tm-btv2hd-4000k.m3u8
+北京影视,http://101.89.132.136/live/tm-btv4-4000k.m3u8
+北京新闻,http://101.89.132.136/live/tm-btv9-4000k.m3u8
+北京纪实,http://101.89.132.136/live/tm-btvjishihd-4000k.m3u8
+安徽卫视,http://101.89.132.136/live/tm-ahwshd-4000k.m3u8
+东方卫视,http://101.89.132.136/live/tm-dfwshd-4000k.m3u8
+深圳卫视,http://101.89.132.136/live/tm-shenzhenhd-4000k.m3u8
+广东卫视,http://101.89.132.136/live/tm-guangdonghd-4000k.m3u8
+黑龙卫视,http://101.89.132.136/live/tm-heilongjianghd-4000k.m3u8
+辽宁卫视,http://101.89.132.136/live/tm-liaoninghd-4000k.m3u8
 
 喜剧影院,http://101.89.132.179/live/tm-yg1xjyy-1200k.m3u8
 高清电影,http://101.89.132.179/live/tm-yg1dypd-1200k.m3u8
@@ -20,5 +59,3 @@ CCTV1,http://101.89.132.136:80/live/tm-cctv1-4000k.m3u8
 经典剧场,http://101.89.132.179/live/tm-yg1jdjc-1200k.m3u8
 骄阳剧场,http://101.89.132.179/live/tm-yg1jyjc-1200k.m3u8
 上海电视剧,http://101.89.132.179/live/tm-shdsj-4000k.m3u8
-
-CCTV3,http://61.151.179.192/tlivecloud-cdn.ysp.cctv.cn/2000203803.m3u8

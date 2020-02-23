@@ -7,7 +7,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         applicationId "com.shuiyes.video"
-        versionCode 1 //new Date().time.intValue()
+        versionCode new Date().time.intValue()
         versionName "v" + new Date().format('yyyyMMddHHmm')
     }
 

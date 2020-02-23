@@ -348,6 +348,8 @@ public abstract class BaseVideoController extends FrameLayout {
     }
 
     public interface MediaPlayerControl {
+        String getUrl();
+
         void start(String url);
 
         void start();

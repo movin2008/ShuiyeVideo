@@ -15,8 +15,8 @@ import java.net.URLDecoder;
 
 public class TVListActivity extends BaseTVListActivity implements View.OnClickListener {
 
-    public final static String EXTRA = "filename";
-    private String FileName = "default.list";
+    public final static String EXTRA = "file";
+    private String FileList = "default.list";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
 
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA)) {
-            FileName = intent.getStringExtra(EXTRA);
+            FileList = intent.getStringExtra(EXTRA);
         }
         refreshTvlist();
     }
@@ -50,9 +50,10 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
             @Override
             public void run() {
                 try {
-                    InputStream in = mContext.getAssets().open("tvlive/" + FileName);
+                    InputStream in = mContext.getAssets().open(FileList);
                     BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                    if (FileName.endsWith(".tv")) {
+                    if (FileList.endsWith(".fm")) {
+                        isHLS = false;
 
                         String text;
                         while ((text = br.readLine()) != null) {
@@ -63,7 +64,18 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
 
                             addListVideo(text);
                         }
-                    } else if (FileName.endsWith(".dpl")) {
+                    }else if (FileList.endsWith(".tv")) {
+
+                        String text;
+                        while ((text = br.readLine()) != null) {
+                            if (text.startsWith("##")) {
+                                // 注释
+                                continue;
+                            }
+
+                            addListVideo(text);
+                        }
+                    } else if (FileList.endsWith(".dpl")) {
                         String text, url = null;
                         while ((text = br.readLine()) != null) {
                             if (text.startsWith("##")) {
@@ -80,7 +92,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                                 }
                             }
                         }
-                    } else if (FileName.endsWith(".m3u")) {
+                    } else if (FileList.endsWith(".m3u")) {
                         String text, title = null, groupTitle = "";
                         while ((text = br.readLine()) != null) {
                             if (text.startsWith("#EXTM3U")) {
@@ -110,7 +122,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                             }
                         }
                     } else {
-                        onFailure("更多源加载失败：未知后缀 " + FileName);
+                        onFailure("更多源加载失败：未知后缀 " + FileList);
                     }
                     br.close();
                 } catch (Exception e) {

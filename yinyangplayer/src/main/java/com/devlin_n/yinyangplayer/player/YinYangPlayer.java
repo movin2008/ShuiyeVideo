@@ -450,6 +450,11 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
         return this;
     }
 
+    @Override
+    public String getUrl() {
+        return mCurrentUrl;
+    }
+
     /**
      * 一开始播放就seek到预先设置好的位置
      */

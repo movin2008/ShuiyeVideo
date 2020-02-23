@@ -3,7 +3,6 @@ package com.shuiyes.video.ui.base;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -28,6 +27,8 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
     protected TagFlowLayout mResultView;
     protected Handler mHandler = new Handler();
     protected List<ListVideo> mVideos = new ArrayList<ListVideo>();
+
+    protected boolean isHLS = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +94,11 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
             // 中广热点云加了 auth 验证
             url = CbchotUtil.getAuthUrl(url);
         }else if(url.contains("player.cntv.cn/standard/live")){
-
             WebActivity.launch(this, url);
             return;
         }
 
-        PlayUtils.play(this, url, view.getTitle(), true);
+        PlayUtils.playLive(this, url, view.getTitle(), isHLS);
     }
-
 
 }

@@ -1,0 +1,81 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fadeScrollbars="false">
+
+    <com.zhy.view.flowlayout.FlowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="yinyuetai"
+            android:text="音悦台" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="film1"
+            android:text="电影整理" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="film2"
+            android:text="经典电影" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="laosj"
+            android:text="老司机" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="tokyo1"
+            android:text="Tokyo hot1" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="tokyo2"
+            android:text="Tokyo hot2" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="SKrBlue"
+            android:text="韩国三级" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="SKrDance"
+            android:text="韩国热舞" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="SKrDance2"
+            android:text="韩国骚舞" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="SKrSilk"
+            android:text="韩国黑丝" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="SKrSalonGirls"
+            android:text="韩国车模" />
+
+    </com.zhy.view.flowlayout.FlowLayout>
+
+</ScrollView>

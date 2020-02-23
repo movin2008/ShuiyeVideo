@@ -31,7 +31,7 @@ public class SuzhouCMCCActivity extends BaseTVLiveActivity {
         return HOST + "cctv-" + tv + "/cctv-" + tv;
     }
 
-    private final String HOST = "http://183.207.248.71:80/cntv/live1/";
+    private final String HOST = "http://183.207.248.71/cntv/live1/";
 
     @Override
     public void refreshVideos(String result) throws Exception {
@@ -47,7 +47,7 @@ public class SuzhouCMCCActivity extends BaseTVLiveActivity {
             String channelName = channel.getString("channelName");
             String uuid = channel.getString("uuid");
 
-            // http://183.207.248.71:80/cntv/live1/channelName/uuid
+            // http://183.207.248.71/cntv/live1/channelName/uuid
             mVideos.add(new ListVideo(channelName, channelName, HOST + channelName + "/" + uuid));
         }
     }
