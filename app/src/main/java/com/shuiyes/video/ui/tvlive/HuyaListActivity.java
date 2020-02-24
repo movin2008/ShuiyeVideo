@@ -52,51 +52,20 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
         mVideos.add(new ListVideo(title, null, null));
         mVideos.add(new ListVideo("测试", title, url.replace("https", "test").replace("http", "test")));
 
-        // http://aldirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1.m3u8
-        mVideos.add(new ListVideo("源.aldirect", title, url));
+        String[] sources = {"aldirect", "jsdirect", "txdirect", "al", "js", "tx"};
+        for (String source : sources) {
+            String nurl = url.replace("aldirect", source);
+            mVideos.add(new ListVideo("源." + source, title, nurl));
+            mVideos.add(new ListVideo("源." + source + "_1200", title, nurl.replace(".m3u8", "_1200.m3u8")));
+            mVideos.add(new ListVideo("源." + source + "_2000", title, nurl.replace(".m3u8", "_2000.m3u8")));
+            mVideos.add(new ListVideo("源." + source + "_2500", title, nurl.replace(".m3u8", "_2500.m3u8")));
 
-        // http://aldirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1_1200.m3u8
-        mVideos.add(new ListVideo("源.aldirect_1200", title, url.replace(".m3u8", "_1200.m3u8")));
-
-        // http://txdirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1.m3u8
-        String jsdirect_url = url.replace("aldirect", "jsdirect");
-        mVideos.add(new ListVideo("源.jsdirect", title, jsdirect_url));
-
-        // http://txdirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1_1200.m3u8
-        jsdirect_url = jsdirect_url.replace(".m3u8", "_1200.m3u8");
-        mVideos.add(new ListVideo("源.jsdirect_1200", title, jsdirect_url));
-
-        // http://txdirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1.m3u8
-        String txdirect_url = url.replace("aldirect", "txdirect");
-        mVideos.add(new ListVideo("源.txdirect", title, txdirect_url));
-
-        // http://txdirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1_1200.m3u8
-        txdirect_url = txdirect_url.replace(".m3u8", "_1200.m3u8");
-        mVideos.add(new ListVideo("源.txdirect_1200", title, txdirect_url));
-
-        // http://tx.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1.m3u8
-        String tx_url = url.replace("aldirect", "tx");
-        mVideos.add(new ListVideo("源.tx", title, tx_url));
-
-        // http://tx.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1_1200.m3u8
-        tx_url = tx_url.replace(".m3u8", "_1200.m3u8");
-        mVideos.add(new ListVideo("源.tx_1200", title, tx_url));
-
-        // http://js.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1.m3u8
-        String js_url = url.replace("aldirect", "js");
-        mVideos.add(new ListVideo("源.js", title, js_url));
-
-        // http://js.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1_1200.m3u8
-        js_url = js_url.replace(".m3u8", "_1200.m3u8");
-        mVideos.add(new ListVideo("源.js_1200", title, js_url));
-
-        // http://js.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1.m3u8
-        String al_url = url.replace("aldirect", "js");
-        mVideos.add(new ListVideo("源.al", title, al_url));
-
-        // http://js.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1_1200.m3u8
-        al_url = al_url.replace(".m3u8", "_1200.m3u8");
-        mVideos.add(new ListVideo("源.al_1200", title, al_url));
+            nurl = nurl.replace("huyalive", "backsrc");
+            mVideos.add(new ListVideo("源." + source, title, nurl));
+            mVideos.add(new ListVideo("源." + source + "_1200", title, nurl.replace(".m3u8", "_1200.m3u8")));
+            mVideos.add(new ListVideo("源." + source + "_2000", title, nurl.replace(".m3u8", "_2000.m3u8")));
+            mVideos.add(new ListVideo("源." + source + "_2500", title, nurl.replace(".m3u8", "_2500.m3u8")));
+        }
     }
 
     @Override
@@ -134,7 +103,7 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
 
     private Thread mThread;
 
-    static final int COUNT = 12;
+    static final int COUNT = 24;
 
     public void testHuyaUrl(NumberView v) {
         if (mThread != null && mThread.isAlive()) {
@@ -175,7 +144,8 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
 
                 if (flag == 0) {
                     tips(v.getTitle() + " 测试结束, 全部无效");
-                }if (flag == COUNT) {
+                }
+                if (flag == COUNT) {
                     tips(v.getTitle() + " 测试结束, 全部有效");
                 } else {
                     tips(v.getTitle() + " 测试结束, 有效: " + flag + ", 无效: " + (COUNT - flag));

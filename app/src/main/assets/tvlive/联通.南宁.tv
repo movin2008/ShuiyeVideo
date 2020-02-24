@@ -23,6 +23,7 @@ CCTV15,http://121.31.30.90:8085/ysten-business/live/cctv-15/1.m3u8
 
 CGTN,http://121.31.30.90:8085/ysten-business/live/cctv-9/12757797.m3u8
 CETV,http://121.31.30.90:8085/ysten-business/live/jiaoyutv/1.m3u8
+炫动卡通,http://121.31.30.90:8085/ysten-business/live/xuandongkaton/1.m3u8
 
 NEWTV搏击系列,http://121.31.30.90:8085/ysten-business/live/SD-1500k-576P-bokesen/1.m3u8
 Newtv中国功夫,http://121.31.30.90:8085/ysten-business/live/SD-1500k-576P-gzkongfu/1.m3u8
@@ -59,6 +60,13 @@ Newtv海外剧场,http://121.31.30.90:8085/ysten-business/live/xiqumd/1.m3u8
 陕西卫视,http://121.31.30.90:8085/ysten-business/live/shanxi1stv/1.m3u8
 内蒙卫视,http://121.31.30.90:8085/ysten-business/live/neimenggustv/1.m3u8
 东方卫视,http://121.31.30.90:8085/ysten-business/live/hddongfangstv/1.m3u8
+北京卫视,http://121.31.30.90:8085/ysten-business/live/hdbeijingstv/1.m3u8
+广东卫视,http://121.31.30.90:8085/ysten-business/live/hdguangdongstv/1.m3u8
+湖北卫视,http://121.31.30.90:8085/ysten-business/live/hdhubeistv/1.m3u8
+山东卫视,http://121.31.30.90:8085/ysten-business/live/hdshandongstv/1.m3u8
+深圳卫视,http://121.31.30.90:8085/ysten-business/live/hdshenzhenstv/1.m3u8
+天津卫视,http://121.31.30.90:8085/ysten-business/live/hdtianjinstv/1.m3u8
+浙江卫视,http://121.31.30.90:8085/ysten-business/live/hdzhejiangstv/1.m3u8
 
 Newtv爱情喜剧,http://121.31.30.90:8085/ysten-business/live/aiqingxj/yst.m3u8
 Newtv动作电影,http://121.31.30.90:8085/ysten-business/live/dongzuody/yst.m3u8
@@ -77,3 +85,8 @@ Newtv精品大剧,http://121.31.30.90:8085/ysten-business/live/jdaju/yst.m3u8
 湖南卫视,http://121.31.30.90:8085/ysten-business/live/hunanstv/yst.m3u8
 西藏卫视,http://121.31.30.90:8085/ysten-business/live/xizangstv/yst.m3u8
 湖南卫视,http://121.31.30.90:8085/ysten-business/live/hdhunanstv/yst.m3u8
+
+阳光卫视,http://121.31.30.90:8085/ysten-business/live/yangguangstv/yst.m3u8
+动画王国,http://121.31.30.90:8085/ysten-business/live/donghuawg/yst.m3u8
+精品综艺,http://121.31.30.90:8085/ysten-business/live/jzongyi/yst.m3u8
+优漫卡通,http://121.31.30.90:8085/ysten-business/live/youmankaton/yst.m3u8
