@@ -1,14 +1,12 @@
  港
 香港卫视,http://zhibo.hkstv.tv/livestream/mutfysrq.flv
 香港卫视,http://zhibo.hkstv.tv/livestream/mutfysrq/playlist.m3u8
-香港卫视,http://cctvtxyh5c.liveplay.myqcloud.com/cstv/xianggangweishi_2/index.m3u8
 
 香港耀才财经,rtmp://202.69.69.180:443/webcast/bshdlive-pc
 香港耀才财经,http://202.69.69.180:443/webcast/bshdlive-pc/playlist.m3u8
 香港耀才财经,http://202.69.67.66:443/webcast/bshdlive-pc/playlist.m3u8
 香港耀才財經,http://202.69.67.66:443/webcast/bshdlive-mobile/playlist.m3u8
 
-星空衛視,http://116.199.5.52:8114/00000000/index.m3u8?&Fsv_ctype=LIVES&Fsv_otype=1&FvSeid=5abd1660af1babb4&Pcontent_id=&Provider_id=&Fsv_chan_hls_se_idx=233
 香港有线新闻,https://ottproxy2.mott.tv/livehls/MOB-SCC/02.m3u8
 HKC 新闻,https://ottproxy2.mott.tv/livehls/MOB-SCC/03.m3u8?sessionID=XNoSKsoyhu+3ZzGxIn6l1Azz
 
@@ -17,9 +15,8 @@ HKC 新闻,https://ottproxy2.mott.tv/livehls/MOB-SCC/03.m3u8?sessionID=XNoSKsoyh
 
 凤凰资讯,http://117.169.120.138:8080/live/fhzixun/.m3u8
 
-TVB 翡翠台,http://116.199.5.51:8114/index.m3u8?Fsv_chan_hls_se_idx=188&amp;FvSeid=1&amp;Fsv_ctype=LIVES&amp;Fsv_otype=1&amp;Provider_id=&amp;Pcontent_id=.m3u8
-TVB 明珠台,http://116.199.5.51:8114/hls/Fsv_chan_hls_se_idx=12?FvSeid=1&Fsv_filetype=1&Fsv_ctype=LIVES&Fsv_cid=0&Fsv_chan_hls_se_idx=12&Fsv_rate_id=2&Fsv_SV_PARAM1=0&Fsv_ShiftEnable=0&Fsv_ShiftTsp=0&Provider_id=0&Pcontent_id=8114.m3u8&Fsv_CMSID=&Fsv_otype=1
 TVB 无线新闻,http://www.liveviptv.xyz/tv/tvb.php?vid=wxxw
+TVB 新闻,http://www.liveviptv.xyz/tv/tvb.php
 
  澳
 澳门卫视,http://61.244.22.4/ch3/ch3.live/playelist.m3u8
@@ -35,6 +32,8 @@ TVB 无线新闻,http://www.liveviptv.xyz/tv/tvb.php?vid=wxxw
 三立新闻,http://60.199.188.65/HLS/WG_ETTV-N/index.m3u8
 三立新闻,http://107.148.215.110:13164/play.m3u8?token=xTdGZJZVxFxQo2DiNku%2Fx0D8&tid=gt&id=48
 三亚新闻综合,http://hnsy.chinashadt.com:1935/live/syzb.stream/playlist.m3u8
+东森新闻,http://192.200.120.82:8080/ZZ_dongsenxinwen/ZZ_dongsenxinwen.m3u8
+WarnerTV,http://192.200.120.82:8080/ZZ_huanadianying/ZZ_huanadianying.m3u8
 民视,rtmp://59.124.75.137:1935/sat/tv051
 
 三立新闻,http://60.199.188.65/HLS/WG_ETTV-N/01.m3u8

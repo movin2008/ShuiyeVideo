@@ -42,6 +42,7 @@
 西班牙活力电视,https://mdslivehlsb-i.akamaihd.net/hls/live/623617/energy/bitrate_3.m3u8
 西班牙神性电视,https://mdslivehls-i.akamaihd.net/hls/live/571648/divinity/bitrate_4.m3u8
 
+美国亚美卫视,https://dcunilive30-lh.akamaihd.net/i/dclive_1@535522/master.m3u8
 美国中文台,rtmp://media3.sinovision.net:1935/live/livestream
 美国中文台,http://media3.sinovision.net:1935/live/livestream/playlist.m3u8
 美国芝加哥WGN9频道HD,http://wgntribune-lh.akamaihd.net/i/WGNPrimary_1@304622/master.m3u8
@@ -211,6 +212,7 @@
 土耳其TRT Muzik,http://trtcanlitv-lh.akamaihd.net/i/TRTMUZIK_1@181845/master.m3u8
 土耳其TRT Turk,http://trtcanlitv-lh.akamaihd.net/i/TRTTURK_1@182144/master.m3u8
 
+印度 Gabruu TV,http://104.237.60.234/live/gabruutv.m3u8
 印度 ABP Asmita,http://abpasmita-lh.akamaihd.net/i/abpasmita_1@77821/master.m3u8
 印度 DD News,http://nicls1-lh.akamaihd.net/i/ddnews_1@409133/master.m3u8
 印度 Lok Sabha TV,http://nicls1-lh.akamaihd.net/i/lst_1@26969/master.m3u8
@@ -478,10 +480,8 @@ Vivid TV Europe,http://188.35.9.26:2031/udp/031a
 黎巴嫩 Future-TV,http://futuretv.cdn.mangomolo.com/futuretv/smil:futuretv.smil/master.m3u8
 黎巴嫩Al Manar,http://live.mediaforall.net:1935/liveorigin/livestream_480p/playlist.m3u8
 
-
 BabyFirst港澳台,http://ms003.happytv.com.tw/live/F9YMztT5DcwWEr1f/index.m3u8
 Bbsok.CF,http://51buy.giize.com/1.mp4
-
 
 SEA TV,http://203.189.147.211:1935/live/mp4:myStream_720p/playlist.m3u8
 Company TV（US|MUSIC）,http://wma10.fluidstream.net/CompanyTV/_definst_/mp4:livestream_720p/playlist.m3u8

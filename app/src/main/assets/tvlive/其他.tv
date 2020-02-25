@@ -1,5 +1,4 @@
 中国大熊猫保护研究中心 1080P,https://gcbsc.v.live.baishancdnx.cn/gc/xiongmao03_1/index.m3u8?contentid=2820180516001
-成都大熊猫繁育研究基地 1080P,https://gctxyc.liveplay.myqcloud.com/gc/xiongmao25_1/index.m3u8?contentid=2820180516001
 成都大熊猫繁育研究基地 720P,https://gcalic.v.myalicdn.com/gc/ipanda_1/index.m3u8?contentid=2820180516001&AUTH=EWbqPX5amMUxL2KapN4PojjCv6Y3kLImyv4JB9phjgIhwCszcDyLyNooS5TQjhxk9JhHTXU+qF3B2DqF9U/PJA==
 
  TVBUS http://chlist.sopplus.tv/v2/channels
@@ -27,19 +26,6 @@ cctv15,http://cbn-live.cbchot.com/live/cl003_1.m3u8
 CCTV3,http://111.11.123.47:6610/030000001000/CCTV-3/CCTV-3.m3u8
 CCTV5,http://111.11.123.47:6610/030000001000/CCTV-5/CCTV-5.m3u8
 
- 江西省南昌市 移动
-湖南卫视,http://223.82.250.72/live/hdhunanstv/1.m3u8
-凤凰中文HD,http://223.82.250.72/live/fhchinese/1.m3u8
-凤凰中文,http://223.82.250.72/ysten-bussiness/live/fhchinese/1.m3u8
-凤凰资讯,http://223.82.250.72/ysten-bussiness/live/fhzixun/1.m3u8
-
- 广东广州 联通
-贵州卫视,http://116.199.5.51:8114/00000000/hls/index.m3u8?Fsv_chan_hls_se_idx=41&FvSeid=1&Fsv_ctype=LIVES&Fsv_otype=1&Provider_id=&Pcontent_id=.m3u8
-重庆卫视,http://116.199.5.51:8114/index.m3u8?Fsv_chan_hls_se_idx=10&FvSeid=1&Fsv_ctype=LIVES&Fsv_otype=1&Provider_id=&Pcontent_id=.m3u8
-湖南卫视,http://116.199.5.51:8114/hls/Fsv_chan_hls_se_idx=006&FvSeid=1&Fsv_ctype=LIVES&Fsv_otype=1&Provider_id=0&Pcontent_id=8114.m3u8
-浙江卫视,http://116.199.5.51:8114/hls/Fsv_chan_hls_se_idx=013&FvSeid=1&Fsv_ctype=LIVES&Fsv_otype=1&Provider_id=0&Pcontent_id=8114.m3u8
-兵团卫视,http://116.199.5.51:8114/hls/Fsv_chan_hls_se_idx=050&FvSeid=1&Fsv_ctype=LIVES&Fsv_otype=1&Provider_id=0&Pcontent_id=8114.m3u8
-
 北京教育网
 湖南卫视,rtmp://58.200.131.2:1935/livetv/hunantv
 江苏卫视,rtmp://58.200.131.2:1935/livetv/jstv
@@ -56,24 +42,18 @@ CCTV3,http://39.135.38.165:6610/000000001000/1000000001000011218/1.m3u8?IASHttpS
  广东深圳 联通
 CCTV3,https://116.77.72.195/streams/d/cctv3/playlist.m3u8
 
- 北京联通 360P
-CCTV3,https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv3_2_hd.m3u8
-CCTV3,https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv3_2/index.m3u8
-辽宁卫视,http://cctvalih5ca.v.myalicdn.com/wstv/liaoning_2/index.m3u8
-
  济南联通
 CCTV3,http://cctvalih5ca.v.myalicdn.com/live/cctv3_2/index.m3u8
+辽宁卫视,http://cctvalih5ca.v.myalicdn.com/wstv/liaoning_2/index.m3u8
 
  北京教育网
 CCTV3,http://60.13.128.12:5010/nn_live.ts?id=CCTV3&nn_m3u8=1&nn_file_index=316143772&nn_file_name=20200203T090500Z&nn_file_index_time=1580720735&nn_file_start=5683804&nn_file_end=6495776&nn_ak=0174bf22b417673b2c32e8691719e25f45&ndt=phone&nal=0158e2375e06079b8ee57746c4bf400e05c6ec6598725a&ndi=e21e2900bf112056&ngs=5e37e258000115d8d8c01ca94c08571b&ncmsid=10011
 
 
 爱上4K,http://1.180.237.9/live.aishang.ctlcdn.com/00000110240282_1/encoder/0/playlist.m3u8
-
 CCTV5,http://hbsh.chinashadt.com:2036/live/8.stream/playlist.m3u8
 湖南卫视,http://hbpx.chinashadt.com:2036/live/px5.stream/playlist.m3u8
 龙口综合,http://yslk.chinashadt.com:1635/live/stream:di3.stream/playlist.m3u8
-
 CCTV5,http://124.47.33.211:80/wh7f454c46tw1637120599_1868358036/PLTV/88888888/224/3221225489/index.m3u8?icpid=88888888&RTS=1554598207&from=0&hms_devid=143
 CCTV15,http://111.63.117.13:6060/030000001000/G_CCTV-15/G_CCTV-15.m3u8
 
@@ -91,4 +71,7 @@ NEWTV完美游戏,http://218.207.213.133/wh7f454c46tw546395453_-944749478/PLTV/8
 浙江卫视,http://ali.m.l.cztv.com/channels/lantian/channel01/360p.m3u8
 金鹰卡通,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/jinyingkaton/1.m3u8
 优漫卡通,http://117.169.72.6:8080/ysten-businessmobile/live/youmankaton/1.m3u8
+
 高清电影,https://tudou.com-l-tudou.com/20181129/14668_3c425f2e/1000k/hls/index.m3u8
+BBC经典系列展播,http://qdntv96789.applinzi.com/96tv.php?633138330
+

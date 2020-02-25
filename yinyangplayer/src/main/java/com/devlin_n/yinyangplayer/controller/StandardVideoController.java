@@ -421,6 +421,7 @@ public class StandardVideoController extends BaseVideoController implements View
 
         if(isLive){
             currTime.setText("LIVE");
+            if (title != null) title.setText(mediaPlayer.getTitle());
             return 0;
         }
         int position = mediaPlayer.getCurrentPosition();

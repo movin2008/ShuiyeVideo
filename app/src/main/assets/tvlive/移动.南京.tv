@@ -165,6 +165,8 @@ CCTV6 HD,http://183.207.248.37/PLTV/3/224/3221227209/index.m3u8
 CCTV7 HD,http://183.207.249.6/PLTV/3/224/3221225546/index.m3u8
 CCTV7 HD,http://183.207.249.15/PLTV/3/224/3221225546/index.m3u8
 CCTV7 HD,http://183.207.248.10/PLTV/3/224/3221225546/index.m3u8
+CCTV7 HD,http://183.207.249.9/PLTV/3/224/3221225546/index.m3u8
+CCTV7 HD,http://183.207.248.8/PLTV/3/224/3221225546/index.m3u8
 CCTV8 HD,http://183.207.248.35/PLTV/3/224/3221227205/index.m3u8
 CCTV9 HD,http://183.207.249.6/PLTV/3/224/3221225532/index.m3u8
 CCTV10 HD,http://183.207.249.7/PLTV/3/224/3221225550/index.m3u8
@@ -185,7 +187,6 @@ CCTV13,http://183.207.249.14/PLTV/3/224/3221225560/index.m3u8
 嘉佳卡通,http://183.207.249.9/PLTV/2/224/3221226099/index.m3u8
 海南卫视,http://183.207.248.11/PLTV/4/224/3221225810/index.m3u8
 徐州综合,http://183.207.248.11/PLTV/3/224/3221225945/index.m3u8
-
 
 ott.js.chinamobile.com
 CCTV1,http://223.110.245.159/ott.js.chinamobile.com/PLTV/3/224/3221225852/index.m3u8
@@ -328,6 +329,7 @@ CCTV1 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221226316/ind
 CCTV2 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221227207/index.m3u8
 CCTV4,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221225534/index.m3u8
 CCTV5 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221227166/index.m3u8
+CCTV7 FHD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221225546/index.m3u8
 CCTV8 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221227204/index.m3u8
 CCTV8 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221227205/index.m3u8
 CCTV10 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221225550/index.m3u8
