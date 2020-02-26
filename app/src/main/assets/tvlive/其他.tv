@@ -26,7 +26,7 @@ cctv15,http://cbn-live.cbchot.com/live/cl003_1.m3u8
 CCTV3,http://111.11.123.47:6610/030000001000/CCTV-3/CCTV-3.m3u8
 CCTV5,http://111.11.123.47:6610/030000001000/CCTV-5/CCTV-5.m3u8
 
-北京教育网
+ 北京教育网
 湖南卫视,rtmp://58.200.131.2:1935/livetv/hunantv
 江苏卫视,rtmp://58.200.131.2:1935/livetv/jstv
 凤凰电影,rtmp://58.200.131.2:1935/livetv/fhdy

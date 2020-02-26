@@ -68,7 +68,7 @@ public class FloatController extends BaseVideoController implements View.OnClick
                 break;
             case YinYangPlayer.STATE_PLAYING:
                 playProgressButton.setState(PlayProgressButton.STATE_PLAYING);
-//                hide();
+                show();
                 break;
             case YinYangPlayer.STATE_PAUSED:
                 playProgressButton.setState(PlayProgressButton.STATE_PAUSE);
@@ -80,7 +80,6 @@ public class FloatController extends BaseVideoController implements View.OnClick
             case YinYangPlayer.STATE_PREPARED:
                 playProgressButton.setVisibility(GONE);
                 mTitleView.setText(title);
-                show();
                 break;
             case YinYangPlayer.STATE_ERROR:
                 break;

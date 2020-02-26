@@ -217,7 +217,7 @@
 土耳其TRT Muzik,http://trtcanlitv-lh.akamaihd.net/i/TRTMUZIK_1@181845/master.m3u8
 土耳其TRT Turk,http://trtcanlitv-lh.akamaihd.net/i/TRTTURK_1@182144/master.m3u8
 
-印度 Gabruu TV,http://104.237.60.234/live/gabruutv.m3u8
+印度音乐电视台,http://104.237.60.234/live/gabruutv.m3u8
 印度 ABP Asmita,http://abpasmita-lh.akamaihd.net/i/abpasmita_1@77821/master.m3u8
 印度 DD News,http://nicls1-lh.akamaihd.net/i/ddnews_1@409133/master.m3u8
 印度 Lok Sabha TV,http://nicls1-lh.akamaihd.net/i/lst_1@26969/master.m3u8
@@ -484,6 +484,8 @@ Vivid TV Europe,http://188.35.9.26:2031/udp/031a
 马其顿 Sky Folk TV,http://skyfolk.mk/live.m3u8
 黎巴嫩 Future-TV,http://futuretv.cdn.mangomolo.com/futuretv/smil:futuretv.smil/master.m3u8
 黎巴嫩Al Manar,http://live.mediaforall.net:1935/liveorigin/livestream_480p/playlist.m3u8
+越南人民报,http://27.118.16.98:1935/live/truyenhinhnhandan720/chunklist_w2006762604.m3u8
+蒙古国 MNB,http://103.14.38.107:1935/live/mnb.stream/master.m3u8
 
 BabyFirst港澳台,http://ms003.happytv.com.tw/live/F9YMztT5DcwWEr1f/index.m3u8
 Bbsok.CF,http://51buy.giize.com/1.mp4

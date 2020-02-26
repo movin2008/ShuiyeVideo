@@ -45,18 +45,6 @@ City Music TV,http://5592f056abba8.streamlock.net/citytv/citytv/playlist.m3u8
 
 GO-RTV,http://593aed234297b.streamlock.net:1935/gotvsjoerd/gotvsjoerd/playlist.m3u8
 
-澳視澳門0189,http://61.244.22.4/ch1/ch1.live/playelist.m3u8
-澳門20188,http://61.244.22.4/ch2/ch2.live/playelist.m3u8
-靖天欢乐,http://61.58.60.230:9319/live/201.m3u8
-靖天资讯,http://61.58.60.230:9319/live/202.m3u8
-靖洋戏剧,http://61.58.60.230:9319/live/203.m3u8
-靖天娱乐,http://61.58.60.230:9319/live/204.m3u8
-靖天国际,http://61.58.60.230:9319/live/205.m3u8
-靖洋卡通,http://61.58.60.230:9319/live/206.m3u8
-靖天卡通,http://61.58.60.230:9319/live/207.m3u8
-靖天日本,http://61.58.60.230:9319/live/243.m3u8
-靖天映画,http://61.58.60.230:9319/live/244.m3u8
-
 Ranchenato TV,http://66.240.236.25:1936/ranchenato/smil:ranchenato.smil/chunklist_b1044100_sleng.m3u8
 
 RTSH Film,http://79.106.48.2/live/rtsh_film_ott_p3/playlist.m3u8
@@ -258,10 +246,7 @@ IndieWave,https://vcnindiewave.teleosmedia.com/stream/indiewave/indiewave/playli
 攻壳机动队,https://video.letv-cdn.com/20180305/vFFKzovv/1000kb/hls/index.m3u8
 星球大战8,https://video.letv-cdn.com/20180311/hLjxe7s5/1000kb/hls/index.m3u8
 颤栗汪洋3,https://video.suyunbo.tv/20171008/ZvczP8m3/1500kb/hls/index.m3u8
-击倒总统,https://vip.94kuyun.com/20180103/hmbstma4/hls/index.m3u8
-白宫沦陷2,https://vip.94kuyun.com/20180117/0VkgQmd9/hls/index.m3u8
-黑海夺金,https://vip.94kuyun.com/20180121/yZEzEkZu/hls/index.m3u8
-女狙击手,https://vip.94kuyun.com/20180610/9rsRa3kg/index.m3u8
+
 
 美国之音,https://voa-lh.akamaihd.net/i/voa_mpls_tvmc8@326847/master.m3u8
 齐天大圣-万妖之城,https://www.48iuz.com/20181016/ZgbsM34C/index.m3u8
@@ -269,40 +254,9 @@ IndieWave,https://vcnindiewave.teleosmedia.com/stream/indiewave/indiewave/playli
 Zee Bangla Cinema,https://ylive42-i.akamaihd.net/hls/live/690910/zeebanglacinema/playlist.m3u8
 Zing USA,https://ylive66-i.akamaihd.net/hls/live/691677/zingus/playlist.m3u8
 
-跨界喜剧王第三季,https://zkcdn.wb699.com/2018/09/30/UXYMS7IMw7Pjy5ez/playlist.m3u8
-动物世界BD,https://zkgn.wb699.com/2018/09/28/5B5IzgjXObXM14GZ/playlist.m3u8
-西虹市首富,https://zuikzy.win7i.com/2018/07/30/hCt7GSGU1sAgOC8j/playlist.m3u8
 
-蒙古国 MNB,http://103.14.38.107:1935/live/mnb.stream/master.m3u8
-印度 音乐电视台,http://104.237.60.234/live/gabruutv.m3u8?dsjtv.m3u8
 CCTV?,http://111.13.111.242/otttv.bj.chinamobile.com/PLTV/88888888/224/3221225865/1.m3u8
 
 
-越南 Ⅰ 越南人民报,http://27.118.16.98:1935/live/truyenhinhnhandan720/chunklist_w2006762604.m3u8
-襄阳综合,http://34911.hlsplay.aodianyun.com/guangdianyun_34911/tv_channel_390.m3u8
-襄阳综合,http://42.236.91.206/guangdianyun_34911/tv_channel_390__redirect__34911.m3u8
-龙溪电视,http://42.236.91.206/tv_radio_38269/tv_channel_767__redirect__38269.m3u8
 
-海南卫视,http://hnhbxww.com/live.php?http://mlive1.91kds.cn/b9/hitv.m3u8?id=lywshd
-威海综合,http://l2.weihai.tv:8081/hls/czv7gqQ091.m3u8
-威海海洋,http://l2.weihai.tv:8081/hls/haiyangpd.m3u8
-
-番禺综合,http://live.pybtv.cn/channel1/sd/live.m3u8?_upt=16fb00e01563813775
-柯桥综合,http://live.scbtv.cn/hls/news/index.m3u8
-柯桥时尚,http://live.scbtv.cn/hls/qfc/index.m3u8
-新华中文,http://livecdn1.news.cn/cnccn/manifest.m3u8
-海南卫视,http://livelyws.chinamcache.com/lyws/zb01.m3u8?auth_key=1593241343-0-0-90b80e74457c94b2015f9428a1cb9b0e
-
-文山综合,http://m3u8.channel.wsrtv.com.cn/cms/videos/nmip-media/channellive/channel7/playlist.m3u8
-张家口电视,http://nlive.zjkgdcs.com:8091/live/xwzhpd.m3u8
-
-武汉综合,http://stream.appwuhan.com/1tzb/sd/live.m3u8
-晋江电视,http://stream.jinjiang.tv/1/sd/live.m3u8?_upt=7738cbdd1569250965
-随州农村,http://suizhou.source.cjyun.org/video/s10145-szncpd.m3u8
-随州综合,http://suizhou.source.cjyun.org/video/s10145-szzhpd.m3u8
-济南综合,http://ts1.ijntv.cn/xwhd/playlist.m3u8
-睢宁综合,http://tv.jrsncn.com:9001/hls/live/live1/stream.m3u8
-
-襄阳公共,http://xiangyang.live.cjyun.org/video/s10125-education_hd.m3u8
-大壮我们不一样 HD,http://vodcdn.video.taobao.com/oss/taobao-ugc/9572871aa45747a786679a822d7e2709/1511859261/video.m3u8.m3u8
 
