@@ -51,26 +51,18 @@ CCTV3,http://60.13.128.12:5010/nn_live.ts?id=CCTV3&nn_m3u8=1&nn_file_index=31614
 
 
 爱上4K,http://1.180.237.9/live.aishang.ctlcdn.com/00000110240282_1/encoder/0/playlist.m3u8
-CCTV5,http://hbsh.chinashadt.com:2036/live/8.stream/playlist.m3u8
-湖南卫视,http://hbpx.chinashadt.com:2036/live/px5.stream/playlist.m3u8
-龙口综合,http://yslk.chinashadt.com:1635/live/stream:di3.stream/playlist.m3u8
-CCTV5,http://124.47.33.211:80/wh7f454c46tw1637120599_1868358036/PLTV/88888888/224/3221225489/index.m3u8?icpid=88888888&RTS=1554598207&from=0&hms_devid=143
 CCTV15,http://111.63.117.13:6060/030000001000/G_CCTV-15/G_CCTV-15.m3u8
-
 郑氏频道 - baby,http://ms003.happytv.com.tw/live/F9YMztT5DcwWEr1f/index.m3u8?token=VAU4_fynwoclW3rInbKmJw&time=1558344002435
-
-NEWTV超级电影,http://183.251.61.207/PLTV/88888888/224/3221225804/index.m3u8
 NEWTV完美游戏,http://218.207.213.133/wh7f454c46tw546395453_-944749478/PLTV/88888888/224/3221225894/index.m3u8
 
 峨眉电影,http://scgctvshow.sctv.com/hdlive/emei/1.m3u8
-河北卫视,http://live01.hebtv.com/channels/hebtv/video_channel_04/flv:2000k/live
-云南卫视,http://edge1.yntv.cn/channels/yntv/ynws/flv:sd/live
+
+
 西藏卫视,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/xizangstv/1.m3u8
 兵团卫视,http://v.btzx.com.cn:1935/live/weishi.stream/playlist.m3u8
 江西卫视,http://live02.jxtvcn.com.cn/live-jxtvcn/jxtv01.m3u8
 浙江卫视,http://ali.m.l.cztv.com/channels/lantian/channel01/360p.m3u8
 金鹰卡通,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/jinyingkaton/1.m3u8
-优漫卡通,http://117.169.72.6:8080/ysten-businessmobile/live/youmankaton/1.m3u8
 
 高清电影,https://tudou.com-l-tudou.com/20181129/14668_3c425f2e/1000k/hls/index.m3u8
 BBC经典系列展播,http://qdntv96789.applinzi.com/96tv.php?633138330

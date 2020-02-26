@@ -50,7 +50,6 @@ public class FloatView extends FrameLayout{
     private int floatY;
     private boolean firstTouch = true;
 
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         final int X = (int) event.getRawX();

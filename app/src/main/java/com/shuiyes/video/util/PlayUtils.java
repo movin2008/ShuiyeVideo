@@ -17,6 +17,7 @@ import com.shuiyes.video.ui.letv.LetvVActivity;
 import com.shuiyes.video.ui.qq.QQVActivity;
 import com.shuiyes.video.ui.tvlive.TVBusActivity;
 import com.shuiyes.video.ui.tvlive.TVPlayActivity;
+import com.shuiyes.video.ui.tvlive.YinyangFM;
 import com.shuiyes.video.ui.tvlive.YinyangTVPlayActivity;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuVActivity;
@@ -82,7 +83,7 @@ public class PlayUtils {
         WebActivity.launch(context, url);
     }
 
-    public static void playLive(Context context, String url, String title, boolean isHLS){
+    public static void playLive(Context context, String url, String title, boolean isHLS, boolean isFM){
         if (url.startsWith("tvbus://")) {
             try {
                 context.createPackageContext("io.binstream.github.demo", 0);
@@ -108,6 +109,10 @@ public class PlayUtils {
                 dialog.show();
             }
         } else {
+            if(isFM){
+                YinyangFM.start(context, url, title);
+                return;
+            }
 //                context.startActivity(new Intent(context, TVPlayActivity.class)
             context.startActivity(new Intent(context, YinyangTVPlayActivity.class)
                     .putExtra("title", title)

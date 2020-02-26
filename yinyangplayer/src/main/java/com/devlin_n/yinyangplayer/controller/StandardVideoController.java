@@ -247,6 +247,9 @@ public class StandardVideoController extends BaseVideoController implements View
                 L.e("STATE_PREPARED");
                 if (!isLive) bottomProgress.setVisibility(VISIBLE);
                 loadingProgress.setVisibility(GONE);
+//                if(isFM){
+//                    mediaPlayer.startFloatWindow();
+//                }
                 break;
             case YinYangPlayer.STATE_ERROR:
                 L.e("STATE_ERROR");

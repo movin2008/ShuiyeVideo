@@ -52,7 +52,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                 try {
                     InputStream in = mContext.getAssets().open(FileList);
                     BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                    if (FileList.endsWith(".fm")) {
+                    if (FileList.startsWith("film")) {
                         isHLS = false;
 
                         String text;
@@ -64,7 +64,18 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
 
                             addListVideo(text);
                         }
-                    }else if (FileList.endsWith(".tv")) {
+                    }else if (FileList.startsWith("tvlive")) {
+                        String text;
+                        while ((text = br.readLine()) != null) {
+                            if (text.startsWith("##")) {
+                                // 注释
+                                continue;
+                            }
+
+                            addListVideo(text);
+                        }
+                    } else if (FileList.startsWith("fm")) {
+                        isFM = true;
 
                         String text;
                         while ((text = br.readLine()) != null) {

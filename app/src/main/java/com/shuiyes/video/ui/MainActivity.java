@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity {
 
     // 收音机源
     public void fmlist(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "收音机.tv"));
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fm/收音机.fm"));
     }
 
     public void somgtv(View view) {

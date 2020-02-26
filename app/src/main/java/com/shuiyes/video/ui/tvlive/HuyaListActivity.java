@@ -103,7 +103,7 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
 
     private Thread mThread;
 
-    static final int COUNT = 24;
+    static final int COUNT = 36;
 
     public void testHuyaUrl(NumberView v) {
         if (mThread != null && mThread.isAlive()) {

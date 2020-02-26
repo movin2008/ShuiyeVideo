@@ -3,4 +3,6 @@
     <color name="theme_color">#39C5BB</color>
     <color name="theme_color_translucent">#9939C5BB</color>
     <color name="background_color">#64000000</color>
+
+    <drawable name="translucent">#00000000</drawable>
 </resources>

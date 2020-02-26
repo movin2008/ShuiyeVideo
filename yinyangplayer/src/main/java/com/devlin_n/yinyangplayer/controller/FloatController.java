@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.devlin_n.yinyangplayer.R;
 import com.devlin_n.yinyangplayer.player.YinYangPlayer;
@@ -18,7 +20,8 @@ import com.devlin_n.yinyangplayer.widget.PlayProgressButton;
 public class FloatController extends BaseVideoController implements View.OnClickListener {
 
     private PlayProgressButton playProgressButton;
-
+    private TextView mTitleView;
+    private ImageView mCloseView;
 
     public FloatController(@NonNull Context context) {
         super(context);
@@ -45,6 +48,8 @@ public class FloatController extends BaseVideoController implements View.OnClick
                 doPauseResume();
             }
         });
+        mTitleView = controllerView.findViewById(R.id.tv_title);
+        mCloseView = controllerView.findViewById(R.id.btn_close);
     }
 
     @Override
@@ -63,7 +68,7 @@ public class FloatController extends BaseVideoController implements View.OnClick
                 break;
             case YinYangPlayer.STATE_PLAYING:
                 playProgressButton.setState(PlayProgressButton.STATE_PLAYING);
-                hide();
+//                hide();
                 break;
             case YinYangPlayer.STATE_PAUSED:
                 playProgressButton.setState(PlayProgressButton.STATE_PAUSE);
@@ -74,6 +79,8 @@ public class FloatController extends BaseVideoController implements View.OnClick
                 break;
             case YinYangPlayer.STATE_PREPARED:
                 playProgressButton.setVisibility(GONE);
+                mTitleView.setText(title);
+                show();
                 break;
             case YinYangPlayer.STATE_ERROR:
                 break;
@@ -100,8 +107,10 @@ public class FloatController extends BaseVideoController implements View.OnClick
 
     private void show(int timeout) {
         if (!mShowing) {
-            playProgressButton.show();
             mShowing = true;
+            playProgressButton.show();
+            mTitleView.setVisibility(View.VISIBLE);
+            mCloseView.setVisibility(View.VISIBLE);
         }
         removeCallbacks(mFadeOut);
         if (timeout != 0) {
@@ -109,12 +118,24 @@ public class FloatController extends BaseVideoController implements View.OnClick
         }
     }
 
+    private String title;
+    public FloatController setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public FloatController setCover(int coverRes) {
+        controllerView.findViewById(R.id.iv_cover).setBackgroundResource(coverRes);
+        return this;
+    }
 
     @Override
     public void hide() {
         if (mShowing) {
-            playProgressButton.hide();
             mShowing = false;
+            playProgressButton.hide();
+            mTitleView.setVisibility(View.GONE);
+            mCloseView.setVisibility(View.GONE);
         }
     }
 }

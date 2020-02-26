@@ -586,6 +586,7 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
         if (!isInPlaybackState()) return;
         Intent intent = new Intent(getContext(), BackgroundPlayService.class);
         intent.putExtra(KeyUtil.URL, mCurrentUrl);
+        intent.putExtra(KeyUtil.TITLE, mCurrentTitle);
         getCurrentPosition();
         intent.putExtra(KeyUtil.POSITION, getDuration() <= 0 ? 0 : mCurrentPosition);
         intent.putExtra(KeyUtil.ENABLE_CACHE, isCache);

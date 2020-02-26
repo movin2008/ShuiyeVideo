@@ -29,6 +29,7 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
     protected List<ListVideo> mVideos = new ArrayList<ListVideo>();
 
     protected boolean isHLS = true;
+    protected boolean isFM = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,7 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
             return;
         }
 
-        PlayUtils.playLive(this, url, view.getTitle(), isHLS);
+        PlayUtils.playLive(this, url, view.getTitle(), isHLS, isFM);
     }
 
 }

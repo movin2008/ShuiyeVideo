@@ -77,12 +77,17 @@
 美国狗狗宠物,http://video.blivenyc.com/broadcast/prod/2061/22/file-3192k.m3u8
 
 日本家庭剧场,http://192.240.127.34:1935/live/cs11.stream/playlist.m3u8
+日本历史频道,http://192.240.127.34:1935/live/cs14.stream/playlist.m3u8
+日本卫星剧场,http://192.240.127.34:1935/live/cs18.stream/playlist.m3u8
+日本映画频道,http://192.240.127.34:1935/live/cs19.stream/playlist.m3u8
+日本 WOWOW,http://192.240.127.34:1935/live/cs27.stream/playlist.m3u8
+
 日本家庭剧场,http://192.240.127.34:1935/live/cs11.stream/media_1254.m3u8
 日本历史频道,http://192.240.127.34:1935/live/cs14.stream/media_1254.m3u8
-日本衛星劇場,http://192.240.127.34:1935/live/cs18.stream/playlist.m3u8
 日本卫星剧场,http://192.240.127.34:1935/live/cs18.stream/media_1254.m3u8
-日本映画,http://192.240.127.34:1935/live/cs19.stream/media_1254.m3u8
-日本朝日,http://192.240.127.34:1935/live/cs19.stream/play.m3u8
+日本映画频道,http://192.240.127.34:1935/live/cs19.stream/media_1254.m3u8
+日本 WOWOW,http://192.240.127.34:1935/live/cs27.stream/media_1254.m3u8
+日本朝日频道,http://192.240.127.34:1935/live/cs19.stream/play.m3u8
 日本 Cinefil WOWOW,http://192.240.127.34:1935/live/cs27.stream/media_1254.m3u8
 日本 Japan24news,https://n24-cdn-live.ntv.co.jp/ch01/High.m3u8
 日本 NHK,https://nhkworld.webcdn.stream.ne.jp/www11/nhkworld-tv/global/263941/live_wa_s.m3u8
