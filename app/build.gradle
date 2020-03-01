@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: "../version.gradle"
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -6,9 +7,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        applicationId "com.shuiyes.video"
-        versionCode new Date().time.intValue() - 1000000000
-        versionName "v" + new Date().format('yyyyMMddHHmm')
+        applicationId rootProject.ext.applicationId
     }
 
     buildTypes {
@@ -22,8 +21,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-}
 
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+
+            def rootName = rootProject.name
+            def versionName = defaultConfig.versionName
+            def buildType = variant.variantData.variantConfiguration.buildType.name
+
+            outputFileName = "${rootName}_${versionName}-${buildType}.apk"
+        }
+    }
+}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

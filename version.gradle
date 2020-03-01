@@ -1,0 +1,46 @@
+ext.vername = "local.properties";
+ext.verprop = "ver.code";
+
+def getAndAddVersionCode() {
+    def propsFile = rootProject.file(vername)
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        if (props[verprop] != null) {
+
+            def code = (props[verprop]).toInteger()
+            println("> Task :app version code is " + code)
+
+            def taskNames = gradle.startParameter.taskNames
+            if ((':app:assembleRelease' in taskNames) || (':app:assembleDebug' in taskNames)) {
+                props[verprop] = (++code).toString()
+                println("> Task :app version code new " + code)
+                props.store(propsFile.newWriter(), null)
+            }
+
+            return code
+        } else {
+            throw new GradleException("No such property " + verprop + " in " + propsFile.toPath())
+        }
+    } else {
+        throw new GradleException("No such file " + propsFile.toPath())
+    }
+}
+
+def time2VersionName() {
+    def date = new Date()
+    def vname = "v" + date.format('yyyyMMddHHmm')
+    return vname
+}
+
+def time2VersionCode() {
+    return new Date().time.intValue() - 1000000000
+}
+
+android {
+    defaultConfig {
+        versionCode getAndAddVersionCode()
+        versionName time2VersionName()
+    }
+}
+

@@ -39,9 +39,9 @@ ext {
     targetSdkVersion = 23
     compileSdkVersion = 28
     buildToolsVersion = '28.0.3'
+    applicationId = 'com.shuiyes.video'
 }
 
-// 指定javadoc UTF-8格式
 task javadoc(type: Javadoc) {
     options.encoding = "utf-8"
 }
