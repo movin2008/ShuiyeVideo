@@ -1,10 +1,14 @@
 济南新闻,http://ts1.ijntv.cn/xwhd/hd/live.m3u8
 济南都市,http://ts1.ijntv.cn/jnds/sd/live.m3u8
 济南影视,http://ts1.ijntv.cn/yshd/hd/live.m3u8
+济南商务,http://ts1.ijntv.cn/jnsw/sd/live.m3u8
+济南娱乐,http://ts1.ijntv.cn/jnyd/sd/live.m3u8
 济南娱乐,http://ts2.ijntv.cn/jnyl/sd/live.m3u8
 济南生活,http://ts2.ijntv.cn/jnsh/sd/live.m3u8
 济南少儿,http://ts2.ijntv.cn/jnse/sd1/live.m3u8
-济南商务,http://ts1.ijntv.cn/jnsw/sd/live.m3u8
+济南都市,http://ts1.ijntv.cn/jnds/playlist.m3u8
+济南影视,http://ts1.ijntv.cn/jnyd/playlist.m3u8
+
 
 河北影视,http://live01.hebtv.com/channels/hebtv/video_channel_06/flv:2000k/live.m3u8
 河北卫视,http://live01.hebtv.com/channels/hebtv/video_channel_04/flv:2000k/live
@@ -476,3 +480,4 @@
 
 襄阳公共,http://xiangyang.live.cjyun.org/video/s10125-education_hd.m3u8
 
+烟台影视,http://live.zhyantai.com/yttv3/playlist.m3u8
