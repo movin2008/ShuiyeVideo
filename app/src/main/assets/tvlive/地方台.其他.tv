@@ -19,15 +19,23 @@
 河北卫视,http://weblive.hebtv.com/live/hbws_bq/index.m3u8
 河北影视,http://weblive.hebtv.com/live/hbys_bq/index.m3u8
 
-
 河北衡水新闻综合,http://hls.hsrtv.cn/hls/hstv1.m3u8
 河北衡水影视娱乐,http://hls.hsrtv.cn/hls/hstv2.m3u8
 河北衡水公共频道,http://hls.hsrtv.cn/hls/hstv3.m3u8
 
-徐州-1,http://stream1.huaihai.tv/xwzh/playlist.m3u8
-徐州-2,http://stream1.huaihai.tv/jjsh/playlist.m3u8
-徐州-3,http://stream1.huaihai.tv/wyys/playlist.m3u8
-徐州-4,http://stream1.huaihai.tv/ggpd/playlist.m3u8
+江苏徐州-1,http://stream1.huaihai.tv/xwzh/playlist.m3u8
+江苏徐州-2,http://stream1.huaihai.tv/jjsh/playlist.m3u8
+江苏徐州-3,http://stream1.huaihai.tv/wyys/playlist.m3u8
+江苏徐州-4,http://stream1.huaihai.tv/ggpd/playlist.m3u8
+
+江苏徐州1,http://stream1.huaihai.tv/xwzh/sd/live.m3u8
+江苏徐州2,http://stream1.huaihai.tv/jjsh/sd/live.m3u8
+江苏徐州3,http://stream1.huaihai.tv/wyys/sd/live.m3u8
+江苏徐州4,http://stream1.huaihai.tv/ggpd/sd/live.m3u8
+
+包头综合,http://live.btgdt.com/channels/btgd/xwzh/m3u8:500k
+包头经济,http://live.btgdt.com/channels/btgd/jjpd/m3u8:500k
+包头生活,http://live.btgdt.com/channels/btgd/shfw/m3u8:500k
 
 延安公共,http://stream2.liveyun.hoge.cn/YATV2/sd/live.m3u8
 延安综合,http://stream2.liveyun.hoge.cn/YATV1/sd/live.m3u8
@@ -46,6 +54,19 @@
 云南公共,http://edge1.yntv.cn/channels/yntv/yngg/m3u8:sd
 云南娱乐,http://edge1.yntv.cn/channels/yntv/ynyl/m3u8:sd
 
+苏州新闻综合频道,rtmp://csztv.2500sz.com/live/c01
+苏州社会经济频道,rtmp://csztv.2500sz.com/live/c02
+苏州文化生活频道,rtmp://csztv.2500sz.com/live/c03
+苏州生活资讯频道,rtmp://csztv.2500sz.com/live/c04
+
+福F建J电视,rtsp://183.252.176.54:554/PLTV/88888888/224/3221226115/10000100000000060000000002358067_0.smil
+福F建J公共,rtsp://183.252.176.54:554/PLTV/88888888/224/3221226113/10000100000000060000000002358064_0.smil
+福F建J经济,rtsp://183.252.176.54:554/PLTV/88888888/224/3221226117/10000100000000060000000002358072_0.smil
+福F建J旅游,rtsp://183.252.176.54:554/PLTV/88888888/224/3221226125/10000100000000060000000002358191_0.smil
+福F建J少儿,rtsp://183.252.176.54:554/PLTV/88888888/224/3221226120/10000100000000060000000002358082_0.smil
+福F建J体育,rtsp://183.252.176.54:554/PLTV/88888888/224/3221226127/10000100000000060000000002434540_0.smil
+福F建J新闻,rtsp://183.252.176.54:554/PLTV/88888888/224/3221226116/10000100000000060000000002358068_0.smil
+福F建J综合,rtsp://183.252.176.54:554/PLTV/88888888/224/3221226112/10000100000000060000000002358063_0.smil
 
 潮州综合,http://live.zscz0768.com/live/zhpd.m3u8
 潮州公共,http://live.zscz0768.com/live/ggpd.m3u8
@@ -481,3 +502,4 @@
 襄阳公共,http://xiangyang.live.cjyun.org/video/s10125-education_hd.m3u8
 
 烟台影视,http://live.zhyantai.com/yttv3/playlist.m3u8
+甘肃影视,http://stream.gstv.com.cn/whys/sd/live.m3u8

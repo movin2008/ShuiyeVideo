@@ -101,6 +101,9 @@ public abstract class BaseVideoController extends FrameLayout {
     public void setScreenState(int screenState) {
     }
 
+    public void setVideoSize(int width, int height) {
+    }
+
     public void startFullScreenDirectly() {
 
     }

@@ -12,15 +12,20 @@ HKC 新闻,https://ottproxy2.mott.tv/livehls/MOB-SCC/03.m3u8?sessionID=XNoSKsoyh
 
 鳳凰中文,http://liveali.ifeng.com/live/FHZW.m3u8
 凤凰中文,http://117.169.124.43:6610/ysten-businessmobile/live/fhchinese/index.m3u8
+凤凰卫视,http://liveali.ifeng.com/live/FHZW.flv
 
+凤凰资讯,http://liveali.ifeng.com/live/FHZX.flv
 凤凰资讯,http://117.169.120.138:8080/live/fhzixun/.m3u8
 
 TVB 无线新闻,http://www.liveviptv.xyz/tv/tvb.php?vid=wxxw
 TVB 新闻,http://www.liveviptv.xyz/tv/tvb.php
+TVB 星河,https://dlhls-cdn-mp.zhanqi.tv/zqlive/291236_97IGR.m3u8
+
 
  澳
 澳门卫视,http://61.244.22.4/ch3/ch3.live/playelist.m3u8
 澳门卫视,http://stream.mastvnet.com/MSTV/playlist.m3u8
+澳亞衛視,http://stream.mastvnet.com/MASTV/playlist.m3u8
 澳门卫视,http://stream.mastvnet.com/MSTV/SD/live.m3u8
 澳亚卫视,http://stream.mastvnet.com/MASTV/sd/live.m3u8
 澳门莲花,rtmp://live-rtmp.lotustv.duolaibo.cn/lotustv/5562e9e4d409d24c9600075c
@@ -45,8 +50,6 @@ TVB 新闻,http://www.liveviptv.xyz/tv/tvb.php
 
 三立新闻,http://60.199.188.65/HLS/WG_ETTV-N/index.m3u8
 三立新闻,http://107.148.215.110:13164/play.m3u8?token=xTdGZJZVxFxQo2DiNku%2Fx0D8&tid=gt&id=48
-东森新闻,http://192.200.120.82:8080/ZZ_dongsenxinwen/ZZ_dongsenxinwen.m3u8
-WarnerTV,http://192.200.120.82:8080/ZZ_huanadianying/ZZ_huanadianying.m3u8
 民视,rtmp://59.124.75.137:1935/sat/tv051
 
 三立新闻,http://60.199.188.65/HLS/WG_ETTV-N/01.m3u8
@@ -61,3 +64,7 @@ TVB 新闻,http://220.158.149.14:9999/live/TV00000000000000000082@HHZT;LIVE
 空中英语,http://220.158.149.14:9999/live/TV00000000000000000077@HHZT;LIVE
 BCYOYO,http://220.158.149.14:9999/live/TV00000000000000000076@HHZT;LIVE
 CNEX纪录片,http://220.158.149.14:9999/live/TV00000000000000000083@HHZT;LIVE
+
+东森新闻,http://192.200.120.82:8080/ZZ_dongsenxinwen/ZZ_dongsenxinwen.m3u8
+八大综合,http://192.200.120.82:8080/ZZ_zhongtianyazhou/ZZ_zhongtianyazhou.m3u8
+WarnerTV,http://192.200.120.82:8080/ZZ_huanadianying/ZZ_huanadianying.m3u8

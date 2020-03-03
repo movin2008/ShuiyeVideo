@@ -1,1 +1,1 @@
-include ':app', ':common', ':flowlayout', ':yinyangplayer', ':tvbus', ':exoplayer', ':source'
+include ':app', ':common', ':flowlayout', ':yinyangplayer', ':tvbus', ':exoplayer', ':sourcetest'

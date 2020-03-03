@@ -1,6 +1,7 @@
 中国大熊猫保护研究中心 1080P,https://gcbsc.v.live.baishancdnx.cn/gc/xiongmao03_1/index.m3u8?contentid=2820180516001
 成都大熊猫繁育研究基地 720P,https://gcalic.v.myalicdn.com/gc/ipanda_1/index.m3u8?contentid=2820180516001&AUTH=EWbqPX5amMUxL2KapN4PojjCv6Y3kLImyv4JB9phjgIhwCszcDyLyNooS5TQjhxk9JhHTXU+qF3B2DqF9U/PJA==
 
+
 上海外滩陆嘴,http://bililive.kksmg.com/hls/sdi7000/playlist.m3u8
 上海外滩魔眼,http://bililive.kksmg.com/hls/sdi80/playlist.m3u8
 上海外滩陆嘴,rtmp://bililive.kksmg.com/hls/sdi7000
@@ -14,8 +15,22 @@
 西双版纳tv2民语台,http://tvdrs.bntv.cn:8100/channellive/bntv2.flv
 西双版纳tv3勐海台,http://tvdrs.bntv.cn:8100/channellive/bntv3.flv
 
-中國氣象頻道,http://hls.weathertv.cn/tslslive/qCFIfHB/hls/live_sd.m3u8
-炫动卡通,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/xuandongkaton/1.m3u8
+都市剧场,http://stream.slave.jxtvnet.tv:14311/playurl?accesstoken=R5DC2A42FU309BB004K7738E848ICA43ED17PBM345713AV0Z57EA5W15D48CE92ED319F0&playtype=live&protocol=http&playtoken=ABCDEFGH&auth=no&programid=4200000142
+靓妆高清,http://stream.slave.jxtvnet.tv:14311/playurl?accesstoken=R5DC2A42FU309BB004K7738E848ICA43ED17PBM345713AV0Z57EA5W15D48CE92ED319F0&playtype=live&protocol=http&playtoken=ABCDEFGH&auth=no&programid=4200000127
+
+ CIBN （peoplevideo.cn 易奇网）
+好莱坞片,http://cibn.peoplevideo.cn/hls/vCIBNHLWPD/1800/vCIBNHLWPD.m3u8?wsSecret=771e13c21abf2b58b4c375b614f113f4
+院线大片,http://cibn.peoplevideo.cn/hls/vCIBNHYPD/1800/vCIBNHYPD.m3u8?wsSecret=771e13c21abf2b58b4c375b614f113f4
+电影综合,http://cinb1.peoplevideo.cn/hls/vCIBNDYPD/1800/vCIBNDYPD.m3u8?wsSecret=6bf1094344cdd96542103b7ead60c664
+电影导视,http://cinb1.peoplevideo.cn/hls/vCIBNDYDS/1800/vCIBNDYDS.m3u8?wsSecret=6bf1094344cdd96542103b7ead60c664
+精品影院,http://cinb1.peoplevideo.cn/hls/vCIBNJPYY/1800/vCIBNJPYY.m3u8?wsSecret=6bf1094344cdd96542103b7ead60c664
+流金岁月,http://cibn.peoplevideo.cn/hls/vCIBNSCPD/1800/vCIBNSCPD.m3u8?wsSecret=5f38811d672214110f110816440adbdb
+情感影院,http://cinb1.peoplevideo.cn/hls/vCIBNQGYY/1800/vCIBNQGYY.m3u8?wsSecret=6bf1094344cdd96542103b7ead60c664
+喜剧影院,http://cinb1.peoplevideo.cn/hls/vCIBNHSYX/1800/vCIBNHSYX.m3u8?wsSecret=6bf1094344cdd96542103b7ead60c664
+古装剧场,http://cinb1.peoplevideo.cn/hls/vCIBNZYPD/1800/vCIBNZYPD.m3u8?wsSecret=6bf1094344cdd96542103b7ead60c664
+骄阳剧场,http://cinb1.peoplevideo.cn/hls/vCIBNJDJC/1800/vCIBNJDJC.m3u8?wsSecret=6bf1094344cdd96542103b7ead60c664
+
+音悦台,http://yeyuaihao.gz01.bdysite.com/dl/gzyx.php
 
  TVBUS http://chlist.sopplus.tv/v2/channels
 CCTV1,tvbus://1R8Rw3uqyfdkci7b9VWm7N17ynqv259h1Bo7i2uyi9bmq513uX
@@ -38,50 +53,38 @@ cctv15,http://cbn-live.cbchot.com/live/cl003_1.m3u8
 心动电影1,https://cdn1.ibizastream.biz:441/free/1/playlist_dvr.m3u8
 心动电影2,https://cdn1.ibizastream.biz:441/free/2/playlist_dvr.m3u8
 
+ 北京移动
+凤凰中文,http://111.13.42.9/PLTV/88888888/224/3221225942/1.m3u8
+凤凰中文,http://111.13.42.13/PLTV/88888888/224/3221225942/1.m3u8
+卡酷少儿,http://221.179.217.70/PLTV/88888888/224/3221225907/1.m3u8
+
  河北石家庄 移动
 CCTV3,http://111.11.123.47:6610/030000001000/CCTV-3/CCTV-3.m3u8
 CCTV5,http://111.11.123.47:6610/030000001000/CCTV-5/CCTV-5.m3u8
 
- 北京教育网
-湖南卫视,rtmp://58.200.131.2:1935/livetv/hunantv
-江苏卫视,rtmp://58.200.131.2:1935/livetv/jstv
-凤凰电影,rtmp://58.200.131.2:1935/livetv/fhdy
-星空卫视,rtmp://58.200.131.2:1935/livetv/startv
-凤凰中文,rtmp://58.200.131.2:1935/livetv/fhzw
-
- 四川成都 联通
-CCTV3,http://60.255.149.208/tslive/c213_scc_20190618_0apbps2b_original_r10/c213_scc_20190618_0apbps2b_original_r10.m3u8
-
- 广西防城港 移动
-CCTV3,http://39.135.38.165:6610/000000001000/1000000001000011218/1.m3u8?IASHttpSessionId=OTT16157620200202041417014267&fmt=ts2hls&u=45768392
-
- 广东深圳 联通
-CCTV3,https://116.77.72.195/streams/d/cctv3/playlist.m3u8
-
- 济南联通
 CCTV3,http://cctvalih5ca.v.myalicdn.com/live/cctv3_2/index.m3u8
 辽宁卫视,http://cctvalih5ca.v.myalicdn.com/wstv/liaoning_2/index.m3u8
 
- 北京教育网
+CCTV3,http://60.255.149.208/tslive/c213_scc_20190618_0apbps2b_original_r10/c213_scc_20190618_0apbps2b_original_r10.m3u8
+CCTV3,http://39.135.38.165:6610/000000001000/1000000001000011218/1.m3u8?IASHttpSessionId=OTT16157620200202041417014267&fmt=ts2hls&u=45768392
+CCTV3,https://116.77.72.195/streams/d/cctv3/playlist.m3u8
 CCTV3,http://60.13.128.12:5010/nn_live.ts?id=CCTV3&nn_m3u8=1&nn_file_index=316143772&nn_file_name=20200203T090500Z&nn_file_index_time=1580720735&nn_file_start=5683804&nn_file_end=6495776&nn_ak=0174bf22b417673b2c32e8691719e25f45&ndt=phone&nal=0158e2375e06079b8ee57746c4bf400e05c6ec6598725a&ndi=e21e2900bf112056&ngs=5e37e258000115d8d8c01ca94c08571b&ncmsid=10011
-
+山东教育,http://111.12.110.81:6610/000000001000/7341476808603780321/1.m3u8?channel-id=ystenlive
+江西卫视,http://live02.jxtvcn.com.cn/live-jxtvcn/jxtv01.m3u8
+浙江卫视,http://ali.m.l.cztv.com/channels/lantian/channel01/360p.m3u8
+峨眉电影,http://scgctvshow.sctv.com/hdlive/emei/1.m3u8
+兵团卫视,http://v.btzx.com.cn:1935/live/weishi.stream/playlist.m3u8
 
 爱上4K,http://1.180.237.9/live.aishang.ctlcdn.com/00000110240282_1/encoder/0/playlist.m3u8
 CCTV15,http://111.63.117.13:6060/030000001000/G_CCTV-15/G_CCTV-15.m3u8
 郑氏频道 - baby,http://ms003.happytv.com.tw/live/F9YMztT5DcwWEr1f/index.m3u8?token=VAU4_fynwoclW3rInbKmJw&time=1558344002435
 NEWTV完美游戏,http://218.207.213.133/wh7f454c46tw546395453_-944749478/PLTV/88888888/224/3221225894/index.m3u8
 
-峨眉电影,http://scgctvshow.sctv.com/hdlive/emei/1.m3u8
-
-
 西藏卫视,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/xizangstv/1.m3u8
-兵团卫视,http://v.btzx.com.cn:1935/live/weishi.stream/playlist.m3u8
-兵团卫视,http://v.btzx.com.cn:1935/live/weishi.stream/chunklist_w846804169.m3u8
-
-江西卫视,http://live02.jxtvcn.com.cn/live-jxtvcn/jxtv01.m3u8
-浙江卫视,http://ali.m.l.cztv.com/channels/lantian/channel01/360p.m3u8
 金鹰卡通,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/jinyingkaton/1.m3u8
+CCTV3,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/cctv-3/1.m3u8
+炫动卡通,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/xuandongkaton/1.m3u8
 
-高清电影,https://tudou.com-l-tudou.com/20181129/14668_3c425f2e/1000k/hls/index.m3u8
+中國氣象頻道,http://hls.weathertv.cn/tslslive/qCFIfHB/hls/live_sd.m3u8
 BBC经典系列展播,http://qdntv96789.applinzi.com/96tv.php?633138330
 

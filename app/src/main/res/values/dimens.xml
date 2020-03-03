@@ -5,4 +5,6 @@
     <dimen name="search_bottom_size">2dp</dimen>
     <dimen name="search_margin_size">1dp</dimen>
 
+    <dimen name="text_size">30sp</dimen>
+
 </resources>

@@ -178,6 +178,7 @@ CCTV13,http://183.207.249.14/PLTV/3/224/3221225560/index.m3u8
 精品电影,http://183.207.249.14/PLTV/3/224/3221225567/index.m3u8
 安徽卫视 HD,http://183.207.249.15/PLTV/3/224/3221225634/index.m3u8
 北京卫视 HD,http://183.207.249.7/PLTV/3/224/3221225574/index.m3u8
+宁夏卫视,http://183.207.248.11/PLTV/4/224/3221225842/index.m3u8
 新疆卫视,http://183.207.249.15/PLTV/3/224/3221225523/index.m3u8
 徐州-1HD,http://183.207.249.15/PLTV/3/224/3221225945/index.m3u8
 徐州-3HD,http://183.207.249.7/PLTV/3/224/3221225949/index.m3u8
@@ -191,7 +192,7 @@ CCTV13,http://183.207.249.14/PLTV/3/224/3221225560/index.m3u8
 欢笑剧场,http://183.207.249.15/PLTV/2/224/3221226031/index.m3u8
 七彩戏剧,http://183.207.249.9/PLTV/2/224/3221226039/1.m3u8
 
-ott.js.chinamobile.com
+ ott.js.chinamobile.com
 CCTV1,http://223.110.245.159/ott.js.chinamobile.com/PLTV/3/224/3221225852/index.m3u8
 CCTV1 HD,http://223.110.245.159/ott.js.chinamobile.com/PLTV/3/224/3221225530/index.m3u8
 CCTV1 HD,http://223.110.245.165/ott.js.chinamobile.com/PLTV/3/224/3221226316/index.m3u8
@@ -321,6 +322,7 @@ BesTV超级HD,http://223.110.245.167/ott.js.chinamobile.com/PLTV/3/224/322122694
 置业频道,http://223.110.245.161/ott.js.chinamobile.com/PLTV/3/224/3221227037/index.m3u8
 中国交通,http://223.110.245.161/ott.js.chinamobile.com/PLTV/3/224/3221227027/index.m3u8
 中国气象,http://223.110.245.157/ott.js.chinamobile.com/PLTV/3/224/3221227438/index.m3u8
+凤凰中文,http://223.110.245.139/ott.js.chinamobile.com/PLTV/3/224/3221226922/index.m3u8
 
 湖北卫视,http://ott.js.chinamobile.com/PLTV/3/224/3221227565/index.m3u8
 黑龙江台,http://ott.js.chinamobile.com/PLTV/3/224/3221227492/index.m3u8
@@ -419,4 +421,7 @@ CCTV8,http://223.110.245.139/PLTV/4/224/3221227304/index.m3u8
 新疆卫视,http://223.110.243.136/PLTV/3/224/3221225523/index.m3u8
 凤凰香港,http://223.110.245.136/PLTV/3/224/3221226975/index.m3u8
 凤凰中文,http://223.110.245.139/PLTV/3/224/3221226922/index.m3u8
+
+CCTV5+,http://223.110.241.130:6610/gitv/live1/G_CCTV-5PLUS-HQ/G_CCTV-5PLUS-HQ/1.m3u8
+
 

@@ -809,6 +809,7 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
                     int videoWidth = iMediaPlayer.getVideoWidth();
                     int videoHeight = iMediaPlayer.getVideoHeight();
                     Tips.show(getContext(), "视频分辨率：" + videoWidth + "x" + videoHeight);
+                    if (mVideoController != null) mVideoController.setVideoSize(videoWidth, videoHeight);
 
                     break;
                 case IjkMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:

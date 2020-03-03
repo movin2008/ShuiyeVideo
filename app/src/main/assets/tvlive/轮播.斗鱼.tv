@@ -1,0 +1,27 @@
+## https://www.52pojie.cn/thread-957638-1-1.html
+## 经过我十多天的思考，测试，沉淀，升华，终于破解了斗鱼直播源  真实地址的精简标准格式（可能是之一）：
+## 标准格式：http://tx2play1.douyucdn.cn/live/空白_4000P.flv   （其中：http和https可以互换，flv和xs可以互换，不影响效果）
+## 等效格式：https://tx2play1.douyucdn.cn/live/空白_4000P.xs   （其中：_4000P为蓝光，可以换成_2000p超清，_1200p高清，_550p流畅，可以根据自己的网速自己调整清晰度。也可以去掉_4000P，默认是高清或者超清。）
+## 真实的斗鱼直播源是我抓过的直播平台中最难抓的，主要是因为几乎所有斗鱼直播源都是经过时间加密的，而且麻烦的是加密种类多样。
+## 利用上面我介绍的抓取直播源的方法先抓到加密的直播源，例子1是用“PC浏览器F12抓的，”例子2是用“手机浏览器”抓的，例子3是用“Z直播”抓的，三种方法抓的直播源格式格式虽然不同，但都能套用标准格式。
+## 空白处=斗鱼房间号+一串字母数字组合。从抓取的加密直播源中很容易找到“斗鱼房间号+一串字母数字组合”，复制粘贴到标准格式空白处，就得到真实的斗鱼直播源了，
+##
+## 例子1加密直播源：https://tc-tct.douyucdn2.cn/dyliveflv1a/288016rlols5_4000p.flv?wsAuth=8b486029039b56bea5890018f8fbc0c5&token=web-h5-89457769-288016-88ecb324a2c68d24b31f3321f9e5b8bdd61f2d4174ff5fb3&logo=0&expire=0&did=2c3861dd383f06343e559cf200051501&ver=Douyu_219050705&pt=2&st=0&mix=0&isp=
+## 例子1真实直播源：http://tx2play1.douyucdn.cn/live/288016rlols5.flv
+##
+## 例子2加密直播源：http://hls1a.douyucdn.cn/live/1525851rffvVYsm7_2200/playlist.m3u8?wsSecret=0a0646be9c7bfed2b222bfff0652de51&wsTime=1557997214&token=h5-douyu-0-1525851-f16629cd8a409e970ca6c948ef2144ce&did=eefe85593b4a4e28b8983f1700061531
+## 例子2真实直播源：http://tx2play1.douyucdn.cn/live/1525851rffvVYsm7.flv
+##
+## 例子3加密直播源：http://hdl3.douyucdn.cn/live/6582435r0a0H5rCu_900.flv?wsAuth=3e2020856988091207fe91fd26af39af&token=app-android1-124701978-6582435-e99adb30d4408afba06d37194ec0b252297eec70c8d87d5f&logo=0&expire=0&did=48c12f70-1554-45af-bb8f-5d5e4534c310&ver=v5.0.0&channel=94&pt=1&st=0&mix=0&isp=
+## 例子3真实直播源：http://tx2play1.douyucdn.cn/live/6582435r0a0H5rCu.flv
+##
+## 我随机抓了将近20个斗鱼直播源，套用标准格式都成功了，目前成功率100%。因为方法2抓源格式固定，大家可以多用方法2抓取。
+## 再次说明：对于24小时不间断播放的直播间来说，这个真实的直播源可以长久有效，上面3个例子都是24小时不间断直播的；直播间关播，直播源立即失效，再次开播，需要按照此方法再次获取真实直播源。
+ 斗鱼轮播(待完善)
+英雄联盟,http://tx2play1.douyucdn.cn/288016rlols5.m3u8
+积分电播,http://tx2play1.douyucdn.cn/122402rK7MO9bXSq.m3u8
+
+斗鱼官方赛事 MSI 550p,https://tc-tct.douyucdn2.cn/dyliveflv1a/288016rlols5_550p.flv?wsAuth=44bfc95c08c38338d12f273b5ad69178&token=web-h5-89457769-288016-88ecb324a2c68d246a0ec41e5b616c187a51fcad26326b1d&logo=0&expire=0&did=2c3861dd383f06343e559cf200051501&ver=Douyu_219050705&pt=2&st=0&mix=0&isp=
+斗鱼官方赛事 MSI 2000p,https://tc-tct.douyucdn2.cn/dyliveflv1a/288016rlols5_2000p.flv?wsAuth=238e6028af9f658812fa5b51c5637fdf&token=web-h5-89457769-288016-88ecb324a2c68d2408c4b2c20b4dd59510db3c4fd8b392fa&logo=0&expire=0&did=2c3861dd383f06343e559cf200051501&ver=Douyu_219050705&pt=2&st=0&mix=0&isp=
+斗鱼官方赛事 MSI 4000p,https://tc-tct.douyucdn2.cn/dyliveflv1a/288016rlols5_4000p.flv?wsAuth=8b486029039b56bea5890018f8fbc0c5&token=web-h5-89457769-288016-88ecb324a2c68d24b31f3321f9e5b8bdd61f2d4174ff5fb3&logo=0&expire=0&did=2c3861dd383f06343e559cf200051501&ver=Douyu_219050705&pt=2&st=0&mix=0&isp=
+

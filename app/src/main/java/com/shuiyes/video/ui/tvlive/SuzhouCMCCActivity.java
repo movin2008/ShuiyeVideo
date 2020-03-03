@@ -10,6 +10,8 @@ import com.shuiyes.video.util.Utils;
 import org.json.JSONObject;
 
 import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class SuzhouCMCCActivity extends BaseTVLiveActivity {
 
@@ -37,6 +39,9 @@ public class SuzhouCMCCActivity extends BaseTVLiveActivity {
     public void refreshVideos(String result) throws Exception {
         Utils.setFile("suzhou.cmcc.iptv", result);
 
+        // 按名字排序
+        TreeMap<String, String> maps = new TreeMap<String, String>();
+
         JSONObject obj = new JSONObject(result);
         Iterator<String> iterator = obj.keys();
         mVideos.clear();
@@ -48,7 +53,16 @@ public class SuzhouCMCCActivity extends BaseTVLiveActivity {
             String uuid = channel.getString("uuid");
 
             // http://183.207.248.71/cntv/live1/channelName/uuid
-            mVideos.add(new ListVideo(channelName, channelName, HOST + channelName + "/" + uuid));
+            maps.put(channelName, HOST + channelName + "/" + uuid);
+        }
+
+
+        Set<String> sets = maps.keySet();
+
+        Iterator<String> iterator2 = sets.iterator();
+        while(iterator2.hasNext()){
+            String name = iterator2.next();
+            mVideos.add(new ListVideo(name, name, maps.get(name)));
         }
     }
 

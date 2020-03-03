@@ -1,8 +1,9 @@
  江西省南昌市 移动
 湖南卫视,http://223.82.250.72/live/hdhunanstv/1.m3u8
-凤凰中文HD,http://223.82.250.72/live/fhchinese/1.m3u8
-凤凰中文,http://223.82.250.72/ysten-bussiness/live/fhchinese/1.m3u8
-凤凰资讯,http://223.82.250.72/ysten-bussiness/live/fhzixun/1.m3u8
+新疆卫视,http://223.82.250.72/live/xinjiangstv/1.m3u8
+凤凰中文,http://223.82.250.72/live/fhchinese/1.m3u8
+凤凰中文 HD,http://223.82.250.72/ysten-bussiness/live/fhchinese/1.m3u8
+凤凰资讯 HD,http://223.82.250.72/ysten-bussiness/live/fhzixun/1.m3u8
 
  江西移动8M
 CCTV17 HD,http://117.169.124.37:6610/ysten-businessmobile/live/HD-4000k-1080P-cctv17/1.m3u8
@@ -34,8 +35,8 @@ CCTV14 HD,http://117.169.124.36:6610/ysten-businessmobile/live/cctv-14/1.m3u8
 CCTV15 HD,http://117.169.124.36:6610/ysten-businessmobile/live/cctv-15/1.m3u8
 CCTV5+ HD,http://117.169.124.46:6410/ysten-businessmobile/live/hdcctv05plus/1.m3u8
 
-凤凰卫视HD,http://117.169.124.37:6610/ysten-businessmobile/live/fhchinese/1.m3u8
-凤凰咨询HD,http://117.169.124.37:6610/ysten-businessmobile/live/fhzixun/1.m3u8
+凤凰中文HD,http://117.169.124.37:6610/ysten-businessmobile/live/fhchinese/1.m3u8
+凤凰资讯HD,http://117.169.124.37:6610/ysten-businessmobile/live/fhzixun/1.m3u8
 
 北京卫视HD,http://117.169.124.37:6610/ysten-businessmobile/live/hdbeijingstv/yst.m3u8
 天津卫视HD,http://117.169.124.37:6610/ysten-businessmobile/live/hdtianjinstv/yst.m3u8

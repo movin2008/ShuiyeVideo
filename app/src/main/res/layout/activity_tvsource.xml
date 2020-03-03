@@ -10,59 +10,149 @@
         android:layout_height="wrap_content"
         android:padding="20dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" 轮播源"
+            android:textSize="@dimen/text_size" />
+
         <Button
             style="@style/Button"
             android:layout_width="wrap_content"
             android:onClick="huya"
-            android:text="虎牙轮播源" />
+            android:text="虎牙" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="iqiyi"
+            android:text="爱奇艺" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="douyu"
+            android:text="斗鱼" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="wasu"
+            android:text="华数" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n 广电源"
+            android:textSize="@dimen/text_size" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="shanxGD"
+            android:text="陕西广电" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="cdnin"
+            android:text="广电蜀小果1" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="cdnout"
+            android:text="广电蜀小果2" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n 移动源"
+            android:textSize="@dimen/text_size" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="bjCmcc"
+            android:text="北京" />
 
         <Button
             style="@style/Button"
             android:layout_width="wrap_content"
             android:onClick="njCmcc"
-            android:text="南京移动源" />
-
-        <Button
-            style="@style/Button"
-            android:layout_width="wrap_content"
-            android:onClick="nnCmcc"
-            android:text="南宁移动源" />
-
-        <Button
-            style="@style/Button"
-            android:layout_width="wrap_content"
-            android:onClick="herbCmcc"
-            android:text="哈尔滨移动源" />
-
-        <Button
-            style="@style/Button"
-            android:layout_width="wrap_content"
-            android:onClick="jygCmcc"
-            android:text="嘉峪关移动源" />
-
-        <Button
-            style="@style/Button"
-            android:layout_width="wrap_content"
-            android:onClick="hzCmcc"
-            android:text="杭州移动源" />
+            android:text="江苏南京" />
 
         <Button
             style="@style/Button"
             android:layout_width="wrap_content"
             android:onClick="szCmcc"
-            android:text="苏州移动源" />
+            android:text="江苏苏州" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="nnCmcc"
+            android:text="广西南宁" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="ncCmcc"
+            android:text="江西南昌" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="herb1Cmcc"
+            android:text="黑龙江哈尔滨" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="jygCmcc"
+            android:text="甘肃嘉峪关" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="hz1Cmcc"
+            android:text="浙江杭州" />
 
         <Button
             style="@style/Button"
             android:layout_width="wrap_content"
             android:onClick="whCmcc"
-            android:text="武汉移动源" />
+            android:text="湖北武汉" />
 
         <Button
             style="@style/Button"
             android:layout_width="wrap_content"
             android:onClick="syCmcc"
-            android:text="沈阳移动源" />
+            android:text="辽宁沈阳" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="fzCmcc"
+            android:text="福建福州" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="zzCmcc"
+            android:text="河南郑州" />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:onClick="dlCmcc"
+            android:text="魔百盒代理" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n 联通源"
+            android:textSize="@dimen/text_size" />
 
         <Button
             style="@style/Button"
@@ -128,8 +218,8 @@
             style="@style/Button"
             android:layout_width="wrap_content"
             android:onClick="soplus"
-            android:visibility="gone"
-            android:text="SopPlus 整理" />
+            android:text="SopPlus 整理"
+            android:visibility="gone" />
 
     </com.zhy.view.flowlayout.FlowLayout>
 
