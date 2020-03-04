@@ -33,7 +33,6 @@ import com.shuiyes.video.util.WindowUtil;
 import com.devlin_n.yinyangplayer.widget.StatusView;
 import com.devlin_n.yinyangplayer.widget.YinYangSurfaceView;
 import com.devlin_n.yinyangplayer.widget.YinYangTextureView;
-import com.shuiyes.video.widget.Tips;
 
 import java.io.File;
 import java.io.IOException;
@@ -808,7 +807,6 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
 
                     int videoWidth = iMediaPlayer.getVideoWidth();
                     int videoHeight = iMediaPlayer.getVideoHeight();
-                    Tips.show(getContext(), "视频分辨率：" + videoWidth + "x" + videoHeight);
                     if (mVideoController != null) mVideoController.setVideoSize(videoWidth, videoHeight);
 
                     break;

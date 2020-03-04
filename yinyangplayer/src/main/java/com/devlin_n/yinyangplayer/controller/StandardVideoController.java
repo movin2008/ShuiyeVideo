@@ -28,6 +28,7 @@ import com.devlin_n.yinyangplayer.player.YinYangPlayer;
 import com.devlin_n.yinyangplayer.util.Constants;
 import com.devlin_n.yinyangplayer.util.L;
 import com.shuiyes.video.util.WindowUtil;
+import com.shuiyes.video.widget.Tips;
 
 /**
  * 直播/点播控制器
@@ -55,7 +56,7 @@ public class StandardVideoController extends BaseVideoController implements View
     private LinearLayout completeContainer;
     private Animation showAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_alpha_in);
     private Animation hideAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_alpha_out);
-    private PopupMenu popupMenu;
+    protected PopupMenu popupMenu;
 
 
     public StandardVideoController(@NonNull Context context) {
@@ -84,7 +85,7 @@ public class StandardVideoController extends BaseVideoController implements View
         fullScreenButton.setOnClickListener(this);
         bottomContainer = (LinearLayout) controllerView.findViewById(R.id.bottom_container);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bottomContainer.getLayoutParams();
-        params.setMargins(0,0,0,WindowUtil.getNavigationBarHeight(getContext()));
+        params.setMargins(0, 0, 0, WindowUtil.getNavigationBarHeight(getContext()));
         bottomContainer.setLayoutParams(params);
         topContainer = (LinearLayout) controllerView.findViewById(R.id.top_container);
         videoProgress = (SeekBar) controllerView.findViewById(R.id.seekBar);
@@ -111,6 +112,7 @@ public class StandardVideoController extends BaseVideoController implements View
         statusHolder.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) WindowUtil.getStatusBarHeight(getContext())));
         popupMenu = new PopupMenu(getContext(), moreMenu, Gravity.END);
         popupMenu.getMenuInflater().inflate(R.menu.controller_menu, popupMenu.getMenu());
+        popupMenu.getMenu().findItem(R.id.video_source).setVisible(false);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -125,14 +127,10 @@ public class StandardVideoController extends BaseVideoController implements View
         int itemId = item.getItemId();
         if (itemId == R.id.other_player) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-
             String url = mediaPlayer.getUrl();
-//            String extension = android.webkit.MimeTypeMap.getFileExtensionFromUrl(url);
-//            String mimeType = android.webkit.MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-
             intent.setDataAndType(Uri.parse(url), "video/*");
             getContext().startActivity(intent);
-        }else if (itemId == R.id.float_window) {
+        } else if (itemId == R.id.float_window) {
             mediaPlayer.startFloatWindow();
         } else if (itemId == R.id.scale_default) {
             mediaPlayer.setScreenScale(YinYangPlayer.SCREEN_SCALE_DEFAULT);
@@ -316,12 +314,18 @@ public class StandardVideoController extends BaseVideoController implements View
      */
     public void setLive(boolean live) {
         isLive = live;
-        if(live){
+        if (live) {
             bottomProgress.setVisibility(GONE);
             videoProgress.setVisibility(INVISIBLE);
             totalTime.setVisibility(INVISIBLE);
             moreMenu.setVisibility(VISIBLE);
         }
+    }
+
+    @Override
+    public void setVideoSize(int width, int height) {
+        Tips.show(getContext(), "视频分辨率：" + width + "x" + height);
+        popupMenu.getMenu().findItem(R.id.screen_scale).setTitle(width + "x" + height);
     }
 
     @Override
@@ -422,7 +426,7 @@ public class StandardVideoController extends BaseVideoController implements View
             return 0;
         }
 
-        if(isLive){
+        if (isLive) {
             currTime.setText("LIVE");
             if (title != null) title.setText(mediaPlayer.getTitle());
             return 0;

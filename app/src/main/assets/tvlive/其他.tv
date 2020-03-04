@@ -73,7 +73,9 @@ CCTV3,http://60.13.128.12:5010/nn_live.ts?id=CCTV3&nn_m3u8=1&nn_file_index=31614
 江西卫视,http://live02.jxtvcn.com.cn/live-jxtvcn/jxtv01.m3u8
 浙江卫视,http://ali.m.l.cztv.com/channels/lantian/channel01/360p.m3u8
 峨眉电影,http://scgctvshow.sctv.com/hdlive/emei/1.m3u8
+
 兵团卫视,http://v.btzx.com.cn:1935/live/weishi.stream/playlist.m3u8
+兵团卫视,rtmp://v.btzx.com.cn/live/weishi.stream
 
 爱上4K,http://1.180.237.9/live.aishang.ctlcdn.com/00000110240282_1/encoder/0/playlist.m3u8
 CCTV15,http://111.63.117.13:6060/030000001000/G_CCTV-15/G_CCTV-15.m3u8

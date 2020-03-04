@@ -57,14 +57,14 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
             String nurl = url.replace("aldirect", source);
             mVideos.add(new ListVideo("源." + source, title, nurl));
             mVideos.add(new ListVideo("源." + source + "_1200", title, nurl.replace(".m3u8", "_1200.m3u8")));
-            mVideos.add(new ListVideo("源." + source + "_2000", title, nurl.replace(".m3u8", "_2000.m3u8")));
-            mVideos.add(new ListVideo("源." + source + "_2500", title, nurl.replace(".m3u8", "_2500.m3u8")));
+//            mVideos.add(new ListVideo("源." + source + "_2000", title, nurl.replace(".m3u8", "_2000.m3u8")));
+//            mVideos.add(new ListVideo("源." + source + "_2500", title, nurl.replace(".m3u8", "_2500.m3u8")));
 
             nurl = nurl.replace("huyalive", "backsrc");
             mVideos.add(new ListVideo("源." + source, title, nurl));
             mVideos.add(new ListVideo("源." + source + "_1200", title, nurl.replace(".m3u8", "_1200.m3u8")));
-            mVideos.add(new ListVideo("源." + source + "_2000", title, nurl.replace(".m3u8", "_2000.m3u8")));
-            mVideos.add(new ListVideo("源." + source + "_2500", title, nurl.replace(".m3u8", "_2500.m3u8")));
+//            mVideos.add(new ListVideo("源." + source + "_2000", title, nurl.replace(".m3u8", "_2000.m3u8")));
+//            mVideos.add(new ListVideo("源." + source + "_2500", title, nurl.replace(".m3u8", "_2500.m3u8")));
         }
     }
 
@@ -103,7 +103,7 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
 
     private Thread mThread;
 
-    static final int COUNT = 36;
+    static final int COUNT = 24;
 
     public void testHuyaUrl(NumberView v) {
         if (mThread != null && mThread.isAlive()) {
@@ -144,8 +144,7 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
 
                 if (flag == 0) {
                     tips(v.getTitle() + " 测试结束, 全部无效");
-                }
-                if (flag == COUNT) {
+                }else if (flag == COUNT) {
                     tips(v.getTitle() + " 测试结束, 全部有效");
                 } else {
                     tips(v.getTitle() + " 测试结束, 有效: " + flag + ", 无效: " + (COUNT - flag));
