@@ -713,9 +713,9 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
     private IMediaPlayer.OnErrorListener onErrorListener = new IMediaPlayer.OnErrorListener() {
         @Override
         public boolean onError(IMediaPlayer iMediaPlayer, int framework_err, int impl_err) {
-            // 直播，尝试3次
-            if (isLive() && errorCount++ < 3) {
-                NetworkUtil.get(mCurrentUrl);
+            // 直播，尝试2次
+            if (isLive() && errorCount++ < 2) {
+//                NetworkUtil.get(mCurrentUrl);
                 restart();
             } else {
                 mCurrentState = STATE_ERROR;

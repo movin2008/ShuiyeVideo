@@ -1,4 +1,4 @@
-北邮直播源
+ 北邮直播源
 CCTV2,rtmp://ivi.bupt.edu.cn:1935/livetv/cctv2hd
 CCTV3,rtmp://ivi.bupt.edu.cn:1935/livetv/cctv3hd
 CCTV4,rtmp://ivi.bupt.edu.cn:1935/livetv/cctv4hd
@@ -35,8 +35,10 @@ CHC高清电影,rtmp://ivi.bupt.edu.cn:1935/livetv/chchd
 四川卫视,rtmp://ivi.bupt.edu.cn:1935/livetv/schd
 河南卫视,rtmp://ivi.bupt.edu.cn:1935/livetv/hnhd
 河北卫视,rtmp://ivi.bupt.edu.cn:1935/livetv/hebhd
+凤凰中文台,rtmp://ivi.bupt.edu.cn:1935/livetv/fhzw
+凤凰咨询台,rtmp://ivi.bupt.edu.cn:1935/livetv/fhzx
 
-北邮测试源
+ 北邮测试源
 CCTV1,http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8
 CCTV3,http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8
 CCTV-5,http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8
