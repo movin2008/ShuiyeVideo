@@ -136,7 +136,8 @@ public class YoukuVActivity extends BasePlayActivity {
                     } else {
                         boolean isVip = data.has("trial");
                         if (isVip) {
-                            Tips.show(getBaseContext(), "VIP 视频支持6分钟试看，可尝试VIP解析");
+                            fault("VIP视频只支持6分钟试看", true);
+                            return;
                         }
 
                         JSONArray streams = data.getJSONArray("stream");

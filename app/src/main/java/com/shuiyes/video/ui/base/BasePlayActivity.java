@@ -427,7 +427,9 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
     }
 
     protected void fault(Exception e) {
-        fault(e.getCause().getClass().getName() + " " + e.getLocalizedMessage());
+        Throwable t = e.getCause();
+        if(t == null) t = e;
+        fault(t.getClass().getName() + " " + e.getLocalizedMessage());
     }
 
     private void playUrl(String url) {
@@ -576,7 +578,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
             case MSG_FETCH_VIDEO:
                 String streamStr = (String) msg.obj;
                 if (TextUtils.isEmpty(streamStr)) {
-                    mStateView.setText(mStateView.getText() + "[成功]\n解析视频地址...");
+                    mStateView.setText(mStateView.getText() + "[成功]\n解析视频信息...");
                 } else {
                     mClarityView.setText(streamStr);
                     mClarityView.setVisibility(View.VISIBLE);
