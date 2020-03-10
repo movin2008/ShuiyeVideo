@@ -1,0 +1,9 @@
+
+CCTV-5+,http://117.169.120.132:8080/live/hdcctv05plus/playlist.m3u8
+CCTV-8,http://117.169.120.132:8080/live/cctv-8/playlist.m3u8
+
+重庆卫视,http://117.169.120.132:8080/live/chongqingstv/playlist.m3u8
+江苏卫视,http://117.169.120.165:8080/live/hdjiangsustv/playlist.m3u8
+
+凤凰资讯,http://117.169.120.138:8080/live/fhzixun/.m3u8
+鳳凰資訊,http://117.169.124.43:6610/ysten-businessmobile/live/fhzixun/index.m3u8

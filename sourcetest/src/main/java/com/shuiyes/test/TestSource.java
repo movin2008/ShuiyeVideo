@@ -1,5 +1,8 @@
 package com.shuiyes.test;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -176,15 +179,33 @@ public class TestSource {
 				}
 
 			}
-		}else if(filename.endsWith(".json")){
+		}else if(filename.endsWith(".qtitv")){
 			String text = null;
 			StringBuffer buffer = new StringBuffer();
 			while ((text = br.readLine()) != null) {
 				buffer.append(text);
 			}
 			br.close();
-			
-			
+
+			System.out.println(buffer.length());
+			JSONArray arr = new JSONArray(buffer.toString());
+
+			for (int i = 0; i < arr.length(); i++) {
+				JSONObject obj = arr.getJSONObject(i);
+
+				bw.write("\n[Group]" + obj.getString("name") + "\n");
+				bw.flush();
+
+				JSONArray data = obj.getJSONArray("data");
+				for (int j = 0; j < data.length(); j++) {
+					JSONObject tmp = data.getJSONObject(j);
+					JSONArray source = tmp.getJSONArray("source");
+					for (int k = 0; k < source.length(); k++) {
+						bw.write(tmp.getString("name") +","+source.getString(k)+ "\n");
+						bw.flush();
+					}
+				}
+			}
 		}
 		
 		br.close();

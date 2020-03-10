@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="每个频道共 12 个直播源地址，有些是无效的，建议先进行源有效性测试" />
+            android:text="每个频道共 8 个直播源地址，有些是无效的，建议先进行源有效性测试" />
     </LinearLayout>
 
 
