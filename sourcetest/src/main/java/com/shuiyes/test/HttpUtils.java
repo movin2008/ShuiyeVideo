@@ -1,14 +1,12 @@
 package com.shuiyes.test;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -19,13 +17,6 @@ import javax.net.ssl.X509TrustManager;
 
 public class HttpUtils {
 
-    public static String FormateUrl(String url) {
-        if (url.startsWith("//")) {
-            url = "http:" + url;
-        }
-        return url;
-    }
-
     public static final String UA_MAC = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36";
     public static final String UA_WIN = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36";
     public static final String UA_ANDROID = "Mozilla/5.0 (Linux; U; Android 9; zh-cn; MI 6 Build/PKQ1.190118.001) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/10.0 Mobile Safari/537.36  ";
@@ -33,7 +24,7 @@ public class HttpUtils {
     public static final String UA = UA_WIN;
 
     public static void setURLConnection(HttpURLConnection conn, String headers) {
-        conn.setConnectTimeout(9999);
+        conn.setConnectTimeout(3333);
         conn.setReadTimeout(9999);
         conn.setRequestProperty("Host", conn.getURL().getHost());
         conn.setRequestProperty("User-Agent", UA);
@@ -45,47 +36,23 @@ public class HttpUtils {
             conn.setRequestProperty(header[0], header[1]);
         }
     }
-    
-    static boolean isEmpty(String s){
-    	return s == null || s.length() == 0;
-    }
 
-    public static String printHeaders(URLConnection conn) {
-        Map<String, List<String>> headers = conn.getHeaderFields();
-        Set<String> keys = headers.keySet();
-        Iterator<String> iterator = keys.iterator();
-
-        String code = "HTTP/1.1 unkown";
-        StringBuffer buf = new StringBuffer();
-        while (iterator.hasNext()) {
-            String key = iterator.next();
-
-            buf.setLength(0);
-            List<String> values = headers.get(key);
-            for (String value : values) {
-                buf.append(value + ",");
-            }
-            if (key == null || "null".equals(key)) code = buf.toString();
-            System.out.println(key + ": " + buf.toString());
-
-
-        }
-        return code;
+    static boolean isEmpty(String s) {
+        return s == null || s.length() == 0;
     }
 
     public static boolean get(String url) {
-    	url = url.trim();
-    	if(url.toLowerCase().startsWith("p2p") || url.startsWith("p8p")){
-    		return false;
-    	}
-    	if(url.startsWith("mitv") || url.startsWith("vjms")
-    			|| url.startsWith("rtmp") 
-    			|| url.startsWith("rtsp")
-    			|| url.startsWith("tvbus")
-    			|| url.startsWith("mms")){
-    		return true;
-    	}
-    	
+        url = url.trim();
+        if (url.startsWith("vjms") || url.startsWith("mitv") || url.toLowerCase().startsWith("p2p") || url.startsWith("p8p")) {
+            return false;
+        }
+        if (url.startsWith("rtmp") || url.startsWith("rtsp")
+                || url.startsWith("tvbus")
+//    			|| url.startsWith("http")
+                || url.startsWith("mms")) {
+            return true;
+        }
+
         return HttpUtils.get(url, false);
     }
 
@@ -93,9 +60,11 @@ public class HttpUtils {
         return HttpUtils.get(url, null, forCookie);
     }
 
+    public static String E = "";
+
     public static boolean get(String url, String headers, boolean forCookie) {
 
-    	boolean ret = false;
+        boolean ret = false;
         HttpURLConnection conn = null;
         try {
             if (url.startsWith("https://")) {
@@ -108,18 +77,25 @@ public class HttpUtils {
             conn.setRequestMethod("GET");
             conn.connect();
             int code = conn.getResponseCode();
-            System.out.println("ResponseCode " + code);
+            Log.e("ResponseCode", "" + code);
+            E = "" + code;
 
             if (code == 200) {
-            	int size = conn.getInputStream().available();
-            	if(size > 0){
-            	}else{
-                	System.err.println("no data.");
-            	}
-            	ret = true;
+                InputStream in = conn.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                String text = br.readLine();
+                if (text != null && text.startsWith("#EXTM3U")) {
+                    ret = true;
+                } else {
+                    E = "302";
+                    System.err.println("readLine " + text);
+                }
+                br.close();
             } else if (code == 301 || code == 302) {
                 Thread.sleep(500);
                 return HttpUtils.get(conn.getHeaderField("Location"), headers, forCookie);
+            } else {
+                E = "" + code;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -129,7 +105,8 @@ public class HttpUtils {
             }
             return HttpUtils.get(url, headers, forCookie);
         } catch (Exception e) {
-        	System.err.println(e.getLocalizedMessage());
+            E = e.getLocalizedMessage();
+            System.err.println(e.getLocalizedMessage());
         } finally {
             if (conn != null) {
                 conn.disconnect();

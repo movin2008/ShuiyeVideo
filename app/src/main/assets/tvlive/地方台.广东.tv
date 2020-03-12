@@ -1,17 +1,21 @@
  nclive.grtn.cn/playlist.m3u8
 广东综艺,http://nclive.grtn.cn/4K/playlist.m3u8
+广东卫视,http://nclive.grtn.cn/gdws/playlist.m3u8
 广东房产,http://nclive.grtn.cn/fcpd/playlist.m3u8
 广东公共,http://nclive.grtn.cn/ggpd/playlist.m3u8
 广东国际,http://nclive.grtn.cn/gjpd/playlist.m3u8
 高尔夫球,http://nclive.grtn.cn/grfpd/playlist.m3u8
 嘉佳卡通,http://nclive.grtn.cn/jjkt/playlist.m3u8
-广东科教,http://nclive.grtn.cn/tvs1/playlist.m3u8
+广东经济,http://nclive.grtn.cn/tvs1/playlist.m3u8
+广东经济,http://nclive.grtn.cn/tvs1hd/playlist.m3u8
 南方卫视,http://nclive.grtn.cn/tvs2/playlist.m3u8
+广东综艺,http://nclive.grtn.cn/tvs3/playlist.m3u8
 广东影视,http://nclive.grtn.cn/tvs4/playlist.m3u8
 广东少儿,http://nclive.grtn.cn/tvs5/playlist.m3u8
 广东珠江,http://nclive.grtn.cn/zjpd/playlist.m3u8
 广东新闻,http://nclive.grtn.cn/xwpd/playlist.m3u8
 南方购物,http://nclive.grtn.cn/nfgw/playlist.m3u8
+广东体育,http://nclive.grtn.cn/typd/playlist.m3u8
 
  dslive.grtn.cn/playlist.m3u8
 河源综合,http://dslive.grtn.cn/hyzh/playlist.m3u8
@@ -30,19 +34,22 @@
 
  nclive.grtn.cn/live.m3u8
 广东综艺,http://nclive.grtn.cn/4K/sd/live.m3u8
+广东卫视,http://nclive.grtn.cn/gdws/sd/live.m3u8
 广东房产,http://nclive.grtn.cn/fcpd/sd/live.m3u8
 广东公共,http://nclive.grtn.cn/ggpd/sd/live.m3u8
 广东国际,http://nclive.grtn.cn/gjpd/sd/live.m3u8
 高尔夫球,http://nclive.grtn.cn/grfpd/sd/live.m3u8
 嘉佳卡通,http://nclive.grtn.cn/jjkt/sd/live.m3u8
-广东科教,http://nclive.grtn.cn/tvs1/sd/live.m3u8
-广东科教,http://nclive.grtn.cn/tvs1hd/hd/live.m3u8
+广东经济,http://nclive.grtn.cn/tvs1/sd/live.m3u8
+广东经济,http://nclive.grtn.cn/tvs1hd/hd/live.m3u8
 南方卫视,http://nclive.grtn.cn/tvs2/sd/live.m3u8
+广东综艺,http://nclive.grtn.cn/tvs3/sd/live.m3u8
 广东影视,http://nclive.grtn.cn/tvs4/sd/live.m3u8
 广东少儿,http://nclive.grtn.cn/tvs5/sd/live.m3u8
 广东珠江,http://nclive.grtn.cn/zjpd/sd/live.m3u8
 广东新闻,http://nclive.grtn.cn/xwpd/sd/live.m3u8
 南方购物,http://nclive.grtn.cn/nfgw/sd/live.m3u8
+广东体育,http://nclive.grtn.cn/typd/sd/live.m3u8
 
  dslive.grtn.cn/live.m3u8
 河源综合,http://dslive.grtn.cn/hyzh/sd/live.m3u8
@@ -58,6 +65,7 @@
 珠海生活,http://dslive.grtn.cn/zhzh/sd/live.m3u8
 湛江综合,http://dslive.grtn.cn/zjzh/sd/live.m3u8
 肇庆综合,http://dslive.grtn.cn/zqzh/sd/live.m3u8
+潮州综合,http://dslive.grtn.cn/czzh/sd/live.m3u8
 
  aplay.gztv.com/sec/*.flv
 广州经济,http://aplay.gztv.com/sec/jingji.flv
@@ -76,3 +84,18 @@
 广州新闻,http://aplay.gztv.com/sec/xinwen.m3u8
 广州影视,http://aplay.gztv.com/sec/yingshi.m3u8
 广州综合,http://aplay.gztv.com/sec/zhonghe.m3u8
+
+ 221.179.69.238/dx.m3u8
+汕头生活,http://221.179.69.238:880/dx2.m3u8
+汕头公共,http://221.179.69.238:880/dx3.m3u8
+潮州综合,http://221.179.69.238:880/dx4.m3u8
+潮州公共,http://221.179.69.238:880/dx5.m3u8
+揭阳综合,http://221.179.69.238:880/dx7.m3u8
+
+广东体育,http://cdn12.switchium.com/gdty.m3u8
+
+潮安影视,http://chaoan.chaoantv.com:8278/chaoanyingshi/playlist.m3u8
+潮安综合,http://chaoan.chaoantv.com:8278/chaoanzonghe/playlist.m3u8
+
+揭阳综合,http://livejieyang.chinamcache.com/live/zb01.m3u8
+揭阳公共,http://livejieyang.chinamcache.com/live/zb02.m3u8

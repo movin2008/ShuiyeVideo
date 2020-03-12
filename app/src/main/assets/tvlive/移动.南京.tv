@@ -173,7 +173,6 @@ CCTV9 HD,http://183.207.249.6/PLTV/3/224/3221225532/index.m3u8
 CCTV10 HD,http://183.207.249.7/PLTV/3/224/3221225550/index.m3u8
 CCTV12 HD,http://183.207.249.7/PLTV/3/224/3221225556/index.m3u8
 CCTV13,http://183.207.249.14/PLTV/3/224/3221225560/index.m3u8
-
 CCTV-1,http://183.207.249.9/PLTV/3/224/3221225530/index.m3u8
 CCTV-3,http://183.207.249.5/PLTV/3/224/3221225588/index.m3u8
 CCTV-5+,http://183.207.249.14/PLTV/3/224/3221225604/index.m3u8
@@ -275,6 +274,7 @@ CCTV4,http://223.110.245.165/ott.js.chinamobile.com/PLTV/3/224/3221225534/index.
 CCTV4,http://223.110.245.159/ott.js.chinamobile.com/PLTV/3/224/3221225781/index.m3u8
 CCTV4 HD,http://223.110.245.163/ott.js.chinamobile.com/PLTV/3/224/3221227378/index.m3u8
 CCTV5 HD,http://223.110.245.165/ott.js.chinamobile.com/PLTV/3/224/3221227401/index.m3u8
+CCTV-5,http://223.110.245.165/ott.js.chinamobile.com/PLTV/3/224/3221227401/1.m3u8
 CCTV6 HD,http://223.110.245.159/ott.js.chinamobile.com/PLTV/3/224/3221225548/index.m3u8
 CCTV6 HD,http://223.110.245.139/ott.js.chinamobile.com/PLTV/3/224/3221227209/index.m3u8
 CCTV6 HD,http://223.110.245.159/ott.js.chinamobile.com/PLTV/3/224/3221227209/index.m3u8
@@ -375,7 +375,9 @@ CCTV2 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221227207/ind
 CCTV4,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221225534/index.m3u8
 CCTV7 FHD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221225546/index.m3u8
 CCTV8 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221227205/index.m3u8
+CCTV-8,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221227204/index.m3u8
 CCTV10 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221225550/index.m3u8
+CCTV-12,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221225556/index.m3u8
 CCTV13,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221225560/index.m3u8
 CCTV14 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221227201/index.m3u8
 广东卫视 HD,http://223.110.245.170/ott.js.chinamobile.com/PLTV/3/224/3221227249/index.m3u8
@@ -407,6 +409,8 @@ CCTV12 HD,http://223.110.245.172/PLTV/3/224/3221225556/index.m3u8
 CCTV13 HD,http://223.110.245.170/PLTV/3/224/3221225560/index.m3u8
 CCTV14 HD,http://223.110.245.170/PLTV/3/224/3221227201/index.m3u8
 CCTV14 HD,http://223.110.245.169/PLTV/3/224/3221227201/index.m3u8
+
+优漫卡通,http://223.110.243.171/PLTV/3/224/3221226982/index.m3u8
 精品电影 HD,http://223.110.245.170/PLTV/3/224/3221225567/index.m3u8
 广东卫视 HD,http://223.110.245.170/PLTV/3/224/3221227249/index.m3u8
 黑龙卫视 HD,http://223.110.245.170/PLTV/3/224/3221227252/index.m3u8

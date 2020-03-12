@@ -158,7 +158,8 @@ public class MainActivity extends BaseActivity {
         // https://v.qq.com/x/cover/4zhgrc6vcikqw0p/e0017ah5b20.html
 //        VipActivity.launch(this, "http://www.le.com/ptv/vplay/31625706.html");
 
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/test.tv"));
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/央视频.tv"));
+//        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "test.tv"));
 //        startActivity(new Intent(this, HuyaListActivity.class).putExtra(TVListActivity.EXTRA, "test.tv"));
 
 //        String url = "http://live.redtraffic.xyz/bigdick.m3u8";
