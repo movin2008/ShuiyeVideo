@@ -1,11 +1,7 @@
 package com.shuiyes.test;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
@@ -13,6 +9,10 @@ import java.io.OutputStreamWriter;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 // 源有效性测试
 public class TestSource {
@@ -38,9 +38,7 @@ public class TestSource {
 	}
 
 	static void a() throws Exception {
-		String filename = "source/src/main/assets/test.list";
-		File file = new File("./");
-		System.out.println("path "+file.getAbsolutePath());
+		String filename = "test.list";
 		FileInputStream in = new FileInputStream(filename);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
@@ -48,8 +46,8 @@ public class TestSource {
 		String out = sdf.format(new Date()) + ".list";
 		String error = sdf.format(new Date()) + "_e.list";
 		System.out.println(out);
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("source/src/main/assets/"+out)));
-		BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("source/src/main/assets/"+error)));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(out)));
+		BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(error)));
 
 		int flag = 0;
 		if (filename.endsWith(".list")) {
@@ -186,21 +184,21 @@ public class TestSource {
 				buffer.append(text);
 			}
 			br.close();
-
+			
 			System.out.println(buffer.length());
-			JSONArray arr = new JSONArray(buffer.toString());
-
-			for (int i = 0; i < arr.length(); i++) {
+			JSONArray arr = JSON.parseArray(buffer.toString());
+			
+			for (int i = 0; i < arr.size(); i++) {
 				JSONObject obj = arr.getJSONObject(i);
-
+				
 				bw.write("\n[Group]" + obj.getString("name") + "\n");
 				bw.flush();
-
+				
 				JSONArray data = obj.getJSONArray("data");
-				for (int j = 0; j < data.length(); j++) {
+				for (int j = 0; j < data.size(); j++) {
 					JSONObject tmp = data.getJSONObject(j);
 					JSONArray source = tmp.getJSONArray("source");
-					for (int k = 0; k < source.length(); k++) {
+					for (int k = 0; k < source.size(); k++) {
 						bw.write(tmp.getString("name") +","+source.getString(k)+ "\n");
 						bw.flush();
 					}

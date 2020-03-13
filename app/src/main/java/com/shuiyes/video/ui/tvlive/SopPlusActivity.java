@@ -1,7 +1,6 @@
 package com.shuiyes.video.ui.tvlive;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.shuiyes.video.bean.ListVideo;
 import com.shuiyes.video.ui.base.BaseTVLiveActivity;
@@ -26,19 +25,19 @@ public class SopPlusActivity extends BaseTVLiveActivity {
     @Override
     public String getPlayUrl(int tv) {
         String ret = "";
-        switch (tv){
+        switch (tv) {
             case 1:
                 ret = "tvbus://1R8Rw3uqyfdkci7b9VWm7N17ynqv259h1Bo7i2uyi9bmq513uX";
-            break;
+                break;
             case 2:
                 ret = "tvbus://12MGYHm2fp2wtTjiGpDsbD1odpShZDSn5ub2y74ok1HX5WB6wk";
-            break;
+                break;
             case 3:
                 ret = "tvbus://1CA1abneBv2mhnLyEzjh42Fg3ehAuL1vQcbPUygwh7CXz5dejb";
-            break;
+                break;
             case 4:
                 ret = "tvbus://12VFuSR8upLqpWEdDXipjrq1rci3sv8rzfDn8c1c7xymtEk8vwt";
-            break;
+                break;
         }
         return ret;
     }
@@ -50,14 +49,14 @@ public class SopPlusActivity extends BaseTVLiveActivity {
         JSONArray arr = new JSONArray(result);
         mVideos.clear();
 
-        for (int i =0; i<arr.length(); i++){
+        for (int i = 0; i < arr.length(); i++) {
             JSONObject obj = arr.getJSONObject(i);
             String type = obj.getString("type");
-            if("public".equals(type)){
+            if ("public".equals(type)) {
                 String name = obj.getString("name");
                 String address = obj.getString("address");
                 mVideos.add(new ListVideo(name, name, address));
-            }else{
+            } else {
                 continue;
             }
         }

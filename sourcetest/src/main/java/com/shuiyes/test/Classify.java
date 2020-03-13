@@ -51,7 +51,7 @@ public class Classify {
 				if (text.contains(split)) {
 					
 					// 分类
-					if(text.contains("rtmp")){
+					if(text.contains("111.40.205")){
 						bw.write(text + "\n");
 						bw.flush();
 					}else{

@@ -48,14 +48,19 @@ public class HuyaFormater {
 					String title = tmp[0];
 					String url = tmp[1];
 					
-					url = url.replace("http://", "https://");
-					url = url.replace("txdirect.hls", "aldirect.hls");
-					url = url.replace("jsdirect.hls", "aldirect.hls");
-					url = url.replace("js.hls", "aldirect.hls");
-					url = url.replace("tx.hls", "aldirect.hls");
-					url = url.replace("al.hls", "aldirect.hls");
-					url = url.replace("1_1200.m3u8", "1.m3u8");
-					url = url.replace("1_2000.m3u8", "1.m3u8");
+					if(url.contains("huya.com")){
+						url = url.replace("http://", "https://");
+						url = url.replace("txdirect.hls", "aldirect.hls");
+						url = url.replace("jsdirect.hls", "aldirect.hls");
+						url = url.replace("js.hls", "aldirect.hls");
+						url = url.replace("tx.hls", "aldirect.hls");
+						url = url.replace("al.hls", "aldirect.hls");
+						url = url.replace("1_1200.m3u8", "1.m3u8");
+						url = url.replace("1_2000.m3u8", "1.m3u8");
+						
+						url = url.replace("/backsrc/", "/huyalive/");
+						url = url.replace("aldirect.hls", "aldirect.rtmp");
+					}
 					
 					bw.write( title+","+url + "\n");
 				}else{

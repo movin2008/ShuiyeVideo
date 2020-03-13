@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="更多源加载中..." />
+        android:text="加载中..." />
 
     <LinearLayout
         android:id="@+id/ll_title_container"

@@ -15,7 +15,6 @@ import com.shuiyes.video.ui.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;
 import com.shuiyes.video.ui.qq.QQSoActivity;
-import com.shuiyes.video.ui.tvlive.FilmSourceActivity;
 import com.shuiyes.video.ui.tvlive.TVListActivity;
 import com.shuiyes.video.ui.tvlive.TVSourceActivity;
 import com.shuiyes.video.widget.Tips;
@@ -131,17 +130,17 @@ public class MainActivity extends BaseActivity {
 
     // 电视直播
     public void tvlive(View view) {
-        startActivity(new Intent(this, TVSourceActivity.class));
+        startActivity(new Intent(this, TVSourceActivity.class).putExtra(TVSourceActivity.EXTRA, "tvlive/"));
     }
 
     // 电影搜集
     public void film(View view) {
-        startActivity(new Intent(this, FilmSourceActivity.class));
+        startActivity(new Intent(this, TVSourceActivity.class).putExtra(TVSourceActivity.EXTRA, "film/"));
     }
 
     // 收音机源
     public void fmlist(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "fm/收音机.fm"));
+        startActivity(new Intent(this, TVSourceActivity.class).putExtra(TVSourceActivity.EXTRA, "fm/"));
     }
 
     public void somgtv(View view) {

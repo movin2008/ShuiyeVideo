@@ -23,6 +23,8 @@ import java.util.List;
 
 public abstract class BaseTVListActivity extends BaseActivity implements View.OnClickListener {
 
+    public final static String EXTRA = "file";
+
     protected TextView mTextView;
     protected TagFlowLayout mResultView;
     protected Handler mHandler = new Handler();
@@ -88,7 +90,6 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
     @Override
     public void onClick(View v) {
         NumberView view = (NumberView) v;
-
 
         String url = view.getUrl();
         if(url.contains("cbn-live.cbchot.com")){

@@ -15,8 +15,7 @@ import java.net.URLDecoder;
 
 public class TVListActivity extends BaseTVListActivity implements View.OnClickListener {
 
-    public final static String EXTRA = "file";
-    private String FileList = "default.list";
+    private String F = "tmp/test.tv";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +23,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
 
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA)) {
-            FileList = intent.getStringExtra(EXTRA);
+            F = intent.getStringExtra(EXTRA);
         }
         refreshTvlist();
     }
@@ -50,9 +49,9 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
             @Override
             public void run() {
                 try {
-                    InputStream in = mContext.getAssets().open(FileList);
+                    InputStream in = mContext.getAssets().open(F);
                     BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                    if (FileList.startsWith("film")) {
+                    if (F.startsWith("film")) {
                         isHLS = false;
 
                         String text;
@@ -64,7 +63,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
 
                             addListVideo(text);
                         }
-                    }else if (FileList.startsWith("tvlive")) {
+                    }else if (F.startsWith("tvlive")) {
                         String text;
                         while ((text = br.readLine()) != null) {
                             if (text.startsWith("##")) {
@@ -74,7 +73,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
 
                             addListVideo(text);
                         }
-                    } else if (FileList.startsWith("fm")) {
+                    } else if (F.startsWith("fm")) {
                         isFM = true;
 
                         String text;
@@ -86,7 +85,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
 
                             addListVideo(text);
                         }
-                    } else if (FileList.endsWith(".dpl")) {
+                    } else if (F.endsWith(".dpl")) {
                         String text, url = null;
                         while ((text = br.readLine()) != null) {
                             if (text.startsWith("##")) {
@@ -103,7 +102,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                                 }
                             }
                         }
-                    } else if (FileList.endsWith(".m3u")) {
+                    } else if (F.endsWith(".m3u")) {
                         String text, title = null, groupTitle = "";
                         while ((text = br.readLine()) != null) {
                             if (text.startsWith("#EXTM3U")) {
@@ -133,18 +132,18 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                             }
                         }
                     } else {
-                        onFailure("更多源加载失败：未知后缀 " + FileList);
+                        onFailure("加载失败：" + F);
                     }
                     br.close();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    onFailure("更多源加载失败：" + e.getLocalizedMessage());
+                    onFailure("加载失败：" + e.getLocalizedMessage());
                     return;
                 } finally {
                 }
 
                 if (mVideos.isEmpty()) {
-                    onFailure("更多源加载为空.");
+                    onFailure("加载为空.");
                     return;
                 }
 

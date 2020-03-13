@@ -19,7 +19,7 @@
 ## 再次说明：对于24小时不间断播放的直播间来说，这个真实的直播源可以长久有效，上面3个例子都是24小时不间断直播的；直播间关播，直播源立即失效，再次开播，需要按照此方法再次获取真实直播源。
  斗鱼轮播(待完善)
 英雄联盟,http://tx2play1.douyucdn.cn/288016rlols5.m3u8
-积分电播,http://tx2play1.douyucdn.cn/122402rK7MO9bXSq.m3u8
+积分点播,http://tx2play1.douyucdn.cn/122402rK7MO9bXSq.m3u8
 
 斗鱼官方赛事 MSI 550p,https://tc-tct.douyucdn2.cn/dyliveflv1a/288016rlols5_550p.flv?wsAuth=44bfc95c08c38338d12f273b5ad69178&token=web-h5-89457769-288016-88ecb324a2c68d246a0ec41e5b616c187a51fcad26326b1d&logo=0&expire=0&did=2c3861dd383f06343e559cf200051501&ver=Douyu_219050705&pt=2&st=0&mix=0&isp=
 斗鱼官方赛事 MSI 2000p,https://tc-tct.douyucdn2.cn/dyliveflv1a/288016rlols5_2000p.flv?wsAuth=238e6028af9f658812fa5b51c5637fdf&token=web-h5-89457769-288016-88ecb324a2c68d2408c4b2c20b4dd59510db3c4fd8b392fa&logo=0&expire=0&did=2c3861dd383f06343e559cf200051501&ver=Douyu_219050705&pt=2&st=0&mix=0&isp=

@@ -9,9 +9,12 @@ import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
+// 源有效性测试
 public class ScanTVUrl {
 
 	/**
@@ -44,13 +47,14 @@ public class ScanTVUrl {
 
 		List<String> sets = new ArrayList<String>();
 		
-		for(int i = 10; i < 256; i++){
-			String ip = "117.184.45."+i;
-			String iptext = "上海移动,"+ip;
+		for(int i = 0; i < 255; i++){
+			//
+			String ip = "140.249.247."+i;
+			String iptext = "青岛电信,"+ip;
 			String url = "http://"+ip+"/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8";
 
 			System.out.println();
-			System.out.println(url);
+			System.out.println(sets.size() +", " +url);
 			if(HttpUtils.get(url)){
 				sets.add(iptext);
 				bw.write("CCTV-4K," + url + "\n");
@@ -59,7 +63,7 @@ public class ScanTVUrl {
 				if("403".equals(HttpUtils.E)){
 					sets.add(iptext);
 				}
-				bw2.write("待定" + i + "," + url + "\n");
+				bw2.write("CCTV-4K," + url + "\n");
 				bw2.flush();
 			}
 			Thread.sleep(50);
@@ -76,24 +80,26 @@ public class ScanTVUrl {
 		}
 	}
 	
-	static void c() throws Exception {
+	static void aa() throws Exception {
 		String filename = "test.list";
 		FileInputStream in = new FileInputStream(filename);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
+		List<String> sets = new ArrayList<String>();
 		if (filename.endsWith(".list")) {
 
+			
 			String text = null;
 			while ((text = br.readLine()) != null) {
 				String split = ",";
 				if (text.contains(split)) {
 					String[] tmp = text.split(",");
-					if(HttpUtils.get("http://"+tmp[1]+"/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8")){
-						System.out.println(tmp[1]);
-					}else{
-						System.err.println(tmp[1]);
+//					if(HttpUtils.get("http://"+tmp[1]+"/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8")){
+					if(HttpUtils.get(tmp[1])){
+						sets.add(text);
 					}
 				}else{
+					sets.add(text);
 				}
 			}
 		} 
@@ -101,6 +107,13 @@ public class ScanTVUrl {
 		br.close();
 		
 		System.out.println("end");
+		
+		System.out.println();
+		System.out.println();
+		Iterator<String> iterator = sets.iterator();
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());
+		}
 	}
 
 }

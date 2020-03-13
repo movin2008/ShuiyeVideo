@@ -5,128 +5,65 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.shuiyes.video.R;
-import com.shuiyes.video.ui.base.BaseActivity;
+import com.shuiyes.video.bean.ListVideo;
+import com.shuiyes.video.ui.base.BaseTVListActivity;
+import com.shuiyes.video.widget.NumberView;
+import com.zhy.view.flowlayout.TagView;
 
-public class TVSourceActivity extends BaseActivity {
+public class TVSourceActivity extends BaseTVListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_tvsource);
+        Intent intent = getIntent();
+        final String fpath = intent.getStringExtra(EXTRA);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String[] ss = mContext.getAssets().list(fpath);
+                    for (String s : ss) {
+                        String text = s.replace(".tv", "").replace(".fm", "").replace(".list", "");
+                        mVideos.add(new ListVideo(text, s, fpath + s));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    onFailure("加载失败：" + e.getLocalizedMessage());
+                    return;
+                }
+
+                if (mVideos.isEmpty()) {
+                    onFailure("加载为空.");
+                    return;
+                }
+
+                onSuccess();
+            }
+        }).start();
+
     }
 
-    public void huya(View view) {
-        startActivity(new Intent(this, HuyaListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/轮播.虎牙.tv"));
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_tvlist;
     }
 
-    public void iqiyi(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/轮播.爱奇艺.tv"));
+    @Override
+    protected TagView getTagView(int position, ListVideo o) {
+        return super.getTagView(position, o);
     }
 
-    public void douyu(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/轮播.斗鱼.tv"));
-    }
-
-    public void wasu(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/轮播.华数.tv"));
-    }
-
-    public void shanxGD(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/广电.陕西.tv"));
-    }
-
-    public void cdnin(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/广电.四川蜀小果1.tv"));
-    }
-
-    public void cdnout(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/广电.四川蜀小果2.tv"));
-    }
-
-    public void bjCmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.北京.tv"));
-    }
-
-    public void njCmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.南京.tv"));
-    }
-
-    public void nnCmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.南宁.tv"));
-    }
-
-    public void ncCmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.南昌.tv"));
-    }
-
-    public void jygCmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.嘉峪关.tv"));
-    }
-
-    public void herb1Cmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.哈尔滨1.tv"));
-    }
-
-    public void syCmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.沈阳.tv"));
-    }
-
-    public void hz1Cmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.杭州1.tv"));
-    }
-
-    public void whCmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.武汉.tv"));
-    }
-
-    public void zzCmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.郑州.tv"));
-    }
-
-    public void fzCmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.福州.tv"));
-    }
-
-    public void dlCmcc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/移动.魔百盒.代理.tv"));
+    @Override
+    public void onClick(View v) {
+        NumberView view = (NumberView) v;
+        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, view.getUrl()));
     }
 
     public void szCmcc(View view) {
         // 苏州移动源
         startActivity(new Intent(this, SuzhouCMCCActivity.class));
-    }
-
-
-
-    // 武汉联通源
-    public void whCucc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/联通.武汉.tv"));
-    }
-
-    // 南宁联通源
-    public void nnCucc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/联通.南宁.tv"));
-    }
-
-    // 苏州联通源
-    public void szCucc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/联通.苏州.tv"));
-    }
-
-    // 大连电信源
-    public void dlCtc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/电信.大连.tv"));
-    }
-
-    // 成都电信源
-    public void cdCtc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/电信.成都.tv"));
-    }
-
-    // 上海电信源
-    public void shhCtc(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/电信.上海.tv"));
     }
 
     // soplus
@@ -140,18 +77,4 @@ public class TVSourceActivity extends BaseActivity {
         startActivity(new Intent(this, BuptIVIActivity.class));
     }
 
-    // 国际台整理
-    public void foreign(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/国际台.tv"));
-    }
-
-    // 地方台整理
-    public void local(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/地方台.tv"));
-    }
-
-    // 其他
-    public void other(View view) {
-        startActivity(new Intent(this, TVListActivity.class).putExtra(TVListActivity.EXTRA, "tvlive/其他.tv"));
-    }
 }
