@@ -1,3 +1,4 @@
+
 湖南电影高清,http://httpdvb.slave.homed.hunancatv.com:13164/playurl?playtype=live&amp;protocol=hls&amp;accesstoken=R5DEE27D0U309B3089K7735A23DIC56EFF0APBM2FFCD29V0Z69015W15DEAE8ECE8A23EB&amp;playtoken=ABCDEFGH&amp;programid=4200000026.m3u8
 湖南卫视高清,http://httpdvb.slave.homed.hunancatv.com:13164/playurl?playtype=live&amp;protocol=hls&amp;accesstoken=R5DEE27D0U309B3089K7735A23DIC56EFF0APBM2FFCD29V0Z69015W15DEAE8ECE8A23EB&amp;playtoken=ABCDEFGH&amp;programid=4200000136.m3u8
 长沙新闻频道,http://httpdvb.slave.homed.hunancatv.com:13164/playurl?playtype=live&amp;protocol=hls&amp;accesstoken=R5DEE27D0U309B3089K7735A23DIC56EFF0APBM2FFCD29V0Z69015W15DEAE8ECE8A23EB&amp;playtoken=ABCDEFGH&amp;programid=4200000190.m3u8
@@ -9,8 +10,14 @@
 张家界新闻综合高清,http://httpdvb.slave.homed.hunancatv.com:13164/playurl?playtype=live&amp;protocol=hls&amp;accesstoken=R5DEE27D0U309B3089K7735A23DIC56EFF0APBM2FFCD29V0Z69015W15DEAE8ECE8A23EB&amp;playtoken=ABCDEFGH&amp;programid=4200000271.m3u8
 东方卫视高清,http://httpdvb.slave.homed.hunancatv.com:13164/playurl?playtype=live&amp;protocol=hls&amp;accesstoken=R5DEE27D0U309B3089K7735A23DIC56EFF0APBM2FFCD29V0Z69015W15DEAE8ECE8A23EB&amp;playtoken=ABCDEFGH&amp;programid=4200000347.m3u8
 
-test,http://117.148.187.37/PLTV/88888888/224/3221226763/index.m3u8
-test,http://39.134.65.162/PLTV/88888888/224/3221225692/index.m3u8
+
+
+迁西电视台,https://tv.lnshw.com.cn:8123/liveqx2/livestream.m3u8
+迁西电视台,https://tv.lnshw.com.cn:8123/liveqx1/livestream.m3u8
+迁西电视台,https://tv.lnshw.com.cn:8123/lixeqx3/livestream.m3u8
+
+test2,http://117.148.187.37/PLTV/88888888/224/3221226763/index.m3u8
+test1,http://39.134.65.162/PLTV/88888888/224/3221225692/index.m3u8
 咪咕,http://112.17.40.140/PLTV/88888888/224/3221226756/index.m3u8
 
 康巴卫视,http://scgctvshow.sctv.com/sdlive/kangba/3.m3u8

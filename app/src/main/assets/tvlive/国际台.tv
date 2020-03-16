@@ -3,6 +3,7 @@
 心动电影1,https://5a2a51fc4cfde.streamlock.net/lfh/_definst_/Stream1/playlist.m3u8
 心动电影2,https://5a2a51fc4cfde.streamlock.net/lfh/_definst_/Stream2/playlist.m3u8
 
+韩-KNN,http://211.220.195.200:1935/live/mp4:KnnTv.stream/playlist.m3u8
 韩国 KBS2,rtmp://live2.kbs.gscdn.com:1935/1tv_home/_definst_/playlist.m3u8?id=2101&secure=c2lkPWticy1saXZlJnRva2VuPUtCUy1MSVZFOTdBRjY4M0U5NDFEJmlzc3Vlcj01OC4yMjcuMTk0LjEwNiZjaWQ9NUEzOEY0RDAwRDAyJnBhdGg9LzF0dl9ob21lL19kZWZpbnN0Xy8xdHZfaG9tZS5zdHJlYW0mZmlsZT0xdHZfaG9tZS5zdHJlYW0mYnlwYXNzPWZhbHNlJmF0aW1lPTEzNDczNTc1NDQ=
 韩国 GoodTV,http://mobliestream.c3tv.com:554/live/goodtv.sdp/playlist.m3u8
 韩国 GoodTV,rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp
@@ -76,19 +77,16 @@
 美国彭博财经台,http://liveproduseast.akamaized.net/us/Channel-USTV-AWS-virginia-1/Source-USTV-1000-1_live.m3u8
 美国狗狗宠物,http://video.blivenyc.com/broadcast/prod/2061/22/file-3192k.m3u8
 
-日本家庭剧场,http://192.240.127.34:1935/live/cs11.stream/playlist.m3u8
-日本历史频道,http://192.240.127.34:1935/live/cs14.stream/playlist.m3u8
-日本卫星剧场,http://192.240.127.34:1935/live/cs18.stream/playlist.m3u8
-日本映画频道,http://192.240.127.34:1935/live/cs19.stream/playlist.m3u8
-日本 WOWOW,http://192.240.127.34:1935/live/cs27.stream/playlist.m3u8
+# Unable to open key file http://japaniptv.com/ck.aspx?wowzasessionid=727897334
+日本|家庭剧场,http://192.240.127.34:1935/live/cs11.stream/media_1254.m3u8
+日本|历史频道,http://192.240.127.34:1935/live/cs14.stream/media_1254.m3u8
+日本|卫星剧场,http://192.240.127.34:1935/live/cs18.stream/media_1254.m3u8
+日本|映画频道,http://192.240.127.34:1935/live/cs19.stream/media_1254.m3u8
+日本|家庭剧场,http://192.240.127.34:1935/live/cs11.stream/playlist.m3u8
+日本|历史频道,http://192.240.127.34:1935/live/cs14.stream/playlist.m3u8
+日本|卫星剧场,http://192.240.127.34:1935/live/cs18.stream/playlist.m3u8
+日本|映画频道,http://192.240.127.34:1935/live/cs19.stream/playlist.m3u8
 
-日本家庭剧场,http://192.240.127.34:1935/live/cs11.stream/media_1254.m3u8
-日本历史频道,http://192.240.127.34:1935/live/cs14.stream/media_1254.m3u8
-日本卫星剧场,http://192.240.127.34:1935/live/cs18.stream/media_1254.m3u8
-日本映画频道,http://192.240.127.34:1935/live/cs19.stream/media_1254.m3u8
-日本 WOWOW,http://192.240.127.34:1935/live/cs27.stream/media_1254.m3u8
-日本朝日频道,http://192.240.127.34:1935/live/cs19.stream/play.m3u8
-日本 Cinefil WOWOW,http://192.240.127.34:1935/live/cs27.stream/media_1254.m3u8
 日本 Japan24news,https://n24-cdn-live.ntv.co.jp/ch01/High.m3u8
 日本 NHK,https://nhkworld.webcdn.stream.ne.jp/www11/nhkworld-tv/global/263941/live_wa_s.m3u8
 日本 DX,http://bcsecurelivehls-i.akamaihd.net/hls/live/265320/5043843989001/140130JTDX/index_1200.m3u8

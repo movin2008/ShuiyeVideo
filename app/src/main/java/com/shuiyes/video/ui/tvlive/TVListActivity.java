@@ -51,7 +51,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                 try {
                     InputStream in = mContext.getAssets().open(F);
                     BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                    if (F.startsWith("film")) {
+                    if (F.startsWith("film") || F.startsWith("blue") || F.startsWith("tmp")) {
                         isHLS = false;
 
                         String text;
@@ -133,6 +133,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
                         }
                     } else {
                         onFailure("加载失败：" + F);
+                        return;
                     }
                     br.close();
                 } catch (Exception e) {

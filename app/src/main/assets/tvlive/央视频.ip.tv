@@ -2,11 +2,8 @@
  武汉移动
 CCTV-4K,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
 
- 济南移动
-CCTV-4K,http://120.221.180.106/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
-
- 青岛移动
-CCTV-4K,http://120.221.198.42/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
+ 上海电信
+CCTV-4K,http://61.151.179.195/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
 
  普陀移动
 CCTV-4K,http://120.204.20.52/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
@@ -16,22 +13,6 @@ CCTV-4K,http://120.204.20.75/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
 CCTV-4K,http://120.204.20.82/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
 CCTV-4K,http://120.204.20.88/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
 CCTV-4K,http://120.204.20.97/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
-
- 杭州移动
-CCTV-4K,http://111.0.27.25/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
-
- 深圳移动
-CCTV-4K,http://120.233.115.36/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
-
- 重庆移动
-CCTV-4K,http://221.178.18.101/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
-CCTV-4K,http://221.178.19.159/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
-
- 南京移动
-CCTV-4K,http://36.152.72.151/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
-
- 上海电信
-CCTV-4K,http://61.151.179.195/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
 
  央视频(IP 随时失效)
 CCTV-4K,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
@@ -105,5 +86,3 @@ CGTN,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/001/2001656803.m3u8
 
 CCTV4K,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/2000266303.m3u8
 CCTV4K,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/iuo/2000266303.m3u8
-
-

@@ -1,0 +1,203 @@
+
+[Group]上海电台
+上海戏剧曲艺 AM1197,http://ls.qingting.fm/live/269.m3u8
+
+[Group]浙江电台
+
+[Group]杭州电台
+华语之声新青年频道,http://video.hy960.com:960/live.mp3
+
+[Group]中国电台
+华语之声新青年频道,http://video.hy960.com:960/live.mp3
+滴嗒旅行音乐台,http://live.xmcdn.com/live/1022/64.m3u8
+金十电台,http://fmcdn.jin10.com/AAC/voice.m3u8
+
+[Group]CRI 电台
+CRI 客家之声,http://ls.qingting.fm/live/1001.m3u8
+CRI Music Mix (5),http://live.xmcdn.com/live/1053/64.m3u8
+
+[Group]CNR电台
+CNR 中国民乐,http://ngcdn021.cnr.cn/live/zgmy48/index.m3u8
+CNR 中国民乐,http://live.xmcdn.com/live/1060/64.m3u8
+CNR 中国民乐,http://ls.qingting.fm/live/4991.m3u8
+CNR 中国民乐,http://ngcdn021.cnr.cn/live/zgmy/index.m3u8
+CNR 古典音乐,http://ngcdn022.cnr.cn/live/gdyy48/index.m3u8
+CNR 古典音乐,http://live.xmcdn.com/live/1061/64.m3u8
+CNR 古典音乐,http://ls.qingting.fm/live/4993.m3u8
+CNR 古典音乐,http://ngcdn022.cnr.cn/live/gdyy/index.m3u8
+CNR 相声小品,http://ngcdn023.cnr.cn/live/xsxp48/index.m3u8
+CNR 相声小品,http://live.xmcdn.com/live/1058/64.m3u8
+CNR 相声小品,http://ls.qingting.fm/live/4990.m3u8
+CNR 相声小品,http://ngcdn023.cnr.cn/live/xsxp/index.m3u8
+CNR 长篇联播,http://ngcdn024.cnr.cn/live/cplb48/index.m3u8
+CNR 长篇联播,http://live.xmcdn.com/live/1551/64.m3u8
+CNR 长篇联播,http://ls.qingting.fm/live/4992.m3u8
+CNR 长篇联播,http://ngcdn024.cnr.cn/live/cplb/index.m3u8
+CNR 长篇联播 (5),http://live.xmcdn.com/live/1059/64.m3u8
+
+[Group]CCTV电台
+CCTV-5+ 体育赛事,http://cctv.v.kcdnvip.com/live/cctv5plus_1/index.m3u8?adapt=0&BR=audio
+CCTV-5 体育,http://cctv.v.kcdnvip.com/live/cctv5_1/index.m3u8?adapt=0&BR=audio
+CCTV-5+ 体育赛事,http://cctv5.v.kcdnvip.com/live/cctv5plus_1/index.m3u8?adapt=0&BR=audio
+
+[Group]合肥电台
+合肥徽商广播,http://120.193.102.2/hfradio/hfdta234/index.m3u8
+合肥新闻广播 FM91.5,http://120.193.102.2/hfradio/hfdta256/index.m3u8
+合肥交通广播 FM102.6,http://120.193.102.2/hfradio/hfdta134/index.m3u8
+合肥故事广播 FM98.8,http://120.193.102.2/hfradio/hfdta156/index.m3u8
+合肥汽车音乐广播 Hot FM87.6,http://120.193.102.2/hfradio/hfdta178/index.m3u8
+
+[Group]北京电台
+北京顺义广播电台 FM92.9,http://61.50.151.20:8083/assets/player.swf?provider=p2ps&streamer=rtmfp://61.50.151.20:1935/tvfiles/live/7/21/kZxMsTdXI1hOp&file=http://61.50.151.20:8083/tvfiles/live/7/21/kZxMsTdXI1hOp/kZxMsTdXI1hOp.livesegments&retry_play=1&auto_play=1
+北京阳光调频 FM98.6 2,http://live.xmcdn.com/live/962/64.m3u8
+
+[Group]开州电台
+开州之声 FM89.0,http://183.64.174.171:10124/tlgb.m3u8
+
+[Group]巴渝电台
+巴渝之声 FM104.5,http://stream.cqbntv.com/channel4/sd/live.m3u8
+巴渝之声 FM104.5,http://live.xmcdn.com/live/1666/64.m3u8
+巴渝之声 FM104.5,http://ls.qingting.fm/live/3545693.m3u8
+巴渝之声 FM104.5,http://live.xmcdn.com/live/1154/64.m3u8
+
+[Group]海峡之声电台
+海峡之声闽南语 AM783,http://live.xmcdn.com/live/192/64.m3u8
+海峡之声汽车生活 FM90.6,http://live.xmcdn.com/live/193/64.m3u8
+海峡之声综合广播 FM97.9,http://live.xmcdn.com/live/191/64.m3u8
+
+[Group]白银人民广播电台
+白银人民广播电台FM100.5 FM98.8,http://115.85.197.250:6872/
+
+
+[Group]广州电台
+广州 MYFM 88.0 (都市生活),http://live.xmcdn.com/live/259/64.m3u8
+
+[Group]梅州电台
+梅州私家车广播 FM94,http://ls.qingting.fm/live/2841338.m3u8
+
+[Group]澄海人民广播电台
+澄海人民广播电台,http://chdt.imwork.net:2349/
+
+[Group]韶关电台
+韶关综合广播,http://live.sgmsw.cn:8134/hls-live/livepkgr/_definst_/liveevent/livestream1.m3u8
+韶关交通旅游广播,http://live.sgmsw.cn:8134/hls-live/livepkgr/_definst_/liveevent/livestream2.m3u8
+
+[Group]贵州电台
+贵州电台故事广播 FM90.0,http://ls.qingting.fm/live/23931.m3u8
+
+[Group]海南电台
+海口新闻综合广播,http://live.xmcdn.com/live/1823/64.m3u8
+
+[Group]河北 电台
+邯郸旅游音乐广播 FM93.4,http://live.xmcdn.com/live/1131/64.m3u8
+保定欢乐调频884,http://ls.qingting.fm/live/3865599.m3u8
+邢台音乐广播 FM96.8,http://ls.qingting.fm/live/4926000.m3u8
+心动FM,http://live.xmcdn.com/live/1894/64.m3u8
+
+[Group]河南电台
+安阳新闻综合广播 FM94.2,http://ls.qingting.fm/live/4689560.m3u8
+安阳汽车音乐台 FM100.8,http://live.xmcdn.com/live/1269/64.m3u8
+安阳汽车音乐台 FM100.8,http://ls.qingting.fm/live/2123.m3u8
+安阳交通广播 FM89,http://live.xmcdn.com/live/1267/64.m3u8
+安阳交通广播 FM89,http://ls.qingting.fm/live/2138.m3u8
+龙广新闻广播 FM94.6,http://stream3.hljtv.com/hljrdjt/sd/live.m3u8
+龙广新闻广播 FM94.6,http://ls.qingting.fm/live/4974.m3u8
+龙广新闻广播 FM94.6,http://live.xmcdn.com/live/375/64.m3u8
+龙广私家车广播 FM104.5,http://stream3.hljtv.com/hljrdsh/sd/live.m3u8
+龙广私家车广播 FM104.5,http://ls.qingting.fm/live/4970.m3u8
+龙广私家车广播 FM104.5,http://live.xmcdn.com/live/377/64.m3u8
+龙广都市女性台 FM102.1,http://stream3.hljtv.com/hljrd97/sd/live.m3u8
+龙广都市女性台 FM102.1,http://live.xmcdn.com/live/378/64.m3u8
+龙广都市女性台 FM102.1,http://ls.qingting.fm/live/4968.m3u8
+龙广音乐广播 FM95.8,http://stream3.hljtv.com/hljrdnx/sd/live.m3u8
+龙广音乐广播 FM95.8,http://ls.qingting.fm/live/4969.m3u8
+
+[Group]电台
+龙广交通广播 FM99.8,http://stream3.hljtv.com/hljrdjt/sd/live.m3u8
+
+[Group]河南电台
+龙广乡村广播 AM945,http://stream3.hljtv.com/hljrdnc/sd/live.m3u8
+龙广乡村广播 AM945,http://ls.qingting.fm/live/4977.m3u8
+龙广乡村广播 AM945,http://live.xmcdn.com/live/382/64.m3u8
+
+[Group]电台
+龙广爱家频道 FM97,http://stream3.hljtv.com/hljrd97/sd/live.m3u8
+龙广爱家频道 FM97,http://ls.qingting.fm/live/4972.m3u8
+
+[Group]河南电台
+龙广爱家频道 FM97,http://live.xmcdn.com/live/380/64.m3u8
+龙广朝鲜语广播 AM873,http://stream3.hljtv.com/hljrdcy/sd/live.m3u8
+龙广北大荒之声 FM104.6,http://stream3.hljtv.com/hljrdgx/sd/live.m3u8
+龙广北大荒之声 FM104.6,http://live.xmcdn.com/live/383/64.m3u8
+龙广高校广播 FM99.3,http://stream3.hljtv.com/hljrdgx/sd/live.m3u8
+
+[Group]湖北电台
+麻城人民广播电台,http://219.139.52.74:8086/mcrd
+公安县广播电台 FM102.6,http://ls.qingting.fm/live/5063.m3u8
+
+[Group]湖南电台
+长沙交通音乐广播 FM106.1,http://ls.qingting.fm/live/3967.m3u8
+大眼睛湘潭1065电台,http://live.xmcdn.com/live/421/64.m3u8
+大眼睛湘潭1065电台,http://ls.qingting.fm/live/2412.m3u8
+衡阳好朋友 FM105.4,http://live.xmcdn.com/live/1683/64.m3u8
+怀化新闻频道,http://ls.qingting.fm/live/3077068.m3u8
+
+[Group]江苏电台
+通化新闻综合台,http://live.xmcdn.com/live/450/64.m3u8
+通化交通广播,http://live.xmcdn.com/live/452/64.m3u8
+通化生活广播,http://live.xmcdn.com/live/451/64.m3u8
+通化城乡广播,http://live.xmcdn.com/live/453/64.m3u8
+青山湖之声魅力934,http://ls.qingting.fm/live/2412.m3u8
+
+[Group]江西电台
+南昌交通广播 FM95.1,http://live.xmcdn.com/live/618/64.m3u8
+
+[Group]江西电台
+九江私家车广播 FM104,http://ls.qingting.fm/live/4326443.m3u8
+
+[Group]辽宁电台
+朝阳交通娱乐广播 AM648,http://live.xmcdn.com/live/354/64.m3u8
+盘锦新闻综合广播 FM104.2,http://ls.qingting.fm/live/1097.m3u8
+盘锦经济生活广播 FM97.1,http://ls.qingting.fm/live/1098.m3u8
+盘锦交通文艺广播 FM91.4,http://ls.qingting.fm/live/2650481.m3u8
+辽阳交通文艺广播 FM107.8,http://live.xmcdn.com/live/2060/64.m3u8
+辽阳交通文艺广播 FM107.8,http://ls.qingting.fm/live/2977806.m3u8
+鄂尔多斯蒙语综合 FM93.5,http://live.xmcdn.com/live/1091/64.m3u8
+男人广播 FM107.7,http://live.xmcdn.com/live/1594/64.m3u8
+宁夏新闻广播 FM106.1,http://live.xmcdn.com/live/983/64.m3u8
+宁夏新闻广播 FM106.1,http://ls.qingting.fm/live/1839.m3u8
+
+[Group]山东电台
+山东女主播电台 FM97.5,http://live.xmcdn.com/live/801/64.m3u8
+山东交通广播 FM101.1,http://live.xmcdn.com/live/798/64.m3u8
+山东乡村广播 FM91.9,http://live.xmcdn.com/live/809/64.m3u8
+青岛故事广播 FM95.2,http://live.xmcdn.com/live/820/64.m3u8
+青岛广播爱车 FM94.0,http://live.xmcdn.com/live/1521/64.m3u8
+潍坊最爱调频 FM98.3,http://ls.qingting.fm/live/1561087.m3u8
+烟台新闻广播 FM101,http://live.xmcdn.com/live/838/64.m3u8
+烟台经济广播 FM105.9,http://live.xmcdn.com/live/837/64.m3u8
+烟台交通广播 FM103,http://live.xmcdn.com/live/832/64.m3u8
+莱州新闻交通广播 FM92.7,http://219.146.141.140:1036/
+莱州音乐故事广播FM88.1,http://219.146.141.140:1056/
+
+[Group]山西电台
+山西新闻广播 AM819,http://live.xmcdn.com/live/892/64.m3u8
+山西健康广播 FM105.9,http://live.xmcdn.com/live/890/64.m3u8
+山西故事广播 FM88.6,http://live.xmcdn.com/live/1669/64.m3u8
+太原新闻广播 FM91.2,http://live.xmcdn.com/live/888/64.m3u8
+阳泉交通广播,http://live.xmcdn.com/live/1709/64.m3u8?aac
+
+[Group]陕西电台
+iRadio网络音乐台,http://ls.qingting.fm/live/4935.m3u8
+
+[Group]四川电台
+四川旅游广播 FM97.0,http://ls.qingting.fm/live/1116.m3u8
+广元新闻综合广播 FM102.7,http://3075.liveplay.myqcloud.com/live/gybtv1.m3u8
+广元交通旅游广播 FM104.8,http://3075.liveplay.myqcloud.com/live/gybtv2.m3u8
+
+[Group]电台
+新疆维吾尔语交通文艺广播,http://live.xmcdn.com/live/994/64.m3u8
+
+[Group]新疆电台
+新疆蒙古语广播,http://live.xmcdn.com/live/1349/64.m3u8
+

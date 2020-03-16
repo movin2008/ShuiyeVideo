@@ -129,7 +129,13 @@
                 style="@style/Button"
                 android:layout_width="wrap_content"
                 android:onClick="film"
-                android:text="电影搜集" />
+                android:text="电影音悦" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:onClick="blue"
+                android:text="不可描述" />
 
             <Button
                 style="@style/Button"

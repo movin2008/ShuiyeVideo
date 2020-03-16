@@ -32,7 +32,7 @@ public class HttpUtils {
 
     public static void setURLConnection(HttpURLConnection conn, String headers) {
         conn.setConnectTimeout(3333);
-        conn.setReadTimeout(3333);
+        conn.setReadTimeout(5555);
         conn.setRequestProperty("Host", conn.getURL().getHost());
         conn.setRequestProperty("User-Agent", UA);
 //        conn.setRequestProperty("Accept-Encoding", "gzip");
@@ -63,16 +63,12 @@ public class HttpUtils {
     		return true;
     	}
     	
-        return HttpUtils.get(url, false);
-    }
-
-    public static boolean get(String url, boolean forCookie) {
-        return HttpUtils.get(url, null, forCookie);
+        return HttpUtils.get(url, null);
     }
 
     public static String E = "";
     
-    public static boolean get(String url, String headers, boolean forCookie) {
+    public static boolean get(String url, String headers) {
 
     	boolean ret = false;
         HttpURLConnection conn = null;
@@ -97,13 +93,12 @@ public class HttpUtils {
             	if(text != null && text.startsWith("#EXTM3U")){
                 	ret = true;
             	}else{
-            		E = "302";
             		System.err.println("readLine " + text+".");
             	}
             	br.close();
             } else if (code == 301 || code == 302) {
                 Thread.sleep(500);
-                return HttpUtils.get(conn.getHeaderField("Location"), headers, forCookie);
+                return HttpUtils.get(conn.getHeaderField("Location"), headers);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -111,7 +106,7 @@ public class HttpUtils {
                 Thread.sleep(500);
             } catch (InterruptedException e1) {
             }
-            return HttpUtils.get(url, headers, forCookie);
+            return HttpUtils.get(url, headers);
         } catch (Exception e) {
         	E = e.getLocalizedMessage();
         	System.err.println(e.getLocalizedMessage());
