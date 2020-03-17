@@ -60,11 +60,12 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
             mVideos.add(new ListVideo("源.2000", title, nurl.replace(".m3u8", "_2000.m3u8")));
             mVideos.add(new ListVideo("源.2500", title, nurl.replace(".m3u8", "_2500.m3u8")));
 
-            nurl = nurl.replace("huyalive", "backsrc");
-            mVideos.add(new ListVideo("备源." + source, title, nurl));
-            mVideos.add(new ListVideo("备源.1200", title, nurl.replace(".m3u8", "_1200.m3u8")));
-            mVideos.add(new ListVideo("备源.2000", title, nurl.replace(".m3u8", "_2000.m3u8")));
-            mVideos.add(new ListVideo("备源.2500", title, nurl.replace(".m3u8", "_2500.m3u8")));
+//            nurl = nurl.replace("huyalive", "src");
+//            nurl = nurl.replace("huyalive", "backsrc");
+//            mVideos.add(new ListVideo("备源." + source, title, nurl));
+//            mVideos.add(new ListVideo("备源.1200", title, nurl.replace(".m3u8", "_1200.m3u8")));
+//            mVideos.add(new ListVideo("备源.2000", title, nurl.replace(".m3u8", "_2000.m3u8")));
+//            mVideos.add(new ListVideo("备源.2500", title, nurl.replace(".m3u8", "_2500.m3u8")));
 
 //            nurl = nurl.replace("rtmp", "hls");
 //            mVideos.add(new ListVideo("源." + source, title, nurl));

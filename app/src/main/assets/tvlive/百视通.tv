@@ -1,3 +1,4 @@
+ bestvcdn.com.cn IP 失效
 CCTV-1,http://112.29.151.141/azure-live.bestvcdn.com.cn/live/program/live/cctv1hd/4000000/mnf.m3u8
 CCTV-2,http://112.29.151.141/azure-live.bestvcdn.com.cn/live/program/live/cctv2/1300000/mnf.m3u8
 CCTV-3,http://112.29.151.141/azure-live.bestvcdn.com.cn/live/program/live/cctv3hd/4000000/mnf.m3u8
@@ -27,6 +28,7 @@ CCTV-15,http://112.29.151.141/azure-live.bestvcdn.com.cn/live/program/live/cctvy
 天津卫视,http://112.29.151.141/azure-live.bestvcdn.com.cn/live/program/live/tjwshd/4000000/mnf.m3u8
 辽宁卫视,http://112.29.151.141/azure-live.bestvcdn.com.cn/live/program/live/lnwshd/4000000/mnf.m3u8
 黑龙江台,http://112.29.151.141/azure-live.bestvcdn.com.cn/live/program/live/hljwshd/4000000/mnf.m3u8
+五星体育,http://112.29.151.141/azure-live.bestvcdn.com.cn/live/program/live/ssty/1300000/mnf.m3u8
 
 直播1,http://112.29.151.141/azure-live.bestvcdn.com.cn/live/program/live/hdnba1/4000000/mnf.m3u8
 直播2,http://112.29.151.141/azure-live.bestvcdn.com.cn/live/program/live/hdnba2/4000000/mnf.m3u8

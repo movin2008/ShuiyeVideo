@@ -1,7 +1,6 @@
 中国大熊猫保护研究中心 1080P,https://gcbsc.v.live.baishancdnx.cn/gc/xiongmao03_1/index.m3u8?contentid=2820180516001
 成都大熊猫繁育研究基地 720P,https://gcalic.v.myalicdn.com/gc/ipanda_1/index.m3u8?contentid=2820180516001&AUTH=EWbqPX5amMUxL2KapN4PojjCv6Y3kLImyv4JB9phjgIhwCszcDyLyNooS5TQjhxk9JhHTXU+qF3B2DqF9U/PJA==
 
-
 上海外滩陆嘴,http://bililive.kksmg.com/hls/sdi7000/playlist.m3u8
 上海外滩魔眼,http://bililive.kksmg.com/hls/sdi80/playlist.m3u8
 上海外滩陆嘴,rtmp://bililive.kksmg.com/hls/sdi7000
@@ -66,7 +65,6 @@ CCTV3,http://60.13.128.12:5010/nn_live.ts?id=CCTV3&nn_m3u8=1&nn_file_index=31614
 兵团卫视,rtmp://v.btzx.com.cn/live/weishi.stream
 
 爱上4K,http://1.180.237.9/live.aishang.ctlcdn.com/00000110240282_1/encoder/0/playlist.m3u8
-CCTV15,http://111.63.117.13:6060/030000001000/G_CCTV-15/G_CCTV-15.m3u8
 NEWTV完美游戏,http://218.207.213.133/wh7f454c46tw546395453_-944749478/PLTV/88888888/224/3221225894/index.m3u8
 
 西藏卫视,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/xizangstv/1.m3u8
@@ -76,4 +74,7 @@ CCTV3,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/cctv-3/1.m3u8
 
 中國氣象頻道,http://hls.weathertv.cn/tslslive/qCFIfHB/hls/live_sd.m3u8
 BBC经典系列展播,http://qdntv96789.applinzi.com/96tv.php?633138330
+北京体育4K,http://by4.nty.tv189.cn/live/tm-btvjishihd-4000k.m3u8
+CCTV 13,http://liveali.ifeng.com/live/CCTV.m3u8
+CCTV 03,http://newvideo.dangtutv.cn:8278/CCTVzongyi/playlist.m3u8
 

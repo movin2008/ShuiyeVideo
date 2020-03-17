@@ -10,18 +10,7 @@
 济南影视,http://ts1.ijntv.cn/jnyd/playlist.m3u8
 
 
-河北影视,http://live01.hebtv.com/channels/hebtv/video_channel_06/flv:2000k/live.m3u8
-河北卫视,http://live01.hebtv.com/channels/hebtv/video_channel_04/flv:2000k/live
-河北都市,http://weblive.hebtv.com/live/hbds_bq/index.m3u8
-河北公共,http://weblive.hebtv.com/live/hbgg_bq/index.m3u8
-河北农民,http://weblive.hebtv.com/live/nmpd_bq/index.m3u8
-河北少儿,http://weblive.hebtv.com/live/hbse_bq/index.m3u8
-河北卫视,http://weblive.hebtv.com/live/hbws_bq/index.m3u8
-河北影视,http://weblive.hebtv.com/live/hbys_bq/index.m3u8
 
-河北衡水新闻综合,http://hls.hsrtv.cn/hls/hstv1.m3u8
-河北衡水影视娱乐,http://hls.hsrtv.cn/hls/hstv2.m3u8
-河北衡水公共频道,http://hls.hsrtv.cn/hls/hstv3.m3u8
 
 江苏徐州-1,http://stream1.huaihai.tv/xwzh/playlist.m3u8
 江苏徐州-2,http://stream1.huaihai.tv/jjsh/playlist.m3u8
@@ -48,10 +37,7 @@
 农林卫视,http://stream.snrtv.com/sxtvs-nl.m3u8
 
 
-云南卫视,http://edge1.yntv.cn/channels/yntv/ynws/flv:sd/live
-云南都市,http://edge1.yntv.cn/channels/yntv/ynds/m3u8:sd
-云南公共,http://edge1.yntv.cn/channels/yntv/yngg/m3u8:sd
-云南娱乐,http://edge1.yntv.cn/channels/yntv/ynyl/m3u8:sd
+
 
 苏州新闻综合频道,rtmp://csztv.2500sz.com/live/c01
 苏州社会经济频道,rtmp://csztv.2500sz.com/live/c02
@@ -144,30 +130,7 @@
 
 江西新闻HD,http://live02.jxtvcn.com.cn/live-jxtvcn/jxtv07.m3u8
 
-蚌埠新闻综合,http://newvod.ahbbtv.com:1935/live/smil:xwpd_copy.smil/playlist.m3u8
-蚌埠公共频道,http://newvod.ahbbtv.com:1935/live/smil:ggpd_copy.smil/playlist.m3u8
-蚌埠生活频道,http://newvod.ahbbtv.com:1935/live/smil:shpd_copy.smil/playlist.m3u8
-蚌埠公交频道,http://newvod.ahbbtv.com:1935/live/smil:gjpd_copy.smil/playlist.m3u8
 
-宿州公共频道,http://live.ahsz.tv/video/s10001-ggpd/index.m3u8
-宿州科教频道,http://live.ahsz.tv/video/s10001-kxjy/index.m3u8
-
-亳州新闻频道,http://220.180.110.101:8083/videos/live/33/59/NC7XQdEveyncq/NC7XQdEveyncq.m3u8
-亳州农村频道,http://220.180.110.101:8083/videos/live/39/13/o4ncrHkSp7q09/o4ncrHkSp7q09.m3u8
-
-芜湖新闻综合,http://live1.wuhubtv.com/channel1/sd/live.m3u8
-芜湖生活频道,http://live1.wuhubtv.com/channel2/sd/live.m3u8
-芜湖公共频道,http://live1.wuhubtv.com/channel3/sd/live.m3u8
-芜湖教育频道,http://live1.wuhubtv.com/channel4/sd/live.m3u8
-
-六安新闻综合,http://live.china-latv.com/channel1/sd/live.m3u8
-六安公共频道,http://live.china-latv.com/channel2/sd/live.m3u8
-
-马鞍山新闻综合,http://live.massp.cn:5011/vod/video_hls/c01.m3u8
-
-滁州新闻综合,http://183.167.193.45:1935/live/cztvzh/playlist.m3u8
-滁州科教频道,http://183.167.193.45:1935/live/cztvkj/playlist.m3u8
-滁州公共频道,http://183.167.193.45:1935/live/cztvgg/playlist.m3u8
 
 东至影视频道,http://223.247.33.124:1935/live/yingshi/playlist.m3u8
 东至文化资讯,http://223.247.33.124:1935/live/wenhua/playlist.m3u8
@@ -179,16 +142,7 @@
 涡阳新闻综合,http://220.180.110.101:8083/videos/live/36/57/hwEHU4UVQ1Iv5/hwEHU4UVQ1Iv5.m3u8
 
 
-厦门卫视,http://cstvpull.live.wscdns.com/live/xiamen.flv
-厦门二套,http://cstvpull.live.wscdns.com/live/xiamen2.flv
-厦门三套,http://cstvpull.live.wscdns.com/live/xiamen3.flv
-厦门一套,http://cstvpull.live.wscdns.com/live/xiamen1.flv
-厦门移动,http://cstvpull.live.wscdns.com/live/xiamenyidong.flv
 
-厦门卫视,http://cstv.live.wscdns.com/live/xiamen/playlist.m3u8
-厦门一套,http://cstv.live.wscdns.com/live/xiamen1/playlist.m3u8
-厦门二套,http://cstv.live.wscdns.com/live/xiamen2/playlist.m3u8
-厦门三套,http://cstv.live.wscdns.com/live/xiamen3/playlist.m3u8
 
 开州综合频道,http://kaixianlive.cbg.cn:10345/1.m3u8
 开州生活频道,http://kaixianlive.cbg.cn:10345/5.m3u8
@@ -448,8 +402,7 @@
 南阳科教频道,http://30539.hlsplay.aodianyun.com/lms_30539/tv_channel_296.m3u8
 延边朝鲜语综合,http://live.ybtvyun.com/video/s10006-ybtv1-sd/index.m3u8
 延边汉语综合,http://live.ybtvyun.com/video/s10016-ybtv2-sd/index.m3u8
-滨海新闻,http://cstvpull.live.wscdns.com/live/tianjinbh.flv
-滨海综艺,http://cstvpull.live.wscdns.com/live/tianjinbh2.flv
+
 娄底,http://mms.ldntv.cn:1935/live/_definst_/zonghe/chunklist_w67585331.m3u8
 利州HD,http://3g.dzsm.com/streamer/gylztv.m3u8
 旺苍新闻,http://3g.dzsm.com/streamer/gycttv.m3u8
@@ -457,7 +410,6 @@
 宜春法制,http://live.ycstv.com/hls/YCTV2HD.m3u8
 遂宁高清,http://snlive.scsntv.com:8091/live/gggy.m3u8
 靖江新闻高清,http://visit.jjbctv.com:1935/live/xwzhpc/playlist.m3u8
-河北经济,http://weblive.hebtv.com/live/hbjj_bq/index.m3u8
 马鞍山公共频道,http://live.massp.cn:5011/vod/video_hls/c03.m3u8
 马鞍山影视频道,http://live.massp.cn:5011/vod/video_hls/c02.m3u8
 酉阳新闻综合,http://qxlmlive.cbg.cn:1935/app_2/ls_68.stream/chunklist.m3u8
@@ -504,4 +456,21 @@
 甘肃影视,http://stream.gstv.com.cn/whys/sd/live.m3u8
 
 dab,http://zbbf2.ahtv.cn/live/dab.m3u8
+
+广西 Ⅰ 南宁综合台,http://24tl.qingk.cn/live/NNTV_NEWS_A.m3u8
+山西 Ⅰ 大同综合台,http://hwzbout.yunshicloud.com/p2984z/k8kl9m.m3u8
+
+陕西 Ⅰ 安康综合台,http://pili-live-hls.hsyapp.sobeylingyun.com/xjhsyapp2019/sxakzhpd.m3u8
+
+河南 Ⅰ 河南都市台,http://player.200877926.top/18/tv.php?tv=hayx&id=82
+山东 Ⅰ 烟台综合台,http://player.200877926.top/hogejump/yantai.php?id=2
+山东 Ⅰ 烟台影视台,http://player.200877926.top/hogejump/yantai.php?id=5
+江西 Ⅰ 上饶综合台,http://live.0793.tv/srtv1/sd/live.m3u8
+湖南 Ⅰ 湘潭综合台,http://live.hnxttv.com:9601/live/xwzh/800K/tzwj_video.m3u8
+
+上海 Ⅰ 浦东综合台,http://pdlive.lyuncloud.com/pdlive/pdtv/index.m3u8
+山西 Ⅰ 朔州新闻台,http://stream.sxsztv.com/live4/sd/live.m3u8
+黑龙 Ⅰ 黑龙江都市,http://stream3.hljtv.com/hljdd2/sd/live.m3u8
+山西 Ⅰ 大同公共台,https://hwapi.yunshicloud.com/p2984z/239g8l.m3u8
+山西 Ⅰ 大同生活台,https://hwapi.yunshicloud.com/p2984z/lnbwyz.m3u8
 

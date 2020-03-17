@@ -82,6 +82,7 @@
 日本|历史频道,http://192.240.127.34:1935/live/cs14.stream/media_1254.m3u8
 日本|卫星剧场,http://192.240.127.34:1935/live/cs18.stream/media_1254.m3u8
 日本|映画频道,http://192.240.127.34:1935/live/cs19.stream/media_1254.m3u8
+日本|WOWOWO  ,http://192.240.127.34:1935/live/cs27.stream/media_1254.m3u8
 日本|家庭剧场,http://192.240.127.34:1935/live/cs11.stream/playlist.m3u8
 日本|历史频道,http://192.240.127.34:1935/live/cs14.stream/playlist.m3u8
 日本|卫星剧场,http://192.240.127.34:1935/live/cs18.stream/playlist.m3u8
@@ -141,6 +142,13 @@
 意大利 Video Calabria,http://wms.shared.streamshow.it/videocalabria/videocalabria/playlist.m3u8
 意大利 RaiYoyo,http://b2everyrai-lh.akamaihd.net/i/raiyoyo_1@191405/master.m3u8
 意大利 RaiGulp,http://b2everyrai-lh.akamaihd.net/i/raigulp_1@66350/master.m3u8
+意大利 Rai 溢价,http://b2everyrai-lh.akamaihd.net/i/raipremium_1@181837/index_1800_av-p.m3u8
+意大利 V2 音乐频道,http://de1se01.v2beat.live/playlist.m3u8
+意大利 Video Calabria,http://wms.shared.streamshow.it/videocalabria/videocalabria/playlist.m3u8
+意大利 Ⅰ RAI 四台,http://b2everyrai-lh.akamaihd.net/i/rai4_1@181951/index_1800_av-p.m3u8
+意大利 Ⅰ RAI 五台,http://b2everyrai-lh.akamaihd.net/i/rai5_1@182695/index_1800_av-p.m3u8
+意大利 Ⅰ RAI 大口,http://b2everyrai-lh.akamaihd.net/i/raigulp_1@66350/index_1800_av-p.m3u8
+意大利 Ⅰ RAI 电影,http://b2everyrai-lh.akamaihd.net/i/raimovie_1@67348/index_1800_av-p.m3u8
 
 俄罗斯 Astrakhan 24 (Opt-2),http://streaming.astrakhan.ru/astrakhan24/index.m3u8
 俄罗斯 First Music (Opt-3),http://rtmp.one.by:1200
@@ -224,6 +232,8 @@
 印度 Vasanth TV Tamil,http://vasanth.live.cdn.bitgravity.com/vasanth/secure/live/feed03?e=0&h=a9be0836bc39f96d0a9a958a659dfc1d&bgsecuredir=1
 印度 ,http://204.107.27.38/live/3485.low.stream/playlist.m3u8
 
+泰国 Ⅰ PPTV,http://183.182.100.184/live/pptvthai/chunklist.m3u8
+泰国 Ⅰ PPTV,http://183.182.100.184/live/pptvthai/playlist.m3u8
 泰国 DDTV,http://203.156.63.20:1935/live/ddtv/playlist.m3u8
 泰国 DDTV,rtmp://203.156.63.20:1935/live/ddtv
 泰国 ETV,http://61.19.244.112:1935/live/livestream/playlist.m3u8
@@ -425,8 +435,7 @@ Vivid TV Europe,http://188.35.9.26:2031/udp/031a
 德国 Deutsche-Welle,http://dwstream5-lh.akamaihd.net/i/dwstream5_live@124540/master.m3u8
 德国 HR-Fernsehen,http://livestream-1.hr.de/i/hr_fernsehen@75910/master.m3u8
 德国超级游艇,http://cdn.mobibase.com/hls/733/258_5000k/playlist.m3u8
-意大利 Rai 溢价,http://b2everyrai-lh.akamaihd.net/i/raipremium_1@181837/index_1800_av-p.m3u8
-意大利 V2 音乐频道,http://de1se01.v2beat.live/playlist.m3u8
+
 拉丁美洲中国环球 CGTN,http://livees.cgtn.com/1000e/prog_index.m3u8
 拉丁美洲La Mega Mundial,http://68.235.35.243:1935/lamegamundial/lamegamundial2/playlist.m3u8
 拉丁美洲TV Marti,http://ocb-lh.akamaihd.net/i/ocb_mpls_tvmc1@383606/master.m3u8
@@ -851,11 +860,6 @@ Qmusic,https://dpp-qmusicnl-live.akamaized.net/streamx/QmusicNL.m3u8
 V2BEAT TV,https://de1se01.v2beat.live/playlist.m3u8
 The Film Detective,https://distro.akamaized.net/indexfd_1280x720.m3u8
 
-壹新闻,http://ax.micaesoft.com/YMitv/YMITV_CN_eratv.m3u8
-環球電視,http://live-cdn.xzxwhcb.com/hls/sn88wrar.m3u8
-唐人电视,http://174.127.67.246/live200/playlist.m3u8
-信吉电视,http://220.130.241.203:1935/sjtv/livestream/chunklist_w1048671923.m3u8
-
 新传媒5频道,https://dlau142f16b92.cloudfront.net/hls/ch5ctv/master02.m3u8
 
 dubaizaman,http://www.elahmad.com/tv/m3u8/dubaitv.m3u8?id=dubaizaman
@@ -1044,7 +1048,6 @@ Fashion,https://bozztv.com/36bay2/gin/giniko_modelinc_2000kb_36bay2/tracks-v1a1/
 俄罗斯TV-21 Murmansk,http://tv21.inmurmansk.ru/full_stream.flv
 越南VNBC,http://uni6rtmp.tulix.tv/vbstv/vbsabr.smil/chunklist_w1301626483_b1228800.m3u8
 法国TV5 Monde Info (Opt-1),http://v3plusinfo247hls-i.akamaihd.net/hls/live/218877/v3plusinfo247hls/index.m3u8
-意大利Video Calabria,http://wms.shared.streamshow.it/videocalabria/videocalabria/playlist.m3u8
 阿联酋Noor Dubai,http://www.elahmad.com/tv/m3u8/dubaitv.m3u8?id=noordubaitv
 韩国YTN,http://ytnmmd.mmdlive.lldns.net/ytnmmd/9484b70302db4786886ae40308bf45a1/chunklist_b732000.m3u8
 阿拉伯Yemen TV,https://bozztv.com/36bay2/gin/giniko_yementv_900kb_36bay2/tracks-v1a1/mono.m3u8
@@ -1053,3 +1056,4 @@ Fashion,https://bozztv.com/36bay2/gin/giniko_modelinc_2000kb_36bay2/tracks-v1a1/
 阿联酋Sharjah Sports,https://svs.itworkscdn.net/smc4sportslive/smc4.smil/chunklist.m3u8
 凤凰卫视电影台,rtmp://58.200.131.2:1935/livetv/fhdy日本NHK WORLD
 印度T-NEWS,rtmp://edge-ind.inapcdn.in:1935/berry/vdevice3.stream_aac
+Hit music,http://hitmusic.hu/hitmusic.m3u8
