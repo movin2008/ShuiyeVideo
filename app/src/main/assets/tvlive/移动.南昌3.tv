@@ -6,8 +6,10 @@ CCTV 15,http://223.82.250.72/live/cctv-15/1.m3u8
 湖南卫视,http://223.82.250.72/live/hdhunanstv/1.m3u8
 新疆卫视,http://223.82.250.72/live/xinjiangstv/1.m3u8
 凤凰中文,http://223.82.250.72/live/fhchinese/1.m3u8
-凤凰中文 HD,http://223.82.250.72/ysten-bussiness/live/fhchinese/1.m3u8
-凤凰资讯 HD,http://223.82.250.72/ysten-bussiness/live/fhzixun/1.m3u8
+凤凰中文,http://223.82.250.72/ysten-bussiness/live/fhchinese/1.m3u8
+凤凰资讯,http://223.82.250.72/ysten-bussiness/live/fhzixun/1.m3u8
+
+四川 Ⅰ 巴中公共,http://223.82.250.72/live/hddongfangstv/1.m3u8
 
 卡酷少儿,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/kakukaton/1.m3u8
 优漫卡通,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/youmankaton/1.m3u8

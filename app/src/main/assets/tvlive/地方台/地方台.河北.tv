@@ -3,9 +3,9 @@
 河北 Ⅰ 河北卫视,http://live01.hebtv.com/channels/hebtv/video_channel_04/m3u8:2000k/live.m3u8
 河北 Ⅰ 河北影视,http://live01.hebtv.com/channels/hebtv/video_channel_06/m3u8:2000k/live.m3u8
 
-河北 Ⅰ 河北经济,http://weblive.hebtv.com/live/hbjj_bq/index.m3u8
 河北 Ⅰ 河北卫视,http://weblive.hebtv.com/live/hbws_bq/index.m3u8
 河北 Ⅰ 河北影视,http://weblive.hebtv.com/live/hbys_bq/index.m3u8
+河北 Ⅰ 河北经济,http://weblive.hebtv.com/live/hbjj_bq/index.m3u8
 河北 Ⅰ 河北都市,http://weblive.hebtv.com/live/hbds_bq/index.m3u8
 河北 Ⅰ 河北公共,http://weblive.hebtv.com/live/hbgg_bq/index.m3u8
 河北 Ⅰ 河北农民,http://weblive.hebtv.com/live/nmpd_bq/index.m3u8
@@ -14,3 +14,7 @@
 河北 Ⅰ 衡水新闻综合,http://hls.hsrtv.cn/hls/hstv1.m3u8
 河北 Ⅰ 衡水影视娱乐,http://hls.hsrtv.cn/hls/hstv2.m3u8
 河北 Ⅰ 衡水公共频道,http://hls.hsrtv.cn/hls/hstv3.m3u8
+
+河北省 Ⅰ 迁西综合,https://tv.lnshw.com.cn:8123/liveqx2/livestream.m3u8
+河北省 Ⅰ 迁西农业,https://tv.lnshw.com.cn:8123/liveqx1/livestream.m3u8
+河北省 Ⅰ 迁西综艺,https://tv.lnshw.com.cn:8123/lixeqx3/livestream.m3u8

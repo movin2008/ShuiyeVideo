@@ -1,3 +1,12 @@
  河北石家庄 移动
 CCTV04,http://111.63.117.13:6060/030000001000/CCTV-4/CCTV-4.m3u8
 CCTV15,http://111.63.117.13:6060/030000001000/G_CCTV-15/G_CCTV-15.m3u8
+
+ 河北石家庄 移动
+CCTV3,http://111.11.123.47:6610/030000001000/CCTV-3/CCTV-3.m3u8
+CCTV5,http://111.11.123.47:6610/030000001000/CCTV-5/CCTV-5.m3u8
+
+ hebyun.com.cn
+CCTV 01,http://umslive.hebyun.com.cn/live/cctv1/1500k/tzwj_video.m3u8
+CCTV 02,http://umslive.hebyun.com.cn/live/cctv2/1500k/tzwj_video.m3u8
+CCTV 04,http://umslive.hebyun.com.cn/live/cctv4/1500k/tzwj_video.m3u8

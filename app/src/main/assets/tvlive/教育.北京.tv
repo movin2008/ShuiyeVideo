@@ -17,3 +17,17 @@ CHANNEL[V],rtmp://58.200.131.2:1935/livetv/channelv
 凤凰电影,rtmp://58.200.131.2:1935/livetv/fhdy
 星空卫视,rtmp://58.200.131.2:1935/livetv/startv
 凤凰中文,rtmp://58.200.131.2:1935/livetv/fhzw
+
+
+CCTV16,rtmp://58.200.131.2:1935/livetv/cctv16
+CETV-1,rtmp://58.200.131.2:1935/livetv/cetv1
+CETV-2,rtmp://58.200.131.2:1935/livetv/cetv2
+CETV-3,rtmp://58.200.131.2:1935/livetv/cetv3
+CETV-4,rtmp://58.200.131.2:1935/livetv/cetv4
+
+CCTV-风云剧场,rtmp://58.200.131.2:1935/livetv/fyjctv
+CCTV-风云音乐,rtmp://58.200.131.2:1935/livetv/fyyytv
+CCTV-风云足球,rtmp://58.200.131.2:1935/livetv/fyzqtv
+CCTV-国防军事,rtmp://58.200.131.2:1935/livetv/gfjstv
+CCTV-怀旧剧场,rtmp://58.200.131.2:1935/livetv/hjjctv
+CCTV-世界地理,rtmp://58.200.131.2:1935/livetv/sjdltv

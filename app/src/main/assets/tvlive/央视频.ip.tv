@@ -14,7 +14,7 @@ CCTV-4K,http://120.204.20.82/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
 CCTV-4K,http://120.204.20.88/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
 CCTV-4K,http://120.204.20.97/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
 
- 央视频(IP 随时失效)
+ 央视频 武汉移动(IP 随时失效)
 CCTV-4K,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/001/2000266303.m3u8
 CCTV1,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/001/2000210103.m3u8
 CCTV2,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/001/2000203603.m3u8
@@ -82,7 +82,6 @@ CGTN,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/001/2001656803.m3u8
 青海卫视,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/001/2000294703.m3u8
 黑龙江台,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/001/2000293901.m3u8
 黑龙江台,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/001/2000293903.m3u8
-
 
 CCTV4K,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/2000266303.m3u8
 CCTV4K,http://111.48.79.174/tlivecloud-cdn.ysp.cctv.cn/iuo/2000266303.m3u8

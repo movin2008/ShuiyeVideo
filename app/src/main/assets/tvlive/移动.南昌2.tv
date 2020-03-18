@@ -8,6 +8,8 @@ CCTV-13,http://117.169.120.140:8080/live/cctv-13/.m3u8
 江西卫视,http://117.169.120.140:8080/live/jiangxistv/.m3u8
 重庆卫视,http://117.169.120.132:8080/live/chongqingstv/playlist.m3u8
 江苏卫视,http://117.169.120.165:8080/live/hdjiangsustv/playlist.m3u8
+东方财经,http://117.169.120.140:8080/live/dongnanstv/.m3u8
+娄底公共,http://117.169.120.140:8080/live/hdtianjinstv/.m3u8
 
 凤凰中文,http://117.169.120.138:8080/live/fhchinese/index.m3u8
 凤凰资讯,http://117.169.120.138:8080/live/fhzixun/index.m3u8

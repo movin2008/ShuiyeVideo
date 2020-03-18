@@ -81,3 +81,4 @@ CCTV13,http://118.123.60.9:8114/hls/index.m3u8?Fsv_chan_hls_se_idx=26&FvSeid=1&F
 香蕉代理,http://118.123.60.12:8114/LIVES/Fsv_otype=1&FvSeid=&Fsv_chan_hls_se_idx=027&Provider_id=&Pcontent_id=index.m3u8
 
 四川卫视,http://118.123.60.17:8112/syhjcms_hls/10000100000000050000000000000080
+仙桃生活,http://118.123.60.10:8114/syhjcms_hls/10000100201705020000001000000008?FvSeid=5bf2539394e75947&Fsv_filetype=0&Fsv_ctype=LIVES&Fsv_cid=6641&Fsv_TBt=614400&Fsv_ShiftEnable=1&Fsv_ShiftTsp=120&Fsv_SV_PARAM1=0&Fsv_otype=0&Provider_id=syhjcms_hls&Pcontent_id=10000100201705020000001000000008&Fsv_CMSID=syhjcms&Fsv_chan_hls_se_idx=12

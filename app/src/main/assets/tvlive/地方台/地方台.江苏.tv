@@ -14,18 +14,29 @@
 江苏 Ⅰ 南京少儿,http://live.nbs.cn/channels/njtv/sepd/flv:500k/live
 江苏 Ⅰ 南京教科,http://live.nbs.cn/channels/njtv/jkpd/flv:500k/live
 
-江苏 Ⅰ 徐州1频道,http://stream.huaihai.tv/xwzh/sd/live.m3u8
-江苏 Ⅰ 徐州2频道,http://stream.huaihai.tv/jjsh/sd/live.m3u8
-江苏 Ⅰ 徐州3频道,http://stream.huaihai.tv/wyys/sd/live.m3u8
-江苏 Ⅰ 徐州4频道,http://stream.huaihai.tv/ggpd/sd/live.m3u8
+江苏 Ⅰ 苏州综合,rtmp://csztv.2500sz.com/live/c01
+江苏 Ⅰ 苏州经济,rtmp://csztv.2500sz.com/live/c02
+江苏 Ⅰ 苏州文化,rtmp://csztv.2500sz.com/live/c03
+江苏 Ⅰ 苏州生活,rtmp://csztv.2500sz.com/live/c04
+
+江苏 Ⅰ 徐州-1,http://stream1.huaihai.tv/xwzh/playlist.m3u8
+江苏 Ⅰ 徐州-2,http://stream1.huaihai.tv/jjsh/playlist.m3u8
+江苏 Ⅰ 徐州-3,http://stream1.huaihai.tv/wyys/playlist.m3u8
+江苏 Ⅰ 徐州-4,http://stream1.huaihai.tv/ggpd/playlist.m3u8
+
+江苏 Ⅰ 徐州-1,http://stream1.huaihai.tv/xwzh/sd/live.m3u8
+江苏 Ⅰ 徐州-2,http://stream1.huaihai.tv/jjsh/sd/live.m3u8
+江苏 Ⅰ 徐州-3,http://stream1.huaihai.tv/wyys/sd/live.m3u8
+江苏 Ⅰ 徐州-4,http://stream1.huaihai.tv/ggpd/sd/live.m3u8
+
+江苏 Ⅰ 徐州-1,http://stream.huaihai.tv/xwzh/sd/live.m3u8
+江苏 Ⅰ 徐州-2,http://stream.huaihai.tv/jjsh/sd/live.m3u8
+江苏 Ⅰ 徐州-3,http://stream.huaihai.tv/wyys/sd/live.m3u8
+江苏 Ⅰ 徐州-4,http://stream.huaihai.tv/ggpd/sd/live.m3u8
 
 江苏 Ⅰ 无锡综合,http://live-wx.wifiwx.com/wxtv1/sd/live.m3u8
 江苏 Ⅰ 无锡都市,http://live-wx.wifiwx.com/wxtv3/sd/live.m3u8
 
-## 代理 http://show.kan0512.com/ncsztv1/sd/live.m3u8?_upt=f5ac42491584440257
-江苏 Ⅰ 苏州综合,http://player.200877926.top/17/js/suzhoum3u8.php?id=60
-
-## 代理 http://show.kan0512.com/ncsztv5/playlist.m3u8?_upt=691d7e1d1584445972
-江苏 Ⅰ 苏州生活,http://player.ioioz.com/18/tv.php?tv=jssztv&id=53
-江苏 Ⅰ 苏州未知,http://player.ioioz.com/18/tv.php?tv=jssztv&id=52
-江苏 Ⅰ 苏州未知,http://player.ioioz.com/18/tv.php?tv=jssztv&id=51
+江苏 Ⅰ 句容综合,http://218.3.92.100:1937/live/jrxwzh/playlist.m3u8
+江苏 Ⅰ 句容生活,http://218.3.92.100:1937/live/shenghuo/playlist.m3u8
+江苏 Ⅰ 句容影视,http://218.3.92.100:1937/live/yingshi/playlist.m3u8

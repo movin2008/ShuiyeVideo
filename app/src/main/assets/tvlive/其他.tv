@@ -1,24 +1,3 @@
-中国大熊猫保护研究中心 1080P,https://gcbsc.v.live.baishancdnx.cn/gc/xiongmao03_1/index.m3u8?contentid=2820180516001
-成都大熊猫繁育研究基地 720P,https://gcalic.v.myalicdn.com/gc/ipanda_1/index.m3u8?contentid=2820180516001&AUTH=EWbqPX5amMUxL2KapN4PojjCv6Y3kLImyv4JB9phjgIhwCszcDyLyNooS5TQjhxk9JhHTXU+qF3B2DqF9U/PJA==
-
-上海外滩陆嘴,http://bililive.kksmg.com/hls/sdi7000/playlist.m3u8
-上海外滩魔眼,http://bililive.kksmg.com/hls/sdi80/playlist.m3u8
-上海外滩陆嘴,rtmp://bililive.kksmg.com/hls/sdi7000
-上海外滩魔眼,rtmp://bililive.kksmg.com/hls/sdi80
-
-绵阳科技,http://live.826pc.com/mytv/live.php?id=2
-绵阳公共,http://live.826pc.com/mytv/live.php?id=3
-绵阳综合,http://live.826pc.com/mytv/live.php?id=4
-
-西双版纳tv1综合台,http://tvdrs.bntv.cn:8100/channellive/bntv1.flv
-西双版纳tv2民语台,http://tvdrs.bntv.cn:8100/channellive/bntv2.flv
-西双版纳tv3勐海台,http://tvdrs.bntv.cn:8100/channellive/bntv3.flv
-
-都市剧场,http://stream.slave.jxtvnet.tv:14311/playurl?accesstoken=R5DC2A42FU309BB004K7738E848ICA43ED17PBM345713AV0Z57EA5W15D48CE92ED319F0&playtype=live&protocol=http&playtoken=ABCDEFGH&auth=no&programid=4200000142
-靓妆高清,http://stream.slave.jxtvnet.tv:14311/playurl?accesstoken=R5DC2A42FU309BB004K7738E848ICA43ED17PBM345713AV0Z57EA5W15D48CE92ED319F0&playtype=live&protocol=http&playtoken=ABCDEFGH&auth=no&programid=4200000127
-
-音悦台,http://yeyuaihao.gz01.bdysite.com/dl/gzyx.php
-
  TVBUS http://chlist.sopplus.tv/v2/channels
 CCTV1,tvbus://1R8Rw3uqyfdkci7b9VWm7N17ynqv259h1Bo7i2uyi9bmq513uX
 CCTV2,tvbus://12MGYHm2fp2wtTjiGpDsbD1odpShZDSn5ub2y74ok1HX5WB6wk
@@ -40,17 +19,21 @@ cctv15,http://cbn-live.cbchot.com/live/cl003_1.m3u8
 心动电影1,https://cdn1.ibizastream.biz:441/free/1/playlist_dvr.m3u8
 心动电影2,https://cdn1.ibizastream.biz:441/free/2/playlist_dvr.m3u8
 
- 北京移动
-凤凰中文,http://111.13.42.9/PLTV/88888888/224/3221225942/1.m3u8
-凤凰中文,http://111.13.42.13/PLTV/88888888/224/3221225942/1.m3u8
-卡酷少儿,http://221.179.217.70/PLTV/88888888/224/3221225907/1.m3u8
 
- 河北石家庄 移动
-CCTV3,http://111.11.123.47:6610/030000001000/CCTV-3/CCTV-3.m3u8
-CCTV5,http://111.11.123.47:6610/030000001000/CCTV-5/CCTV-5.m3u8
+成都大熊猫 1080P,https://gcbsc.v.live.baishancdnx.cn/gc/xiongmao03_1/index.m3u8?contentid=2820180516001
+高一年级,http://v.xstv.net/hls-live/live/_definst_/liveevent/3333.m3u8
 
-CCTV3,http://cctvalih5ca.v.myalicdn.com/live/cctv3_2/index.m3u8
-辽宁卫视,http://cctvalih5ca.v.myalicdn.com/wstv/liaoning_2/index.m3u8
+上海外滩陆嘴,http://bililive.kksmg.com/hls/sdi7000/playlist.m3u8
+上海外滩魔眼,http://bililive.kksmg.com/hls/sdi80/playlist.m3u8
+上海外滩陆嘴,rtmp://bililive.kksmg.com/hls/sdi7000
+上海外滩魔眼,rtmp://bililive.kksmg.com/hls/sdi80
+
+西双版纳tv1综合台,http://tvdrs.bntv.cn:8100/channellive/bntv1.flv
+西双版纳tv2民语台,http://tvdrs.bntv.cn:8100/channellive/bntv2.flv
+西双版纳tv3勐海台,http://tvdrs.bntv.cn:8100/channellive/bntv3.flv
+
+都市剧场,http://stream.slave.jxtvnet.tv:14311/playurl?accesstoken=R5DC2A42FU309BB004K7738E848ICA43ED17PBM345713AV0Z57EA5W15D48CE92ED319F0&playtype=live&protocol=http&playtoken=ABCDEFGH&auth=no&programid=4200000142
+靓妆高清,http://stream.slave.jxtvnet.tv:14311/playurl?accesstoken=R5DC2A42FU309BB004K7738E848ICA43ED17PBM345713AV0Z57EA5W15D48CE92ED319F0&playtype=live&protocol=http&playtoken=ABCDEFGH&auth=no&programid=4200000127
 
 CCTV3,http://60.255.149.208/tslive/c213_scc_20190618_0apbps2b_original_r10/c213_scc_20190618_0apbps2b_original_r10.m3u8
 CCTV3,http://39.135.38.165:6610/000000001000/1000000001000011218/1.m3u8?IASHttpSessionId=OTT16157620200202041417014267&fmt=ts2hls&u=45768392
@@ -59,10 +42,7 @@ CCTV3,http://60.13.128.12:5010/nn_live.ts?id=CCTV3&nn_m3u8=1&nn_file_index=31614
 山东教育,http://111.12.110.81:6610/000000001000/7341476808603780321/1.m3u8?channel-id=ystenlive
 江西卫视,http://live02.jxtvcn.com.cn/live-jxtvcn/jxtv01.m3u8
 浙江卫视,http://ali.m.l.cztv.com/channels/lantian/channel01/360p.m3u8
-峨眉电影,http://scgctvshow.sctv.com/hdlive/emei/1.m3u8
-
-兵团卫视,http://v.btzx.com.cn:1935/live/weishi.stream/playlist.m3u8
-兵团卫视,rtmp://v.btzx.com.cn/live/weishi.stream
+点掌财经,http://cclive2.aniu.tv/live/anzb.m3u8
 
 爱上4K,http://1.180.237.9/live.aishang.ctlcdn.com/00000110240282_1/encoder/0/playlist.m3u8
 NEWTV完美游戏,http://218.207.213.133/wh7f454c46tw546395453_-944749478/PLTV/88888888/224/3221225894/index.m3u8
@@ -77,4 +57,8 @@ BBC经典系列展播,http://qdntv96789.applinzi.com/96tv.php?633138330
 北京体育4K,http://by4.nty.tv189.cn/live/tm-btvjishihd-4000k.m3u8
 CCTV 13,http://liveali.ifeng.com/live/CCTV.m3u8
 CCTV 03,http://newvideo.dangtutv.cn:8278/CCTVzongyi/playlist.m3u8
+
+CHC 家庭影院,http://pili-live-hls.fssh.tianma3600.com/fssh/fsds.m3u8
+CHC 家庭影院,http://zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221225927/index.m3u8
+
 
