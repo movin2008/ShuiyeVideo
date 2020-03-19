@@ -105,7 +105,7 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
                 try {
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
                     String html = HttpUtils.get(LetvUtils.getVideoInfoUrl(mVid));
-                    if(html.startsWith("Exception: ")){
+                    if (html.startsWith("Exception: ")) {
                         fault(html);
                         return;
                     }
@@ -189,7 +189,7 @@ public class LetvVActivity extends BasePlayActivity implements View.OnClickListe
         mHandler.sendMessage(mHandler.obtainMessage(MSG_FETCH_VIDEO, streamStr));
         String html = HttpUtils.get(LetvUtils.getVideoPlayUrl(url, mVid));
 
-        if(html.startsWith("Exception: ")){
+        if (html.startsWith("Exception: ")) {
             fault(html);
             return;
         }

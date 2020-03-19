@@ -43,7 +43,7 @@ public class FlowlayoutDialog extends Dialog implements View.OnClickListener {
         getWindow().setAttributes(layoutParams);
 
         View firstChild = mView.getChildAt(0);
-        if(firstChild != null){
+        if (firstChild != null) {
             firstChild.requestFocus();
         }
     }

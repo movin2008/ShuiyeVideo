@@ -118,6 +118,7 @@ public class FloatController extends BaseVideoController implements View.OnClick
     }
 
     private String title;
+
     public FloatController setTitle(String title) {
         this.title = title;
         return this;

@@ -5,7 +5,7 @@ import android.text.format.Formatter;
 import com.shuiyes.video.ui.SVApplication;
 import com.shuiyes.video.bean.PlayVideo;
 
-public class YoukuVideo extends PlayVideo{
+public class YoukuVideo extends PlayVideo {
 
     /**
      * # Last updated: 2017-10-13
@@ -98,7 +98,7 @@ public class YoukuVideo extends PlayVideo{
     private long size;
 
     public YoukuVideo(VideoType type, long size, String url) {
-        super(type.getProfile()+"(" + Formatter.formatFileSize(SVApplication.getAppContext(), size) + ")", url);
+        super(type.getProfile() + "(" + Formatter.formatFileSize(SVApplication.getAppContext(), size) + ")", url);
         this.type = type;
         this.size = size;
     }

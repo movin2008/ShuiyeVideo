@@ -2,6 +2,7 @@ package com.shuiyes.video.ui.tvlive;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.shuiyes.video.R;
@@ -10,24 +11,22 @@ import com.shuiyes.video.ui.base.BaseTVListActivity;
 import com.shuiyes.video.widget.NumberView;
 import com.zhy.view.flowlayout.TagView;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
 public class TVSourceActivity extends BaseTVListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        final String fpath = intent.getStringExtra(EXTRA);
-
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    String[] ss = mContext.getAssets().list(fpath);
-                    for (String s : ss) {
-                        String text = s.replace(".tv", "").replace(".fm", "").replace(".list", "");
-                        mVideos.add(new ListVideo(text, s, fpath + s));
-                    }
+                    listFiles(getIntent().getStringExtra(EXTRA));
                 } catch (Exception e) {
                     e.printStackTrace();
                     onFailure("加载失败：" + e.getLocalizedMessage());
@@ -66,7 +65,6 @@ public class TVSourceActivity extends BaseTVListActivity {
         startActivity(new Intent(this, SuzhouCMCCActivity.class));
     }
 
-    // soplus
     @Deprecated
     public void soplus(View view) {
         startActivity(new Intent(this, SopPlusActivity.class));
@@ -75,6 +73,38 @@ public class TVSourceActivity extends BaseTVListActivity {
     // 北邮测试源
     public void iviBupt(View view) {
         startActivity(new Intent(this, BuptIVIActivity.class));
+    }
+
+    private void listFiles(String path) throws Exception {
+        Log.e(TAG, "listFiles " + path);
+        String[] list = mContext.getAssets().list(path);
+
+        Map<String, String> maps = new HashMap<>();
+
+        for (String s : list) {
+            String subPath = path + s;
+            if (mContext.getAssets().list(subPath).length > 1) {
+                maps.put(subPath + "/", s);
+                continue;
+            }
+
+            String text = s.replace(".tv", "").replace(".fm", "").replace(".list", "");
+            mVideos.add(new ListVideo(text, s, subPath));
+        }
+
+        Set<String> sets = maps.keySet();
+        Iterator<String> iterator = sets.iterator();
+        while (iterator.hasNext()) {
+            String subPath = iterator.next();
+            String s = maps.get(subPath);
+
+            // title
+            mVideos.add(new ListVideo("", "", null));
+            mVideos.add(new ListVideo(s, s, null));
+
+            listFiles(subPath);
+        }
+
     }
 
 }

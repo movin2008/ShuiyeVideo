@@ -43,6 +43,7 @@ public class MemoryUtil {
 
     /**
      * 获取内部存储空间
+     *
      * @return
      */
     public static long[] getInternalMemorySize() {
@@ -51,20 +52,21 @@ public class MemoryUtil {
 
     /**
      * 获取DATA分区空间
+     *
      * @return
      */
     public static long[] getDataMemorySize() {
         return getPathSize(Environment.getDataDirectory().getAbsolutePath());
     }
 
-    private static long[] getPathSize(String path){
+    private static long[] getPathSize(String path) {
         StatFs stat = new StatFs(path);
         long blockSize = stat.getBlockSizeLong();
         long availableBlocks = stat.getAvailableBlocksLong();
         long totalBlocks = stat.getBlockCountLong();
 
-        long available = blockSize*availableBlocks;
-        long total = blockSize*totalBlocks;
+        long available = blockSize * availableBlocks;
+        long total = blockSize * totalBlocks;
 
         final long[] size = {available, total};
         return size;

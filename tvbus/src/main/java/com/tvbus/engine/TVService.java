@@ -7,55 +7,55 @@ import android.os.IBinder;
 import android.util.Log;
 
 public class TVService extends Service {
-	final static String TAG = "TVBusService";
+    final static String TAG = "TVBusService";
 
-	public static boolean RUN = false;
+    public static boolean RUN = false;
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-		Log.e(TAG, "onCreate");
+        Log.e(TAG, "onCreate");
 
-		TVServer server = new TVServer();
-		Thread thread = new Thread(server);
-		thread.setName("tvcore");
-		thread.start();
+        TVServer server = new TVServer();
+        Thread thread = new Thread(server);
+        thread.setName("tvcore");
+        thread.start();
 
-		RUN = true;
-	}
+        RUN = true;
+    }
 
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		Log.e(TAG, "onStartCommand startId="+startId);
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e(TAG, "onStartCommand startId=" + startId);
 
-		return START_NOT_STICKY;
-	}
-	
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		Log.e(TAG, "onDestroy");
+        return START_NOT_STICKY;
+    }
 
-		TVCore.getInstance().quit();
-		RUN = false;
-	}
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "onDestroy");
 
-	@Override
-	public IBinder onBind(Intent intent) {
-		return null;
-	}
-	
-	
-	private class TVServer implements Runnable {
-		TVCore tvcore = TVCore.getInstance();
+        TVCore.getInstance().quit();
+        RUN = false;
+    }
 
-		@Override
-		public void run() {
-			try {
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
-				this.tvcore.setPlayPort(8902);
-				this.tvcore.setServPort(4010);
+
+    private class TVServer implements Runnable {
+        TVCore tvcore = TVCore.getInstance();
+
+        @Override
+        public void run() {
+            try {
+
+                this.tvcore.setPlayPort(8902);
+                this.tvcore.setServPort(4010);
 
 //				String pkg = getApplicationContext().getPackageName();
 //				Class ContextImpl = Class.forName("android.app.ContextImpl");
@@ -72,18 +72,18 @@ public class TVService extends Service {
 
 //				int retv = tvcore.init(getApplicationContext());
 //				int retv = tvcore.init(getApplicationContext().createPackageContext("tv.sopplus.android", Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE));
-				int retv = tvcore.init(getApplicationContext().createPackageContext("io.binstream.github.demo", Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE));
+                int retv = tvcore.init(getApplicationContext().createPackageContext("io.binstream.github.demo", Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE));
 
 //				mPackageName.set(loadedApk, pkg);
 //				Log.e("HAHA", getApplicationContext().getPackageName());
 
-				if(retv == 0) {
-					tvcore.run();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
+                if (retv == 0) {
+                    tvcore.run();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

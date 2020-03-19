@@ -45,10 +45,10 @@ public class AlbumDialog extends FlowlayoutDialog {
     public void show(final int index) {
         super.show();
         final NumberView view = (NumberView) this.findViewById(ResourceDef.ID_TAG_BTN + index);
-        if(view != null){
+        if (view != null) {
             view.setFocusableInTouchMode(true);
             view.requestFocus();
-            Log.e(TAG, "show("+index+") "+view+" focused:"+view.isFocused());
+            Log.e(TAG, "show(" + index + ") " + view + " focused:" + view.isFocused());
         }
     }
 

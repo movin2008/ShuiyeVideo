@@ -65,7 +65,7 @@ public class QQSoActivity extends BaseSearchActivity {
                 String html = QQUtils.searchVideos(keyword);
                 Utils.setFile("qqso.html", html);
 
-                if(html.startsWith("Exception: ")){
+                if (html.startsWith("Exception: ")) {
                     notice(html);
                     return false;
                 }
@@ -87,7 +87,7 @@ public class QQSoActivity extends BaseSearchActivity {
                         String result = html;
                         if (html.contains(key)) {
                             result = html.substring(0, html.indexOf(key));
-                        }else if (html.contains("result_relative")) {
+                        } else if (html.contains("result_relative")) {
                             result = html.substring(0, html.indexOf("result_relative"));
                         }
 
@@ -99,7 +99,7 @@ public class QQSoActivity extends BaseSearchActivity {
                         String albumImg = result.substring(result.indexOf(tmp) + tmp.length());
                         tmp = "src=\"";
                         albumImg = albumImg.substring(albumImg.indexOf(tmp) + tmp.length());
-                        if(!albumImg.startsWith("http")){
+                        if (!albumImg.startsWith("http")) {
                             albumImg = "https:" + albumImg.substring(0, albumImg.indexOf("\""));
                         }
 
@@ -115,14 +115,14 @@ public class QQSoActivity extends BaseSearchActivity {
 
                         String albumSummary = "";
                         tmp = "<span class=\"label\">简　介：</span>";
-                        if(result.indexOf(tmp) != -1){
+                        if (result.indexOf(tmp) != -1) {
                             albumSummary = result.substring(result.indexOf(tmp) + tmp.length());
                             tmp = ">";
                             albumSummary = albumSummary.substring(albumSummary.indexOf(tmp) + tmp.length());
                             albumSummary = albumSummary.substring(0, albumSummary.indexOf("<"));
-                        }else {
+                        } else {
                             tmp = "<span class=\"label\">主　题：</span>";
-                            if(result.indexOf(tmp) != -1){
+                            if (result.indexOf(tmp) != -1) {
                                 albumSummary = result.substring(result.indexOf(tmp) + tmp.length());
                                 tmp = ">";
                                 albumSummary = albumSummary.substring(albumSummary.indexOf(tmp) + tmp.length());
@@ -150,7 +150,7 @@ public class QQSoActivity extends BaseSearchActivity {
                                 title += "(预告)";
                             } else if (result.contains("alt=\"视频包月only-VIP\"")) {
                                 title += "(VIP)";
-                            }else if (result.contains("alt=\"VIP付费\"") || result.contains("alt=\"超前点播\"")) {
+                            } else if (result.contains("alt=\"VIP付费\"") || result.contains("alt=\"超前点播\"")) {
                                 title += "(VIP付费)";
                             }
 

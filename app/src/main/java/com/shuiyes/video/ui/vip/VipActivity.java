@@ -25,7 +25,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shuiyes.video.R;
 import com.shuiyes.video.bean.PlayVideo;
@@ -37,7 +36,6 @@ import com.shuiyes.video.widget.MiscView;
 import com.shuiyes.video.widget.Tips;
 
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
 public class VipActivity extends BaseActivity implements View.OnClickListener {
@@ -217,7 +215,7 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
                 }
                 break;
             case KeyEvent.KEYCODE_BACK:
-                if(mWebView.canGoBack()){
+                if (mWebView.canGoBack()) {
                     mWebView.goBack();
                     return false;
                 }

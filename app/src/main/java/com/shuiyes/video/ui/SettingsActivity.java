@@ -81,15 +81,15 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if(event.getAction() == KeyEvent.ACTION_UP){
+        if (event.getAction() == KeyEvent.ACTION_UP) {
             return super.dispatchKeyEvent(event);
         }
         switch (event.getKeyCode()) {
             case KeyEvent.KEYCODE_BACK:
-                if(threadRunning){
+                if (threadRunning) {
                     Tips.show(this, "请等待测试结束...");
                     return true;
-                }else {
+                } else {
                     return super.dispatchKeyEvent(event);
                 }
         }
@@ -162,7 +162,7 @@ public class SettingsActivity extends BaseActivity {
     boolean threadRunning;
 
     public void testAllCCode(View view) {
-        if(threadRunning) return;
+        if (threadRunning) return;
         threadRunning = true;
         mTextView.setText("获取优酷鉴权CNA...");
         new Thread(new Runnable() {
@@ -182,7 +182,7 @@ public class SettingsActivity extends BaseActivity {
                     text("测试" + ccode + "...");
                     String ret;
                     text(ret = testCCode(ccode, cna));
-                    if(!ret.startsWith("[Exception:")){
+                    if (!ret.startsWith("[Exception:")) {
                         i++;
                     }
                 }
@@ -193,7 +193,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     public void testCCode(View view) {
-        if(threadRunning) return;
+        if (threadRunning) return;
         threadRunning = true;
 
         mTextView.setText("获取优酷鉴权CNA...");
@@ -211,7 +211,7 @@ public class SettingsActivity extends BaseActivity {
                 text("[成功]\n测试" + ccode + "...");
                 String ret;
                 text(ret = testCCode(ccode, cna));
-                if(!ret.startsWith("[Exception:")){
+                if (!ret.startsWith("[Exception:")) {
                     updateCCODE(ccode);
                 }
 
@@ -220,7 +220,7 @@ public class SettingsActivity extends BaseActivity {
         }).start();
     }
 
-    private String testCCode(String ccode, String cna){
+    private String testCCode(String ccode, String cna) {
         try {
             Thread.sleep(567);
 

@@ -13,13 +13,13 @@ public class SLog {
     private static final boolean DEBUGD = false;
     private static final String TAG = "SHUIYES";
 
-    public static void e(String tag, String text){
-        if(DEBUGE){
+    public static void e(String tag, String text) {
+        if (DEBUGE) {
             Log.e(tag, text);
         }
     }
 
-    public static void e(Throwable e){
+    public static void e(Throwable e) {
 //        Log.e(TAG, e.getLocalizedMessage());
 //        StackTraceElement[] stes = e.getStackTrace();
 //        for(StackTraceElement ste: stes){
@@ -28,12 +28,12 @@ public class SLog {
         e(TAG, Log.getStackTraceString(e));
     }
 
-    public static void e(String text, Throwable e){
+    public static void e(String text, Throwable e) {
         e(TAG, text + "\n" + Log.getStackTraceString(e));
     }
 
-    public static void d(String tag, String text){
-        if(DEBUGD){
+    public static void d(String tag, String text) {
+        if (DEBUGD) {
             Log.d(tag, text);
         }
     }

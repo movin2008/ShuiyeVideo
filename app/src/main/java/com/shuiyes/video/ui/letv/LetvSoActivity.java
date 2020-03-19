@@ -70,7 +70,7 @@ public class LetvSoActivity extends BaseSearchActivity {
                 String html = LetvUtils.searchVideos(keyword);
 //					notice(result);
 
-                if(html.startsWith("Exception: ")){
+                if (html.startsWith("Exception: ")) {
                     notice(html);
                     return false;
                 }
@@ -112,7 +112,7 @@ public class LetvSoActivity extends BaseSearchActivity {
                     }
 //                    notice("data"+flag+" ===== "+data);
 
-                    if(data.startsWith("<div class=\"So-detail Star-so\"")){
+                    if (data.startsWith("<div class=\"So-detail Star-so\"")) {
                         html = html.substring(startIndex + start.length());
 
                         // 跳过明星
@@ -239,7 +239,7 @@ public class LetvSoActivity extends BaseSearchActivity {
                         }
                     }
 
-                    if((listVideos == null || listVideos.size() < 1) && ico_vip){
+                    if ((listVideos == null || listVideos.size() < 1) && ico_vip) {
                         // 没有专辑列表，要考虑是否是 VIP
                         albumTitle += " (VIP)";
                     }
@@ -419,7 +419,7 @@ public class LetvSoActivity extends BaseSearchActivity {
                         String url = video.getString("url");//.replaceAll("letv.com", "le.com")
 
                         String name = video.getString("name");
-                        if(video.has("areaAllow") && !video.getBoolean("areaAllow")){
+                        if (video.has("areaAllow") && !video.getBoolean("areaAllow")) {
                             name += " (VIP)";
                         }
 

@@ -16,7 +16,7 @@ public class CbchotUtil {
     // com\cbchot\android\b\as.class
     // com\cbchot\android\common\c\r.class
     // auth_key 入口
-    public static String getAuthUrl(String url){
+    public static String getAuthUrl(String url) {
         int i = a(new Date(System.currentTimeMillis() + 3600L));
         String str = null;
         try {
@@ -34,38 +34,35 @@ public class CbchotUtil {
         localStringBuilder.append("-");
         localStringBuilder.append("0");
         localStringBuilder.append("-");
-        localStringBuilder.append((String)localObject);
+        localStringBuilder.append((String) localObject);
 
         str = j(localStringBuilder.toString());
         localObject = new StringBuilder();
-        ((StringBuilder)localObject).append(url);
-        ((StringBuilder)localObject).append("?auth_key=");
-        ((StringBuilder)localObject).append(i);
-        ((StringBuilder)localObject).append("-");
-        ((StringBuilder)localObject).append("0");
-        ((StringBuilder)localObject).append("-");
-        ((StringBuilder)localObject).append("0");
-        ((StringBuilder)localObject).append("-");
-        ((StringBuilder)localObject).append(str);
+        ((StringBuilder) localObject).append(url);
+        ((StringBuilder) localObject).append("?auth_key=");
+        ((StringBuilder) localObject).append(i);
+        ((StringBuilder) localObject).append("-");
+        ((StringBuilder) localObject).append("0");
+        ((StringBuilder) localObject).append("-");
+        ((StringBuilder) localObject).append("0");
+        ((StringBuilder) localObject).append("-");
+        ((StringBuilder) localObject).append(str);
 
         return localObject.toString();
     }
 
-    public static int a(Date paramDate)
-    {
+    public static int a(Date paramDate) {
         if (paramDate == null) {
             return 0;
         }
         return Integer.valueOf(String.valueOf(paramDate.getTime() / 1000L)).intValue();
     }
 
-    public static String a(int paramInt)
-    {
+    public static String a(int paramInt) {
         return SVApplication.getAppContext().getString(paramInt);
     }
 
-    public static String z()
-    {
+    public static String z() {
         String str = null;
         try {
             str = new String(Base64.decode(a(R.string.logo_no_update), 0), "UTF-8");
@@ -75,26 +72,24 @@ public class CbchotUtil {
         return str;
     }
 
-    public static String j(String paramString)
-    {
+    public static String j(String paramString) {
 
         try {
             MessageDigest localObject = MessageDigest.getInstance("MD5");
-            ((MessageDigest)localObject).reset();
-            ((MessageDigest)localObject).update(paramString.getBytes("UTF-8"));
+            ((MessageDigest) localObject).reset();
+            ((MessageDigest) localObject).update(paramString.getBytes("UTF-8"));
 
-            byte[] paramBytes = ((MessageDigest)localObject).digest();
+            byte[] paramBytes = ((MessageDigest) localObject).digest();
             Object buffer = new StringBuffer();
             int i = 0;
-            while (i < paramBytes.length)
-            {
+            while (i < paramBytes.length) {
                 if (Integer.toHexString(paramBytes[i] & 0xFF).length() == 1) {
-                    ((StringBuffer)buffer).append("0");
+                    ((StringBuffer) buffer).append("0");
                 }
-                ((StringBuffer)buffer).append(Integer.toHexString(paramBytes[i] & 0xFF));
+                ((StringBuffer) buffer).append(Integer.toHexString(paramBytes[i] & 0xFF));
                 i += 1;
             }
-            return ((StringBuffer)buffer).substring(0, ((StringBuffer)buffer).length()).toString();
+            return ((StringBuffer) buffer).substring(0, ((StringBuffer) buffer).length()).toString();
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -46,19 +46,19 @@ public class MDDVActivity extends BasePlayActivity implements Callback {
                     String uuid;
                     String vodUuid = null;
                     String[] uuids = mIntentUrl.split("/");
-                    if(uuids.length > 2){
+                    if (uuids.length > 2) {
                         vodUuid = uuids[1];
                         uuid = uuids[2];
-                    }else{
+                    } else {
                         uuid = uuids[1];
                     }
 
-                    if(uuid != null){
+                    if (uuid != null) {
                         mHandler.sendEmptyMessage(MSG_FETCH_VIDEOINFO);
                         MDDUtils.getSectionInfo(uuid, MDDVActivity.this);
                     }
 
-                    if(vodUuid != null && mVideoList.isEmpty()){
+                    if (vodUuid != null && mVideoList.isEmpty()) {
                         MDDUtils.listVodSections(vodUuid, MDDVActivity.this);
                     }
                 } catch (Exception e) {
@@ -75,7 +75,7 @@ public class MDDVActivity extends BasePlayActivity implements Callback {
 
     @Override
     public void onFailure(Call call, IOException e) {
-        Log.e(TAG, "onFailure: "+call.request().url().url().getPath());
+        Log.e(TAG, "onFailure: " + call.request().url().url().getPath());
     }
 
     @Override
@@ -84,9 +84,9 @@ public class MDDVActivity extends BasePlayActivity implements Callback {
             String action = call.request().url().url().getPath();
             ResponseBody responseBody = response.body();
             if (responseBody == null) {
-                Log.e(TAG, "onResponse(null): "+action);
+                Log.e(TAG, "onResponse(null): " + action);
                 return;
-            }else{
+            } else {
 //                Log.e(TAG, "onResponse: "+action);
             }
 
@@ -94,20 +94,20 @@ public class MDDVActivity extends BasePlayActivity implements Callback {
             Utils.setFile("mdd3", result);
 
             JSONObject obj = new JSONObject(result);
-            if(obj.getInt("msgType") == 0){
-                if(MDDUtils.GetSectionInfoAction.equals(action)){
+            if (obj.getInt("msgType") == 0) {
+                if (MDDUtils.GetSectionInfoAction.equals(action)) {
                     getSectionInfo(obj);
-                }else if(MDDUtils.ListVodAction.equals(action)){
+                } else if (MDDUtils.ListVodAction.equals(action)) {
                     listVodResult(call, obj);
-                }else{
+                } else {
                     Log.e(TAG, "onResponse unkown url.");
                 }
-            }else{
+            } else {
                 Log.e(TAG, result);
-                if(MDDUtils.GetSectionInfoAction.equals(action)){
+                if (MDDUtils.GetSectionInfoAction.equals(action)) {
                     fault(obj.getString("msg"));
-                }else {
-                    Tips.show(mContext, call.request().url().url().getPath()+" "+obj.getString("msg"));
+                } else {
+                    Tips.show(mContext, call.request().url().url().getPath() + " " + obj.getString("msg"));
                 }
             }
         } catch (Exception e) {
@@ -124,13 +124,13 @@ public class MDDVActivity extends BasePlayActivity implements Callback {
         JSONArray dataList = obj.getJSONArray("data");
 
         String vodUuid = call.request().header("vodUuid");
-        if(TextUtils.isEmpty(vodUuid)){
+        if (TextUtils.isEmpty(vodUuid)) {
             return;
         }
 
         for (int j = 0; j < dataList.length(); j++) {
             JSONObject data = dataList.getJSONObject(j);
-            mVideoList.add(j, new ListVideo(j+1, data.getString("name"),MDDUtils.getPlayUrl(vodUuid, data.getString("uuid"))));
+            mVideoList.add(j, new ListVideo(j + 1, data.getString("name"), MDDUtils.getPlayUrl(vodUuid, data.getString("uuid"))));
         }
         mHandler.sendEmptyMessage(MSG_UPDATE_SELECT);
     }

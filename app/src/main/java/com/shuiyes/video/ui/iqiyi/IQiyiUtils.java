@@ -26,6 +26,7 @@ public class IQiyiUtils {
 
     /**
      * 获取（非综艺）节目列表
+     *
      * @param aid
      * @param page
      * @return
@@ -36,6 +37,7 @@ public class IQiyiUtils {
 
     /**
      * 获取（综艺）节目列表
+     *
      * @param cid  {@link Channel} 6
      * @param sid  sourceid
      * @param time 2019
@@ -93,7 +95,7 @@ public class IQiyiUtils {
 
         String html = HttpUtils.get(albumUrl);
 
-        if(html.startsWith("Exception: ")){
+        if (html.startsWith("Exception: ")) {
             Log.e(TAG, html);
             return;
         }

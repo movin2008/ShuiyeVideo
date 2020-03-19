@@ -141,7 +141,7 @@ public class HuyaListActivity extends TVListActivity implements View.OnClickList
                             PreferenceUtil.setHuyaInvaildUrl(getApplicationContext(), invaildUrl + view.getUrl() + ",");
                         }
                     }
-                    if(enable != view.isEnabled()){
+                    if (enable != view.isEnabled()) {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {

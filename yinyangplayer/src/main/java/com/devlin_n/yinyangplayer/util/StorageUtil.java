@@ -73,7 +73,7 @@ public class StorageUtil {
         File appCacheDir = new File(new File(dataDir, context.getPackageName()), "cache");
         if (!appCacheDir.exists()) {
             if (!appCacheDir.mkdirs()) {
-                Log.e(TAG,"Unable to create external cache directory");
+                Log.e(TAG, "Unable to create external cache directory");
                 return null;
             }
         }

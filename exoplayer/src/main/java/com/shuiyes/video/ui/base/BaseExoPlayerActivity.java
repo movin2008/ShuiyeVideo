@@ -62,7 +62,7 @@ public abstract class BaseExoPlayerActivity extends Activity implements View.OnC
         if (mPlayerView != null) {
             mPlayerView.onResume();
         }
-        if(mExoPlayer != null){
+        if (mExoPlayer != null) {
             mExoPlayer.setPlayWhenReady(true);
         }
     }
@@ -74,7 +74,7 @@ public abstract class BaseExoPlayerActivity extends Activity implements View.OnC
         if (mPlayerView != null) {
             mPlayerView.onPause();
         }
-        if(mExoPlayer != null){
+        if (mExoPlayer != null) {
             mExoPlayer.setPlayWhenReady(false);
         }
     }
@@ -117,6 +117,7 @@ public abstract class BaseExoPlayerActivity extends Activity implements View.OnC
 
     private SimpleExoPlayer mExoPlayer;
     private PlayerView mPlayerView;
+
     private void initExoPlayer() {
         mPlayerView = (PlayerView) this.findViewById(R.id.exoplayer_view);
         mPlayerView.requestFocus();
@@ -152,13 +153,13 @@ public abstract class BaseExoPlayerActivity extends Activity implements View.OnC
         mExoPlayer.addListener(new Player.EventListener() {
             @Override
             public void onLoadingChanged(boolean isLoading) {
-                Log.e(TAG, "onLoadingChanged "+isLoading);
+                Log.e(TAG, "onLoadingChanged " + isLoading);
             }
 
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-                Log.e(TAG, "onPlayerStateChanged playWhenReady="+playWhenReady+", playbackState="+playbackState);
-                if(playbackState == 3){
+                Log.e(TAG, "onPlayerStateChanged playWhenReady=" + playWhenReady + ", playbackState=" + playbackState);
+                if (playbackState == 3) {
                     // TODO MSG_PALY_VIDEO
                 }
             }
@@ -170,7 +171,7 @@ public abstract class BaseExoPlayerActivity extends Activity implements View.OnC
 
             @Override
             public void onPositionDiscontinuity(int reason) {
-                Log.e(TAG, "onPositionDiscontinuity "+reason);
+                Log.e(TAG, "onPositionDiscontinuity " + reason);
             }
 
             @Override
@@ -191,7 +192,9 @@ public abstract class BaseExoPlayerActivity extends Activity implements View.OnC
 
         mExoPlayer.setPlayWhenReady(true);
         mExoPlayer.prepare(videoSource);
-    };
+    }
+
+    ;
 
     protected String mVid, mIntentUrl, mPlayUrl;
 
@@ -254,8 +257,8 @@ public abstract class BaseExoPlayerActivity extends Activity implements View.OnC
 
     @Override
     public void onLoadError(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData, IOException error, boolean wasCanceled) {
-        String err = "onError(" + error.getLocalizedMessage()+ ")";
-        Log.e(TAG, " =========================== "+err);
+        String err = "onError(" + error.getLocalizedMessage() + ")";
+        Log.e(TAG, " =========================== " + err);
         fault(err);
     }
 

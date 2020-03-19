@@ -57,17 +57,19 @@ public class MgtvUtils {
         tk2 = tk2.replaceAll("=", "-");
         tk2 = new StringBuffer(tk2).reverse().toString();
 
-        Log.e(TAG, "tk2("+tk2.length()+")=" + tk2);
+        Log.e(TAG, "tk2(" + tk2.length() + ")=" + tk2);
 
         return tk2;
     }
 
     private static final String API_VIDEO = "https://pcweb.api.mgtv.com/player/video?video_id=%s&tk2=%s";
+
     public static String getVideo(String vid) {
         return HttpUtils.get(String.format(API_VIDEO, vid, MgtvUtils.tk2()));
     }
 
     private static final String API_PM2 = "https://web.da.mgtv.com/pc/player?id=%s&v=%s&p=%s&au=%s&auver=v1&callback=cb";
+
     public static String getPm2(String vid, String cxid, String pm2) throws Exception {
         JSONObject obj = new JSONObject();
         obj.put("id", cxid);
@@ -81,31 +83,31 @@ public class MgtvUtils {
     }
 
     private static final String API_SOURCE = "https://pstream.api.mgtv.com/player/getSource?video_id=%s&tk2=%s&pm2=%s";
+
     public static String getSource(String vid, String pm2) {
         return HttpUtils.get(String.format(API_SOURCE, vid, tk2(), pm2));
     }
 
     public static String getPlayerParmV(String vid) throws JSONException {
         JSONObject obj = new JSONObject();
-        obj.put("hid",303114);
-        obj.put("id",vid);
-        obj.put("rid",2);
-        obj.put("url","https://www.mgtv.com/s/"+vid+".html");
-        obj.put("on_date","");
-        obj.put("clip_type",1);
-        obj.put("vtt",1968);
-        obj.put("ispreview",0);
-        obj.put("ispay",0);
-        obj.put("vip",0);
-        obj.put("uname","");
-        obj.put("ucode","");
+        obj.put("hid", 303114);
+        obj.put("id", vid);
+        obj.put("rid", 2);
+        obj.put("url", "https://www.mgtv.com/s/" + vid + ".html");
+        obj.put("on_date", "");
+        obj.put("clip_type", 1);
+        obj.put("vtt", 1968);
+        obj.put("ispreview", 0);
+        obj.put("ispay", 0);
+        obj.put("vip", 0);
+        obj.put("uname", "");
+        obj.put("ucode", "");
 
         return obj.toString();
     }
 
 
-
-    public static String getPlayerParmP(String vid,  String cxid, String pm2) throws JSONException {
+    public static String getPlayerParmP(String vid, String cxid, String pm2) throws JSONException {
         JSONObject obj = new JSONObject();
         obj.put("sdkversion", "PCWEBSDK_V2.1.4_20181127");
         obj.put("_v", "1");
@@ -120,7 +122,7 @@ public class MgtvUtils {
         m.put("time", 0);
         m.put("allowad", 110110);
         m.put("ptype", "front");
-        m.put("pu", "https://www.mgtv.com/s/"+vid+".html");
+        m.put("pu", "https://www.mgtv.com/s/" + vid + ".html");
         obj.put("m", m);
 
         JSONObject u = new JSONObject();

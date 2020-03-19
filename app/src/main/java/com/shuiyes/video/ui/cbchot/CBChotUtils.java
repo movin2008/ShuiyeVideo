@@ -43,7 +43,7 @@ public class CBChotUtils {
         return "";
     }
 
-        // com.wasu.utils.AuthCode.class authCode()
+    // com.wasu.utils.AuthCode.class authCode()
     public static String authCode(String wasuCodeStr, String key) {
         wasuCodeStr = b(wasuCodeStr);
         String keyMD5 = MD5.encode(key);

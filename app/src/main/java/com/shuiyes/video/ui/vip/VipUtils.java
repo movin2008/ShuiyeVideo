@@ -69,9 +69,9 @@ public class VipUtils {
                     + "&ref=0&type=&&ios=0";
             String refer = "Referer: " + type.refer + URLEncoder.encode(url);
 
-            if(type.api.contains("administrator")){
+            if (type.api.contains("administrator")) {
                 return HttpUtils.post(type.api + VipSource.adminApi(), data, refer);
-            }else{
+            } else {
                 return HttpUtils.post(type.api, data, refer);
             }
         }

@@ -428,7 +428,7 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
 
     protected void fault(Exception e) {
         Throwable t = e.getCause();
-        if(t == null) t = e;
+        if (t == null) t = e;
         fault(t.getClass().getName() + " " + e.getLocalizedMessage());
     }
 

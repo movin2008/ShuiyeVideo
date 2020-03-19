@@ -807,7 +807,8 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
 
                     int videoWidth = iMediaPlayer.getVideoWidth();
                     int videoHeight = iMediaPlayer.getVideoHeight();
-                    if (mVideoController != null) mVideoController.setVideoSize(videoWidth, videoHeight);
+                    if (mVideoController != null)
+                        mVideoController.setVideoSize(videoWidth, videoHeight);
 
                     break;
                 case IjkMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:
@@ -828,7 +829,7 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
     private IMediaPlayer.OnPreparedListener onPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(IMediaPlayer iMediaPlayer) {
-            if(isLive()){
+            if (isLive()) {
                 playerContainer.removeView(statusView);
             }
             errorCount = 0;

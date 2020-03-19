@@ -69,8 +69,8 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
         });
     }
 
-    protected TagView getTagView(int position, ListVideo o){
-        if(o.getUrl() == null){
+    protected TagView getTagView(int position, ListVideo o) {
+        if (o.getUrl() == null) {
             // 标题
             TagView view = new TagView(mContext);
             view.setSize(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -78,7 +78,7 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
             view.setText(o.getText());
             view.setTextSize(30);
             return view;
-        }else{
+        } else {
             NumberView view = new NumberView(getApplicationContext(), o);
             view.setSize(view.measureWidth(), 0);
             view.setTextColor(Color.BLACK);
@@ -92,10 +92,10 @@ public abstract class BaseTVListActivity extends BaseActivity implements View.On
         NumberView view = (NumberView) v;
 
         String url = view.getUrl();
-        if(url.contains("cbn-live.cbchot.com")){
+        if (url.contains("cbn-live.cbchot.com")) {
             // 中广热点云加了 auth 验证
             url = CbchotUtil.getAuthUrl(url);
-        }else if(url.contains("player.cntv.cn/standard/live")){
+        } else if (url.contains("player.cntv.cn/standard/live")) {
             WebActivity.launch(this, url);
             return;
         }

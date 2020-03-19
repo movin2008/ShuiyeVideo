@@ -2,7 +2,7 @@ package com.shuiyes.video.ui.letv;
 
 import com.shuiyes.video.bean.PlayVideo;
 
-public class LetvStream extends PlayVideo{
+public class LetvStream extends PlayVideo {
 
     private int stream;
     private String streamStr;

@@ -60,7 +60,7 @@ public class SuzhouCMCCActivity extends BaseTVLiveActivity {
         Set<String> sets = maps.keySet();
 
         Iterator<String> iterator2 = sets.iterator();
-        while(iterator2.hasNext()){
+        while (iterator2.hasNext()) {
             String name = iterator2.next();
             mVideos.add(new ListVideo(name, name, maps.get(name)));
         }

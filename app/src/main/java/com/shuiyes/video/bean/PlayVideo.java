@@ -1,6 +1,6 @@
 package com.shuiyes.video.bean;
 
-public class PlayVideo implements Cloneable{
+public class PlayVideo implements Cloneable {
 
     protected String text;
     protected String url;

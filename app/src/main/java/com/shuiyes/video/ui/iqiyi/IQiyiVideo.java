@@ -2,7 +2,7 @@ package com.shuiyes.video.ui.iqiyi;
 
 import com.shuiyes.video.bean.PlayVideo;
 
-public class IQiyiVideo extends PlayVideo{
+public class IQiyiVideo extends PlayVideo {
 
     /**
      stream_types = [
@@ -24,13 +24,14 @@ public class IQiyiVideo extends PlayVideo{
      */
 
     /**
-     vd_2_id = {10: '4k', 19: '4k', 5:'BD', 18: 'BD', 21: 'HD_H265', 2: 'HD', 4: 'TD', 17: 'TD_H265', 96: 'LD', 1: 'SD', 14: 'TD'}
+     * vd_2_id = {10: '4k', 19: '4k', 5:'BD', 18: 'BD', 21: 'HD_H265', 2: 'HD', 4: 'TD', 17: 'TD_H265', 96: 'LD', 1: 'SD', 14: 'TD'}
+     *
      * @param vd
      * @return
      */
     public static VideoType formateVideoType(int vd) {
         VideoType type = null;
-        switch (vd){
+        switch (vd) {
             case 10:
             case 19:
                 type = VideoType.UHD;
@@ -62,18 +63,18 @@ public class IQiyiVideo extends PlayVideo{
         return type;
     }
 
-    public static final int UHD_SZ = 4096*2160;
+    public static final int UHD_SZ = 4096 * 2160;
 
     public enum VideoType {
-        UHD("4k", "m3u8", "4K", 4096*2160),
-        BD("BD", "m3u8", "1080P", 1920*1080),
-        TD("TD", "m3u8", "720P", 1080*720),
-        TD_H265("TD_H265", "m3u8", "720P H265", 1280*720),
+        UHD("4k", "m3u8", "4K", 4096 * 2160),
+        BD("BD", "m3u8", "1080P", 1920 * 1080),
+        TD("TD", "m3u8", "720P", 1080 * 720),
+        TD_H265("TD_H265", "m3u8", "720P H265", 1280 * 720),
 
-        HD("HD", "m3u8", "540P", 896*504),
-        HD_H265("HD_H265", "m3u8", "540P H265", 896*504),
-        SD("SD", "m3u8", "360P", 640*360),
-        LD("LD", "m3u8", "210P", 384*216);
+        HD("HD", "m3u8", "540P", 896 * 504),
+        HD_H265("HD_H265", "m3u8", "540P H265", 896 * 504),
+        SD("SD", "m3u8", "360P", 640 * 360),
+        LD("LD", "m3u8", "210P", 384 * 216);
 
         private String type, ext, profile;
         private int screenSize;

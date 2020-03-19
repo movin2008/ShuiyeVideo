@@ -11,7 +11,6 @@ public class L {
 
     private static final String TAG = "YinYangPlayer";
 
-
     public static void d(String msg) {
         Log.d(TAG, msg);
     }

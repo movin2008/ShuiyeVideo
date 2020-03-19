@@ -5,10 +5,10 @@ package com.tvbus.engine;
  * VAN
  */
 public interface TVListener {
-    public void onInited(String result);
-    public void onStart(String result);
-    public void onPrepared(String result);
-    public void onInfo(String result);
-    public void onStop(String result);
-    public void onQuit(String result);
+    void onInited(String result);
+    void onStart(String result);
+    void onPrepared(String result);
+    void onInfo(String result);
+    void onStop(String result);
+    void onQuit(String result);
 }

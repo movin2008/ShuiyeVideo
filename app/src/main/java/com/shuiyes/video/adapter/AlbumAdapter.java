@@ -89,7 +89,7 @@ public class AlbumAdapter extends BaseAdapter {
             }
         });
 
-        viewHolder.index.setText(position+1+"");
+        viewHolder.index.setText(position + 1 + "");
         viewHolder.title.setText(album.getTitle());
         viewHolder.summary.setText(album.getSummary());
 

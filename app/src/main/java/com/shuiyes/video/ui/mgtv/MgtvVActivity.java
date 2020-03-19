@@ -93,7 +93,7 @@ public class MgtvVActivity extends BasePlayActivity {
                     String video = MgtvUtils.getVideo(mVid);
                     Utils.setFile("mgtv", video);
 
-                    if(TextUtils.isEmpty(video)){
+                    if (TextUtils.isEmpty(video)) {
                         fault("请稍后重试...");
                         return;
                     }
@@ -115,9 +115,9 @@ public class MgtvVActivity extends BasePlayActivity {
                     String vast = MgtvUtils.getPm2(mVid, cxid, pm2);
                     Utils.setFile("mgtv", vast);
 
-                    if(vast.contains("<pm2>") & vast.contains("</pm2>")){
-                        pm2 = vast.substring(vast.indexOf("<Pm2>")+5, vast.indexOf("</Pm2>"));
-                    }else{
+                    if (vast.contains("<pm2>") & vast.contains("</pm2>")) {
+                        pm2 = vast.substring(vast.indexOf("<Pm2>") + 5, vast.indexOf("</Pm2>"));
+                    } else {
                         fault("授权异常...");
                         return;
                     }

@@ -33,7 +33,7 @@ public abstract class BaseTVLiveActivity extends BaseTVListActivity implements C
     }
 
     @Override
-    public int getContentViewId(){
+    public int getContentViewId() {
         return R.layout.activity_tvlive;
     }
 

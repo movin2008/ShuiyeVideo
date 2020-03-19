@@ -109,7 +109,7 @@ public class CBChotVActivity extends BasePlayActivity {
 
 //                            mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_URL, url));
                             fault("完善中...");
-                        }else{
+                        } else {
                             mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_URL, url));
                         }
                     } else {

@@ -20,7 +20,7 @@ public class TVBusActivity extends TVPlayActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(!TVService.RUN){
+        if (!TVService.RUN) {
             startService(new Intent(this, TVService.class));
         }
 
@@ -139,7 +139,7 @@ public class TVBusActivity extends TVPlayActivity {
 
     @Override
     protected void startPlayback(final String url) {
-        if(url == null){
+        if (url == null) {
             return;
         }
         runOnUiThread(new Runnable() {
@@ -149,7 +149,7 @@ public class TVBusActivity extends TVPlayActivity {
 
                 try {
                     Log.e(TAG, "startPlayback " + url);
-                    if(url.endsWith("m3u8")){
+                    if (url.endsWith("m3u8")) {
                         mVideoView.setVideoURI(Uri.parse(url));
                     }
                 } catch (Exception e) {
@@ -198,14 +198,14 @@ public class TVBusActivity extends TVPlayActivity {
             // {"buffer":"100","download_rate":"1175423","download_total":"9","hls_last_conn":"2","upload_rate":"0","upload_total":"0"}
             mBuffer = jsonObj.optInt("buffer", 0);
             mTmPlayerConn = jsonObj.optInt("hls_last_conn", 0);
-            if(mBuffering){
+            if (mBuffering) {
                 int rate = jsonObj.optInt("download_rate", 0);
-                if(mBuffer < 50 || (rate < 100 * 1024 && mBuffer < 99)){
-                    statusMessage =  android.text.format.Formatter.formatFileSize(mContext, rate) + "/s " + mBuffer+ "%";
+                if (mBuffer < 50 || (rate < 100 * 1024 && mBuffer < 99)) {
+                    statusMessage = android.text.format.Formatter.formatFileSize(mContext, rate) + "/s " + mBuffer + "%";
                 } else {
-                    statusMessage =  android.text.format.Formatter.formatFileSize(mContext, rate) + "/s";
+                    statusMessage = android.text.format.Formatter.formatFileSize(mContext, rate) + "/s";
                 }
-            }else{
+            } else {
                 statusMessage = "";
             }
         } else if ("onStop".equals(event)) {
@@ -213,7 +213,7 @@ public class TVBusActivity extends TVPlayActivity {
 
             int errno = jsonObj.optInt("errno", 0);
             if (errno < 0) {
-                statusMessage = "errno: " + errno + ((errno == -104)?"[源失效]":"");
+                statusMessage = "errno: " + errno + ((errno == -104) ? "[源失效]" : "");
             }
         } else if ("onQut".equals(event)) {
             //

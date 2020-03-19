@@ -44,6 +44,7 @@ public class MDDUtils {
 
     /**
      * 关键字搜索
+     *
      * @param keyword
      * @param callback
      */
@@ -69,6 +70,7 @@ public class MDDUtils {
 
     /**
      * 剧集列表
+     *
      * @param vodUuid
      * @param callback
      */
@@ -93,6 +95,7 @@ public class MDDUtils {
 
     /**
      * 剧集信息包括视频路径
+     *
      * @param uuid
      * @param callback
      */
@@ -112,7 +115,7 @@ public class MDDUtils {
     }
 
     public static String getPlayUrl(String vodUuid, String uuid) {
-        return "mdd.com/"+vodUuid+"/"+uuid;
+        return "mdd.com/" + vodUuid + "/" + uuid;
     }
 
     private static String getPostData(JSONObject data, String action, String signData) {

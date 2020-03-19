@@ -35,24 +35,32 @@ import java.io.File;
 public class ExoCommon {
 
     private static ExoCommon mH = new ExoCommon();
-    private ExoCommon(){
+
+    private ExoCommon() {
     }
-    public static ExoCommon get(){
+
+    public static ExoCommon get() {
         return mH;
     }
 
-    /** Returns a {@link DataSource.Factory}. */
+    /**
+     * Returns a {@link DataSource.Factory}.
+     */
     public DataSource.Factory buildDataSourceFactory(Context context) {
         DefaultDataSourceFactory upstreamFactory = new DefaultDataSourceFactory(context, buildHttpDataSourceFactory(context));
         return buildReadOnlyCacheDataSource(upstreamFactory, getDownloadCache(context));
     }
 
-    /** Returns a {@link HttpDataSource.Factory}. */
+    /**
+     * Returns a {@link HttpDataSource.Factory}.
+     */
     public HttpDataSource.Factory buildHttpDataSourceFactory(Context context) {
         return new DefaultHttpDataSourceFactory(Util.getUserAgent(context, "ExoPlayer"));
     }
 
-    /** Returns whether extension renderers should be used. */
+    /**
+     * Returns whether extension renderers should be used.
+     */
     public boolean useExtensionRenderers() {
         return "withExtensions".equals(BuildConfig.FLAVOR);
     }

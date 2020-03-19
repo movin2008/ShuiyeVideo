@@ -10,14 +10,18 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
+
+import static com.shuiyes.video.os.WindowManagerPolicyConstants.NAV_BAR_BOTTOM;
+import static com.shuiyes.video.os.WindowManagerPolicyConstants.NAV_BAR_LEFT;
+import static com.shuiyes.video.os.WindowManagerPolicyConstants.NAV_BAR_RIGHT;
 
 /**
  * Window工具类
@@ -46,10 +50,35 @@ public class WindowUtil {
         if (!hasNavigationBar(context)) {
             return 0;
         }
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        Log.e("HAHA", "navigation_bar_height " + resources.getDimensionPixelSize(resourceId));
-        return resources.getDimensionPixelSize(resourceId);
+
+        if (WindowUtil.navigationBarPosition(context) == NAV_BAR_BOTTOM) {
+            Resources resources = context.getResources();
+            int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+            return resources.getDimensionPixelSize(resourceId);
+        }
+        return 0;
+    }
+
+    // cp from PhoneWindowManager
+//    public static int navigationBarPosition(int displayWidth, int displayHeight, int displayRotation) {
+    public static int navigationBarPosition(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+        display.getRealSize(size);
+
+        int displayWidth = size.x;
+        int displayHeight = size.y;
+        int displayRotation = display.getRotation();
+
+        if (displayWidth > displayHeight) {
+            if (displayRotation == Surface.ROTATION_270) {
+                return NAV_BAR_LEFT;
+            } else {
+                return NAV_BAR_RIGHT;
+            }
+        }
+        return NAV_BAR_BOTTOM;
     }
 
     /**

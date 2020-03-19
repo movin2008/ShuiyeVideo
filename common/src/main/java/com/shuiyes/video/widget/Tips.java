@@ -31,7 +31,7 @@ public class Tips {
     private static Toast mToast;
 
     public static void show(Context context, CharSequence text, int duration) {
-        if(mToast != null){
+        if (mToast != null) {
             mToast.cancel();
             mToast = null;
         }

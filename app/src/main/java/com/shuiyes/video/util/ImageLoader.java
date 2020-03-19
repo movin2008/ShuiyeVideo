@@ -24,7 +24,7 @@ public class ImageLoader {
     }
 
     public Bitmap getBitmap(final String imageUrl, final Handler handler) {
-        if(TextUtils.isEmpty(imageUrl)){
+        if (TextUtils.isEmpty(imageUrl)) {
             return null;
         }
 
@@ -86,11 +86,11 @@ public class ImageLoader {
         try {
             URL url = new URL(urlStr);
             connection = (HttpURLConnection) url.openConnection();
-             connection.setConnectTimeout(6666);
-             connection.setReadTimeout(6666);
+            connection.setConnectTimeout(6666);
+            connection.setReadTimeout(6666);
             connection.setRequestMethod("GET");
             connection.connect();
-            if(connection.getResponseCode() == 200){
+            if (connection.getResponseCode() == 200) {
                 return connection.getInputStream();
             }
         } catch (Exception e) {
@@ -108,7 +108,7 @@ public class ImageLoader {
                 // 小图片扩放到 320*240
                 scaleWidth = 320;
                 scaleHeight = 240;
-            }else{
+            } else {
                 // 大图片缩放到 400x300
                 scaleWidth = 400;
                 scaleHeight = 300;
@@ -118,7 +118,7 @@ public class ImageLoader {
                 // 小图片扩放到 240*320
                 scaleWidth = 240;
                 scaleHeight = 320;
-            }else{
+            } else {
                 // 大图片缩放到 300x400
                 scaleWidth = 300;
                 scaleHeight = 400;

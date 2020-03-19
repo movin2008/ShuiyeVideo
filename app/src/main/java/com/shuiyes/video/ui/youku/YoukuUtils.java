@@ -20,13 +20,13 @@ public class YoukuUtils {
     private final static String TAG = "YoukuUtils";
 
     /**
-     # Found in http://g.alicdn.com/player/beta-ykplayer/0.6.2/youku-player.min.js
-     # grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
+     * # Found in http://g.alicdn.com/player/beta-ykplayer/0.6.2/youku-player.min.js
+     * # grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
      */
     public static String CCODE = "0511";//0511 0517 0521 0590 0519
     public static String VERSION = "0.5.85";
 
-    public static void updateCCodeIfNeed(Context context){
+    public static void updateCCodeIfNeed(Context context) {
         YoukuUtils.CCODE = PreferenceManager.getDefaultSharedPreferences(context).getString("CCODE", YoukuUtils.CCODE);
     }
 
@@ -77,15 +77,15 @@ public class YoukuUtils {
             conn.connect();
 
             String ret = conn.getHeaderField("ETag");
-            if(ret != null){
+            if (ret != null) {
                 ret = ret.substring(1, ret.length() - 1);
-            }else{
+            } else {
                 Map<String, List<String>> headers = conn.getHeaderFields();
                 Set<String> keys = headers.keySet();
                 Iterator<String> iterator = keys.iterator();
                 while (iterator.hasNext()) {
                     String key = iterator.next();
-                    Log.e(TAG, key+"="+headers.get(key).get(0));
+                    Log.e(TAG, key + "=" + headers.get(key).get(0));
 
                     if ("Set-Cookie".equals(key)) {
                         List<String> l = headers.get(key);
@@ -103,7 +103,7 @@ public class YoukuUtils {
                 }
             }
             return ret;
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             try {
                 Thread.sleep(999);
@@ -114,7 +114,7 @@ public class YoukuUtils {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(conn != null){
+            if (conn != null) {
                 conn.disconnect();
             }
         }
@@ -122,20 +122,21 @@ public class YoukuUtils {
     }
 
     public static String CToken;
-    public static String fetchCToken(){
+
+    public static String fetchCToken() {
         return HttpUtils.get("https://youku.com/", true);
     }
 
     public static String search(String keyword, String cookie) throws Exception {
-        return HttpUtils.get("https://so.youku.com/search_video/q_" + URLEncoder.encode(keyword,"utf-8"), "Cookie: "+cookie, false);
+        return HttpUtils.get("https://so.youku.com/search_video/q_" + URLEncoder.encode(keyword, "utf-8"), "Cookie: " + cookie, false);
     }
 
     public static String listAlbums(String vid) throws Exception {
-        return HttpUtils.get("https://v.youku.com/page/playlist?videoEncodeId="+URLEncoder.encode(vid,"utf-8")+"&page=1&videoCategoryId=96&componentid=38011&isSimple=false");
+        return HttpUtils.get("https://v.youku.com/page/playlist?videoEncodeId=" + URLEncoder.encode(vid, "utf-8") + "&page=1&videoCategoryId=96&componentid=38011&isSimple=false");
     }
 
-    public static String getPlayUrlByVid(String vid){
-        return "https://v.youku.com/v_show/id_"+vid+".html";
+    public static String getPlayUrlByVid(String vid) {
+        return "https://v.youku.com/v_show/id_" + vid + ".html";
     }
 
     public static String getPlayVid(String url) {

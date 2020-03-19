@@ -85,14 +85,14 @@ public class YoukuSoActivity extends BaseSearchActivity {
                     return false;
                 }
 
-                if(TextUtils.isEmpty(YoukuUtils.CToken)){
+                if (TextUtils.isEmpty(YoukuUtils.CToken)) {
                     String ctoken = YoukuUtils.fetchCToken();
                     if (TextUtils.isEmpty(ctoken)) {
                         notice("Fetch ctoken error, please try again.");
                     }
                     Log.e(TAG, ctoken);
 
-                    if(ctoken.startsWith("Exception: ")){
+                    if (ctoken.startsWith("Exception: ")) {
                         notice(ctoken);
                         return false;
                     }
@@ -111,7 +111,7 @@ public class YoukuSoActivity extends BaseSearchActivity {
                 }
 
 
-                if(html.startsWith("Exception: ")){
+                if (html.startsWith("Exception: ")) {
                     notice(html);
                     return false;
                 }

@@ -20,7 +20,7 @@ public class YinyangTVPlayActivity extends AppCompatActivity {
     protected boolean isHLS;
     protected YinYangPlayer mYinYangPlayer;
 
-    protected String[] getIntentStringExtras(){
+    protected String[] getIntentStringExtras() {
         String url = getIntent().getStringExtra("url");
         String title = getIntent().getStringExtra("title");
         return new String[]{url, title};
@@ -42,7 +42,7 @@ public class YinyangTVPlayActivity extends AppCompatActivity {
         mYinYangPlayer.alwaysFullScreen().setUrl(url).setTitle(title).setVideoController(initVideoController()).start();
     }
 
-    protected StandardVideoController initVideoController(){
+    protected StandardVideoController initVideoController() {
         StandardVideoController controller = new StandardVideoController(this);
         controller.setLive(isHLS);
         return controller;

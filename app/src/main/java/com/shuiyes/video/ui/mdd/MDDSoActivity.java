@@ -111,7 +111,8 @@ public class MDDSoActivity extends BaseSearchActivity implements Callback {
                 String albumTitle = vod.getString("name");
                 String albumSummary = vod.getString("introduction");
                 String albumImg = vod.getString("coverImage");
-                String albumUrl = vod.getString("uuid");;
+                String albumUrl = vod.getString("uuid");
+                ;
                 MDDUtils.listVodSections(albumUrl, MDDSoActivity.this);
 
                 Album album = new Album(j, albumTitle, albumSummary, albumImg, albumUrl, null);
@@ -137,7 +138,7 @@ public class MDDSoActivity extends BaseSearchActivity implements Callback {
             Album album = mAlbums.get(i);
             if (vodUuid.equals(album.getAlbumUrl())) {
                 album.setListVideos(listVideos);
-                Log.e(TAG, "listVodResult setListVideos index=" + i+" vodUuid=" + vodUuid);
+                Log.e(TAG, "listVodResult setListVideos index=" + i + " vodUuid=" + vodUuid);
                 mHandler.sendEmptyMessage(Constants.MSG_LIST_ALBUM);
                 break;
             }

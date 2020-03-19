@@ -36,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Constants.MSG_SHOW_TIPS:
-                    Tips.show(mContext, (String)msg.obj);
+                    Tips.show(mContext, (String) msg.obj);
                     break;
                 case Constants.MSG_CHECK_PERMISSION:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -56,7 +56,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                     handleOtherMessage(msg);
                     break;
             }
-        };
+        }
+
+        ;
     };
 
     @Override
@@ -71,7 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         Tips.show(mContext, permissions);
                         finish();
                         break;
-                    }else{
+                    } else {
                         requestPermissions(new String[]{permission}, 100);
                     }
                 }
@@ -80,7 +82,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    protected void handleOtherMessage(Message msg){}
+    protected void handleOtherMessage(Message msg) {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +116,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if(event.getAction() == KeyEvent.ACTION_UP){
+        if (event.getAction() == KeyEvent.ACTION_UP) {
             return super.dispatchKeyEvent(event);
         }
 

@@ -76,7 +76,7 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                 }
 
                 String html = IQiyiUtils.search(keyword);
-                if(!checkHtmlValid(html)){
+                if (!checkHtmlValid(html)) {
                     return false;
                 }
 
@@ -161,7 +161,7 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                     if (albumDocInfo.has("videoinfos")) {
                         JSONArray videoinfos = albumDocInfo.getJSONArray("videoinfos");
                         if (videoinfos.length() > 0) {
-                            JSONObject videoinfo0 = (JSONObject)videoinfos.get(0);
+                            JSONObject videoinfo0 = (JSONObject) videoinfos.get(0);
                             if (TextUtils.isEmpty(albumTitle)) {
                                 albumTitle = videoinfo0.getString("itemTitle");
                             }
@@ -172,7 +172,7 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                                 albumUrl = videoinfo0.getString("itemLink");
                             }
 
-                            if(videoinfo0.has("is_vip") && videoinfo0.getBoolean("is_vip")){
+                            if (videoinfo0.has("is_vip") && videoinfo0.getBoolean("is_vip")) {
                                 albumTitle += "(VIP)";
                             }
                             listVideos(listVideos, videoinfos, albumTitle);
@@ -197,7 +197,7 @@ public class IQIyiSoActivity extends BaseSearchActivity {
                     }
 
                     if (TextUtils.isEmpty(albumUrl)) {
-                        Log.e(TAG, flag + " albumUrl error."+albumDocInfo);
+                        Log.e(TAG, flag + " albumUrl error." + albumDocInfo);
                         continue;
                     }
 
@@ -242,7 +242,7 @@ public class IQIyiSoActivity extends BaseSearchActivity {
             String name = obj.getString("itemTitle");
 
             String url = "https://www.iqiyi.com/v_19a1b2c3d4.html";
-            if(obj.has("itemLink")){
+            if (obj.has("itemLink")) {
                 url = obj.getString("itemLink");
             }
 
@@ -252,20 +252,20 @@ public class IQIyiSoActivity extends BaseSearchActivity {
 
             String text = name;
             if (name.contains(albumTitle)) {
-                if(name.equals(albumTitle)){
+                if (name.equals(albumTitle)) {
 
-                }else if(name.equals(albumTitle+"第" + (j + 1) + "集")){
+                } else if (name.equals(albumTitle + "第" + (j + 1) + "集")) {
                     text = String.valueOf(j + 1);
-                }else{
+                } else {
                     text = name.replaceAll(albumTitle, "");
                 }
 
-                if(text.startsWith("_")){
+                if (text.startsWith("_")) {
                     text = text.substring(1);
                 }
             }
 
-            if(obj.has("is_vip") && obj.getBoolean("is_vip")){
+            if (obj.has("is_vip") && obj.getBoolean("is_vip")) {
                 text += "(VIP)";
             }
 

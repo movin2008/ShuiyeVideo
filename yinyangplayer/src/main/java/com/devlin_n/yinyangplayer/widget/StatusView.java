@@ -79,8 +79,7 @@ public class StatusView extends LinearLayout {
             case MotionEvent.ACTION_MOVE:
                 float absDeltaX = Math.abs(ev.getX() - downX);
                 float absDeltaY = Math.abs(ev.getY() - downY);
-                if (absDeltaX > ViewConfiguration.get(getContext()).getScaledTouchSlop() ||
-                        absDeltaY > ViewConfiguration.get(getContext()).getScaledTouchSlop()) {
+                if (absDeltaX > ViewConfiguration.get(getContext()).getScaledTouchSlop() || absDeltaY > ViewConfiguration.get(getContext()).getScaledTouchSlop()) {
                     getParent().requestDisallowInterceptTouchEvent(false);
                 }
             case MotionEvent.ACTION_UP:

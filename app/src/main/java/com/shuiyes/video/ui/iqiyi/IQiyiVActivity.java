@@ -170,7 +170,7 @@ public class IQiyiVActivity extends BasePlayActivity {
                         if (showChannelId == IQiyiUtils.Channel.dianshiju) {
                             title = obj.getString("vn");
                             String subt = obj.getString("subt");
-                            if(!TextUtils.isEmpty(subt)){
+                            if (!TextUtils.isEmpty(subt)) {
                                 title += " - " + subt;
                             }
                         } else if (showChannelId == IQiyiUtils.Channel.zongyi) {
@@ -186,11 +186,10 @@ public class IQiyiVActivity extends BasePlayActivity {
 
                     fetchAlbums(albumId, albumCount, sourceid, ty, showChannelId);
 
-                    if(isVip){
+                    if (isVip) {
                         fault("VIP视频只支持6分钟试看", true);
                         return;
                     }
-
 
                     mHandler.sendEmptyMessage(MSG_FETCH_VIDEO);
                     html = IQiyiUtils.getVMS(tvid, vid);
@@ -234,7 +233,7 @@ public class IQiyiVActivity extends BasePlayActivity {
                         IQiyiVideo.VideoType type = IQiyiVideo.formateVideoType(vd);
                         if (type != null) {
                             mUrlList.add(new IQiyiVideo(type, m3u8Url));
-                        }else{
+                        } else {
                             Log.e(TAG, "Unkown vd: " + vd);
                         }
                     }
@@ -271,6 +270,7 @@ public class IQiyiVActivity extends BasePlayActivity {
     }
 
     private int albumCount;
+
     private void fetchAlbums(final String albumId, final int albumCount, final int sourceid, final int ty, final int cid) {
         if (!mVideoList.isEmpty() && this.albumCount == albumCount) return;
         this.albumCount = albumCount;

@@ -33,7 +33,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
         return R.layout.activity_tvlist;
     }
 
-    protected void addListVideo(String text){
+    protected void addListVideo(String text) {
         if (text.startsWith("tvbus://")) {
             mVideos.add(new ListVideo(text, text, text));
         } else if (text.contains(",")) {
@@ -63,7 +63,7 @@ public class TVListActivity extends BaseTVListActivity implements View.OnClickLi
 
                             addListVideo(text);
                         }
-                    }else if (F.startsWith("tvlive")) {
+                    } else if (F.startsWith("tvlive")) {
                         String text;
                         while ((text = br.readLine()) != null) {
                             if (text.startsWith("##")) {

@@ -93,6 +93,7 @@ public abstract class BaseSearchActivity extends BaseActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
         // 焦点给子view后无效
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

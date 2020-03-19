@@ -75,7 +75,6 @@ public class MainActivity extends BaseActivity {
 //        }).start();
 
         //		Tips.show(this, Build.VERSION.SDK_INT+"/"+Build.MANUFACTURER, 1);
-
     }
 
     String mVideoUrl = null;

@@ -83,7 +83,7 @@ public class PlayUtils {
         WebActivity.launch(context, url);
     }
 
-    public static void playLive(Context context, String url, String title, boolean isHLS, boolean isFM){
+    public static void playLive(Context context, String url, String title, boolean isHLS, boolean isFM) {
         if (url.startsWith("tvbus://")) {
             try {
                 context.createPackageContext("io.binstream.github.demo", 0);
@@ -109,7 +109,7 @@ public class PlayUtils {
                 dialog.show();
             }
         } else {
-            if(isFM){
+            if (isFM) {
                 YinyangFM.start(context, url, title);
                 return;
             }

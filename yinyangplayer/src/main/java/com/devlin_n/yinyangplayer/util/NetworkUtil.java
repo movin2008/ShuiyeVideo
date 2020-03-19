@@ -24,14 +24,12 @@ public class NetworkUtil {
     public static final int NETWORK_MOBILE = 4;
     public static final int NETWORK_UNKNOWN = -1;
 
-
     /**
      * 判断当前网络类型-1为未知网络0为没有网络连接1网络断开或关闭2为以太网3为WiFi4为2G5为3G6为4G
      */
     public static int getNetworkType(Context context) {
         //改为context.getApplicationContext()，防止在Android 6.0上发生内存泄漏
-        ConnectivityManager connectMgr = (ConnectivityManager) context.getApplicationContext()
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo networkInfo = connectMgr.getActiveNetworkInfo();
         if (networkInfo == null) {
@@ -76,8 +74,8 @@ public class NetworkUtil {
         return NETWORK_UNKNOWN;
     }
 
-    public static void get(final String url){
-        if(url.startsWith("rtmp") || url.startsWith("rtsp") ){
+    public static void get(final String url) {
+        if (url.startsWith("rtmp") || url.startsWith("rtsp")) {
             return;
         }
 

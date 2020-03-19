@@ -7,7 +7,7 @@ public class ListVideo {
     private String url;
 
     public ListVideo(int id, String title, String url) {
-        this(id+"", title, url);
+        this(id + "", title, url);
     }
 
     public ListVideo(String text, String title, String url) {

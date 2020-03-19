@@ -15,7 +15,6 @@ import com.shuiyes.video.util.Utils;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-
 public class CBChotSoActivity extends BaseSearchActivity {
 
     private static final boolean DEBUG = false;// true false

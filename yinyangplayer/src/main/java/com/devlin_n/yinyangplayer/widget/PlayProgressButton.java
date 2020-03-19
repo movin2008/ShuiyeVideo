@@ -21,7 +21,6 @@ import com.shuiyes.video.util.WindowUtil;
 
 public class PlayProgressButton extends FrameLayout {
 
-
     public static final int STATE_PLAYING = 1;
     public static final int STATE_PAUSE = 2;
     public static final int STATE_LOADING = 3;
@@ -30,7 +29,6 @@ public class PlayProgressButton extends FrameLayout {
     private boolean mShowing;
     private ImageView playButton;
     private ProgressBar progressBar;
-
 
     public PlayProgressButton(@NonNull Context context) {
         this(context, null);
@@ -44,7 +42,6 @@ public class PlayProgressButton extends FrameLayout {
         super(context, attrs, defStyleAttr);
         init();
     }
-
 
     private void init() {
         LayoutParams params = new LayoutParams(WindowUtil.dp2px(getContext(), 50), WindowUtil.dp2px(getContext(), 50));
@@ -62,7 +59,6 @@ public class PlayProgressButton extends FrameLayout {
         addView(progressBar, params);
 
     }
-
 
     public void setState(int state) {
         switch (state) {

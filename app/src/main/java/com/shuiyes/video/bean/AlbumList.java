@@ -1,6 +1,5 @@
 package com.shuiyes.video.bean;
 
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class AlbumList extends CopyOnWriteArrayList<Album> {

@@ -40,7 +40,7 @@ class VipSource {
     private static final String URL_618G = "https://607p.com/?url=";
     private static final String EXT = " VIP视频解析";
 
-    enum VipRouter{
+    enum VipRouter {
 
         V8090g(VIP_8090, VIP_8090 + EXT, URL_YLYBZ_8090, API_YLYBZ_8090, REFER_YLYBZ_8090),
         Vwocao(VIP_WOCAO, VIP_WOCAO + EXT, URL_YLYBZ_WOCAO, API_YLYBZ_WOCAO, REFER_YLYBZ_WOCAO),
@@ -52,7 +52,7 @@ class VipSource {
 
         String type, text, url, api, refer;
 
-        VipRouter(String type,  String text, String url, String api, String refer) {
+        VipRouter(String type, String text, String url, String api, String refer) {
             this.type = type;
             this.text = text;
             this.url = url;
@@ -63,7 +63,7 @@ class VipSource {
     }
 
     static VipRouter parse(String type) throws Exception {
-        switch (type){
+        switch (type) {
             case VIP_ADMIN:
                 return VipRouter.Vadmin;
             case VIP_WMXZ:
@@ -95,11 +95,10 @@ class VipSource {
     }
 
     /**
-     *
      * @return
      */
     @Deprecated
-    private static String adminApi2(){
+    private static String adminApi2() {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"));
         long day = calendar.get(Calendar.DAY_OF_YEAR) - 1;
         long hour = calendar.get(Calendar.HOUR_OF_DAY);

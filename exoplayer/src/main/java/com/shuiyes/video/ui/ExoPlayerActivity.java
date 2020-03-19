@@ -580,16 +580,16 @@ public class ExoPlayerActivity extends Activity
                 playerView.getOverlayFrameLayout().addView(adUiViewGroup);
             }
             AdsMediaSource.MediaSourceFactory adMediaSourceFactory = new AdsMediaSource.MediaSourceFactory() {
-                        @Override
-                        public MediaSource createMediaSource(Uri uri) {
-                            return ExoPlayerActivity.this.buildMediaSource(uri);
-                        }
+                @Override
+                public MediaSource createMediaSource(Uri uri) {
+                    return ExoPlayerActivity.this.buildMediaSource(uri);
+                }
 
-                        @Override
-                        public int[] getSupportedTypes() {
-                            return new int[]{C.TYPE_DASH, C.TYPE_SS, C.TYPE_HLS, C.TYPE_OTHER};
-                        }
-                    };
+                @Override
+                public int[] getSupportedTypes() {
+                    return new int[]{C.TYPE_DASH, C.TYPE_SS, C.TYPE_HLS, C.TYPE_OTHER};
+                }
+            };
             return new AdsMediaSource(mediaSource, adMediaSourceFactory, adsLoader, adUiViewGroup);
         } catch (ClassNotFoundException e) {
             // IMA extension not loaded.

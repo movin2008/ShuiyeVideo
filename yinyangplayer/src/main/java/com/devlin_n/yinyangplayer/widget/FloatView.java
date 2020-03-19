@@ -17,8 +17,7 @@ import com.shuiyes.video.util.WindowUtil;
  */
 
 @SuppressLint("ViewConstructor")
-public class FloatView extends FrameLayout{
-
+public class FloatView extends FrameLayout {
 
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mParams;
@@ -31,7 +30,6 @@ public class FloatView extends FrameLayout{
         init();
     }
 
-
     private void init() {
         setBackgroundResource(R.drawable.shape_float_window_background);
         int padding = WindowUtil.dp2px(getContext(), 1);
@@ -39,7 +37,6 @@ public class FloatView extends FrameLayout{
         magicVideoView = new YinYangPlayer(getContext());
         addView(magicVideoView);
     }
-
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {

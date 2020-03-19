@@ -17,12 +17,12 @@ import com.shuiyes.video.widget.Tips;
 
 import java.util.Calendar;
 
-
 public class TVPlayActivity extends BaseActivity {
 
     protected Context mContext;
     protected VideoView mVideoView;
     protected TextView mTimeView, mStatusView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,12 +59,12 @@ public class TVPlayActivity extends BaseActivity {
                 Log.e(TAG, "======== " + err);
                 Tips.show(mContext, err, 0);
 
-                if(what == 100){
+                if (what == 100) {
                     // 重新播放
                     mVideoView.stopPlayback();
                     startPlayback(mUrl);
                     return true;
-                }else{
+                } else {
                     mBuffering = false;
                     return false;
                 }
@@ -97,8 +97,8 @@ public class TVPlayActivity extends BaseActivity {
         mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, 100);
     }
 
-    protected void startPlayback(String url){
-        if(!url.startsWith("tvbus")){
+    protected void startPlayback(String url) {
+        if (!url.startsWith("tvbus")) {
             try {
                 mVideoView.setVideoURI(Uri.parse(url));
                 mHandler.removeCallbacks(mRefreshRxTask);
@@ -131,7 +131,7 @@ public class TVPlayActivity extends BaseActivity {
 
     protected boolean mBuffering = true;
 
-    protected boolean onMediaInfo(int what, int extra){
+    protected boolean onMediaInfo(int what, int extra) {
         switch (what) {
             case MediaPlayer.MEDIA_INFO_BUFFERING_START:
                 Log.e(TAG, "======== MEDIA_INFO_BUFFERING_START");
@@ -158,7 +158,7 @@ public class TVPlayActivity extends BaseActivity {
     Runnable mRefreshRxTask = new Runnable() {
         @Override
         public void run() {
-            if(mBuffering){
+            if (mBuffering) {
                 long rx = TrafficStats.getTotalRxBytes();
                 double time = System.currentTimeMillis();
                 double timeDiff = (time - mLastTime) / 1000;
@@ -174,7 +174,7 @@ public class TVPlayActivity extends BaseActivity {
                 mTotalRx = rx;
                 mLastTime = time;
                 mStatusView.setText(rxStr + "/s");
-            }else{
+            } else {
                 mTotalRx = 0;
                 mStatusView.setText("");
             }
