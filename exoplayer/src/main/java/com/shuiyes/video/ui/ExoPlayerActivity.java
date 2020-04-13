@@ -21,8 +21,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
@@ -271,8 +269,7 @@ public class ExoPlayerActivity extends Activity
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (grantResults.length == 0) {
             // Empty results are triggered if a permission is requested while another request was already
             // pending and can be safely ignored in this case.
@@ -466,7 +463,7 @@ public class ExoPlayerActivity extends Activity
     }
 
     @SuppressWarnings("unchecked")
-    private MediaSource buildMediaSource(Uri uri, @Nullable String overrideExtension) {
+    private MediaSource buildMediaSource(Uri uri, String overrideExtension) {
         @ContentType int type = Util.inferContentType(uri, overrideExtension);
         switch (type) {
             case C.TYPE_DASH:
@@ -563,8 +560,7 @@ public class ExoPlayerActivity extends Activity
     /**
      * Returns an ads media source, reusing the ads loader if one exists.
      */
-    private @Nullable
-    MediaSource createAdsMediaSource(MediaSource mediaSource, Uri adTagUri) {
+    private MediaSource createAdsMediaSource(MediaSource mediaSource, Uri adTagUri) {
         // Load the extension source using reflection so the demo app doesn't have to depend on it.
         // The ads loader is reused for multiple playbacks, so that ad playback can resume.
         try {

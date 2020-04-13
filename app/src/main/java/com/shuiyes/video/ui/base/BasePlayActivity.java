@@ -382,6 +382,12 @@ public abstract class BasePlayActivity extends BaseActivity implements View.OnCl
                             vipUrl = "https:" + vipUrl.substring(vipUrl.indexOf("//"));
                         }
                         Log.e(TAG, "VipUrl " + vipUrl);
+                        if (vipUrl.contains("VideoPlay.php")) {
+                            // 规避 refer 验证
+                            vipUrl = "http://shuiyes.com/misc/api/player.m3u8.php?url=" + new String(Base64.encode(vipUrl.getBytes("UTF-8"), Base64.NO_WRAP), "UTF-8");
+                            Log.e(TAG, "VipUrl " + vipUrl);
+                        }
+
                         if (vipUrl.contains(".m3u8") || vipUrl.contains(".mp4")) {
                             mHandler.sendMessage(mHandler.obtainMessage(MSG_CACHE_VIP_URL, vipUrl));
                         } else {
