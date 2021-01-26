@@ -146,6 +146,12 @@
             <Button
                 style="@style/Button"
                 android:layout_width="wrap_content"
+                android:onClick="soplus"
+                android:text="soplus" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="wrap_content"
                 android:onClick="mdd"
                 android:text="埋堆堆港剧" />
 

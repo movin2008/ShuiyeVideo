@@ -15,8 +15,10 @@ import com.shuiyes.video.ui.iqiyi.IQIyiSoActivity;
 import com.shuiyes.video.ui.letv.LetvSoActivity;
 import com.shuiyes.video.ui.mdd.MDDSoActivity;
 import com.shuiyes.video.ui.qq.QQSoActivity;
+import com.shuiyes.video.ui.tvlive.SopPlusActivity;
 import com.shuiyes.video.ui.tvlive.TVListActivity;
 import com.shuiyes.video.ui.tvlive.TVSourceActivity;
+import com.shuiyes.video.util.PlayUtils;
 import com.shuiyes.video.widget.Tips;
 import com.shuiyes.video.ui.youku.YoukuSoActivity;
 
@@ -145,6 +147,12 @@ public class MainActivity extends BaseActivity {
     // 收音机
     public void fmlist(View view) {
         startActivity(new Intent(this, TVSourceActivity.class).putExtra(TVSourceActivity.EXTRA, "fm/"));
+    }
+
+    // soplus
+    public void soplus(View view) {
+//        startActivity(new Intent(this, SopPlusActivity.class));
+        PlayUtils.playLive(this, "tvbus://1R8Rw3uqyfdkci7b9VWm7N17ynqv259h1Bo7i2uyi9bmq513uX", "CCTV1", true, false);
     }
 
     public void somgtv(View view) {

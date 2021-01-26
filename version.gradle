@@ -1,4 +1,4 @@
-ext.vername = "local.properties";
+ext.vername = "gradle.properties";
 ext.verprop = "ver.code";
 
 def getAndAddVersionCode() {
@@ -12,7 +12,7 @@ def getAndAddVersionCode() {
             println("> Task :app version code is " + code)
 
             def taskNames = gradle.startParameter.taskNames
-            if ((':app:assembleRelease' in taskNames) || (':app:assembleDebug' in taskNames)) {
+            if ((':app:assembleRelease' in taskNames)/* || (':app:assembleDebug' in taskNames)*/) {
                 props[verprop] = (++code).toString()
                 println("> Task :app version code new " + code)
                 props.store(propsFile.newWriter(), null)
@@ -34,7 +34,7 @@ def time2VersionName() {
 }
 
 def time2VersionCode() {
-    return new Date().time.intValue() - 1000000000
+    return new Date().time.intValue()
 }
 
 android {

@@ -10,9 +10,7 @@ CRI 南海之声,http://ls.qingting.fm/live/62624.m3u8
 CRI 闽南之音,http://ls.qingting.fm/live/1002.m3u8
 CRI Hit FM FM88.7,http://ls.qingting.fm/live/1007.m3u8
 CRI 轻松调频 FM91.5,http://ls.qingting.fm/live/1006.m3u8
-CRI NEWS Plus AM846,http://ls.qingting.fm/live/4584.m3u8
-CRI NEWS Plus AM1008,http://ls.qingting.fm/live/4584.m3u8
-CRI Sydney,http://ls.qingting.fm/live/4584.m3u8
+CRI NEWS Plus,http://ls.qingting.fm/live/4584.m3u8
 CNR 经济之声,http://ls.qingting.fm/live/387.m3u8
 CNR 中国之声,http://ls.qingting.fm/live/386.m3u8
 CNR 音乐之声,http://ls.qingting.fm/live/388.m3u8
@@ -26,7 +24,6 @@ CNR 文艺之声,http://ls.qingting.fm/live/395.m3u8
 CNR 老年之声,http://ls.qingting.fm/live/396.m3u8
 CNR 中国乡村之声,http://ls.qingting.fm/live/5039.m3u8
 CNR 藏语广播,http://ls.qingting.fm/live/4988.m3u8
-CNR 维语广播,http://ls.qingting.fm/live/4988.m3u8
 CNR 娱乐广播,http://ls.qingting.fm/live/398.m3u8
 CNR 中国交通广播,http://ls.qingting.fm/live/4985.m3u8
 马鞍山新闻广播 FM105.1,http://ls.qingting.fm/live/79135.m3u8
@@ -182,7 +179,6 @@ CNR 中国交通广播,http://ls.qingting.fm/live/4985.m3u8
 郑州新闻广播 FM98.6,http://ls.qingting.fm/live/1220.m3u8
 郑州车道931,http://ls.qingting.fm/live/1221.m3u8
 郑州私家车 FM91.8,http://ls.qingting.fm/live/1222.m3u8
-郑州私家车 FM91.8,http://ls.qingting.fm/live/1222.m3u8
 郑州汽车广播 FM91.2,http://ls.qingting.fm/live/1211.m3u8
 郑州活力944,http://ls.qingting.fm/live/4921.m3u8
 郑州经典广播 FM107.9,http://ls.qingting.fm/live/1223.m3u8
@@ -199,15 +195,11 @@ CNR 中国交通广播,http://ls.qingting.fm/live/4985.m3u8
 楚天交通广播 FM92.7,http://ls.qingting.fm/live/1291.m3u8
 楚天音乐广播 FM105.8,http://ls.qingting.fm/live/1289.m3u8
 襄阳新闻广播 FM104,http://ls.qingting.fm/live/1307.m3u8
-襄阳交通广播 FM89.0,http://ls.qingting.fm/live/1307.m3u8
 襄阳交通广播 FM89.0,http://ls.qingting.fm/live/1308.m3u8
-襄阳汽车广播 FM105.3,http://ls.qingting.fm/live/1308.m3u8
-襄阳汽车广播 FM105.3,http://ls.qingting.fm/live/1309.m3u8
 襄阳经济广播 FM90.9,http://ls.qingting.fm/live/1309.m3u8
 襄阳音乐广播,http://ls.qingting.fm/live/5057.m3u8
 荆门交通音乐频率 FM99.3,http://ls.qingting.fm/live/60808.m3u8
 长沙城市之声 FM101.7,http://ls.qingting.fm/live/4237.m3u8
-长沙新闻广播 FM105.0,http://ls.qingting.fm/live/4877.m3u8
 长沙新闻广播 FM105.0,http://ls.qingting.fm/live/4877.m3u8
 金鹰955电台,http://ls.qingting.fm/live/4937.m3u8
 衡阳好朋友 FM105.4,http://ls.qingting.fm/live/1319363.m3u8
@@ -257,8 +249,7 @@ MY FM 南京 FM103.5,http://ls.qingting.fm/live/2769.m3u8
 赣州电台交通广播 FM99.2,http://ls.qingting.fm/live/4942.m3u8
 赣江之声 FM92.3,http://ls.qingting.fm/live/23889.m3u8
 九江新闻综合广播 FM91.6,http://ls.qingting.fm/live/4474799.m3u8
-九江交通广播 FM88.4 FM88.9,http://ls.qingting.fm/live/2785094.m3u8
-九江柴桑之声910,http://ls.qingting.fm/live/2785094.m3u8
+九江交通广播 FM88.4,http://ls.qingting.fm/live/2785094.m3u8
 辽宁综合广播 FM102.9,http://ls.qingting.fm/live/23793.m3u8
 辽宁经济广播 FM88.8,http://ls.qingting.fm/live/23797.m3u8
 辽宁交通广播 FM97.5,http://ls.qingting.fm/live/23801.m3u8
@@ -390,7 +381,6 @@ Love Radio FM103.7,http://ls.qingting.fm/live/273.m3u8
 新疆哈萨克语广播,http://ls.qingting.fm/live/1908.m3u8
 新疆蒙古语广播,http://ls.qingting.fm/live/1903.m3u8
 新疆怀旧金曲广播 FM105.3,http://ls.qingting.fm/live/78067.m3u8
-MY FM 乌鲁木齐 FM103.9,http://ls.qingting.fm/live/4029.m3u8
 云南新闻广播 FM105.8,http://ls.qingting.fm/live/1926.m3u8
 云南经济广播 私家车 FM88.7,http://ls.qingting.fm/live/1927.m3u8
 云南交通广播 FM91.8,http://ls.qingting.fm/live/1928.m3u8
@@ -450,3 +440,8 @@ MY FM 乌鲁木齐 FM103.9,http://ls.qingting.fm/live/4029.m3u8
 贵州电台故事广播 FM90.0,http://ls.qingting.fm/live/23931.m3u8
 河北保定欢乐调频884,http://ls.qingting.fm/live/3865599.m3u8
 河北邢台音乐广播 FM96.8,http://ls.qingting.fm/live/4926000.m3u8
+上海戏剧曲艺 AM1197,http://ls.qingting.fm/live/269.m3u8
+巴渝之声 FM104.5,http://ls.qingting.fm/live/3545693.m3u8
+辽阳交通文艺广播 FM107.8,http://ls.qingting.fm/live/2977806.m3u8
+宁夏新闻广播 FM106.1,http://ls.qingting.fm/live/1839.m3u8
+公安县广播电台 FM102.6,http://ls.qingting.fm/live/5063.m3u8

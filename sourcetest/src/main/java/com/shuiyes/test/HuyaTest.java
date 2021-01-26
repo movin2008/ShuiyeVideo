@@ -29,7 +29,7 @@ public class HuyaTest {
 	}
 
 	static void a() throws Exception {
-		String filename = "test.list";
+		String filename = "sourcetest/src/main/assets/test.list";
 		FileInputStream in = new FileInputStream(filename);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 

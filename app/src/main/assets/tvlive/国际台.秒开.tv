@@ -57,8 +57,20 @@
 韩国 Ⅰ EBS 少儿频道,http://ebsonairios.ebs.co.kr/ebsutablet500k/tablet500k/playlist.m3u8
 韩国 Ⅰ EBS 第一频道,http://ebsonairios.ebs.co.kr/groundwavetablet500k/tablet500k/playlist.m3u8
 
+## https://dmisvthvll.cdn.mangomolo.com/events/smil:events.smil/playerlist.m3u8
+## #EXTM3U
+## #EXT-X-VERSION:3
+## #EXT-X-STREAM-INF:BANDWIDTH=850000,RESOLUTION=320x180
+## chunklist_b850000.m3u8
+## #EXT-X-STREAM-INF:BANDWIDTH=850000,RESOLUTION=640x360
+## chunklist_b850000.m3u8
+## #EXT-X-STREAM-INF:BANDWIDTH=1500000,RESOLUTION=1280x720
+## chunklist_b1500000.m3u8
+## #EXT-X-STREAM-INF:BANDWIDTH=1600000,RESOLUTION=1920x1080
+## chunklist_b1600000.m3u8
 阿联酋 Ⅰ 迪拜赛马,https://dmisvthvll.cdn.mangomolo.com/events/smil:events.smil/playerlist.m3u8
 阿联酋 Ⅰ 迪拜赛马,https://dmisvthvll.cdn.mangomolo.com/events/smil:events.smil/chunklist_b1600000.m3u8
+阿联酋 Ⅰ 迪拜赛马,https://dmieigthvll.cdn.mangomolo.com/samadubai/smil:samadubai.stream.smil/playerlist.m3u8
 阿联酋 Ⅰ 迪拜赛马,https://dmieigthvll.cdn.mangomolo.com/samadubai/smil:samadubai.stream.smil/chunklist_b1600000.m3u8
 
 美国 Ⅰ 彭博财经,https://liveproduseast.akamaized.net/us/Channel-USTV-AWS-virginia-1/Source-USTV-1000-1_live.m3u8
@@ -67,7 +79,21 @@
 西班牙 Ⅰ 皇马足球,https://rmtv24hweblive-lh.akamaihd.net/i/rmtv24hwebes_1@300661/index_3_av-p.m3u8
 瑞士 Ⅰ 奥林匹克,http://ott-live.olympicchannel.com/out/u/OC1_2.m3u8
 
-新加坡 Ⅰ 亚洲新闻,https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_4.m3u8
+新加坡 Ⅰ 亚洲新闻 270P,https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_1.m3u8
+新加坡 Ⅰ 亚洲新闻 360P,https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_2.m3u8
+新加坡 Ⅰ 亚洲新闻 480P,https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_3.m3u8
+新加坡 Ⅰ 亚洲新闻 720P,https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_4.m3u8
+
+ 新加坡全套 432P
+新加坡 Ⅰ OKTO 台,https://ddftztnzt6o79.cloudfront.net/hls/oktoctv/master01.m3u8
+新加坡 Ⅰ 新传媒 5,https://dlau142f16b92.cloudfront.net/hls/ch5ctv/master01.m3u8
+新加坡 Ⅰ 新传媒 8,https://d34e90s3s13i7n.cloudfront.net/hls/ch8ctv/master01.m3u8
+新加坡 Ⅰ 新传媒 U,https://d3inlz9elsutjl.cloudfront.net/hls/chuctv/master01.m3u8
+新加坡 Ⅰ 朝阳频道,http://d11h6a6nhl9kj9.cloudfront.net/hls/suriactv/master01.m3u8
+新加坡 Ⅰ 新闻频道,https://d2ko4czujk9652.cloudfront.net/hls/cnasctv/master01.m3u8
+新加坡 Ⅰ VASANTHAM,https://d39v9xz8f7n8tk.cloudfront.net/hls/vsnthmctv/master01.m3u8
+
+ 新加坡全套 720P
 新加坡 Ⅰ OKTO 台,https://ddftztnzt6o79.cloudfront.net/hls/oktoctv/master02.m3u8
 新加坡 Ⅰ 新传媒 5,https://dlau142f16b92.cloudfront.net/hls/ch5ctv/master02.m3u8
 新加坡 Ⅰ 新传媒 8,https://d34e90s3s13i7n.cloudfront.net/hls/ch8ctv/master02.m3u8
@@ -75,6 +101,7 @@
 新加坡 Ⅰ 朝阳频道,http://d11h6a6nhl9kj9.cloudfront.net/hls/suriactv/master02.m3u8
 新加坡 Ⅰ 新闻频道,https://d2ko4czujk9652.cloudfront.net/hls/cnasctv/master02.m3u8
 新加坡 Ⅰ VASANTHAM,https://d39v9xz8f7n8tk.cloudfront.net/hls/vsnthmctv/master02.m3u8
+
 
 马来西亚 Ⅰ TV1,https://rtm1mobile.secureswiftcontent.com/Origin01/ngrp:RTM1/chunklist_b1064000.m3u8
 马来西亚 Ⅰ TV2,https://rtm2mobile.secureswiftcontent.com/Origin01/ngrp:RTM1/chunklist_b1064000.m3u8

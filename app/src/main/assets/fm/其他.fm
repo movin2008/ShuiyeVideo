@@ -1,4 +1,6 @@
  龙卷风收音机源一组
+金十电台,http://fmcdn.jin10.com/AAC/voice.m3u8
+开州之声 FM89.0,http://183.64.174.171:10124/tlgb.m3u8
 西双版纳ro2广播台,http://radiodrs.bntv.cn:8100/audiolive/audio2.aac
 西双版纳ro1广播台,http://radiodrs.bntv.cn:8100/audiolive/audio1.aac
 榆林生活资讯广播,rtmp://rtmppull.cnr.cn:1935/live/yulin03
@@ -12,7 +14,6 @@ CRI 客家之声,http://sk.cri.cn/hakka.m3u8
 CRI 闽南之音,http://sk.cri.cn/minnan.m3u8
 CRI Hit FM FM88.7,http://sk.cri.cn/887.m3u8
 CRI 轻松调频 FM91.5,http://sk.cri.cn/915.m3u8
-CRI Easy FM – FM91.5,http://sk.cri.cn/915.m3u8
 CRI NEWS Plus AM846,http://sk.cri.cn/am846.m3u8
 CRI NEWS Plus AM1008,http://sk.cri.cn/am1008.m3u8
 CCTV-1 综合,http://cctv.v.kcdnvip.com/live/cctv1_1/index.m3u8?adapt=0&BR=audio
@@ -46,7 +47,7 @@ CCTV-11 戏曲,http://cctv.v.myalicdn.com/live/cctv11_1audio.m3u8?adapt=0&BR=aud
 CCTV-12 社会与法,http://cctv.v.kcdnvip.com/live/cctv12_1/index.m3u8?adapt=0&BR=audio
 CCTV-13 新闻,http://cctv.v.myalicdn.com/live/cctv13_1audio.m3u8?adapt=0&BR=audio
 CCTV-14 少儿,http://cctv.v.myalicdn.com/live/cctvchild_1audio.m3u8?adapt=0&BR=audio
-CCTV-15 音乐,http://cctv.v.kcdnvip.com/live/cctv15_1/index.m3u8?adapt=0&BR=audio
+CCTV-15 音乐,http://cctv.v.kcdnvip.com/live/cctv15_1audio.m3u8?adapt=0&BR=audio
 安徽新闻综合广播,http://stream2.ahrtv.cn/xnxw/sd/live.m3u8
 安徽经济广播,http://stream.ahrtv.cn/jjgb/sd/live.m3u8
 安徽音乐广播,http://stream.ahrtv.cn/xnyy/sd/live.m3u8
@@ -95,7 +96,6 @@ CCTV-15 音乐,http://cctv.v.kcdnvip.com/live/cctv15_1/index.m3u8?adapt=0&BR=aud
 泉州广播都市之声 FM92.3,http://live.qztvxwgj.com/live/fm923.m3u8
 泉州广播剌桐之声 FM105.9,http://live.qztvxwgj.com/live/fm1059.m3u8
 甘肃新闻综合广播 FM96.1,http://stream1.gstv.com.cn/xwgb1/sd/live.m3u8
-甘肃都市调频 FM106.6,http://stream1.gstv.com.cn/jtgb1/sd/live.m3u8
 甘肃交通广播 FM103.5,http://stream1.gstv.com.cn/jtgb1/sd/live.m3u8
 甘肃经济广播 FM93.4,http://stream1.gstv.com.cn/jjgb1/sd/live.m3u8
 甘肃青春调频 FM104.8,http://stream1.gstv.com.cn/qcgb1/sd/live.m3u8
@@ -218,7 +218,7 @@ CCTV-15 音乐,http://cctv.v.kcdnvip.com/live/cctv15_1/index.m3u8?adapt=0&BR=aud
 沈阳都市广播 FM92.1,http://lms.csytv.com/Live/120/live/livestream.m3u8
 东港新闻综合广播 FM93.3,rtmp://59.45.52.62:1935/livepkgr/ch12
 东港交通生活广播 FM98.0,rtmp://59.45.52.62:1935/livepkgr/ch34
-凤城综合广播 FM100.9,rtmp://59.45.52.62:1935/livepkgr/ch12
+凤城综合广播 FM100.9,rtmp://61.176.97.42:1935/livepkgr/ch12
 凤城故事广播 FM88.7,rtmp://61.176.97.42:1935/livepkgr/ch34
 包头新闻综合广播 FM94.9,http://live.btgdt.com/channels/btgd/xwzhgb/flv:64k/live
 包头交通广播 FM89.2,http://live.btgdt.com/channels/btgd/jtgb/flv:64k/live
@@ -256,7 +256,6 @@ CCTV-15 音乐,http://cctv.v.kcdnvip.com/live/cctv15_1/index.m3u8?adapt=0&BR=aud
 陕西戏曲广播 AM747,http://radio.sxtvs.com/radio/opera.mp3
 陕西青春广播 FM105.5,http://radio.sxtvs.com/radio/kids.mp3
 陕西秦腔广播 FM101.1,http://radio.sxtvs.com/radio/cityopera.mp3
-MY FM 西安 FM105.5,http://radio.sxtvs.com/radio/kids.mp3
 西安新闻广播 FM95.0,http://stream3.xiancity.cn/1/sd/live.m3u8
 西安交通广播 FM104.3,http://stream3.xiancity.cn/5/sd/live.m3u8
 西安资讯广播 FM106.1,http://stream3.xiancity.cn/2/sd/live.m3u8
@@ -336,19 +335,13 @@ LoveRadio 粤来粤爱,http://rs-bj.ajmide.com/r_1666/1666.m3u8
 临沂交通广播,http://live.ilinyi.net/channels/tvie/jiaotongguangbo/flv:128k/live
 临沂音乐广播,http://live.ilinyi.net/channels/tvie/yinyueguangbo/flv:128k/live
 晋城交通音乐广播 FM93.5,http://live1.jcbctv.com:1935/live/yypl/64K/tzwj_video.m3u8
-金十电台,http://fmcdn.jin10.com/AAC/voice.m3u8
-开州之声 FM89.0,http://183.64.174.171:10124/tlgb.m3u8
 龙广新闻广播 FM94.6,http://stream3.hljtv.com/hljrdjt/sd/live.m3u8
 龙广私家车广播 FM104.5,http://stream3.hljtv.com/hljrdsh/sd/live.m3u8
 龙广都市女性台 FM102.1,http://stream3.hljtv.com/hljrd97/sd/live.m3u8
 龙广音乐广播 FM95.8,http://stream3.hljtv.com/hljrdnx/sd/live.m3u8
-龙广交通广播 FM99.8,http://stream3.hljtv.com/hljrdjt/sd/live.m3u8
 龙广乡村广播 AM945,http://stream3.hljtv.com/hljrdnc/sd/live.m3u8
-龙广爱家频道 FM97,http://stream3.hljtv.com/hljrd97/sd/live.m3u8
 龙广朝鲜语广播 AM873,http://stream3.hljtv.com/hljrdcy/sd/live.m3u8
-龙广北大荒之声 FM104.6,http://stream3.hljtv.com/hljrdgx/sd/live.m3u8
 龙广高校广播 FM99.3,http://stream3.hljtv.com/hljrdgx/sd/live.m3u8
-
 
 
 

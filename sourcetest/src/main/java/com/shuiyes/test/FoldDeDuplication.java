@@ -33,10 +33,7 @@ public class FoldDeDuplication {
     static void a() throws Exception {
 
         HashMap<String, String> maps = new HashMap<String, String>();
-        b("app/src/main/assets/tvlive", maps);
-        b("app/src/main/assets/film", maps);
-        b("app/src/main/assets/fm", maps);
-
+        scanFold("app/src/main/assets", maps);
 
         String filename = "sourcetest/src/main/assets/test.list";
         FileInputStream in = new FileInputStream(filename);
@@ -87,11 +84,20 @@ public class FoldDeDuplication {
         bw2.close();
     }
 
-    static void b(String path, HashMap<String, String> maps) throws Exception {
+    static void scanFold(String path, HashMap<String, String> maps) throws Exception {
         File file = new File(path);
         File[] files = file.listFiles();
-        for (File file2 : files) {
-            FileInputStream in2 = new FileInputStream(file2);
+        for (File tmpFile : files) {
+
+            if (tmpFile.isDirectory()) {
+                scanFold(tmpFile.getAbsolutePath(), maps);
+                continue;
+            }
+            if (tmpFile.getName().endsWith("apk") || tmpFile.getName().endsWith("css")) {
+                continue;
+            }
+
+            FileInputStream in2 = new FileInputStream(tmpFile);
             BufferedReader br2 = new BufferedReader(new InputStreamReader(in2));
             String text2 = null;
             while ((text2 = br2.readLine()) != null) {
@@ -105,7 +111,6 @@ public class FoldDeDuplication {
                 }
             }
             br2.close();
-            System.out.println("" + maps.size());
         }
     }
 

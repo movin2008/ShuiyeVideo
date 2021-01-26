@@ -57,11 +57,6 @@
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".ui.tvlive.FilmSourceActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="landscape" />
-
-        <activity
             android:name=".ui.WebActivity"
             android:launchMode="singleTop"
             android:screenOrientation="landscape" />
