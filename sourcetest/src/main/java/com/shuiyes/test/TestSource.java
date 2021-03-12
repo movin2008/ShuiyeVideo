@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
@@ -22,7 +23,17 @@ public class TestSource {
             @Override
             public void run() {
                 try {
-                    a();
+                    SimpleDateFormat sdf = new SimpleDateFormat("MMddHHmmss");
+                    String out = "tmp/" + sdf.format(new Date()) + ".list";
+                    String error = "tmp/" + sdf.format(new Date()) + "_e.list";
+                    System.out.println(out);
+                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(out)));
+                    BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(error)));
+
+                    a("D:\\Android\\AndroidStudioProjects\\ShuiyeVideo\\tmp\\0312171329_e.list", bw, bw2);
+
+//                    listFiles(new File("app/src/main/assets/"));
+//                    listFiles(new File("tmp/tmp/e"), bw, bw2);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -31,20 +42,36 @@ public class TestSource {
 
     }
 
-    static void a() throws Exception {
-        String filename = "sourcetest/src/main/assets/test.list";
+    static void listFiles(File f,BufferedWriter bw, BufferedWriter bw2) throws Exception {
+        System.out.println("listFiles " + f.getAbsolutePath());
+        if (f.exists()) {
+            File[] ff = f.listFiles();
+            for (int i = 0; i < ff.length; i++) {
+                File tmp = ff[i];
+                if (tmp.isDirectory()) {
+                    listFiles(tmp, bw, bw2);
+                } else if (tmp.isFile()) {
+                    a(tmp.getAbsolutePath(), bw, bw2);
+                }
+            }
+
+        }
+    }
+
+    static void a(String filename,BufferedWriter bw, BufferedWriter bw2) throws Exception {
         FileInputStream in = new FileInputStream(filename);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MMddHHmmss");
-        String out = "tmp/" + sdf.format(new Date()) + ".list";
-        String error = "tmp/" + sdf.format(new Date()) + "_e.list";
-        System.out.println(out);
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(out)));
-        BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(error)));
+        System.out.println(filename);
+
+//        SimpleDateFormat sdf = new SimpleDateFormat("MMddHHmmss");
+//        String out = "tmp/" + filename + sdf.format(new Date()) + ".list";
+//        String error = "tmp/" + filename + sdf.format(new Date()) + "_e.list";
+//        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(out)));
+//        BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(error)));
 
         int flag = 0;
-        if (filename.endsWith(".list")) {
+        if (filename.endsWith(".list") || filename.endsWith(".tv") || filename.endsWith(".fm")) {
 
             String text = null;
             while ((text = br.readLine()) != null) {
@@ -56,7 +83,7 @@ public class TestSource {
                 String split = ",";
                 if (text.contains(split)) {
                     System.out.println();
-                    System.out.println(flag++ + " " + text);
+                    System.out.print(flag++ + " ");
 
                     String[] tmp = text.split(split);
                     String title = tmp[0];
@@ -68,9 +95,11 @@ public class TestSource {
                         url = url.replace(":443/", "/");
 
                         if (HttpUtils.get(url)) {
+                            System.out.println("ok");
                             bw.write(title + "," + url + "\n");
                             bw.flush();
                         } else {
+                            System.err.println(HttpUtils.E);
                             bw2.write(title + "," + url + "\n");
                             bw2.flush();
                         }
@@ -201,10 +230,10 @@ public class TestSource {
         }
 
         br.close();
-        bw.close();
-        bw2.close();
+//        bw.close();
+//        bw2.close();
 
-        System.out.println(out + " end");
+        System.out.println(filename + " end");
     }
 
 }

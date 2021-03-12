@@ -46,31 +46,33 @@ public class HttpUtils {
             conn.setRequestProperty(header[0], header[1]);
         }
     }
-    
-    static boolean isEmpty(String s){
-    	return s == null || s.length() == 0;
+
+    static boolean isEmpty(String s) {
+        return s == null || s.length() == 0;
     }
 
     public static boolean get(String url) {
-    	url = url.trim();
-    	if(url.startsWith("vjms") || url.startsWith("mitv") ||url.toLowerCase().startsWith("p2p") || url.startsWith("p8p")){
-    		return false;
-    	}
-    	if(url.startsWith("rtmp") || url.startsWith("rtsp")
-    			|| url.startsWith("tvbus")
+        url = url.trim();
+        if (url.startsWith("vjms") || url.startsWith("mitv") || url.toLowerCase().startsWith("p2p") || url.startsWith("p8p")) {
+            E = "not surpport this protocol.";
+            return false;
+        }
+        if (url.startsWith("rtmp") || url.startsWith("rtsp")
+                || url.startsWith("tvbus")
 //    			|| url.startsWith("http")
-    			|| url.startsWith("mms")){
-    		return true;
-    	}
-    	
+                || url.startsWith("mms")) {
+            return true;
+        }
+
         return HttpUtils.get(url, null);
     }
 
     public static String E = "";
-    
-    public static boolean get(String url, String headers) {
 
-    	boolean ret = false;
+    public static boolean get(String url, String headers) {
+        System.out.println(url);
+
+        boolean ret = false;
         HttpURLConnection conn = null;
         try {
             if (url.startsWith("https://")) {
@@ -83,22 +85,40 @@ public class HttpUtils {
             conn.setRequestMethod("GET");
             conn.connect();
             int code = conn.getResponseCode();
-            Log.e("ResponseCode", "" + code);
-            E = "" + code;
-            
+
             if (code == 200) {
-            	InputStream in = conn.getInputStream();
-            	BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            	String text = br.readLine();
-            	if(text != null && text.startsWith("#EXTM3U")){
-                	ret = true;
-            	}else{
-            		System.err.println("readLine " + text+".");
-            	}
-            	br.close();
+                InputStream in = conn.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                String text = br.readLine();
+                if (text != null && (text.startsWith("#EXTM3U") || text.startsWith("FLV") || !text.trim().startsWith("<html>") || !text.trim().startsWith("<!DOCTYPE HTML>"))) {
+                    while ((text = br.readLine()) != null) {
+                        if (text.startsWith("#")) continue;
+                        if (text.trim().contains(".ts")) {
+                            ret = true;
+                        } else if (text.trim().endsWith(".m3u8")) {
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e1) {
+                            }
+
+                            if(text.startsWith("1.m3u8")){
+                                return HttpUtils.get(url.replace("index.m3u8", "1.m3u8"), headers);
+                            }else{
+                                return HttpUtils.get(conn.getURL().getProtocol() +"://"+ conn.getURL().getHost() + text, headers);
+                            }
+                        } else {
+                            E = "readLine " + text + ".";
+                        }
+                    }
+                } else {
+                    E = "readLine " + text + ".";
+                }
+                br.close();
             } else if (code == 301 || code == 302) {
                 Thread.sleep(500);
                 return HttpUtils.get(conn.getHeaderField("Location"), headers);
+            } else {
+                E = "ResponseCode: " + code;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -108,8 +128,7 @@ public class HttpUtils {
             }
             return HttpUtils.get(url, headers);
         } catch (Exception e) {
-        	E = e.getLocalizedMessage();
-        	System.err.println(e.getLocalizedMessage());
+            E = e.getClass().getSimpleName() + ": " + e.getLocalizedMessage();
         } finally {
             if (conn != null) {
                 conn.disconnect();

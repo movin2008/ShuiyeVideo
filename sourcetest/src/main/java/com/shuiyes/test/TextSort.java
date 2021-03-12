@@ -10,62 +10,55 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 
 public class TextSort {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+    public static void main(String[] args) {
+        new Thread(new Runnable() {
 
-		new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    a();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 
-			@Override
-			public void run() {
-				try {
-					a();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
+    static void a() throws Exception {
+        String filename = "D:\\Android\\AndroidStudioProjects\\SYVideo\\tmp\\0312100540.list";
+        FileInputStream in = new FileInputStream(filename);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
-	}
+        SimpleDateFormat sdf = new SimpleDateFormat("MMddHHmmss");
+        String out = sdf.format(new Date()) + ".list";
+        System.out.println(out);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("tmp/" + out)));
 
-	static void a() throws Exception {
-		String filename = "test.list";
-		FileInputStream in = new FileInputStream(filename);
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        ArrayList<String> list = new ArrayList<String>();
+        String text = null;
+        while ((text = br.readLine()) != null) {
+            if (text.isEmpty()) {
+                continue;
+            }
+            list.add(text);
+        }
 
-		SimpleDateFormat sdf = new SimpleDateFormat("MMddHHmmss");
-		String out = sdf.format(new Date()) + ".list";
-		System.out.println(out);
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(out)));
+        Collections.sort(list);
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            text = iterator.next();
+            bw.write(text + "\n");
+            bw.flush();
+        }
 
-		ArrayList<String> list = new ArrayList<String>();
-		String text = null;
-		while ((text = br.readLine()) != null) {
-			if(text.isEmpty()){
-				continue;
-			}
-			list.add(text);
-		}
-		
-		Collections.sort(list);
-		Iterator<String> iterator = list.iterator();
-		while(iterator.hasNext()){
-			text = iterator.next();
-			bw.write(text + "\n");
-			bw.flush();
-		}
+        br.close();
+        bw.close();
 
-		br.close();
-		bw.close();
-		
-		System.out.println("end");
-	}
+        System.out.println("end");
+    }
 
 }

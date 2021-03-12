@@ -139,11 +139,6 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, TVSourceActivity.class).putExtra(TVSourceActivity.EXTRA, "film/"));
     }
 
-    // 电影搜集
-    public void blue(View view) {
-        startActivity(new Intent(this, TVSourceActivity.class).putExtra(TVSourceActivity.EXTRA, "blue/"));
-    }
-
     // 收音机
     public void fmlist(View view) {
         startActivity(new Intent(this, TVSourceActivity.class).putExtra(TVSourceActivity.EXTRA, "fm/"));

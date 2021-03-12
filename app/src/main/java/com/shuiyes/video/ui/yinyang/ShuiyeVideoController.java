@@ -35,6 +35,12 @@ public class ShuiyeVideoController extends StandardVideoController {
         super(context, attrs, defStyleAttr);
     }
 
+    @Override
+    protected void initView() {
+        super.initView();
+        popupMenu.getMenu().findItem(R.id.video_source).setVisible(true);
+    }
+
     private int index;
     private MiscDialog mTVSourceDialog;
     private ArrayList<PlayVideo> mSourceList;

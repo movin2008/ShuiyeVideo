@@ -35,10 +35,8 @@ cctv15,http://cbn-live.cbchot.com/live/cl003_1.m3u8
 都市剧场,http://stream.slave.jxtvnet.tv:14311/playurl?accesstoken=R5DC2A42FU309BB004K7738E848ICA43ED17PBM345713AV0Z57EA5W15D48CE92ED319F0&playtype=live&protocol=http&playtoken=ABCDEFGH&auth=no&programid=4200000142
 靓妆高清,http://stream.slave.jxtvnet.tv:14311/playurl?accesstoken=R5DC2A42FU309BB004K7738E848ICA43ED17PBM345713AV0Z57EA5W15D48CE92ED319F0&playtype=live&protocol=http&playtoken=ABCDEFGH&auth=no&programid=4200000127
 
-CCTV3,http://60.255.149.208/tslive/c213_scc_20190618_0apbps2b_original_r10/c213_scc_20190618_0apbps2b_original_r10.m3u8
 CCTV3,http://39.135.38.165:6610/000000001000/1000000001000011218/1.m3u8?IASHttpSessionId=OTT16157620200202041417014267&fmt=ts2hls&u=45768392
-CCTV3,https://116.77.72.195/streams/d/cctv3/playlist.m3u8
-CCTV3,http://60.13.128.12:5010/nn_live.ts?id=CCTV3&nn_m3u8=1&nn_file_index=316143772&nn_file_name=20200203T090500Z&nn_file_index_time=1580720735&nn_file_start=5683804&nn_file_end=6495776&nn_ak=0174bf22b417673b2c32e8691719e25f45&ndt=phone&nal=0158e2375e06079b8ee57746c4bf400e05c6ec6598725a&ndi=e21e2900bf112056&ngs=5e37e258000115d8d8c01ca94c08571b&ncmsid=10011
+
 山东教育,http://111.12.110.81:6610/000000001000/7341476808603780321/1.m3u8?channel-id=ystenlive
 江西卫视,http://live02.jxtvcn.com.cn/live-jxtvcn/jxtv01.m3u8
 浙江卫视,http://ali.m.l.cztv.com/channels/lantian/channel01/360p.m3u8
