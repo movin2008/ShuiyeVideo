@@ -44,9 +44,8 @@ public class ScanUrl {
             for (int j = 1; j < 255; j++) {
                 String url = "http://39.135." + i + "." + j + "/";
                 System.out.println();
-                if (HttpUtils.get(url)) {
+                if (HttpUtils.ping(url)) {
                     sets.add(url);
-                    System.out.println("ok");
                     bw.write("待定" + i + "," + url + "\n");
                     bw.flush();
                 } else {

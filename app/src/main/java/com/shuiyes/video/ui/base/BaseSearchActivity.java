@@ -119,6 +119,7 @@ public abstract class BaseSearchActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 final String keyword = s.toString();
+                if(keyword.equals(mSearchText)) return;
                 mSearchText = keyword;
 
                 if (mSearchAsyncTask != null) {

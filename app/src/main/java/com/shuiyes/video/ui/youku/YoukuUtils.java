@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.shuiyes.video.util.HttpUtils;
+import com.shuiyes.video.util.PreferenceUtil;
 import com.shuiyes.video.util.Utils;
 
 public class YoukuUtils {
@@ -23,11 +24,11 @@ public class YoukuUtils {
      * # Found in http://g.alicdn.com/player/beta-ykplayer/0.6.2/youku-player.min.js
      * # grep -oE '"[0-9a-zA-Z+/=]{256}"' youku-player.min.js
      */
-    public static String CCODE = "0511";//0511 0517 0521 0590 0519
+    public static String CCODE = "0532";//0511 0517 0521 0590 0519
     public static String VERSION = "0.5.85";
 
     public static void updateCCodeIfNeed(Context context) {
-        YoukuUtils.CCODE = PreferenceManager.getDefaultSharedPreferences(context).getString("CCODE", YoukuUtils.CCODE);
+        YoukuUtils.CCODE = PreferenceUtil.getCCODE(context);
     }
 
     /**
@@ -73,7 +74,7 @@ public class YoukuUtils {
         HttpURLConnection conn = null;
         try {
             conn = (HttpURLConnection) new URL("http://log.mmstat.com/eg.js").openConnection();
-            HttpUtils.setURLConnection(conn, null);
+            HttpUtils.setURLConnection(conn,  "Cookie: " + sCsrfToken);
             conn.connect();
 
             String ret = conn.getHeaderField("ETag");
@@ -121,14 +122,14 @@ public class YoukuUtils {
         return null;
     }
 
-    public static String CToken;
+    public static String sCsrfToken;
 
     public static String fetchCToken() {
         return HttpUtils.get("https://youku.com/", true);
     }
 
     public static String search(String keyword, String cookie) throws Exception {
-        return HttpUtils.get("https://so.youku.com/search_video/q_" + URLEncoder.encode(keyword, "utf-8"), "Cookie: " + cookie, false);
+        return HttpUtils.get("https://so.youku.com/search_video/q_" + URLEncoder.encode(keyword, "utf-8")+"?searchfrom=1", "Cookie: " + cookie, false);
     }
 
     public static String listAlbums(String vid) throws Exception {

@@ -40,7 +40,7 @@ public class UrlSort {
     //待定249,http://39.135.249.20/huaweicdn.hb.chinamobile.com/PLTV/88888888/224/3221226098/index.m3u8
     //待定253,http://39.135.253.5/huaweicdn.hb.chinamobile.com/PLTV/88888888/224/3221226116/1.m3u8
     static void b() throws Exception {
-        String filename = "D:\\Android\\AndroidStudioProjects\\ShuiyeVideo\\tmp\\0312091319.list";
+        String filename = "D:\\Android\\AndroidStudioProjects\\ShuiyeVideo\\tmp\\0312142552.list";
         FileInputStream in = new FileInputStream(filename);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
 

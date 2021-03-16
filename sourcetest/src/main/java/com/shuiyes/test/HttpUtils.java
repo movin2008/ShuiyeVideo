@@ -138,6 +138,42 @@ public class HttpUtils {
         return ret;
     }
 
+
+    public static boolean ping(String url) {
+        System.out.println(url);
+
+        boolean ret = false;
+        HttpURLConnection conn = null;
+        try {
+            if (url.startsWith("https://")) {
+                conn = initHttpsURLConnection(url);
+            } else {
+                conn = (HttpURLConnection) new URL(url).openConnection();
+            }
+
+            HttpUtils.setURLConnection(conn, null);
+            conn.setRequestMethod("GET");
+            conn.connect();
+            System.out.println("ResponseCode: " + conn.getResponseCode());
+            ret = true;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e1) {
+            }
+            return HttpUtils.ping(url);
+        } catch (Exception e) {
+            E = e.getClass().getSimpleName() + ": " + e.getLocalizedMessage();
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
+
+        return ret;
+    }
+
     private static HttpsURLConnection initHttpsURLConnection(String url) throws Exception {
         HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
         SSLContext sslContext = SSLContext.getInstance("SSL");

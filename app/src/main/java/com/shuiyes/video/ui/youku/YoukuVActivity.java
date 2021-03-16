@@ -134,7 +134,7 @@ public class YoukuVActivity extends BasePlayActivity {
                         // 观看此节目，请先登录！ Maybe VIP video
                         fault(msg, data.getJSONObject("error").getInt("code") == -3007);
                     } else {
-                        boolean isVip = data.has("trial");
+                        boolean isVip = data.getJSONObject("show").getInt("video_pay") == 1;
                         if (isVip) {
                             fault("VIP视频只支持6分钟试看", true);
                             return;

@@ -1,10 +1,15 @@
 package com.shuiyes.test;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 // 源有效性测试
 public class GuessTVUrl {
@@ -20,7 +25,8 @@ public class GuessTVUrl {
             @Override
             public void run() {
                 try {
-                    aa();
+                    aaa("D:\\Android\\AndroidStudioProjects\\SYVideo\\appTelevision\\src\\main\\assets\\tvlive\\移动源\\移动.湖北.ip");
+//                  aa();
 //					b();
 //					c();
                 } catch (Exception e) {
@@ -29,6 +35,60 @@ public class GuessTVUrl {
             }
         }).start();
 
+    }
+
+    static void aaa(String filepath) throws Exception {
+
+        List<String> urls = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filepath)));
+        String text = null;
+        while ((text = br.readLine()) != null) {
+            if(text.startsWith("http")){
+                urls.add(text);
+            }
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MMddHHmmss");
+        String out = sdf.format(new Date()) + ".list";
+        String error = sdf.format(new Date()) + "_e.list";
+        System.out.println(out);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("tmp/" + out)));
+        BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("tmp/" + error)));
+
+        for (int i = 0; i < urls.size(); i++) {
+            // 5600
+            for (int k = 7000; k < 10000; k++) {
+                for (int l = 1; l < 5; l++) {
+                    String id;
+                    if (l == 4) {
+                        id = "index";
+                    } else {
+                        id = "" + l;
+                    }
+                    String url = urls.get(i) + "huaweicdn.hb.chinamobile.com/PLTV/88888888/224/322122" + k + "/" + id + ".m3u8";
+
+                    System.out.println();
+                    if (HttpUtils.get(url)) {
+                        System.out.println("ok");
+                        bw.write("待定" + i + "," + url + "\n");
+                        bw.flush();
+                    } else {
+                        System.err.println(HttpUtils.E);
+                        bw2.write("待定" + i + "," + url + "\n");
+                        bw2.flush();
+
+                        if(HttpUtils.E.contains("Exception")){
+                            break;
+                        }
+                    }
+                    Thread.sleep(50);
+                }
+            }
+        }
+
+        bw.close();
+        bw2.close();
+        System.out.println("end");
     }
 
     static void aa() throws Exception {
@@ -43,7 +103,7 @@ public class GuessTVUrl {
             for (int j = 1; j < 255; j++) {
                 boolean jumpout = false;
                 // 5600
-                for (int k = 6200; k < 7000; k++) {
+                for (int k = 5000; k < 5600; k++) {
                     if(jumpout){
                         break;
                     }
