@@ -1,5 +1,7 @@
 package com.shuiyes.test;
 
+import android.text.TextUtils;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -87,10 +89,14 @@ public class HttpUtils {
             int code = conn.getResponseCode();
 
             if (code == 200) {
+                if(url.contains(".mp4")){
+                    conn.disconnect();
+                    return true;
+                }
                 InputStream in = conn.getInputStream();
                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
                 String text = br.readLine();
-                if (text != null && (text.startsWith("#EXTM3U") || text.startsWith("FLV") || !text.trim().startsWith("<html>") || !text.trim().startsWith("<!DOCTYPE HTML>"))) {
+                if (text != null && (text.startsWith("#EXTM3U") || text.startsWith("FLV") || !(TextUtils.isEmpty(text) || text.trim().startsWith("<html>") || text.trim().startsWith("<!DOCTYPE HTML>")))) {
                     while ((text = br.readLine()) != null) {
                         if (text.startsWith("#")) continue;
                         if (text.trim().contains(".ts")) {

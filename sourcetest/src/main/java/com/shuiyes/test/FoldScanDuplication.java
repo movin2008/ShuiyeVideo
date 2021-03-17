@@ -43,6 +43,7 @@ public class FoldScanDuplication {
             BufferedReader br2 = new BufferedReader(new InputStreamReader(in2));
             String text2 = null;
             while ((text2 = br2.readLine()) != null) {
+                if(text2.startsWith("##")) continue;
                 String split = ",";
                 if (text2.contains(split)) {
                     String[] tmp = text2.split(split);

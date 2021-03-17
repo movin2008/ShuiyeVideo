@@ -33,7 +33,7 @@ public class DeDuplication {
     }
 
     static void a() throws Exception {
-        String filename = "D:\\Android\\AndroidStudioProjects\\SYVideo\\appTelevision\\src\\main\\assets\\tvlive\\cctv.wscdns.com.tv";
+        String filename = "D:\\Android\\AndroidStudioProjects\\ShuiyeVideo\\app\\src\\main\\assets\\tvlive\\地方台\\地方台.其他.tv";
         FileInputStream in = new FileInputStream(filename);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
 

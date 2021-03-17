@@ -25,7 +25,8 @@ public class GuessTVUrl {
             @Override
             public void run() {
                 try {
-                    aaa("D:\\Android\\AndroidStudioProjects\\SYVideo\\appTelevision\\src\\main\\assets\\tvlive\\移动源\\移动.湖北.ip");
+                    bbb("D:\\Android\\AndroidStudioProjects\\ShuiyeVideo\\app\\src\\main\\assets\\tmp\\央视频.ip");
+                    //aaa("D:\\Android\\AndroidStudioProjects\\SYVideo\\appTelevision\\src\\main\\assets\\tvlive\\移动源\\移动.湖北.ip");
 //                  aa();
 //					b();
 //					c();
@@ -37,13 +38,62 @@ public class GuessTVUrl {
 
     }
 
+    static void bbb(String filepath) throws Exception {
+
+        List<String> urls = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filepath)));
+        String text;
+        while ((text = br.readLine()) != null) {
+            if(text.startsWith("##")) continue;
+            if (text.contains(",")) {
+                urls.add(text.split(",")[1]);
+            }
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MMddHHmmss");
+        String out = sdf.format(new Date()) + ".list";
+        String error = sdf.format(new Date()) + "_e.list";
+        System.out.println(out);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("tmp/" + out)));
+        BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("tmp/" + error)));
+
+        final String[] cdns = new String[]{"tlivecloud-cdn", "outlivecloud-cdn", "live-dtocnc-cdn"};
+
+        for (int i = 0; i < urls.size(); i++) {
+            for (int k = 1; k < 255; k++) {
+                for (int j = 0; j < cdns.length; j++) {
+                    String url = "http://" + urls.get(i).replace("*", "" + k) + "/" + cdns[j] + ".ysp.cctv.cn/cctv/2000210103.m3u8";
+                    System.out.println();
+                    if (HttpUtils.get(url)) {
+                        System.out.println("ok");
+                        bw.write("待定" + i + "," + url + "\n");
+                        bw.flush();
+                    } else {
+                        System.err.println(HttpUtils.E);
+                        bw2.write("待定" + i + "," + url + "\n");
+                        bw2.flush();
+
+                        if (HttpUtils.E.contains("Exception")) {
+                            break;
+                        }
+                    }
+                    Thread.sleep(50);
+                }
+            }
+        }
+
+        bw.close();
+        bw2.close();
+        System.out.println("end");
+    }
+
     static void aaa(String filepath) throws Exception {
 
         List<String> urls = new ArrayList<>();
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filepath)));
         String text = null;
         while ((text = br.readLine()) != null) {
-            if(text.startsWith("http")){
+            if (text.startsWith("http")) {
                 urls.add(text);
             }
         }
@@ -76,10 +126,6 @@ public class GuessTVUrl {
                         System.err.println(HttpUtils.E);
                         bw2.write("待定" + i + "," + url + "\n");
                         bw2.flush();
-
-                        if(HttpUtils.E.contains("Exception")){
-                            break;
-                        }
                     }
                     Thread.sleep(50);
                 }
@@ -104,7 +150,7 @@ public class GuessTVUrl {
                 boolean jumpout = false;
                 // 5600
                 for (int k = 5000; k < 5600; k++) {
-                    if(jumpout){
+                    if (jumpout) {
                         break;
                     }
                     for (int l = 1; l < 5; l++) {
@@ -126,7 +172,7 @@ public class GuessTVUrl {
                             bw2.write("待定" + i + "," + url + "\n");
                             bw2.flush();
 
-                            if(HttpUtils.E.contains("Exception")){
+                            if (HttpUtils.E.contains("Exception")) {
                                 jumpout = true;
                                 break;
                             }

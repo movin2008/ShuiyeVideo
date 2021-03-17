@@ -333,13 +333,9 @@
 绩溪新闻,http://124.112.228.134:1935/live/zongyi/playlist.m3u8
 长寿综合,http://qxlmlive.cbg.cn:1935/app_2/ls_63.stream/playlist.m3u8
 
-迁西综合,https://tv.lnshw.com.cn:8123/liveqx2/livestream.m3u8
-迁西农业,https://tv.lnshw.com.cn:8123/liveqx1/livestream.m3u8
-
 金昌公共频道,http://stream4.liveyun.hoge.cn/ch01/sd/live.m3u8
 金昌综合频道,http://stream4.liveyun.hoge.cn/ch02/sd/live.m3u8
 金华新闻综合,http://stream2.jinhua.com.cn/xwzh/app/live.m3u8
-
 
 日照莒县-1,http://61.162.225.122:8181/live/test1.m3u8
 亳州新闻,http://218.22.251.12:8001/tslslive/wT9aUpL/hls/live_sd.m3u8
@@ -397,13 +393,11 @@
 晋江电视,http://stream.jinjiang.tv/1/sd/live.m3u8?_upt=7738cbdd1569250965
 随州农村,http://suizhou.source.cjyun.org/video/s10145-szncpd.m3u8
 随州综合,http://suizhou.source.cjyun.org/video/s10145-szzhpd.m3u8
-济南综合,http://ts1.ijntv.cn/xwhd/playlist.m3u8
 睢宁综合,http://tv.jrsncn.com:9001/hls/live/live1/stream.m3u8
 
 襄阳公共,http://xiangyang.live.cjyun.org/video/s10125-education_hd.m3u8
 
 烟台影视,http://live.zhyantai.com/yttv3/playlist.m3u8
-甘肃影视,http://stream.gstv.com.cn/whys/sd/live.m3u8
 
 dab,http://zbbf2.ahtv.cn/live/dab.m3u8
 
@@ -601,11 +595,7 @@ dab,http://zbbf2.ahtv.cn/live/dab.m3u8
 浙江留学频道,http://hw-m-l.cztv.com/channels/lantian/channel09/1080p.m3u8?k=e50bfc43311fc5aecad39f294634bb01&t=1577153817
 浙江国际,http://hw-m-l.cztv.com/channels/lantian/channel10/1080p.m3u8?k=48877e6c28c2a0215eb8712eb48b888d&t=1577153884
 浙江数码,http://yf-m-l.cztv.com/channels/lantian/channel12/1080p.m3u8?k=be3395c0fc4f07f9bc5ca2098d55687f&t=1577153951
-甘肃经济频道,http://stream.gstv.com.cn/jjpd/sd/live.m3u8
-甘肃少儿频道,http://stream.gstv.com.cn/sepd/sd/live.m3u8
-甘肃公共频道,http://stream.gstv.com.cn/ggpd/sd/live.m3u8
-甘肃移动电视,http://stream.gstv.com.cn/ydds/sd/live.m3u8
-甘肃品质生活,http://stream.gstv.com.cn/pzsh/sd/live.m3u8
+
 武汉电视,http://stream.appwuhan.com/2tzb/sd/live.m3u8
 武汉生活,http://stream.appwuhan.com/3tzb/sd/live.m3u8
 武汉经济,http://stream.appwuhan.com/4tzb/sd/live.m3u8
@@ -638,7 +628,6 @@ dab,http://zbbf2.ahtv.cn/live/dab.m3u8
 株洲新闻综合,http://30515.hlsplay.aodianyun.com/lms_30515/tv_channel_239.m3u8
 句容新闻综合,http://wcnc-lh.akamaihd.net/i/WCNC_Breaking_1@195112/master.m3u8
 句容生活频道,http://weather-lh.akamaihd.net/i/twc_1@92006/index_2400_av-b.m3u8
-睢宁生活教育,http://stream.gstv.com.cn/dspd/sd/live.m3u8
 抚州综合频道,http://video.dztv.tv:1935/live/xwzh_bq/playlist.m3u8
 德兴新闻综合,http://stream2.jlntv.cn/jlyb/sd/live.m3u8
 德州新闻频道,http://stream.zjjrtv.com/zjjtv1/hd/live.m3u8
@@ -649,3 +638,15 @@ dab,http://zbbf2.ahtv.cn/live/dab.m3u8
 西山电视台,http://live.ysxtv.cn:8081/Ch1/playlist.m3u8
 巴中综合频道,http://ocj2.kksmg.com/ocj1/ocj1.m3u8
 阿坝综合频道,http://35848.hlsplay.aodianyun.com/guangdianyun_35848/tv_channel_356.m3u8
+
+甘肃经济,http://stream.gstv.com.cn/jjpd/sd/live.m3u8
+甘肃公共,http://stream.gstv.com.cn/ggpd/sd/live.m3u8
+甘肃都市,http://stream.gstv.com.cn/dspd/sd/live.m3u8
+甘肃生活,http://stream.gstv.com.cn/pzsh/sd/live.m3u8
+甘肃影视,http://stream.gstv.com.cn/whys/sd/live.m3u8
+甘肃少儿,http://stream.gstv.com.cn/sepd/sd/live.m3u8
+西安综艺,http://stream2.xiancity.cn/xatv6/sd/live.m3u8
+淳安新闻,https://wtmtylive.yunshicloud.com/tbziu1/55f255.m3u8
+内蒙蒙语,http://stream.nmtv.cn/3/sd/live.m3u8
+呼伦贝尔新闻,http://live1.hrtonline.cn:1935/live/live100/500K/tzwj_video.m3u8
+东营图文,http://stream.hhek.cn/twpd/sd/live.m3u8

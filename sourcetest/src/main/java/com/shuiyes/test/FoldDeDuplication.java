@@ -33,9 +33,9 @@ public class FoldDeDuplication {
     static void a() throws Exception {
 
         HashMap<String, String> maps = new HashMap<String, String>();
-        scanFold("app/src/main/assets", maps);
+        scanFold("D:\\Android\\AndroidStudioProjects\\ShuiyeVideo\\app\\src\\main\\assets", maps);
 
-        String filename = "sourcetest/src/main/assets/test.list";
+        String filename = "D:\\Android\\AndroidStudioProjects\\SYVideo\\appTelevision\\src\\main\\assets\\test.list";
         FileInputStream in = new FileInputStream(filename);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
@@ -46,34 +46,32 @@ public class FoldDeDuplication {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(out)));
         BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(error)));
 
-        if (filename.endsWith(".list")) {
 
-            String text = null;
-            while ((text = br.readLine()) != null) {
-                String split = ",";
-                if (text.contains(split)) {
-                    String[] tmp = text.split(split);
-                    String title = tmp[0];
-                    String url = tmp[1].trim();
+        String text = null;
+        while ((text = br.readLine()) != null) {
+            String split = ",";
+            if (text.contains(split)) {
+                String[] tmp = text.split(split);
+                String title = tmp[0];
+                String url = tmp[1].trim();
 
-                    if (maps.containsKey(url)) {
-                        System.err.println(maps.get(url) + " - " + title);
+                if (maps.containsKey(url)) {
+                    System.err.println(maps.get(url) + " - " + title);
 
-                        bw2.write(maps.get(url) + " - " + title + "\n");
-                        bw2.write(text + "\n");
-                        bw2.flush();
-                    } else {
-
-                        bw.write(text + "\n");
-                        bw.flush();
-                    }
-                } else {
-                    bw.write(text + "\n");
-                    bw.flush();
-
+                    bw2.write(maps.get(url) + " - " + title + "\n");
                     bw2.write(text + "\n");
                     bw2.flush();
+                } else {
+
+                    bw.write(text + "\n");
+                    bw.flush();
                 }
+            } else {
+                bw.write(text + "\n");
+                bw.flush();
+
+                bw2.write(text + "\n");
+                bw2.flush();
             }
         }
 

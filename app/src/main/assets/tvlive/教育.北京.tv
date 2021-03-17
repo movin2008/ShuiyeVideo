@@ -16,8 +16,6 @@ CHANNEL[V],rtmp://58.200.131.2:1935/livetv/channelv
 江苏卫视,rtmp://58.200.131.2:1935/livetv/jstv
 凤凰电影,rtmp://58.200.131.2:1935/livetv/fhdy
 星空卫视,rtmp://58.200.131.2:1935/livetv/startv
-凤凰中文,rtmp://58.200.131.2:1935/livetv/fhzw
-
 
 CCTV16,rtmp://58.200.131.2:1935/livetv/cctv16
 CETV-1,rtmp://58.200.131.2:1935/livetv/cetv1

@@ -30,7 +30,7 @@ public class TestSource {
                     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(out)));
                     BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(error)));
 
-                    a("D:\\Android\\AndroidStudioProjects\\ShuiyeVideo\\tmp\\0312171329_e.list", bw, bw2);
+                    a("D:\\Android\\AndroidStudioProjects\\ShuiyeVideo\\tmp\\0317153413_e.list", bw, bw2);
 
 //                    listFiles(new File("app/src/main/assets/"));
 //                    listFiles(new File("tmp/tmp/e"), bw, bw2);
