@@ -1,0 +1,96 @@
+## https://github.com/SPX372928/MyIPTV/blob/master/上海百视通联通ip版.txt
+## 可以尝试以下 IP                                         南京联通测试结果
+## shbu.live.bestvcdn.com.cn:8080                            有效
+## keonline.shanghai.liveplay.qq.com                         403
+## 112.132.209.46/liveplay-kk.rtxapp.com  安徽省合肥市 联通   有效
+## 183.207.255.190                        江苏省南京市 移动   有效
+## 112.25.48.68                           江苏省南京市 移动   有效
+## 140.207.241.2:8080                     上海市联通          失效
+##
+
+CCTV1 1080P,http://112.25.48.68/live/program/live/cctv1hd/4000000/mnf.m3u8
+CCTV2 540P,http://112.25.48.68/live/program/live/cctv2/1300000/mnf.m3u8
+CCTV3 1080P,http://112.25.48.68/live/program/live/cctv3hd/4000000/mnf.m3u8
+CCTV4 540P,http://112.25.48.68/live/program/live/cctv4/1300000/mnf.m3u8
+CCTV5 1080P,http://112.25.48.68/live/program/live/cctv5hd/4000000/mnf.m3u8
+CCTV5+ 1080P,http://112.25.48.68/live/program/live/cctv5phd/4000000/mnf.m3u8
+CCTV6 1080P,http://112.25.48.68/live/program/live/cctv6hd/4000000/mnf.m3u8
+CCTV7 540P,http://112.25.48.68/live/program/live/cctv7/1300000/mnf.m3u8
+CCTV8 1080P,http://112.25.48.68/live/program/live/cctv8hd/4000000/mnf.m3u8
+CCTV10 1080P,http://112.25.48.68/live/program/live/cctv10hd/4000000/mnf.m3u8
+CCTV11 540P,http://112.25.48.68/live/program/live/cctv11/1300000/mnf.m3u8
+CCTV12 540P,http://112.25.48.68/live/program/live/cctv12/1300000/mnf.m3u8
+CCTV13 540P,http://112.25.48.68/live/program/live/cctvxw/1300000/mnf.m3u8
+CCTV14 1080P,http://112.25.48.68/live/program/live/cctvsehd/4000000/mnf.m3u8
+CCTV15 540P,http://112.25.48.68/live/program/live/cctvyy/1300000/mnf.m3u8
+
+中国天气频道 576P,http://112.25.48.68/live/program/live/zgqx/1300000/mnf.m3u8
+上海东方影视 1080P,http://112.25.48.68/live/program/live/dsjpdhd/4000000/mnf.m3u8
+上海五星体育 1080P,http://112.25.48.68/live/program/live/ssty/4000000/mnf.m3u8
+上海第一财经 1080P,http://112.25.48.68/live/program/live/dycjhd/4000000/mnf.m3u8
+上海新闻综合 1080P,http://112.25.48.68/live/program/live/xwzhhd/4000000/mnf.m3u8
+上海纪实人文 1080P,http://112.25.48.68/live/program/live/jspdhd/4000000/mnf.m3u8
+上海哈哈炫动 1080P,http://112.25.48.68/live/program/live/hhxdhd/4000000/mnf.m3u8
+上海都市频道 1080P,http://112.25.48.68/live/program/live/ylpdhd/4000000/mnf.m3u8
+上海教育频道 540P,http://112.25.48.68/live/program/live/setv/1300000/mnf.m3u8
+上海 ICS外语 1080P,http://112.25.48.68/live/program/live/wypdhd/4000000/mnf.m3u8
+
+东南卫视 1080P,http://112.25.48.68/live/program/live/dnwshd/4000000/mnf.m3u8
+东方卫视 1080P,http://112.25.48.68/live/program/live/hddfws/4000000/mnf.m3u8
+北京卫视 1080P,http://112.25.48.68/live/program/live/bjwshd/4000000/mnf.m3u8
+天津卫视 1080P,http://112.25.48.68/live/program/live/tjwshd/4000000/mnf.m3u8
+安徽卫视 1080P,http://112.25.48.68/live/program/live/ahwshd/4000000/mnf.m3u8
+山东卫视 1080P,http://112.25.48.68/live/program/live/sdwshd/4000000/mnf.m3u8
+广东卫视 1080P,http://112.25.48.68/live/program/live/gdwshd/4000000/mnf.m3u8
+江苏卫视 1080P,http://112.25.48.68/live/program/live/jswshd/4000000/mnf.m3u8
+江西卫视 1080P,http://112.25.48.68/live/program/live/jxwshd/4000000/mnf.m3u8
+浙江卫视 1080P,http://112.25.48.68/live/program/live/zjwshd/4000000/mnf.m3u8
+辽宁卫视 1080P,http://112.25.48.68/live/program/live/lnwshd/4000000/mnf.m3u8
+深圳卫视 1080P,http://112.25.48.68/live/program/live/szwshd/4000000/mnf.m3u8
+湖北卫视 1080P,http://112.25.48.68/live/program/live/hbwshd/4000000/mnf.m3u8
+湖南卫视 1080P,http://112.25.48.68/live/program/live/hnwshd/4000000/mnf.m3u8
+黑龙卫视 1080P,http://112.25.48.68/live/program/live/hljwshd/4000000/mnf.m3u8
+厦门卫视 540P,http://112.25.48.68/live/program/live/xmws/1300000/mnf.m3u8
+吉林卫视 540P,http://112.25.48.68/live/program/live/jlws/1300000/mnf.m3u8
+四川卫视 540P,http://112.25.48.68/live/program/live/scws/1300000/mnf.m3u8
+宁夏卫视 540P,http://112.25.48.68/live/program/live/nxws/1300000/mnf.m3u8
+云南卫视 540P,http://112.25.48.68/live/program/live/ynws/1300000/mnf.m3u8
+内蒙卫视 540P,http://112.25.48.68/live/program/live/nmgws/1300000/mnf.m3u8'
+广西卫视 540P,http://112.25.48.68/live/program/live/gxws/1300000/mnf.m3u8
+新疆卫视 540P,http://112.25.48.68/live/program/live/xjws/1300000/mnf.m3u8
+河北卫视 540P,http://112.25.48.68/live/program/live/hbws/1300000/mnf.m3u8
+河南卫视 540P,http://112.25.48.68/live/program/live/hnws/1300000/mnf.m3u8
+海南卫视 540P,http://112.25.48.68/live/program/live/lyws/1300000/mnf.m3u8
+甘肃卫视 540P,http://112.25.48.68/live/program/live/gsws/1300000/mnf.m3u8
+贵州卫视 540P,http://112.25.48.68/live/program/live/gzws/1300000/mnf.m3u8
+重庆卫视 540P,http://112.25.48.68/live/program/live/cqws/1300000/mnf.m3u8
+陕西卫视 540P,http://112.25.48.68/live/program/live/sxws/1300000/mnf.m3u8
+青海卫视 540P,http://112.25.48.68/live/program/live/qhws/1300000/mnf.m3u8
+兵团卫视 540P,http://112.25.48.68/live/program/live/btws/1300000/mnf.m3u8
+
+金鹰卡通(湖南) 540P,http://112.25.48.68/live/program/live/jykt/1300000/mnf.m3u8
+嘉佳卡通(广东) 540P,http://112.25.48.68/live/program/live/jjkt/1300000/mnf.m3u8
+
+SiTV新视觉台 1080P,http://112.25.48.68/live/program/live/xsjhd/4000000/mnf.m3u8
+SiTV动漫秀场 1080P,http://112.25.48.68/live/program/live/dmxchd/4000000/mnf.m3u8
+SiTV游戏风云 1080P,http://112.25.48.68/live/program/live/yxfyhd/4000000/mnf.m3u8
+SiTV劲爆体育 1080P,http://112.25.48.68/live/program/live/jbtyhd/4000000/mnf.m3u8
+SiTV魅力足球 1080P,http://112.25.48.68/live/program/live/mlyyhd/4000000/mnf.m3u8
+SiTV欢笑剧场 1080P,http://112.25.48.68/live/program/live/hxjchd/4000000/mnf.m3u8
+SiTV极速汽车 1080P,http://112.25.48.68/live/program/live/jsqchd/4000000/mnf.m3u8
+SiTV生活时尚 1080P,http://112.25.48.68/live/program/live/shsshd/4000000/mnf.m3u8
+SiTV全纪实台 1080P,http://112.25.48.68/live/program/live/qjshd/4000000/mnf.m3u8
+SiTV都市剧场 1080P,http://112.25.48.68/live/program/live/dsjchd/4000000/mnf.m3u8
+SiTV幸福彩虹 1080P,http://112.25.48.68/live/program/live/xfchd/4000000/mnf.m3u8
+SiTV法治天地 540P,http://112.25.48.68/live/program/live/fztd/1300000/mnf.m3u8
+SiTV金色频道 540P,http://112.25.48.68/live/program/live/jingsepd/1300000/mnf.m3u8
+SiTV七彩戏剧 540P,http://112.25.48.68/live/program/live/qcxj/1300000/mnf.m3u8
+SiTV东方财经 540P,http://112.25.48.68/live/program/live/dfcj/1300000/mnf.m3u8
+
+百事通体育1 1080P,http://112.25.48.68/live/program/live/hdnba1/4000000/mnf.m3u8
+百事通体育2 1080P,http://112.25.48.68/live/program/live/hdnba2/4000000/mnf.m3u8
+百事通体育3 1080P,http://112.25.48.68/live/program/live/hdnba3/4000000/mnf.m3u8
+百事通体育4 1080P,http://112.25.48.68/live/program/live/hdnba4/4000000/mnf.m3u8
+百事通体育5 1080P,http://112.25.48.68/live/program/live/hdnba5/4000000/mnf.m3u8
+百事通体育6 1080P,http://112.25.48.68/live/program/live/hdnba6/4000000/mnf.m3u8
+百事通体育7 1080P,http://112.25.48.68/live/program/live/hdnba7/4000000/mnf.m3u8

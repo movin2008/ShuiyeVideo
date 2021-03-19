@@ -30,7 +30,7 @@ public class TestSource {
                     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(out)));
                     BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(error)));
 
-                    a("D:\\Android\\AndroidStudioProjects\\ShuiyeVideo\\tmp\\0317153413_e.list", bw, bw2);
+                    a("D:\\Android\\AndroidStudioProjects\\ShuiyeVideo\\tmp\\0318172720.list", bw, bw2);
 
 //                    listFiles(new File("app/src/main/assets/"));
 //                    listFiles(new File("tmp/tmp/e"), bw, bw2);
@@ -86,6 +86,7 @@ public class TestSource {
                     System.out.print(flag++ + " ");
 
                     String[] tmp = text.split(split);
+                    if(tmp.length < 2) continue;
                     String title = tmp[0];
 
                     String[] urls = tmp[1].split("#");
@@ -133,9 +134,11 @@ public class TestSource {
 
                         String title = tmp[2];
                         if (HttpUtils.get(url)) {
+                            System.out.println("ok");
                             bw.write(title + "," + url + "\n");
                             bw.flush();
                         } else {
+                            System.err.println(HttpUtils.E);
                             bw2.write(title + "," + url + "\n");
                             bw2.flush();
                         }
@@ -180,23 +183,26 @@ public class TestSource {
 //					System.out.println(text);
 
                     text = text.trim();
-                    text = text.replace(":80/", "/");
-                    text = text.replace(":443/", "/");
                     if (text.startsWith("hhttp")) {
                         text = text.replace("hhttp", "http");
                     }
-//					if(text.contains(",")){
-//						text = text.substring(text.lastIndexOf(",") + 1);
-//					}
 
-                    if (HttpUtils.get(text)) {
-                        bw.write(title + "," + text + "\n");
-                        bw.flush();
-                    } else {
-                        bw2.write(title + "," + text + "\n");
-                        bw2.flush();
+                    String[] urls = text.split("#");
+                    for (String url : urls) {
+                        url = url.trim();
+                        url = url.replace(":80/", "/");
+                        url = url.replace(":443/", "/");
+
+                        if (HttpUtils.get(url)) {
+                            System.out.println("ok");
+                            bw.write(title + "," + url + "\n");
+                            bw.flush();
+                        } else {
+                            System.err.println(HttpUtils.E);
+                            bw2.write(title + "," + url + "\n");
+                            bw2.flush();
+                        }
                     }
-                    title = null;
                 }
 
             }

@@ -33,7 +33,7 @@ public class DeDuplication {
     }
 
     static void a() throws Exception {
-        String filename = "D:\\Android\\AndroidStudioProjects\\ShuiyeVideo\\app\\src\\main\\assets\\tvlive\\地方台\\地方台.其他.tv";
+        String filename = "D:\\Android\\AndroidStudioProjects\\SYVideo\\appTelevision\\src\\main\\assets\\test.list";
         FileInputStream in = new FileInputStream(filename);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
@@ -57,6 +57,7 @@ public class DeDuplication {
                     url = url.trim();
                     // 去重
                     if (maps.containsKey(url)) {
+                        System.err.println(url);
                         System.err.println(maps.get(url) + " - " + title);
 
                         bw2.write(text + "\n");

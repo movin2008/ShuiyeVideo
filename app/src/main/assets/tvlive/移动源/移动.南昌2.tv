@@ -1,3 +1,19 @@
+## m-tvlmedia.public.bcs.ysten.com CDN is 223.82.250.72
+##
+ 江西省南昌市 移动
+CCTV 15,http://m-tvlmedia.public.bcs.ysten.com/live/cctv-15/1.m3u8
+CCTV 15,http://223.82.250.72/live/cctv-15/1.m3u8
+
+湖南卫视,http://m-tvlmedia.public.bcs.ysten.com/live/hdhunanstv/1.m3u8
+新疆卫视,http://m-tvlmedia.public.bcs.ysten.com/live/xinjiangstv/1.m3u8
+凤凰中文,http://m-tvlmedia.public.bcs.ysten.com/live/fhchinese/1.m3u8
+巴中公共,http://m-tvlmedia.public.bcs.ysten.com/live/hddongfangstv/1.m3u8
+
+凤凰中文,http://m-tvlmedia.public.bcs.ysten.com/ysten-bussiness/live/fhchinese/1.m3u8
+凤凰资讯,http://m-tvlmedia.public.bcs.ysten.com/ysten-bussiness/live/fhzixun/1.m3u8
+卡酷少儿,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/kakukaton/1.m3u8
+优漫卡通,http://m-tvlmedia.public.bcs.ysten.com/ysten-business/live/youmankaton/1.m3u8
+
  江西南昌移动
 CCTV-5+,http://117.169.120.132:8080/live/hdcctv05plus/playlist.m3u8
 CCTV-8,http://117.169.120.132:8080/live/cctv-8/playlist.m3u8
@@ -7,7 +23,6 @@ CCTV-13,http://117.169.120.140:8080/live/cctv-13/.m3u8
 深圳卫视,http://117.169.120.140:8080/live/hdshenzhenstv/.m3u8
 江西卫视,http://117.169.120.140:8080/live/jiangxistv/.m3u8
 重庆卫视,http://117.169.120.132:8080/live/chongqingstv/playlist.m3u8
-江苏卫视,http://117.169.120.165:8080/live/hdjiangsustv/playlist.m3u8
 东方财经,http://117.169.120.140:8080/live/dongnanstv/.m3u8
 娄底公共,http://117.169.120.140:8080/live/hdtianjinstv/.m3u8
 

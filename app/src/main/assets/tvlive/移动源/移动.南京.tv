@@ -27,13 +27,13 @@
 ## NewTV动作电影 FHD,http://183.207.249.15/PLTV/3/224/3221225529/index.m3u8
 ## 徐州-4 HD,http://183.207.249.15/PLTV/3/224/3221225951/index.m3u8
 ##
+
 南京移动源 cntv央视源
 CCTV1 HD,http://183.207.248.71/cntv/live1/HD-2500k-1080P-cctv1/HD-2500k-1080P-cctv1
 CCTV3 HD,http://183.207.248.71/cntv/live1/HD-2500k-1080P-cctv3/HD-2500k-1080P-cctv3
 CCTV5 HD,http://183.207.248.71/cntv/live1/HD-2500k-1080P-cctv5/HD-2500k-1080P-cctv5
 CCTV6 HD,http://183.207.248.71/cntv/live1/HD-2500k-1080P-cctv6/HD-2500k-1080P-cctv6
 CCTV8 HD,http://183.207.248.71/cntv/live1/HD-2500k-1080P-cctv8/HD-2500k-1080P-cctv8
-
 CCTV1 HD,http://183.207.248.71/cntv/live1/cctv-1/cctv-1
 CCTV2 HD,http://183.207.248.71/cntv/live1/cctv-2/cctv-2
 CCTV3 HD,http://183.207.248.71/cntv/live1/cctv-3/cctv-3
@@ -49,7 +49,6 @@ CCTV10 HD,http://183.207.248.71/cntv/live1/cctv-10/cctv-10
 CCTV12 HD,http://183.207.248.71/cntv/live1/cctv-12/cctv-12
 CCTV13 HD,http://183.207.248.71/cntv/live1/cctv-13/cctv-13
 CCTV14 HD,http://183.207.248.71/cntv/live1/cctv-14/cctv-14
-
 江苏卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-jiangsustv/HD-2500k-1080P-jiangsustv
 浙江卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-zhejiangstv/HD-2500k-1080P-zhejiangstv
 北京卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-beijingstv/HD-2500k-1080P-beijingstv
@@ -57,14 +56,12 @@ CCTV14 HD,http://183.207.248.71/cntv/live1/cctv-14/cctv-14
 广东卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-guangdongstv/HD-2500k-1080P-guangdongstv
 黑龙江卫,http://183.207.248.71/cntv/live1/HD-2500k-1080P-heilongjiangstv/HD-2500k-1080P-heilongjiangstv
 黑龙卫视,http://183.207.248.71/cntv/live1/黑龙江卫视/HD-2500k-1080P-heilongjiangstv
-
 深圳卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-shenzhenstv/HD-2500k-1080P-shenzhenstv
 山东卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-shandongstv/HD-2500k-1080P-shandongstv
 天津卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-tianjinstv/HD-2500k-1080P-tianjinstv
 湖北卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-hubeistv/HD-2500k-1080P-hubeistv
 上海卫视,http://183.207.248.71/cntv/live1/HD-2500k-1080P-dongfangstv/HD-2500k-1080P-dongfangstv
 NEWTV炫舞未来,http://183.207.248.71/cntv/live1/炫舞未来/HD-4000k-1080P-xwwl
-
 北京卫视,http://183.207.248.71/cntv/live1/beijingstv/beijingstv
 北京卫视,http://183.207.248.71/cntv/live1/北京卫视/beijingstv
 江苏卫视,http://183.207.248.71/cntv/live1/jiangsustv/jiangsustv
@@ -145,32 +142,10 @@ CCTV-3,http://183.207.249.5/PLTV/3/224/3221225588/index.m3u8
 CCTV-5+,http://183.207.249.14/PLTV/3/224/3221225604/index.m3u8
 CCTV-12,http://183.207.249.8/PLTV/3/224/3221225556/index.m3u8
 CCTV-8,http://183.207.248.12/PLTV/3/224/3221227204/index.m3u8
-河北卫视,http://183.207.249.10/PLTV/2/224/3221226075/index.m3u8
-广东卫视,http://183.207.249.10/PLTV/3/224/3221225592/index.m3u8
-重庆卫视,http://183.207.249.11/PLTV/2/224/3221226051/index.m3u8
-吉林卫视,http://183.207.249.11/PLTV/2/224/3221226057/index.m3u8
-西藏卫视,http://183.207.249.11/PLTV/2/224/3221226081/index.m3u8
-甘肃卫视,http://183.207.249.11/PLTV/2/224/3221226087/index.m3u8
-厦门卫视,http://183.207.249.11/PLTV/2/224/3221226093/index.m3u8
 江西卫视,http://183.207.249.11/PLTV/3/224/3221225536/index.m3u8
 浙江卫视,http://183.207.249.11/PLTV/3/224/3221225544/index.m3u8
-甘肃卫视,http://183.207.249.12/PLTV/2/224/3221226087/index.m3u8
-四川卫视,http://183.207.249.13/PLTV/2/224/3221226059/index.m3u8
-内蒙古卫视,http://183.207.249.13/PLTV/2/224/3221226077/index.m3u8
-四川卫视,http://183.207.249.14/PLTV/2/224/3221226059/index.m3u8
-广西卫视,http://183.207.249.16/PLTV/2/224/3221226055/index.m3u8
-辽宁卫视,http://183.207.249.16/PLTV/2/224/3221226061/index.m3u8
-东南卫视,http://183.207.249.16/PLTV/2/224/3221226067/index.m3u8
-兵团卫视,http://183.207.249.16/PLTV/2/224/3221226085/index.m3u8
-山西卫视,http://183.207.249.16/PLTV/2/224/3221226091/index.m3u8
 西藏卫视,http://183.207.249.16/PLTV/3/224/3221225523/index.m3u8
-湖南卫视,http://183.207.249.7/PLTV/2/224/3221225908/3.m3u8
-安徽卫视,http://183.207.249.7/PLTV/2/224/3221226053/index.m3u8
-云南卫视,http://183.207.249.8/PLTV/2/224/3221226083/index.m3u8
 北京卫视,http://183.207.249.8/PLTV/3/224/3221225574/index.m3u8
-吉林卫视,http://183.207.249.9/PLTV/2/224/3221226057/index.m3u8
-厦门卫视,http://183.207.249.9/PLTV/2/224/3221226093/index.m3u8
-
 完美游戏,http://183.207.249.16/PLTV/3/224/3221225539/index.m3u8
 动画王国,http://183.207.249.15/PLTV/3/224/3221225555/index.m3u8
 精品电影,http://183.207.249.14/PLTV/3/224/3221225567/index.m3u8
@@ -184,8 +159,31 @@ CCTV-8,http://183.207.248.12/PLTV/3/224/3221227204/index.m3u8
 江苏体育,http://183.207.249.12/PLTV/4/224/3221225935/index.m3u8
 凤凰资讯,http://183.207.249.35/PLTV/3/224/3221226923/index.m3u8
 凤凰香港,http://183.207.249.35/PLTV/3/224/3221226975/index.m3u8
-嘉佳卡通,http://183.207.249.9/PLTV/2/224/3221226099/index.m3u8
 海南卫视,http://183.207.248.11/PLTV/4/224/3221225810/index.m3u8
 徐州综合,http://183.207.248.11/PLTV/3/224/3221225945/index.m3u8
+
+ 南京移动源 PLTV 404? 换 IP 了?
+河北卫视,http://183.207.249.10/PLTV/2/224/3221226075/index.m3u8
+广东卫视,http://183.207.249.10/PLTV/3/224/3221225592/index.m3u8
+重庆卫视,http://183.207.249.11/PLTV/2/224/3221226051/index.m3u8
+吉林卫视,http://183.207.249.11/PLTV/2/224/3221226057/index.m3u8
+西藏卫视,http://183.207.249.11/PLTV/2/224/3221226081/index.m3u8
+甘肃卫视,http://183.207.249.11/PLTV/2/224/3221226087/index.m3u8
+厦门卫视,http://183.207.249.11/PLTV/2/224/3221226093/index.m3u8
+甘肃卫视,http://183.207.249.12/PLTV/2/224/3221226087/index.m3u8
+四川卫视,http://183.207.249.13/PLTV/2/224/3221226059/index.m3u8
+内蒙古卫视,http://183.207.249.13/PLTV/2/224/3221226077/index.m3u8
+四川卫视,http://183.207.249.14/PLTV/2/224/3221226059/index.m3u8
+广西卫视,http://183.207.249.16/PLTV/2/224/3221226055/index.m3u8
+辽宁卫视,http://183.207.249.16/PLTV/2/224/3221226061/index.m3u8
+东南卫视,http://183.207.249.16/PLTV/2/224/3221226067/index.m3u8
+兵团卫视,http://183.207.249.16/PLTV/2/224/3221226085/index.m3u8
+山西卫视,http://183.207.249.16/PLTV/2/224/3221226091/index.m3u8
+湖南卫视,http://183.207.249.7/PLTV/2/224/3221225908/3.m3u8
+安徽卫视,http://183.207.249.7/PLTV/2/224/3221226053/index.m3u8
+云南卫视,http://183.207.249.8/PLTV/2/224/3221226083/index.m3u8
+吉林卫视,http://183.207.249.9/PLTV/2/224/3221226057/index.m3u8
+厦门卫视,http://183.207.249.9/PLTV/2/224/3221226093/index.m3u8
+嘉佳卡通,http://183.207.249.9/PLTV/2/224/3221226099/index.m3u8
 欢笑剧场,http://183.207.249.15/PLTV/2/224/3221226031/index.m3u8
 七彩戏剧,http://183.207.249.9/PLTV/2/224/3221226039/1.m3u8

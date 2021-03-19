@@ -89,31 +89,30 @@ public class HttpUtils {
             int code = conn.getResponseCode();
 
             if (code == 200) {
-                if(url.contains(".mp4")){
+                if (url.contains(".mp4") || url.contains(".mp3") || url.contains("flv") || url.contains(".xs") || url.contains(".smil")) {
                     conn.disconnect();
                     return true;
                 }
                 InputStream in = conn.getInputStream();
                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
                 String text = br.readLine();
-                if (text != null && (text.startsWith("#EXTM3U") || text.startsWith("FLV") || !(TextUtils.isEmpty(text) || text.trim().startsWith("<html>") || text.trim().startsWith("<!DOCTYPE HTML>")))) {
+                if (text != null && (text.startsWith("#EXTM3U") || text.startsWith("FLV") || !(text.trim().startsWith("<html>") || text.trim().startsWith("<!DOCTYPE HTML>") || TextUtils.isEmpty(text)))) {
                     while ((text = br.readLine()) != null) {
                         if (text.startsWith("#")) continue;
-                        if (text.trim().contains(".ts")) {
-                            ret = true;
-                        } else if (text.trim().endsWith(".m3u8")) {
+                        if (text.trim().endsWith(".m3u8")) {
                             try {
                                 Thread.sleep(500);
                             } catch (InterruptedException e1) {
                             }
 
-                            if(text.startsWith("1.m3u8")){
+                            br.close();
+                            if (text.startsWith("1.m3u8")) {
                                 return HttpUtils.get(url.replace("index.m3u8", "1.m3u8"), headers);
-                            }else{
-                                return HttpUtils.get(conn.getURL().getProtocol() +"://"+ conn.getURL().getHost() + text, headers);
+                            } else {
+                                return HttpUtils.get(conn.getURL().getProtocol() + "://" + conn.getURL().getHost() + text, headers);
                             }
                         } else {
-                            E = "readLine " + text + ".";
+                            ret = true;
                         }
                     }
                 } else {
@@ -133,6 +132,9 @@ public class HttpUtils {
             } catch (InterruptedException e1) {
             }
             return HttpUtils.get(url, headers);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            ret = true;
         } catch (Exception e) {
             E = e.getClass().getSimpleName() + ": " + e.getLocalizedMessage();
         } finally {

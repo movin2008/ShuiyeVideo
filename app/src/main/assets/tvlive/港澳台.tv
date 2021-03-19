@@ -1,15 +1,9 @@
+香港卫视,http://zhibo.hkstv.tv/livestream/mutfysrq.flv
+香港卫视,http://zhibo.hkstv.tv/livestream/mutfysrq/playlist.m3u8
+香港亞美卫视,http://dcunilive30-lh.akamaihd.net/i/dclive_1@535522/master.m3u8
+香港阳光卫视,https://stream.chinasuntv.com/680k/mid_video_index.m3u8
+
 香港亚视,https://de035ceb0768225b04e9a007abe39fca.live.prod.hkatv.com/a1_cbr_lo.m3u8
-香港天映頻道,http://45.126.83.51/qwr9ew/s/s33/index2.m3u8
-耀才财经,rtmp://202.69.69.180:443/webcast/bshdlive-pc
-耀才财经,http://202.69.69.180:443/webcast/bshdlive-pc/playlist.m3u8
-耀才财经,http://202.69.67.66:443/webcast/bshdlive-pc/playlist.m3u8
-耀才財經,http://202.69.67.66:443/webcast/bshdlive-mobile/playlist.m3u8
-HKC 新闻,https://ottproxy2.mott.tv/livehls/MOB-SCC/02.m3u8
-HKC 新闻,https://ottproxy2.mott.tv/livehls/MOB-SCC/03.m3u8
-##HKC 新闻,https://ottproxy2.mott.tv/livehls/MOB-SCC/03.m3u8?sessionID=XNoSKsoyhu+3ZzGxIn6l1Azz
-TVB 无线新闻,http://hk4-edge18-1.edgeware.tvb.com/session/723cb41e-681b-11ea-8754-005056b12cf7/qh33qv/newslive/smil:mobile_inews.smil/playlist.m3u8?token=20f26fd8c21b91ba1717b1aa365b15ef_1584514167_1584514167
-TVB 无线新闻,http://hk4-edge26-1.edgeware.tvb.com/session/5f3ea214-681b-11ea-b61d-005056b1026a/dtysfd/newslive/smil:mobilehd_inews.smil/playlist.m3u8?token=12fbaa24b546deac2027d3bc76693bce_1584514135_1584514135
-TVB 无线新闻,http://hk4-edge20-1.edgeware.tvb.com/session/46dd8bea-681b-11ea-8754-005056b12cf7/qh33qv/newslive/smil:mobilehd_inews.smil/playlist.m3u8?token=50403b3c2fc18fdbdd4da387ad6158c1_1584514094_1584514094
 
 澳门奥视,http://61.244.22.4/ch1/ch1.live/playelist.m3u8
 澳门RTP,http://61.244.22.4/ch2/ch2.live/playelist.m3u8
@@ -17,53 +11,11 @@ TVB 无线新闻,http://hk4-edge20-1.edgeware.tvb.com/session/46dd8bea-681b-11ea
 澳门体育,http://61.244.22.4/ch4/sport_ch4.live/playelist.m3u8
 澳视卫星,http://61.244.22.5/ch3/_definst_/ch3.live/playlist.m3u8
 
+耀才财经,rtmp://202.69.69.180/webcast/bshdlive-pc
 GoodTV 综合1080P,http://live-350k.streamingfast.net/hls-live/goodtv/_definst_/liveevent/live-ch1-3.m3u8
 GoodTV 综合 720P,http://live-350k.streamingfast.net/hls-live/goodtv/_definst_/liveevent/live-ch1-2.m3u8
 GoodTV 综合 480P,https://live-350k.streamingfast.net/hls-live/goodtv/_definst_/liveevent/live-ch1-1.m3u8
 GoodTV 真理1080P,http://live-350k.streamingfast.net/hls-live/goodtv/_definst_/liveevent/live-ch2-3.m3u8
 GoodTV 真理 720P,http://live-350k.streamingfast.net/hls-live/goodtv/_definst_/liveevent/live-ch2-2.m3u8
 GoodTV 真理 480P,https://live-350k.streamingfast.net/hls-live/goodtv/_definst_/liveevent/live-ch2-1.m3u8
-
-世新综合,http://61.58.60.230:9319/live/49.m3u8
-国会频道,http://61.58.60.230:9319/live/123.m3u8
-居家幸福,http://61.58.60.230:9319/live/125.m3u8
-靖天欢乐,http://61.58.60.230:9319/live/201.m3u8
-靖天资讯,http://61.58.60.230:9319/live/202.m3u8
-靖洋戏剧,http://61.58.60.230:9319/live/203.m3u8
-靖天娱乐,http://61.58.60.230:9319/live/204.m3u8
-靖天国际,http://61.58.60.230:9319/live/205.m3u8
-靖洋卡通,http://61.58.60.230:9319/live/206.m3u8
-靖天卡通,http://61.58.60.230:9319/live/207.m3u8
-靖天日本,http://61.58.60.230:9319/live/243.m3u8
-靖天映画,http://61.58.60.230:9319/live/244.m3u8
-
-台視財經,https://usb.bozztv.com/ssh101/TTVHD/TTVHD/index.m3u8
-纬来精采,https://usb.bozztv.com/ssh101/ttvbHD/ttvbHD/index.m3u8
-News Net,https://bozztv.com/36bay2/gin-newsnet/index.m3u8
 Electric Now,https://bozztv.com/veset1/720pHi/playlist_720pHi.m3u8
-
-台湾CHTV,http://220.158.149.14:9999/live/TV00000000000000000002@HHZT;LIVE
-TVB 欢乐,http://220.158.149.14:9999/live/TV00000000000000000079@HHZT;LIVE
-台湾待定,http://220.158.149.14:9999/live/TV00000000000000000081@HHZT;LIVE
-TVB 新闻,http://220.158.149.14:9999/live/TV00000000000000000082@HHZT;LIVE
-纬来体育,http://220.158.149.14:9999/live/TV00000000000000000078@HHZT;LIVE
-空中英语,http://220.158.149.14:9999/live/TV00000000000000000077@HHZT;LIVE
-BCYOYO,http://220.158.149.14:9999/live/TV00000000000000000076@HHZT;LIVE
-CNEX纪录片,http://220.158.149.14:9999/live/TV00000000000000000083@HHZT;LIVE
-
-三立新闻,http://60.199.188.65/HLS/WG_ETTV-N/01.m3u8
-三立新聞,http://60.199.188.65/HLS/WG_ETTV-N/02.m3u8
-三立新闻,http://60.199.188.65/HLS/WG_ETTV-N/index.m3u8
-TVBS 新闻,http://60.199.188.65/HLS/WG_TVBS-N/01.m3u8
-TVBS 新闻,http://60.199.188.65/HLS/WG_TVBS-N/02.m3u8
-TVBS 新闻,http://60.199.188.65/HLS/WG_TVBS-N/index.m3u8
-
-信吉电视,http://220.130.241.203:1935/sjtv/livestream_360p/playlist.m3u8
-信吉电视,http://220.130.241.203:1935/sjtv/livestream_720p/playlist.m3u8
-信吉电视,http://220.130.241.203:1935/sjtv/livestream/chunklist_w1048671923.m3u8
-
-壹新闻,http://ax.micaesoft.com/YMitv/YMITV_CN_eratv.m3u8
-環球電視,http://live-cdn.xzxwhcb.com/hls/sn88wrar.m3u8
-人间卫视,http://54.64.23.79:1935/live/vod/playlist.m3u8
-TVB 星河(花屏),http://tvbilive14-i.akamaihd.net/hls/live/496347/CXHMovie/CXHMovie-01.m3u8
-

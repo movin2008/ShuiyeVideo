@@ -37,6 +37,7 @@ CHC高清电影,rtmp://ivi.bupt.edu.cn:1935/livetv/chchd
 河北卫视,rtmp://ivi.bupt.edu.cn:1935/livetv/hebhd
 凤凰中文台,rtmp://ivi.bupt.edu.cn:1935/livetv/fhzw
 凤凰咨询台,rtmp://ivi.bupt.edu.cn:1935/livetv/fhzx
+CHANNEL[V],rtmp://ivi.bupt.edu.cn:1935/livetv/channelv
 
  北邮测试源 http
 CCTV1,http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8
