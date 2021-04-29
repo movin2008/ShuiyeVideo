@@ -9,6 +9,16 @@ import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Base64;
+
 public class HuyaTest {
 
 	public static void main(String[] args) {
@@ -19,7 +29,12 @@ public class HuyaTest {
 			@Override
 			public void run() {
 				try {
-					a();
+					//a();
+					String[] ret = huya(11342412);
+					System.err.println(Arrays.toString(ret));
+
+					String url = newHuyaUrl(ret[1]);
+					System.err.println("newHuyaUrl: " + url);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -92,5 +107,113 @@ public class HuyaTest {
 		bw2.close();
 		
 		System.out.println("end");
+	}
+	
+	static String[] huya(int rid) throws Exception {
+
+		final String[] rets = new String[2];
+		final URL url = new URL("https://m.huya.com/" + rid);
+		final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		setURLConnection(conn, null);
+		conn.setRequestMethod("GET");
+		conn.connect();
+
+		int code = conn.getResponseCode();
+		if (code == 200) {
+			String text;
+			InputStream in = conn.getInputStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(in,"utf-8"));
+			while ((text = br.readLine()) != null) {
+				System.out.println(text);
+				if (text.contains("var liveLineUrl =")) {
+					rets[1] = "https:" + new String(Base64.getDecoder().decode(getVariableValue(text, "\"")));
+				} else if (text.contains("var liveRoomName = ")) {
+					rets[0] = getVariableValue(text, "'");
+				}
+			}
+			br.close();
+		} else {
+			System.err.println("Response code: " + code);
+		}
+		conn.disconnect();
+		return rets;
+	}
+
+	public static final String UA = "Mozilla/5.0 (Linux; U; Android 9; zh-cn; MI 6 Build/PKQ1.190118.001) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/10.0 Mobile Safari/537.36";
+
+	static void setURLConnection(HttpURLConnection conn, String headers) {
+		conn.setConnectTimeout(3333);
+		conn.setReadTimeout(5555);
+		conn.setRequestProperty("Host", conn.getURL().getHost());
+		conn.setRequestProperty("User-Agent", UA);
+
+		if (!isEmpty(headers)) {
+			// Cookie: a=123; b=234; Referer: url
+			String[] header = headers.split(": ");
+			conn.setRequestProperty(header[0], header[1]);
+		}
+	}
+
+	static boolean isEmpty(String s) {
+		return s == null || s.length() == 0;
+	}
+
+	static String getVariableValue(String text, String marks) {
+		return text.substring(text.indexOf(marks) + marks.length(), text.lastIndexOf(marks));
+	}
+	
+	static String getUrlParam(String url, String param) {
+		param = param + "=";
+		int index = url.indexOf(param) + param.length();
+		return URLDecoder.decode(url.substring(index, url.indexOf("&", index)));
+	}
+	
+	static String stringToMD5(String text) {
+        byte[] secretBytes = null;
+        try {
+            secretBytes = MessageDigest.getInstance("md5").digest(text.getBytes());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("no such md5.");
+        }
+        String md5code = new BigInteger(1, secretBytes).toString(16);
+        for (int i = 0; i < 32 - md5code.length(); i++) {
+            md5code = "0" + md5code;
+        }
+        return md5code;
+    }
+	
+	static String newHuyaUrl(String url) {
+		String[] tmp = url.split("\\?");
+		String[] tmp2 = tmp[0].split("/");
+		
+		String ayyuid = tmp2[tmp2.length - 1].replace(".m3u8", "").replace(".flv", "");
+		//System.err.println("ayyuid: " + ayyuid);
+		
+		String fm = new String(Base64.getDecoder().decode(getUrlParam(url, "fm")));
+		//System.err.println("fm: " + fm);
+		
+		// 16195946561773750
+		long currentTimeMillis = System.currentTimeMillis() * 10000;
+		//System.err.println("currentTimeMillis: " + currentTimeMillis);
+		
+		String wsTime = getUrlParam(url, "wsTime");
+		//System.err.println("wsTime: " + wsTime);
+		
+		fm = fm.replace("$0", "0");
+		fm = fm.replace("$1", ayyuid);
+		fm = fm.replace("$2", String.valueOf(currentTimeMillis));
+		fm = fm.replace("$3", wsTime);
+		//System.err.println("fm: " + fm);
+		
+		String wsSecret = getUrlParam(url, "wsSecret");
+		
+		// tx.hls.huya.com
+		// bd.hls.huya.com
+		// migu-bd.hls.huya.com
+		String newurl = url + "&seqid=" + currentTimeMillis;
+		newurl = newurl.replace("ratio=2000", "u=0");
+		newurl = newurl.replace(wsSecret, stringToMD5(fm));
+		
+		return newurl;
 	}
 }
