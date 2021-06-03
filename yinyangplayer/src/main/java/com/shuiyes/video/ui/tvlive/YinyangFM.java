@@ -3,7 +3,7 @@ package com.shuiyes.video.ui.tvlive;
 import android.content.Context;
 import android.content.Intent;
 
-import com.devlin_n.floatWindowPermission.FloatWindowManager;
+import com.android.permission.FloatWindowManager;
 import com.devlin_n.yinyangplayer.player.BackgroundPlayService;
 import com.devlin_n.yinyangplayer.util.KeyUtil;
 

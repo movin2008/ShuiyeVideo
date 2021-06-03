@@ -2,7 +2,6 @@ package com.devlin_n.yinyangplayer.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -23,7 +22,7 @@ public class FloatView extends FrameLayout {
     private WindowManager.LayoutParams mParams;
     public YinYangPlayer magicVideoView;
 
-    public FloatView(@NonNull Context context, WindowManager mWindowManager, WindowManager.LayoutParams mParams) {
+    public FloatView(Context context, WindowManager mWindowManager, WindowManager.LayoutParams mParams) {
         super(context);
         this.mWindowManager = mWindowManager;
         this.mParams = mParams;

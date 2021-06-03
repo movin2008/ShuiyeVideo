@@ -2,7 +2,6 @@ package com.devlin_n.yinyangplayer.widget;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -33,7 +32,7 @@ public class StatusView extends LinearLayout {
         this(context, null);
     }
 
-    public StatusView(Context context, @Nullable AttributeSet attrs) {
+    public StatusView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }

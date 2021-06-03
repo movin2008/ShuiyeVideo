@@ -3,10 +3,7 @@ package com.devlin_n.yinyangplayer.controller;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.AttrRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.PopupMenu;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -17,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -58,16 +56,15 @@ public class StandardVideoController extends BaseVideoController implements View
     private Animation hideAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_alpha_out);
     protected PopupMenu popupMenu;
 
-
-    public StandardVideoController(@NonNull Context context) {
+    public StandardVideoController(Context context) {
         this(context, null);
     }
 
-    public StandardVideoController(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public StandardVideoController(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public StandardVideoController(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public StandardVideoController(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -110,17 +107,19 @@ public class StandardVideoController extends BaseVideoController implements View
         title = (TextView) controllerView.findViewById(R.id.title);
         statusHolder = controllerView.findViewById(R.id.status_holder);
         statusHolder.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) WindowUtil.getStatusBarHeight(getContext())));
-        popupMenu = new PopupMenu(getContext(), moreMenu, Gravity.END);
-        popupMenu.getMenuInflater().inflate(R.menu.controller_menu, popupMenu.getMenu());
-        popupMenu.getMenu().findItem(R.id.video_source).setVisible(false);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                popupMenu.dismiss();
-                menuItemClick(item);
-                return false;
-            }
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            popupMenu = new PopupMenu(getContext(), moreMenu, Gravity.END);
+            popupMenu.getMenuInflater().inflate(R.menu.controller_menu, popupMenu.getMenu());
+            popupMenu.getMenu().findItem(R.id.video_source).setVisible(false);
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    popupMenu.dismiss();
+                    menuItemClick(item);
+                    return false;
+                }
+            });
+        }
     }
 
     protected void menuItemClick(MenuItem item) {

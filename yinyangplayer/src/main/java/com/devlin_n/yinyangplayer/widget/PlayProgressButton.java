@@ -1,10 +1,6 @@
 package com.devlin_n.yinyangplayer.widget;
 
 import android.content.Context;
-import android.support.annotation.AttrRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -30,15 +26,15 @@ public class PlayProgressButton extends FrameLayout {
     private ImageView playButton;
     private ProgressBar progressBar;
 
-    public PlayProgressButton(@NonNull Context context) {
+    public PlayProgressButton(Context context) {
         this(context, null);
     }
 
-    public PlayProgressButton(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public PlayProgressButton(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PlayProgressButton(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public PlayProgressButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -54,7 +50,7 @@ public class PlayProgressButton extends FrameLayout {
         addView(playButton, params);
 
         progressBar = new ProgressBar(getContext());
-        progressBar.setIndeterminateDrawable(ContextCompat.getDrawable(getContext(), R.drawable.progress_loading));
+        progressBar.setIndeterminateDrawable(getContext().getResources().getDrawable(R.drawable.progress_loading));
         progressBar.setVisibility(GONE);
         addView(progressBar, params);
 

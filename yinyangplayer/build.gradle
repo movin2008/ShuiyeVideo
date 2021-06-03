@@ -24,13 +24,11 @@ dependencies {
     // https://github.com/danikula/AndroidVideoCache
     implementation 'com.danikula:videocache:2.7.0'
 
-    // https://github.com/DevlinChiu/FloatWindowPermission
-    api 'com.github.DevlinChiu:FloatWindowPermission:1.1'
-
     // https://github.com/Bilibili/DanmakuFlameMaster
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.8.3'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.8.3'
 
     // for Tips
     implementation project(':common')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
 }

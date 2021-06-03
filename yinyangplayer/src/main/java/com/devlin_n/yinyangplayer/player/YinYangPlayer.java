@@ -7,8 +7,6 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.OrientationEventListener;
@@ -20,9 +18,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.android.permission.FloatWindowManager;
 import com.danikula.videocache.CacheListener;
 import com.danikula.videocache.HttpProxyCacheServer;
-import com.devlin_n.floatWindowPermission.FloatWindowManager;
 import com.devlin_n.yinyangplayer.R;
 import com.devlin_n.yinyangplayer.controller.BaseVideoController;
 import com.devlin_n.yinyangplayer.controller.StandardVideoController;
@@ -55,7 +53,6 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
     //ijkPlayer
     private IMediaPlayer mMediaPlayer;
     //控制器
-    @Nullable
     private BaseVideoController mVideoController;
     private YinYangSurfaceView mSurfaceView;
     private YinYangTextureView mTextureView;
@@ -94,7 +91,6 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
     public static final int PLAYER_FULL_SCREEN = 11;   // 全屏播放器
 
     private AudioManager mAudioManager;//系统音频管理器
-    @NonNull
     private AudioFocusHelper mAudioFocusHelper = new AudioFocusHelper();
 
     public static final int SCREEN_SCALE_DEFAULT = 0;
@@ -116,12 +112,12 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
     private boolean addToPlayerManager;
 
 
-    public YinYangPlayer(@NonNull Context context) {
+    public YinYangPlayer(Context context) {
         this(context, null);
     }
 
 
-    public YinYangPlayer(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public YinYangPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
@@ -570,7 +566,6 @@ public class YinYangPlayer extends FrameLayout implements BaseVideoController.Me
      */
     @Override
     public void startFloatWindow() {
-
         if (FloatWindowManager.getInstance().checkPermission(getContext())) {
             startBackgroundService();
         } else {

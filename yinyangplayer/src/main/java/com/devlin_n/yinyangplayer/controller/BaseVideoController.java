@@ -3,9 +3,6 @@ package com.devlin_n.yinyangplayer.controller;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
-import android.support.annotation.AttrRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -46,15 +43,15 @@ public abstract class BaseVideoController extends FrameLayout {
     private float downY;
 
 
-    public BaseVideoController(@NonNull Context context) {
+    public BaseVideoController(Context context) {
         this(context, null);
     }
 
-    public BaseVideoController(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public BaseVideoController(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BaseVideoController(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public BaseVideoController(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView();
     }

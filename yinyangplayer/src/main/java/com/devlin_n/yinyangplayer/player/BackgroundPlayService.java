@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.WindowManager;
 
@@ -28,7 +27,6 @@ public class BackgroundPlayService extends Service {
     private int position;
     private boolean isCache, isFM;
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;

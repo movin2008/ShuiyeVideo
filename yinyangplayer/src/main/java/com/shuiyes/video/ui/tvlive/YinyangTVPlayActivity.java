@@ -2,12 +2,11 @@ package com.shuiyes.video.ui.tvlive;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.devlin_n.floatWindowPermission.FloatWindowManager;
+import com.android.permission.FloatWindowManager;
 import com.devlin_n.yinyangplayer.R;
 import com.devlin_n.yinyangplayer.controller.StandardVideoController;
 import com.devlin_n.yinyangplayer.player.YinYangPlayer;
@@ -27,7 +26,7 @@ public class YinyangTVPlayActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_tvplay_yinyang);
